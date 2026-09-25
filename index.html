@@ -7,7 +7,6 @@
   <title>Home</title>
 
   <style>
-
     * {
       box-sizing: border-box;
       margin: 0;
@@ -22,7 +21,8 @@
 
     button,
     input,
-    select {
+    select,
+    textarea {
       font: inherit;
     }
 
@@ -30,10 +30,7 @@
       cursor: pointer;
     }
 
-
-    /* =========================
-       HEADER
-    ========================= */
+    /* HEADER */
 
     header {
       position: sticky;
@@ -67,10 +64,6 @@
       background: #f5f5f5;
     }
 
-    .search-box input:focus {
-      border-color: #999;
-    }
-
     .header-actions {
       display: flex;
       gap: 8px;
@@ -86,28 +79,17 @@
       background: #f1f1f1;
     }
 
-    .header-actions button:hover {
-      background: #e5e5e5;
-    }
-
-
-    /* =========================
-       LAYOUT
-    ========================= */
+    /* LAYOUT */
 
     .layout {
       display: flex;
       min-height: calc(100vh - 64px);
     }
 
-
-    /* =========================
-       SIDEBAR
-    ========================= */
+    /* SIDEBAR */
 
     .sidebar {
       width: 230px;
-
       background: white;
       border-right: 1px solid #ddd;
 
@@ -122,7 +104,6 @@
 
     .nav-button {
       width: 100%;
-
       padding: 13px 15px;
       margin-bottom: 4px;
 
@@ -130,7 +111,6 @@
       border-radius: 10px;
 
       background: transparent;
-
       text-align: left;
 
       font-size: 15px;
@@ -150,14 +130,10 @@
       text-transform: uppercase;
     }
 
-
-    /* =========================
-       MAIN
-    ========================= */
+    /* MAIN */
 
     main {
       margin-left: 230px;
-
       width: calc(100% - 230px);
 
       padding: 25px;
@@ -165,9 +141,7 @@
 
     .page {
       display: none;
-
-      max-width: 1100px;
-
+      max-width: 900px;
       margin: auto;
     }
 
@@ -188,66 +162,34 @@
       color: #777;
     }
 
-
-    /* =========================
-       CARDS
-    ========================= */
-
-    .card-grid {
-      display: grid;
-
-      grid-template-columns:
-        repeat(auto-fit, minmax(220px, 1fr));
-
-      gap: 18px;
-    }
+    /* CARDS */
 
     .card {
       background: white;
-
       border: 1px solid #ddd;
       border-radius: 14px;
-
       padding: 20px;
-
-      min-height: 120px;
     }
 
-    .card h3 {
-      margin-bottom: 8px;
-    }
-
-    .card p {
-      color: #777;
-      line-height: 1.5;
-    }
-
-
-    /* =========================
-       HOME
-    ========================= */
+    /* HOME */
 
     .welcome-card {
       background: white;
-
       border-radius: 18px;
 
       padding: 30px;
-
-      margin-bottom: 25px;
+      margin-bottom: 20px;
 
       border: 1px solid #ddd;
     }
 
     .welcome-card h1 {
       margin-bottom: 10px;
-
       font-size: 32px;
     }
 
     .welcome-card p {
       color: #777;
-
       line-height: 1.6;
     }
 
@@ -263,18 +205,325 @@
       color: white;
     }
 
-    .post-button:hover {
-      background: #000;
+    /* STORIES */
+
+    .stories {
+      display: flex;
+      gap: 12px;
+
+      overflow-x: auto;
+
+      padding: 5px 2px 15px;
+
+      margin-bottom: 20px;
     }
 
+    .story {
+      min-width: 85px;
 
-    /* =========================
-       AUTHENTICATION
-    ========================= */
+      background: white;
+
+      border: 1px solid #ddd;
+      border-radius: 14px;
+
+      padding: 10px;
+
+      text-align: center;
+    }
+
+    .story-avatar {
+      width: 55px;
+      height: 55px;
+
+      margin: auto auto 7px;
+
+      border-radius: 50%;
+
+      background: #ddd;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-size: 25px;
+    }
+
+    .story-name {
+      font-size: 12px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* CREATE POST */
+
+    .create-post {
+      background: white;
+
+      border: 1px solid #ddd;
+      border-radius: 15px;
+
+      padding: 15px;
+
+      margin-bottom: 20px;
+    }
+
+    .create-post textarea {
+      width: 100%;
+
+      min-height: 80px;
+
+      border: 1px solid #ddd;
+      border-radius: 10px;
+
+      padding: 12px;
+
+      resize: vertical;
+      outline: none;
+    }
+
+    .create-post-bottom {
+      display: flex;
+
+      justify-content: space-between;
+      align-items: center;
+
+      margin-top: 10px;
+    }
+
+    .secondary-button {
+      border: 1px solid #ddd;
+
+      background: white;
+
+      padding: 9px 14px;
+
+      border-radius: 20px;
+    }
+
+    /* POSTS */
+
+    .feed {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .post {
+      background: white;
+
+      border: 1px solid #ddd;
+
+      border-radius: 15px;
+
+      overflow: hidden;
+    }
+
+    .post-header {
+      display: flex;
+
+      align-items: center;
+
+      gap: 10px;
+
+      padding: 15px;
+    }
+
+    .avatar {
+      width: 42px;
+      height: 42px;
+
+      border-radius: 50%;
+
+      background: #ddd;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      flex-shrink: 0;
+    }
+
+    .post-user {
+      font-weight: bold;
+    }
+
+    .post-time {
+      color: #888;
+      font-size: 12px;
+      margin-top: 3px;
+    }
+
+    .post-content {
+      padding: 0 15px 15px;
+
+      line-height: 1.6;
+    }
+
+    .post-media {
+      width: 100%;
+
+      height: 260px;
+
+      background: #e9e9e9;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-size: 45px;
+    }
+
+    .post-actions {
+      display: flex;
+
+      border-top: 1px solid #eee;
+    }
+
+    .post-actions button {
+      flex: 1;
+
+      padding: 12px 5px;
+
+      border: none;
+
+      background: white;
+    }
+
+    .post-actions button:hover {
+      background: #f5f5f5;
+    }
+
+    /* PROFILE */
+
+    .profile-card {
+      background: white;
+
+      border: 1px solid #ddd;
+      border-radius: 16px;
+
+      padding: 25px;
+
+      margin-bottom: 20px;
+    }
+
+    .profile-top {
+      display: flex;
+      gap: 20px;
+
+      align-items: center;
+    }
+
+    .large-avatar {
+      width: 90px;
+      height: 90px;
+
+      border-radius: 50%;
+
+      background: #ddd;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-size: 40px;
+    }
+
+    .profile-name {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .profile-bio {
+      color: #777;
+      margin-top: 7px;
+    }
+
+    .profile-stats {
+      display: flex;
+      gap: 25px;
+
+      margin-top: 20px;
+    }
+
+    .profile-stat {
+      text-align: center;
+    }
+
+    .profile-stat strong {
+      display: block;
+      font-size: 18px;
+    }
+
+    .profile-stat span {
+      color: #777;
+      font-size: 13px;
+    }
+
+    .follow-button {
+      margin-top: 15px;
+
+      border: none;
+
+      background: #222;
+      color: white;
+
+      padding: 10px 20px;
+
+      border-radius: 22px;
+    }
+
+    /* FOLLOWERS */
+
+    .person-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .person {
+      display: flex;
+
+      align-items: center;
+
+      gap: 12px;
+
+      padding: 12px;
+
+      background: white;
+
+      border: 1px solid #ddd;
+
+      border-radius: 12px;
+    }
+
+    .person-info {
+      flex: 1;
+    }
+
+    .person-info strong {
+      display: block;
+    }
+
+    .person-info span {
+      color: #888;
+      font-size: 13px;
+    }
+
+    .small-follow {
+      border: 1px solid #ddd;
+
+      background: white;
+
+      padding: 8px 13px;
+
+      border-radius: 18px;
+    }
+
+    /* AUTH */
 
     .auth-card {
       max-width: 500px;
-
       margin: 30px auto;
     }
 
@@ -295,11 +544,6 @@
       background: white;
     }
 
-    .auth-card input:focus,
-    .auth-card select:focus {
-      border-color: #888;
-    }
-
     .auth-card .post-button {
       width: 100%;
     }
@@ -318,58 +562,39 @@
       background: none;
 
       font-weight: bold;
-
-      color: #222;
     }
 
-    .auth-switch button:hover {
-      text-decoration: underline;
-    }
+    /* NOTIFICATIONS */
 
+    .notification {
+      display: flex;
 
-    /* =========================
-       ACCOUNT
-    ========================= */
+      gap: 12px;
 
-    .account-card {
-      max-width: 700px;
-
-      margin: auto;
-    }
-
-    .account-option {
-      width: 100%;
+      align-items: center;
 
       padding: 15px;
 
-      margin-bottom: 10px;
+      background: white;
 
       border: 1px solid #ddd;
 
-      border-radius: 10px;
+      border-radius: 12px;
 
-      background: white;
-
-      text-align: left;
+      margin-bottom: 10px;
     }
 
-    .account-option:hover {
-      background: #f3f3f3;
+    .notification-text {
+      line-height: 1.4;
     }
 
-
-    /* =========================
-       MOBILE NAVIGATION
-    ========================= */
+    /* MOBILE NAV */
 
     .mobile-nav {
       display: none;
     }
 
-
-    /* =========================
-       MOBILE
-    ========================= */
+    /* MOBILE */
 
     @media (max-width: 800px) {
 
@@ -389,11 +614,6 @@
         padding: 15px;
 
         padding-bottom: 85px;
-      }
-
-      .header-actions button {
-        width: 38px;
-        height: 38px;
       }
 
       .mobile-nav {
@@ -442,18 +662,31 @@
         font-size: 27px;
       }
 
-    }
+      .profile-top {
+        align-items: flex-start;
+      }
 
+      .large-avatar {
+        width: 70px;
+        height: 70px;
+        font-size: 30px;
+      }
+
+      .profile-name {
+        font-size: 20px;
+      }
+
+      .profile-stats {
+        gap: 15px;
+      }
+    }
   </style>
 </head>
 
 
 <body>
 
-
-  <!-- =========================
-       HEADER
-  ========================= -->
+  <!-- HEADER -->
 
   <header>
 
@@ -468,29 +701,17 @@
 
     </div>
 
-
     <div class="header-actions">
 
-      <button
-        onclick="openMessages()"
-        title="Messages"
-      >
+      <button onclick="openMessages()" title="Messages">
         💬
       </button>
 
-
-      <button
-        onclick="openNotifications()"
-        title="Notifications"
-      >
+      <button onclick="openNotifications()" title="Notifications">
         🔔
       </button>
 
-
-      <button
-        onclick="openAccount()"
-        title="Account"
-      >
+      <button onclick="openAccount()" title="Account">
         👤
       </button>
 
@@ -499,16 +720,12 @@
   </header>
 
 
-
   <div class="layout">
 
 
-    <!-- =========================
-         SIDEBAR
-    ========================= -->
+    <!-- SIDEBAR -->
 
     <aside class="sidebar">
-
 
       <button
         class="nav-button active"
@@ -518,7 +735,6 @@
         🏠 Home
       </button>
 
-
       <button
         class="nav-button"
         data-page="explore"
@@ -526,7 +742,6 @@
       >
         🔎 Explore
       </button>
-
 
       <button
         class="nav-button"
@@ -536,7 +751,6 @@
         🎬 Shorts
       </button>
 
-
       <button
         class="nav-button"
         data-page="videos"
@@ -545,7 +759,6 @@
         ▶️ Videos
       </button>
 
-
       <button
         class="nav-button"
         data-page="music"
@@ -553,7 +766,6 @@
       >
         🎵 Music
       </button>
-
 
       <button
         class="nav-button"
@@ -564,11 +776,9 @@
       </button>
 
 
-
       <div class="sidebar-title">
         Shopping
       </div>
-
 
       <button
         class="nav-button"
@@ -577,7 +787,6 @@
       >
         🛍️ Marketplace
       </button>
-
 
       <button
         class="nav-button"
@@ -588,11 +797,9 @@
       </button>
 
 
-
       <div class="sidebar-title">
         Services
       </div>
-
 
       <button
         class="nav-button"
@@ -602,7 +809,6 @@
         🚗 Transport
       </button>
 
-
       <button
         class="nav-button"
         data-page="businesses"
@@ -610,7 +816,6 @@
       >
         🏢 Businesses
       </button>
-
 
       <button
         class="nav-button"
@@ -621,11 +826,9 @@
       </button>
 
 
-
       <div class="sidebar-title">
         Account
       </div>
-
 
       <button
         class="nav-button"
@@ -635,7 +838,6 @@
         💬 Messages
       </button>
 
-
       <button
         class="nav-button"
         data-page="notifications"
@@ -644,41 +846,41 @@
         🔔 Notifications
       </button>
 
+      <button
+        class="nav-button"
+        data-page="profile"
+        onclick="showPage('profile')"
+      >
+        👤 Profile
+      </button>
 
       <button
         class="nav-button"
         data-page="account"
         onclick="showPage('account')"
       >
-        👤 Account
+        ⚙️ Account
       </button>
-
 
       <button
         class="nav-button"
         data-page="settings"
         onclick="showPage('settings')"
       >
-        ⚙️ Settings
+        🔒 Settings
       </button>
 
     </aside>
 
 
-
-    <!-- =========================
-         MAIN CONTENT
-    ========================= -->
+    <!-- MAIN -->
 
     <main>
 
 
       <!-- HOME -->
 
-      <section
-        id="home"
-        class="page active"
-      >
+      <section id="home" class="page active">
 
         <div class="welcome-card">
 
@@ -689,75 +891,242 @@
             find services and explore new opportunities.
           </p>
 
+        </div>
 
-          <button
-            class="post-button"
-            onclick="openPost()"
-          >
-            Create a Post
-          </button>
+
+        <!-- STORIES -->
+
+        <div class="stories">
+
+          <div class="story" onclick="createStory()">
+
+            <div class="story-avatar">
+              ➕
+            </div>
+
+            <div class="story-name">
+              Your story
+            </div>
+
+          </div>
+
+
+          <div class="story" onclick="openStory('Alex')">
+
+            <div class="story-avatar">
+              👤
+            </div>
+
+            <div class="story-name">
+              Alex
+            </div>
+
+          </div>
+
+
+          <div class="story" onclick="openStory('Maya')">
+
+            <div class="story-avatar">
+              👩
+            </div>
+
+            <div class="story-name">
+              Maya
+            </div>
+
+          </div>
+
+
+          <div class="story" onclick="openStory('Daniel')">
+
+            <div class="story-avatar">
+              👨
+            </div>
+
+            <div class="story-name">
+              Daniel
+            </div>
+
+          </div>
+
+
+          <div class="story" onclick="openStory('Sarah')">
+
+            <div class="story-avatar">
+              👩‍🦱
+            </div>
+
+            <div class="story-name">
+              Sarah
+            </div>
+
+          </div>
 
         </div>
 
 
-        <div class="card-grid">
+        <!-- CREATE POST -->
 
+        <div class="create-post">
 
-          <div class="card">
+          <textarea
+            id="postText"
+            placeholder="What's on your mind?"
+          ></textarea>
 
-            <h3>Stories</h3>
+          <div class="create-post-bottom">
 
-            <p>
-              Share moments and see what people are posting.
-            </p>
+            <button
+              class="secondary-button"
+              onclick="addPostMedia()"
+            >
+              📷 Photo / Video
+            </button>
 
-          </div>
-
-
-          <div class="card">
-
-            <h3>Short Videos</h3>
-
-            <p>
-              Watch and discover short-form videos.
-            </p>
-
-          </div>
-
-
-          <div class="card">
-
-            <h3>Marketplace</h3>
-
-            <p>
-              Discover products and businesses.
-            </p>
+            <button
+              class="post-button"
+              onclick="createPost()"
+            >
+              Post
+            </button>
 
           </div>
 
+        </div>
 
-          <div class="card">
 
-            <h3>Nearby</h3>
+        <!-- FEED -->
 
-            <p>
-              Discover useful places, services and businesses nearby.
-            </p>
+        <div
+          id="feed"
+          class="feed"
+        >
 
-          </div>
+
+          <!-- POST 1 -->
+
+          <article class="post">
+
+            <div class="post-header">
+
+              <div class="avatar">
+                👨
+              </div>
+
+              <div>
+
+                <div class="post-user">
+                  Alex
+                </div>
+
+                <div class="post-time">
+                  2 hours ago
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <div class="post-content">
+
+              Exploring new places today.
+              There is always something interesting to discover.
+
+            </div>
+
+
+            <div class="post-media">
+              🌍
+            </div>
+
+
+            <div class="post-actions">
+
+              <button onclick="likePost(this)">
+                ❤️ <span>24</span>
+              </button>
+
+              <button onclick="commentPost()">
+                💬 <span>8</span>
+              </button>
+
+              <button onclick="sharePost()">
+                🔄 Share
+              </button>
+
+              <button onclick="savePost(this)">
+                🔖 Save
+              </button>
+
+            </div>
+
+          </article>
+
+
+          <!-- POST 2 -->
+
+          <article class="post">
+
+            <div class="post-header">
+
+              <div class="avatar">
+                👩
+              </div>
+
+              <div>
+
+                <div class="post-user">
+                  Maya
+                </div>
+
+                <div class="post-time">
+                  5 hours ago
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <div class="post-content">
+
+              Working on something new.
+              More updates coming soon!
+
+            </div>
+
+
+            <div class="post-actions">
+
+              <button onclick="likePost(this)">
+                ❤️ <span>16</span>
+              </button>
+
+              <button onclick="commentPost()">
+                💬 <span>4</span>
+              </button>
+
+              <button onclick="sharePost()">
+                🔄 Share
+              </button>
+
+              <button onclick="savePost(this)">
+                🔖 Save
+              </button>
+
+            </div>
+
+          </article>
 
         </div>
 
       </section>
 
 
-
       <!-- EXPLORE -->
 
-      <section
-        id="explore"
-        class="page"
-      >
+      <section id="explore" class="page">
 
         <div class="page-header">
 
@@ -769,16 +1138,23 @@
 
         </div>
 
-      </section>
 
+        <div class="card">
+
+          <h3>Discover</h3>
+
+          <p>
+            Search and discovery features will expand here.
+          </p>
+
+        </div>
+
+      </section>
 
 
       <!-- SHORTS -->
 
-      <section
-        id="shorts"
-        class="page"
-      >
+      <section id="shorts" class="page">
 
         <div class="page-header">
 
@@ -793,13 +1169,9 @@
       </section>
 
 
-
       <!-- VIDEOS -->
 
-      <section
-        id="videos"
-        class="page"
-      >
+      <section id="videos" class="page">
 
         <div class="page-header">
 
@@ -814,13 +1186,9 @@
       </section>
 
 
-
       <!-- MUSIC -->
 
-      <section
-        id="music"
-        class="page"
-      >
+      <section id="music" class="page">
 
         <div class="page-header">
 
@@ -835,13 +1203,9 @@
       </section>
 
 
-
       <!-- TEMPLATES -->
 
-      <section
-        id="templates"
-        class="page"
-      >
+      <section id="templates" class="page">
 
         <div class="page-header">
 
@@ -856,13 +1220,9 @@
       </section>
 
 
-
       <!-- MARKETPLACE -->
 
-      <section
-        id="marketplace"
-        class="page"
-      >
+      <section id="marketplace" class="page">
 
         <div class="page-header">
 
@@ -877,13 +1237,9 @@
       </section>
 
 
-
       <!-- NEARBY -->
 
-      <section
-        id="nearby"
-        class="page"
-      >
+      <section id="nearby" class="page">
 
         <div class="page-header">
 
@@ -898,13 +1254,9 @@
       </section>
 
 
-
       <!-- TRANSPORT -->
 
-      <section
-        id="transport"
-        class="page"
-      >
+      <section id="transport" class="page">
 
         <div class="page-header">
 
@@ -919,13 +1271,9 @@
       </section>
 
 
-
       <!-- BUSINESSES -->
 
-      <section
-        id="businesses"
-        class="page"
-      >
+      <section id="businesses" class="page">
 
         <div class="page-header">
 
@@ -940,13 +1288,9 @@
       </section>
 
 
-
       <!-- SERVICES -->
 
-      <section
-        id="services"
-        class="page"
-      >
+      <section id="services" class="page">
 
         <div class="page-header">
 
@@ -961,13 +1305,9 @@
       </section>
 
 
-
       <!-- MESSAGES -->
 
-      <section
-        id="messages"
-        class="page"
-      >
+      <section id="messages" class="page">
 
         <div class="page-header">
 
@@ -982,34 +1322,302 @@
       </section>
 
 
-
       <!-- NOTIFICATIONS -->
 
-      <section
-        id="notifications"
-        class="page"
-      >
+      <section id="notifications" class="page">
 
         <div class="page-header">
 
           <h1>Notifications</h1>
 
           <p>
-            Your notifications will appear here.
+            Social and system notifications.
           </p>
+
+        </div>
+
+
+        <div class="notification">
+
+          <div class="avatar">
+            ❤️
+          </div>
+
+          <div class="notification-text">
+            <strong>Alex</strong>
+            liked your post.
+          </div>
+
+        </div>
+
+
+        <div class="notification">
+
+          <div class="avatar">
+            👤
+          </div>
+
+          <div class="notification-text">
+            <strong>Maya</strong>
+            started following you.
+          </div>
+
+        </div>
+
+
+        <div class="notification">
+
+          <div class="avatar">
+            💬
+          </div>
+
+          <div class="notification-text">
+            Someone commented on your post.
+          </div>
 
         </div>
 
       </section>
 
 
+      <!-- PROFILE -->
+
+      <section id="profile" class="page">
+
+        <div class="profile-card">
+
+          <div class="profile-top">
+
+            <div class="large-avatar">
+              👤
+            </div>
+
+            <div>
+
+              <div class="profile-name">
+                Your Profile
+              </div>
+
+              <div class="profile-bio">
+                Your bio will appear here.
+              </div>
+
+              <button
+                class="follow-button"
+                onclick="editProfile()"
+              >
+                Edit Profile
+              </button>
+
+            </div>
+
+          </div>
+
+
+          <div class="profile-stats">
+
+            <div class="profile-stat">
+
+              <strong id="postCount">
+                0
+              </strong>
+
+              <span>
+                Posts
+              </span>
+
+            </div>
+
+
+            <div
+              class="profile-stat"
+              onclick="showPage('followers')"
+            >
+
+              <strong>
+                0
+              </strong>
+
+              <span>
+                Followers
+              </span>
+
+            </div>
+
+
+            <div
+              class="profile-stat"
+              onclick="showPage('following')"
+            >
+
+              <strong>
+                0
+              </strong>
+
+              <span>
+                Following
+              </span>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="page-header">
+
+          <h2>
+            Your Posts
+          </h2>
+
+        </div>
+
+
+        <div id="profilePosts">
+
+          <div class="card">
+
+            <p>
+              Your posts will appear here.
+            </p>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- FOLLOWERS -->
+
+      <section id="followers" class="page">
+
+        <div class="page-header">
+
+          <h1>Followers</h1>
+
+          <p>
+            People following this account.
+          </p>
+
+        </div>
+
+
+        <div class="person-list">
+
+          <div class="person">
+
+            <div class="avatar">
+              👨
+            </div>
+
+            <div class="person-info">
+
+              <strong>
+                Alex
+              </strong>
+
+              <span>
+                Creator
+              </span>
+
+            </div>
+
+            <button
+              class="small-follow"
+              onclick="toggleFollow(this)"
+            >
+              Follow
+            </button>
+
+          </div>
+
+
+          <div class="person">
+
+            <div class="avatar">
+              👩
+            </div>
+
+            <div class="person-info">
+
+              <strong>
+                Maya
+              </strong>
+
+              <span>
+                Member
+              </span>
+
+            </div>
+
+            <button
+              class="small-follow"
+              onclick="toggleFollow(this)"
+            >
+              Follow
+            </button>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- FOLLOWING -->
+
+      <section id="following" class="page">
+
+        <div class="page-header">
+
+          <h1>Following</h1>
+
+          <p>
+            Accounts you follow.
+          </p>
+
+        </div>
+
+
+        <div class="person-list">
+
+          <div class="person">
+
+            <div class="avatar">
+              👨
+            </div>
+
+            <div class="person-info">
+
+              <strong>
+                Daniel
+              </strong>
+
+              <span>
+                Creator
+              </span>
+
+            </div>
+
+            <button
+              class="small-follow"
+              onclick="toggleFollow(this)"
+            >
+              Following
+            </button>
+
+          </div>
+
+        </div>
+
+      </section>
+
 
       <!-- ACCOUNT -->
 
-      <section
-        id="account"
-        class="page"
-      >
+      <section id="account" class="page">
 
         <div class="page-header">
 
@@ -1022,7 +1630,7 @@
         </div>
 
 
-        <div class="card account-card">
+        <div class="card">
 
           <button
             class="account-option"
@@ -1031,7 +1639,6 @@
             🔐 Sign In
           </button>
 
-
           <button
             class="account-option"
             onclick="showPage('signup')"
@@ -1039,6 +1646,12 @@
             👤 Create Account
           </button>
 
+          <button
+            class="account-option"
+            onclick="showPage('profile')"
+          >
+            👤 View Profile
+          </button>
 
           <button
             class="account-option"
@@ -1052,13 +1665,9 @@
       </section>
 
 
-
       <!-- SIGN IN -->
 
-      <section
-        id="signin"
-        class="page"
-      >
+      <section id="signin" class="page">
 
         <div class="page-header">
 
@@ -1073,20 +1682,17 @@
 
         <div class="card auth-card">
 
-
           <input
             id="signinEmail"
             type="email"
             placeholder="Email address"
           >
 
-
           <input
             id="signinPassword"
             type="password"
             placeholder="Password"
           >
-
 
           <button
             class="post-button"
@@ -1113,13 +1719,9 @@
       </section>
 
 
-
       <!-- SIGN UP -->
 
-      <section
-        id="signup"
-        class="page"
-      >
+      <section id="signup" class="page">
 
         <div class="page-header">
 
@@ -1134,13 +1736,11 @@
 
         <div class="card auth-card">
 
-
           <input
             id="signupName"
             type="text"
             placeholder="Full name"
           >
-
 
           <input
             id="signupEmail"
@@ -1148,13 +1748,11 @@
             placeholder="Email address"
           >
 
-
           <input
             id="signupPhone"
             type="tel"
             placeholder="Phone number"
           >
-
 
           <select id="signupCountry">
 
@@ -1184,20 +1782,17 @@
 
           </select>
 
-
           <input
             id="signupPassword"
             type="password"
             placeholder="Create password"
           >
 
-
           <input
             id="signupConfirmPassword"
             type="password"
             placeholder="Confirm password"
           >
-
 
           <button
             class="post-button"
@@ -1224,43 +1819,45 @@
       </section>
 
 
-
       <!-- SETTINGS -->
 
-      <section
-        id="settings"
-        class="page"
-      >
+      <section id="settings" class="page">
 
         <div class="page-header">
 
           <h1>Settings</h1>
 
           <p>
-            Privacy, security and account settings will be built here.
+            Privacy, security and account settings.
+          </p>
+
+        </div>
+
+
+        <div class="card">
+
+          <h3>
+            Privacy
+          </h3>
+
+          <p>
+            Privacy controls will be added later.
           </p>
 
         </div>
 
       </section>
 
-
     </main>
 
   </div>
 
 
-
-  <!-- =========================
-       MOBILE NAVIGATION
-  ========================= -->
+  <!-- MOBILE NAVIGATION -->
 
   <nav class="mobile-nav">
 
-
-    <button
-      onclick="showPage('home')"
-    >
+    <button onclick="showPage('home')">
 
       <span>🏠</span>
 
@@ -1269,9 +1866,7 @@
     </button>
 
 
-    <button
-      onclick="showPage('explore')"
-    >
+    <button onclick="showPage('explore')">
 
       <span>🔎</span>
 
@@ -1280,9 +1875,7 @@
     </button>
 
 
-    <button
-      onclick="openPost()"
-    >
+    <button onclick="openPost()">
 
       <span>➕</span>
 
@@ -1291,9 +1884,7 @@
     </button>
 
 
-    <button
-      onclick="showPage('shorts')"
-    >
+    <button onclick="showPage('shorts')">
 
       <span>🎬</span>
 
@@ -1302,9 +1893,7 @@
     </button>
 
 
-    <button
-      onclick="openAccount()"
-    >
+    <button onclick="openAccount()">
 
       <span>👤</span>
 
@@ -1315,23 +1904,16 @@
   </nav>
 
 
-
-  <!-- =========================
-       JAVASCRIPT
-  ========================= -->
-
   <script>
 
-
     /* =========================
-       PAGE NAVIGATION
+       NAVIGATION
     ========================= */
 
     function showPage(pageId) {
 
       const pages =
         document.querySelectorAll(".page");
-
 
       pages.forEach(function(page) {
 
@@ -1343,7 +1925,6 @@
       const selectedPage =
         document.getElementById(pageId);
 
-
       if (selectedPage) {
 
         selectedPage.classList.add("active");
@@ -1354,11 +1935,9 @@
       const navButtons =
         document.querySelectorAll(".nav-button");
 
-
       navButtons.forEach(function(button) {
 
         button.classList.remove("active");
-
 
         if (button.dataset.page === pageId) {
 
@@ -1377,23 +1956,314 @@
     }
 
 
-
     /* =========================
        POST
     ========================= */
 
-    function openPost() {
+    let postCount = 0;
+
+
+    function createPost() {
+
+      const text =
+        document
+          .getElementById("postText")
+          .value
+          .trim();
+
+
+      if (!text) {
+
+        alert("Write something before posting.");
+
+        return;
+
+      }
+
+
+      const feed =
+        document.getElementById("feed");
+
+
+      const post =
+        document.createElement("article");
+
+      post.className = "post";
+
+
+      post.innerHTML = `
+
+        <div class="post-header">
+
+          <div class="avatar">
+            👤
+          </div>
+
+          <div>
+
+            <div class="post-user">
+              You
+            </div>
+
+            <div class="post-time">
+              Just now
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="post-content">
+          ${escapeHtml(text)}
+        </div>
+
+
+        <div class="post-actions">
+
+          <button onclick="likePost(this)">
+            ❤️ <span>0</span>
+          </button>
+
+          <button onclick="commentPost()">
+            💬 <span>0</span>
+          </button>
+
+          <button onclick="sharePost()">
+            🔄 Share
+          </button>
+
+          <button onclick="savePost(this)">
+            🔖 Save
+          </button>
+
+        </div>
+
+      `;
+
+
+      feed.prepend(post);
+
+
+      document.getElementById("postText").value = "";
+
+
+      postCount++;
+
+
+      document.getElementById("postCount").textContent =
+        postCount;
+
+
+      alert("Post created successfully.");
+
+    }
+
+
+    function escapeHtml(text) {
+
+      const div =
+        document.createElement("div");
+
+      div.textContent = text;
+
+      return div.innerHTML;
+
+    }
+
+
+    function addPostMedia() {
 
       alert(
-        "The Post and Camera system will be added in Stage 3."
+        "Photo and video uploading will be added in the Camera stage."
       );
 
     }
 
 
+    function openPost() {
+
+      showPage("home");
+
+      document
+        .getElementById("postText")
+        .focus();
+
+    }
+
 
     /* =========================
-       HEADER BUTTONS
+       LIKES
+    ========================= */
+
+    function likePost(button) {
+
+      const number =
+        button.querySelector("span");
+
+      let count =
+        Number(number.textContent);
+
+
+      if (button.dataset.liked === "true") {
+
+        count--;
+
+        button.dataset.liked = "false";
+
+        button.innerHTML =
+          `❤️ <span>${count}</span>`;
+
+      } else {
+
+        count++;
+
+        button.dataset.liked = "true";
+
+        button.innerHTML =
+          `❤️ <span>${count}</span>`;
+
+      }
+
+    }
+
+
+    /* =========================
+       COMMENTS
+    ========================= */
+
+    function commentPost() {
+
+      const comment =
+        prompt("Write your comment:");
+
+      if (!comment) {
+
+        return;
+
+      }
+
+      alert(
+        "Comment added: " + comment
+      );
+
+    }
+
+
+    /* =========================
+       SHARE
+    ========================= */
+
+    function sharePost() {
+
+      alert(
+        "Share options will be expanded later."
+      );
+
+    }
+
+
+    /* =========================
+       SAVE
+    ========================= */
+
+    function savePost(button) {
+
+      if (button.dataset.saved === "true") {
+
+        button.dataset.saved = "false";
+
+        button.innerHTML = "🔖 Save";
+
+        alert("Post removed from saved items.");
+
+      } else {
+
+        button.dataset.saved = "true";
+
+        button.innerHTML = "🔖 Saved";
+
+        alert("Post saved.");
+
+      }
+
+    }
+
+
+    /* =========================
+       STORIES
+    ========================= */
+
+    function createStory() {
+
+      alert(
+        "Story camera and media uploading will be added in the Camera stage."
+      );
+
+    }
+
+
+    function openStory(name) {
+
+      alert(
+        name + "'s story will open here."
+      );
+
+    }
+
+
+    /* =========================
+       PROFILE
+    ========================= */
+
+    function editProfile() {
+
+      const name =
+        prompt(
+          "Enter the name you want displayed:"
+        );
+
+
+      if (!name) {
+
+        return;
+
+      }
+
+
+      document.querySelector(
+        ".profile-name"
+      ).textContent = name;
+
+
+      alert("Profile updated.");
+
+    }
+
+
+    /* =========================
+       FOLLOW
+    ========================= */
+
+    function toggleFollow(button) {
+
+      if (
+        button.textContent.trim() === "Follow"
+      ) {
+
+        button.textContent = "Following";
+
+      } else {
+
+        button.textContent = "Follow";
+
+      }
+
+    }
+
+
+    /* =========================
+       HEADER
     ========================= */
 
     function openMessages() {
@@ -1417,41 +2287,44 @@
     }
 
 
-
     /* =========================
        SEARCH
     ========================= */
 
     function handleSearch(event) {
 
-      if (event.key === "Enter") {
+      if (event.key !== "Enter") {
 
-        const searchText =
-          document
-            .getElementById("globalSearch")
-            .value
-            .trim();
-
-
-        if (searchText === "") {
-
-          return;
-
-        }
-
-
-        alert(
-          "The full search system will be added in a later stage."
-        );
+        return;
 
       }
+
+
+      const searchText =
+        document
+          .getElementById("globalSearch")
+          .value
+          .trim();
+
+
+      if (!searchText) {
+
+        return;
+
+      }
+
+
+      alert(
+        "Search for \"" +
+        searchText +
+        "\" will be connected later."
+      );
 
     }
 
 
-
     /* =========================
-       CREATE ACCOUNT
+       AUTHENTICATION
     ========================= */
 
     function createAccount() {
@@ -1495,9 +2368,6 @@
           .value;
 
 
-
-      /* CHECK EMPTY FIELDS */
-
       if (
         !name ||
         !email ||
@@ -1516,9 +2386,6 @@
       }
 
 
-
-      /* CHECK PASSWORD */
-
       if (password.length < 6) {
 
         alert(
@@ -1529,9 +2396,6 @@
 
       }
 
-
-
-      /* CHECK PASSWORD MATCH */
 
       if (password !== confirmPassword) {
 
@@ -1544,20 +2408,12 @@
       }
 
 
-
-      /* TEMPORARY SUCCESS */
-
       alert(
-        "Your account information is valid. The secure database connection will be added next."
+        "Your account information is valid. Real account creation will be connected in the backend stage."
       );
 
     }
 
-
-
-    /* =========================
-       SIGN IN
-    ========================= */
 
     function signIn() {
 
@@ -1574,7 +2430,6 @@
           .value;
 
 
-
       if (!email || !password) {
 
         alert(
@@ -1586,17 +2441,15 @@
       }
 
 
-
       alert(
-        "The sign-in form is working. The secure database connection will be added next."
+        "The sign-in form is working. Real authentication will be connected in the backend stage."
       );
 
     }
 
 
-
     /* =========================
-       START PAGE
+       START
     ========================= */
 
     document.addEventListener(
