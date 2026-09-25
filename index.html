@@ -18,6 +18,14 @@ body{
   color:#171717;
 }
 
+button,input,textarea,select{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
 /* HEADER */
 header{
   height:64px;
@@ -65,7 +73,6 @@ header{
   background:#f1f2f4;
   padding:10px 13px;
   border-radius:20px;
-  cursor:pointer;
 }
 
 .header-buttons button:hover{
@@ -93,14 +100,9 @@ header{
   padding:12px 15px;
   margin-bottom:4px;
   border-radius:10px;
-  cursor:pointer;
-  font-size:15px;
 }
 
-.nav-button:hover{
-  background:#f1f2f4;
-}
-
+.nav-button:hover,
 .nav-button.active{
   background:#e9eaed;
   font-weight:bold;
@@ -125,8 +127,13 @@ main{
   background:#fff;
   border:1px solid #ddd;
   border-radius:16px;
-  padding:25px;
+  padding:22px;
   margin-bottom:20px;
+}
+
+.section-title{
+  font-size:24px;
+  margin-bottom:15px;
 }
 
 .hero{
@@ -141,30 +148,16 @@ main{
 
 .hero p{
   color:#666;
-  font-size:17px;
   line-height:1.6;
 }
 
-.section-title{
-  font-size:24px;
-  margin-bottom:15px;
-}
-
-/* ACCOUNT */
-.account-actions{
-  display:flex;
-  gap:12px;
-  flex-wrap:wrap;
-  margin-top:20px;
-}
-
+/* BUTTONS */
 .primary-btn,
-.secondary-btn{
+.secondary-btn,
+.danger-btn{
   border:none;
-  padding:12px 20px;
-  border-radius:10px;
-  cursor:pointer;
-  font-size:15px;
+  padding:11px 18px;
+  border-radius:9px;
 }
 
 .primary-btn{
@@ -174,25 +167,200 @@ main{
 
 .secondary-btn{
   background:#eee;
-  color:#111;
 }
 
-.primary-btn:hover{
-  opacity:.85;
+.danger-btn{
+  background:#eee;
+  color:#b00020;
 }
 
-.secondary-btn:hover{
+.button-row{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:15px;
+}
+
+/* STORIES */
+.stories{
+  display:flex;
+  gap:12px;
+  overflow-x:auto;
+  padding-bottom:5px;
+}
+
+.story{
+  min-width:90px;
+  height:125px;
+  border-radius:15px;
+  background:#e9eaed;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  align-items:center;
+  padding:10px;
+  font-size:13px;
+  text-align:center;
+}
+
+.story-avatar{
+  width:55px;
+  height:55px;
+  border-radius:50%;
+  background:#ccc;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:24px;
+  margin-bottom:8px;
+}
+
+/* CREATE POST */
+textarea{
+  width:100%;
+  min-height:100px;
+  border:1px solid #ddd;
+  border-radius:12px;
+  padding:14px;
+  resize:vertical;
+  outline:none;
+}
+
+/* POSTS */
+.post{
+  background:#fff;
+  border:1px solid #ddd;
+  border-radius:16px;
+  margin-bottom:20px;
+  overflow:hidden;
+}
+
+.post-header{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:16px;
+}
+
+.avatar{
+  width:45px;
+  height:45px;
+  border-radius:50%;
   background:#ddd;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:20px;
+}
+
+.post-content{
+  padding:0 16px 16px;
+  line-height:1.6;
+}
+
+.post-image{
+  width:100%;
+  height:250px;
+  background:#e6e7e9;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:50px;
+}
+
+.post-actions{
+  display:flex;
+  border-top:1px solid #eee;
+}
+
+.post-actions button{
+  flex:1;
+  border:none;
+  background:#fff;
+  padding:13px 5px;
+}
+
+.post-actions button:hover{
+  background:#f2f2f2;
+}
+
+.comment-box{
+  display:none;
+  padding:12px 16px;
+  border-top:1px solid #eee;
+}
+
+.comment-box input{
+  width:100%;
+  padding:10px;
+  border:1px solid #ddd;
+  border-radius:20px;
+}
+
+/* PROFILE */
+.profile-cover{
+  height:170px;
+  background:#e3e4e6;
+  border-radius:14px;
+}
+
+.profile-info{
+  display:flex;
+  align-items:center;
+  gap:18px;
+  margin-top:-35px;
+  padding:0 20px;
+}
+
+.profile-avatar{
+  width:90px;
+  height:90px;
+  border-radius:50%;
+  background:#ccc;
+  border:5px solid #fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:40px;
+}
+
+.profile-stats{
+  display:flex;
+  gap:30px;
+  margin-top:20px;
+}
+
+.stat{
+  text-align:center;
+}
+
+.stat strong{
+  display:block;
+  font-size:20px;
+}
+
+/* NOTIFICATIONS */
+.notification{
+  padding:15px;
+  border-bottom:1px solid #eee;
+}
+
+.notification:last-child{
+  border-bottom:none;
+}
+
+/* MESSAGES */
+.message{
+  display:flex;
+  gap:12px;
+  padding:15px 0;
+  border-bottom:1px solid #eee;
 }
 
 /* FORMS */
 .form-box{
   max-width:500px;
   margin:auto;
-}
-
-.form-box h2{
-  margin-bottom:20px;
 }
 
 .form-group{
@@ -213,42 +381,30 @@ main{
   border:1px solid #ccc;
   border-radius:9px;
   outline:none;
-  font-size:15px;
-}
-
-.form-group input:focus,
-.form-group select:focus{
-  border-color:#111;
 }
 
 .form-link{
   margin-top:15px;
   text-align:center;
-  color:#555;
 }
 
 .form-link button{
   border:none;
   background:none;
-  cursor:pointer;
   font-weight:bold;
 }
 
-/* PLACEHOLDER */
 .placeholder{
   text-align:center;
   padding:60px 20px;
 }
 
-.placeholder h2{
-  margin-bottom:10px;
-}
-
 .placeholder p{
   color:#666;
+  margin-top:10px;
 }
 
-/* MOBILE NAV */
+/* MOBILE */
 .mobile-nav{
   display:none;
   position:fixed;
@@ -267,11 +423,9 @@ main{
   border:none;
   background:none;
   font-size:12px;
-  cursor:pointer;
-  padding:8px;
+  padding:7px;
 }
 
-/* RESPONSIVE */
 @media(max-width:800px){
 
   header{
@@ -307,13 +461,20 @@ main{
   .hero h1{
     font-size:28px;
   }
+
+  .profile-info{
+    padding:0 5px;
+  }
+
+  .profile-stats{
+    gap:15px;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<!-- HEADER -->
 <header>
 
   <div class="logo">X</div>
@@ -322,525 +483,771 @@ main{
     <input
       id="searchInput"
       type="search"
-      placeholder="Search..."
+      placeholder="Search people, posts and more..."
       onkeydown="handleSearch(event)"
     >
   </div>
 
   <div class="header-buttons">
-    <button onclick="openMessages()">💬</button>
-    <button onclick="openNotifications()">🔔</button>
-    <button onclick="openAccount()">👤</button>
+    <button onclick="showPage('messages')">💬</button>
+    <button onclick="showPage('notifications')">🔔</button>
+    <button onclick="showPage('profile')">👤</button>
   </div>
 
 </header>
 
 
-<!-- SIDEBAR -->
 <nav class="sidebar">
 
   <button class="nav-button active" onclick="showPage('home',this)">🏠 Home</button>
-
   <button class="nav-button" onclick="showPage('explore',this)">🔎 Explore</button>
-
   <button class="nav-button" onclick="showPage('shorts',this)">🎬 Shorts</button>
-
   <button class="nav-button" onclick="showPage('videos',this)">▶️ Videos</button>
-
   <button class="nav-button" onclick="showPage('music',this)">🎵 Music</button>
-
   <button class="nav-button" onclick="showPage('templates',this)">✨ Templates</button>
-
   <button class="nav-button" onclick="showPage('marketplace',this)">🛍️ Marketplace</button>
-
   <button class="nav-button" onclick="showPage('nearby',this)">📍 Nearby</button>
-
   <button class="nav-button" onclick="showPage('transport',this)">🚗 Transport</button>
-
   <button class="nav-button" onclick="showPage('businesses',this)">🏢 Businesses</button>
-
   <button class="nav-button" onclick="showPage('services',this)">🛠️ Services</button>
-
   <button class="nav-button" onclick="showPage('messages',this)">💬 Messages</button>
-
   <button class="nav-button" onclick="showPage('notifications',this)">🔔 Notifications</button>
-
-  <button class="nav-button" onclick="showPage('account',this)">👤 Account</button>
-
-  <button class="nav-button" onclick="showPage('settings',this)">⚙️ Settings</button>
+  <button class="nav-button" onclick="showPage('profile',this)">👤 Profile</button>
+  <button class="nav-button" onclick="showPage('account',this)">⚙️ Account</button>
+  <button class="nav-button" onclick="showPage('settings',this)">🔒 Settings</button>
 
 </nav>
 
 
-<!-- MAIN -->
 <main>
 
-  <!-- HOME -->
-  <section id="home" class="page active">
+<!-- HOME -->
+<section id="home" class="page active">
 
-    <div class="card hero">
+  <div class="card hero">
 
-      <h1>Welcome</h1>
+    <h1>Welcome</h1>
 
-      <p>
-        Your marketplace, social network, entertainment,
-        business and services platform.
-      </p>
+    <p>
+      Connect with people, share your ideas,
+      discover content and explore your community.
+    </p>
 
-      <div class="account-actions">
+  </div>
 
-        <button
-          class="primary-btn"
-          onclick="showPage('signup')"
-        >
-          Create Account
+
+  <!-- STORIES -->
+
+  <div class="card">
+
+    <h2 class="section-title">Stories</h2>
+
+    <div class="stories">
+
+      <div class="story">
+        <div class="story-avatar">➕</div>
+        Add Story
+      </div>
+
+      <div class="story">
+        <div class="story-avatar">👤</div>
+        Friend
+      </div>
+
+      <div class="story">
+        <div class="story-avatar">👩</div>
+        Creator
+      </div>
+
+      <div class="story">
+        <div class="story-avatar">👨</div>
+        Business
+      </div>
+
+      <div class="story">
+        <div class="story-avatar">🎵</div>
+        Artist
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- CREATE POST -->
+
+  <div class="card">
+
+    <h2 class="section-title">Create Post</h2>
+
+    <textarea
+      id="postText"
+      placeholder="What's on your mind?"
+    ></textarea>
+
+    <div class="button-row">
+
+      <button
+        class="primary-btn"
+        onclick="createPost()"
+      >
+        Post
+      </button>
+
+      <button
+        class="secondary-btn"
+        onclick="addPostPhoto()"
+      >
+        📷 Photo
+      </button>
+
+      <button
+        class="secondary-btn"
+        onclick="addPostVideo()"
+      >
+        🎥 Video
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- FEED -->
+
+  <div id="feed">
+
+    <article class="post">
+
+      <div class="post-header">
+
+        <div class="avatar">👤</div>
+
+        <div>
+          <strong>RockyX Creator</strong>
+          <div style="color:#777;font-size:13px;">
+            Just now
+          </div>
+        </div>
+
+      </div>
+
+      <div class="post-content">
+
+        Welcome to the RockyX social community.
+
+      </div>
+
+      <div class="post-image">
+        🌍
+      </div>
+
+      <div class="post-actions">
+
+        <button onclick="likePost(this)">
+          ❤️ Like
         </button>
 
-        <button
-          class="secondary-btn"
-          onclick="showPage('signin')"
-        >
-          Sign In
+        <button onclick="toggleComments(this)">
+          💬 Comment
         </button>
+
+        <button onclick="sharePost()">
+          🔗 Share
+        </button>
+
+        <button onclick="savePost(this)">
+          🔖 Save
+        </button>
+
+      </div>
+
+      <div class="comment-box">
+
+        <input
+          type="text"
+          placeholder="Write a comment..."
+          onkeydown="submitComment(event)"
+        >
+
+      </div>
+
+    </article>
+
+
+    <article class="post">
+
+      <div class="post-header">
+
+        <div class="avatar">🎵</div>
+
+        <div>
+          <strong>Music Creator</strong>
+          <div style="color:#777;font-size:13px;">
+            1 hour ago
+          </div>
+        </div>
+
+      </div>
+
+      <div class="post-content">
+
+        New content is coming soon. Stay connected.
+
+      </div>
+
+      <div class="post-actions">
+
+        <button onclick="likePost(this)">
+          ❤️ Like
+        </button>
+
+        <button onclick="toggleComments(this)">
+          💬 Comment
+        </button>
+
+        <button onclick="sharePost()">
+          🔗 Share
+        </button>
+
+        <button onclick="savePost(this)">
+          🔖 Save
+        </button>
+
+      </div>
+
+      <div class="comment-box">
+
+        <input
+          type="text"
+          placeholder="Write a comment..."
+          onkeydown="submitComment(event)"
+        >
+
+      </div>
+
+    </article>
+
+  </div>
+
+</section>
+
+
+<!-- EXPLORE -->
+<section id="explore" class="page">
+
+  <div class="card">
+
+    <h2 class="section-title">Explore</h2>
+
+    <p>
+      Discover people, creators, posts, businesses and content.
+    </p>
+
+  </div>
+
+</section>
+
+
+<!-- SHORTS -->
+<section id="shorts" class="page">
+
+  <div class="card placeholder">
+
+    <h2>Shorts</h2>
+
+    <p>
+      Short videos will be built in Stage 3.
+    </p>
+
+  </div>
+
+</section>
+
+
+<!-- VIDEOS -->
+<section id="videos" class="page">
+
+  <div class="card placeholder">
+
+    <h2>Videos</h2>
+
+    <p>
+      Long videos will be built in Stage 3.
+    </p>
+
+  </div>
+
+</section>
+
+
+<!-- MUSIC -->
+<section id="music" class="page">
+
+  <div class="card placeholder">
+
+    <h2>Music</h2>
+
+    <p>
+      Music features will be built in Stage 3.
+    </p>
+
+  </div>
+
+</section>
+
+
+<!-- TEMPLATES -->
+<section id="templates" class="page">
+
+  <div class="card placeholder">
+
+    <h2>Templates</h2>
+
+    <p>
+      Templates will be built in Stage 5.
+    </p>
+
+  </div>
+
+</section>
+
+
+<!-- MARKETPLACE -->
+<section id="marketplace" class="page">
+
+  <div class="card placeholder">
+
+    <h2>Marketplace</h2>
+
+    <p>
+      Marketplace features will be built in Stage 6.
+    </p>
+
+  </div>
+
+</section>
+
+
+<!-- NEARBY -->
+<section id="nearby" class="page">
+
+  <div class="card placeholder">
+
+    <h2>Nearby</h2>
+
+    <p>
+      Nearby features will be built in Stage 8.
+    </p>
+
+  </div>
+
+</section>
+
+
+<!-- TRANSPORT -->
+<section id="transport" class="page">
+
+  <div class="card placeholder">
+
+    <h2>Transport</h2>
+
+    <p>
+      Transport features will be built in Stage 7.
+    </p>
+
+  </div>
+
+</section>
+
+
+<!-- BUSINESSES -->
+<section id="businesses" class="page">
+
+  <div class="card placeholder">
+
+    <h2>Businesses</h2>
+
+    <p>
+      Business features will be built in Stage 7.
+    </p>
+
+  </div>
+
+</section>
+
+
+<!-- SERVICES -->
+<section id="services" class="page">
+
+  <div class="card placeholder">
+
+    <h2>Services</h2>
+
+    <p>
+      Service features will be built in Stage 7.
+    </p>
+
+  </div>
+
+</section>
+
+
+<!-- MESSAGES -->
+<section id="messages" class="page">
+
+  <div class="card">
+
+    <h2 class="section-title">Messages</h2>
+
+    <div class="message">
+
+      <div class="avatar">👤</div>
+
+      <div>
+        <strong>Friend</strong>
+        <p>Welcome to your messages.</p>
+      </div>
+
+    </div>
+
+    <div class="message">
+
+      <div class="avatar">🎵</div>
+
+      <div>
+        <strong>Creator</strong>
+        <p>Your conversations will appear here.</p>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- NOTIFICATIONS -->
+<section id="notifications" class="page">
+
+  <div class="card">
+
+    <h2 class="section-title">Notifications</h2>
+
+    <div class="notification">
+      ❤️ Someone liked your post.
+    </div>
+
+    <div class="notification">
+      👤 Someone started following you.
+    </div>
+
+    <div class="notification">
+      💬 You have a new comment.
+    </div>
+
+    <div class="notification">
+      🔔 Welcome to RockyX.
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- PROFILE -->
+<section id="profile" class="page">
+
+  <div class="card">
+
+    <div class="profile-cover"></div>
+
+    <div class="profile-info">
+
+      <div class="profile-avatar">
+        👤
+      </div>
+
+      <div>
+
+        <h2>Your Profile</h2>
+
+        <p style="color:#666;">
+          Welcome to your RockyX profile.
+        </p>
 
       </div>
 
     </div>
 
-    <div class="card">
-
-      <h2 class="section-title">Explore</h2>
-
-      <p>
-        Discover products, videos, music, businesses,
-        services and more.
-      </p>
-
-    </div>
-
-  </section>
-
-
-  <!-- EXPLORE -->
-  <section id="explore" class="page">
-
-    <div class="card placeholder">
-
-      <h2>Explore</h2>
-
-      <p>
-        Discovery features will be added in a future stage.
-      </p>
-
-    </div>
-
-  </section>
-
-
-  <!-- SHORTS -->
-  <section id="shorts" class="page">
-
-    <div class="card placeholder">
-
-      <h2>Shorts</h2>
-
-      <p>
-        Short videos will be built in the Camera & Content stage.
-      </p>
-
-    </div>
-
-  </section>
-
-
-  <!-- VIDEOS -->
-  <section id="videos" class="page">
-
-    <div class="card placeholder">
-
-      <h2>Videos</h2>
-
-      <p>
-        Long-form video features will be added later.
-      </p>
-
-    </div>
-
-  </section>
-
-
-  <!-- MUSIC -->
-  <section id="music" class="page">
-
-    <div class="card placeholder">
-
-      <h2>Music</h2>
-
-      <p>
-        Music and artist features will be added later.
-      </p>
-
-    </div>
-
-  </section>
-
-
-  <!-- TEMPLATES -->
-  <section id="templates" class="page">
-
-    <div class="card placeholder">
-
-      <h2>Templates</h2>
-
-      <p>
-        Creator templates will be built in the Templates stage.
-      </p>
-
-    </div>
-
-  </section>
-
-
-  <!-- MARKETPLACE -->
-  <section id="marketplace" class="page">
-
-    <div class="card placeholder">
-
-      <h2>Marketplace</h2>
-
-      <p>
-        Products, sellers, shopping and orders will be added later.
-      </p>
-
-    </div>
-
-  </section>
-
-
-  <!-- NEARBY -->
-  <section id="nearby" class="page">
-
-    <div class="card placeholder">
-
-      <h2>Nearby</h2>
-
-      <p>
-        Nearby discovery and maps will be built in the Navigation stage.
-      </p>
-
-    </div>
-
-  </section>
-
-
-  <!-- TRANSPORT -->
-  <section id="transport" class="page">
-
-    <div class="card placeholder">
-
-      <h2>Transport</h2>
-
-      <p>
-        Transport providers and bookings will be added later.
-      </p>
-
-    </div>
-
-  </section>
-
-
-  <!-- BUSINESSES -->
-  <section id="businesses" class="page">
-
-    <div class="card placeholder">
-
-      <h2>Businesses</h2>
-
-      <p>
-        Business profiles and discovery will be added later.
-      </p>
-
-    </div>
-
-  </section>
-
-
-  <!-- SERVICES -->
-  <section id="services" class="page">
-
-    <div class="card placeholder">
-
-      <h2>Services</h2>
-
-      <p>
-        Service providers and bookings will be added later.
-      </p>
-
-    </div>
-
-  </section>
-
-
-  <!-- MESSAGES -->
-  <section id="messages" class="page">
-
-    <div class="card placeholder">
-
-      <h2>Messages</h2>
-
-      <p>
-        Messaging will be built in the Social stage.
-      </p>
-
-    </div>
-
-  </section>
-
-
-  <!-- NOTIFICATIONS -->
-  <section id="notifications" class="page">
-
-    <div class="card placeholder">
-
-      <h2>Notifications</h2>
-
-      <p>
-        Notifications will be connected later.
-      </p>
-
-    </div>
-
-  </section>
-
-
-  <!-- ACCOUNT -->
-  <section id="account" class="page">
-
-    <div class="card">
-
-      <h2 class="section-title">Your Account</h2>
-
-      <p>
-        Manage your account and sign-in options.
-      </p>
-
-      <div class="account-actions">
-
-        <button
-          class="primary-btn"
-          onclick="showPage('signin')"
-        >
-          Sign In
-        </button>
-
-        <button
-          class="secondary-btn"
-          onclick="showPage('signup')"
-        >
-          Create Account
-        </button>
-
+    <div class="profile-stats">
+
+      <div class="stat">
+        <strong id="postCount">0</strong>
+        Posts
+      </div>
+
+      <div class="stat">
+        <strong id="followerCount">0</strong>
+        Followers
+      </div>
+
+      <div class="stat">
+        <strong id="followingCount">0</strong>
+        Following
       </div>
 
     </div>
 
-  </section>
+    <div class="button-row">
+
+      <button
+        class="primary-btn"
+        onclick="editProfile()"
+      >
+        Edit Profile
+      </button>
+
+      <button
+        class="secondary-btn"
+        onclick="followProfile()"
+      >
+        Follow
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
 
 
-  <!-- SIGN IN -->
-  <section id="signin" class="page">
+<!-- ACCOUNT -->
+<section id="account" class="page">
 
-    <div class="card form-box">
+  <div class="card">
 
-      <h2>Sign In</h2>
+    <h2 class="section-title">Account</h2>
 
-      <form onsubmit="signIn(event)">
+    <p>
+      Manage your account.
+    </p>
 
-        <div class="form-group">
+    <div class="button-row">
 
-          <label>Email</label>
+      <button
+        class="primary-btn"
+        onclick="showPage('signin')"
+      >
+        Sign In
+      </button>
 
-          <input
-            id="signinEmail"
-            type="email"
-            required
-            placeholder="Enter your email"
-          >
+      <button
+        class="secondary-btn"
+        onclick="showPage('signup')"
+      >
+        Create Account
+      </button>
 
-        </div>
+    </div>
 
-        <div class="form-group">
+  </div>
 
-          <label>Password</label>
+</section>
 
-          <input
-            id="signinPassword"
-            type="password"
-            required
-            placeholder="Enter your password"
-          >
 
-        </div>
+<!-- SIGN IN -->
+<section id="signin" class="page">
 
-        <button
-          class="primary-btn"
-          type="submit"
+  <div class="card form-box">
+
+    <h2>Sign In</h2>
+
+    <form onsubmit="signIn(event)">
+
+      <div class="form-group">
+
+        <label>Email</label>
+
+        <input
+          id="signinEmail"
+          type="email"
+          required
+          placeholder="Enter your email"
         >
-          Sign In
-        </button>
-
-      </form>
-
-      <div class="form-link">
-
-        Don't have an account?
-
-        <button onclick="showPage('signup')">
-          Create one
-        </button>
 
       </div>
 
-    </div>
+      <div class="form-group">
 
-  </section>
+        <label>Password</label>
 
-
-  <!-- SIGN UP -->
-  <section id="signup" class="page">
-
-    <div class="card form-box">
-
-      <h2>Create Account</h2>
-
-      <form onsubmit="createAccount(event)">
-
-        <div class="form-group">
-
-          <label>Full Name</label>
-
-          <input
-            id="signupName"
-            type="text"
-            required
-            placeholder="Enter your full name"
-          >
-
-        </div>
-
-        <div class="form-group">
-
-          <label>Email</label>
-
-          <input
-            id="signupEmail"
-            type="email"
-            required
-            placeholder="Enter your email"
-          >
-
-        </div>
-
-        <div class="form-group">
-
-          <label>Phone</label>
-
-          <input
-            id="signupPhone"
-            type="tel"
-            placeholder="Enter your phone number"
-          >
-
-        </div>
-
-        <div class="form-group">
-
-          <label>Country</label>
-
-          <select id="signupCountry" required>
-
-            <option value="">Select country</option>
-
-            <option>Ghana</option>
-            <option>Nigeria</option>
-            <option>United Kingdom</option>
-            <option>United States</option>
-            <option>Canada</option>
-            <option>South Africa</option>
-            <option>Kenya</option>
-            <option>Other</option>
-
-          </select>
-
-        </div>
-
-        <div class="form-group">
-
-          <label>Password</label>
-
-          <input
-            id="signupPassword"
-            type="password"
-            required
-            minlength="6"
-            placeholder="Create a password"
-          >
-
-        </div>
-
-        <div class="form-group">
-
-          <label>Confirm Password</label>
-
-          <input
-            id="signupConfirmPassword"
-            type="password"
-            required
-            minlength="6"
-            placeholder="Confirm your password"
-          >
-
-        </div>
-
-        <button
-          class="primary-btn"
-          type="submit"
+        <input
+          id="signinPassword"
+          type="password"
+          required
+          placeholder="Enter your password"
         >
-          Create Account
-        </button>
-
-      </form>
-
-      <div class="form-link">
-
-        Already have an account?
-
-        <button onclick="showPage('signin')">
-          Sign in
-        </button>
 
       </div>
 
+      <button
+        class="primary-btn"
+        type="submit"
+      >
+        Sign In
+      </button>
+
+    </form>
+
+    <div class="form-link">
+
+      Don't have an account?
+
+      <button onclick="showPage('signup')">
+        Create one
+      </button>
+
     </div>
 
-  </section>
+  </div>
+
+</section>
 
 
-  <!-- SETTINGS -->
-  <section id="settings" class="page">
+<!-- SIGN UP -->
+<section id="signup" class="page">
 
-    <div class="card">
+  <div class="card form-box">
 
-      <h2 class="section-title">Settings</h2>
+    <h2>Create Account</h2>
 
-      <p>
-        Account, privacy, security and platform settings
-        will be developed in later stages.
-      </p>
+    <form onsubmit="createAccount(event)">
+
+      <div class="form-group">
+
+        <label>Full Name</label>
+
+        <input
+          id="signupName"
+          type="text"
+          required
+          placeholder="Enter your full name"
+        >
+
+      </div>
+
+      <div class="form-group">
+
+        <label>Email</label>
+
+        <input
+          id="signupEmail"
+          type="email"
+          required
+          placeholder="Enter your email"
+        >
+
+      </div>
+
+      <div class="form-group">
+
+        <label>Phone</label>
+
+        <input
+          id="signupPhone"
+          type="tel"
+          placeholder="Enter your phone number"
+        >
+
+      </div>
+
+      <div class="form-group">
+
+        <label>Country</label>
+
+        <select id="signupCountry" required>
+
+          <option value="">Select country</option>
+          <option>Ghana</option>
+          <option>Nigeria</option>
+          <option>Kenya</option>
+          <option>South Africa</option>
+          <option>United Kingdom</option>
+          <option>United States</option>
+          <option>Canada</option>
+          <option>Other</option>
+
+        </select>
+
+      </div>
+
+      <div class="form-group">
+
+        <label>Password</label>
+
+        <input
+          id="signupPassword"
+          type="password"
+          minlength="6"
+          required
+          placeholder="Create a password"
+        >
+
+      </div>
+
+      <div class="form-group">
+
+        <label>Confirm Password</label>
+
+        <input
+          id="signupConfirmPassword"
+          type="password"
+          minlength="6"
+          required
+          placeholder="Confirm your password"
+        >
+
+      </div>
+
+      <button
+        class="primary-btn"
+        type="submit"
+      >
+        Create Account
+      </button>
+
+    </form>
+
+    <div class="form-link">
+
+      Already have an account?
+
+      <button onclick="showPage('signin')">
+        Sign in
+      </button>
 
     </div>
 
-  </section>
+  </div>
+
+</section>
+
+
+<!-- SETTINGS -->
+<section id="settings" class="page">
+
+  <div class="card">
+
+    <h2 class="section-title">Settings</h2>
+
+    <p>
+      Privacy, security and account settings will be expanded later.
+    </p>
+
+  </div>
+
+</section>
 
 </main>
 
@@ -864,8 +1271,8 @@ main{
     💬<br>Messages
   </button>
 
-  <button onclick="showPage('account')">
-    👤<br>Account
+  <button onclick="showPage('profile')">
+    👤<br>Profile
   </button>
 
 </nav>
@@ -873,25 +1280,21 @@ main{
 
 <script>
 
-/* PAGE NAVIGATION */
+/* NAVIGATION */
 
-function showPage(pageId, button){
+function showPage(pageId,button){
 
-  const pages = document.querySelectorAll(".page");
-
-  pages.forEach(page => {
+  document.querySelectorAll(".page").forEach(page=>{
     page.classList.remove("active");
   });
 
-  const selectedPage = document.getElementById(pageId);
+  const page=document.getElementById(pageId);
 
-  if(selectedPage){
-    selectedPage.classList.add("active");
+  if(page){
+    page.classList.add("active");
   }
 
-  const navButtons = document.querySelectorAll(".nav-button");
-
-  navButtons.forEach(btn => {
+  document.querySelectorAll(".nav-button").forEach(btn=>{
     btn.classList.remove("active");
   });
 
@@ -906,71 +1309,292 @@ function showPage(pageId, button){
 }
 
 
-/* HEADER BUTTONS */
-
-function openMessages(){
-
-  showPage("messages");
-
-}
-
-function openNotifications(){
-
-  showPage("notifications");
-
-}
-
-function openAccount(){
-
-  showPage("account");
-
-}
-
-
 /* SEARCH */
 
 function handleSearch(event){
 
-  if(event.key === "Enter"){
+  if(event.key==="Enter"){
 
-    const value = event.target.value.trim();
+    const value=event.target.value.trim();
 
-    if(value === ""){
-
+    if(!value){
       alert("Please enter something to search.");
-
       return;
-
     }
 
     alert(
-      "Search system will be connected in a future stage."
+      "Search is ready for the social frontend. Full search will be connected later."
     );
+  }
+}
+
+
+/* CREATE POST */
+
+function createPost(){
+
+  const text=document.getElementById("postText").value.trim();
+
+  if(!text){
+
+    alert("Write something before posting.");
+
+    return;
+  }
+
+  const post=document.createElement("article");
+
+  post.className="post";
+
+  post.innerHTML=`
+
+    <div class="post-header">
+
+      <div class="avatar">👤</div>
+
+      <div>
+        <strong>You</strong>
+        <div style="color:#777;font-size:13px;">
+          Just now
+        </div>
+      </div>
+
+    </div>
+
+    <div class="post-content">
+      ${escapeHTML(text)}
+    </div>
+
+    <div class="post-actions">
+
+      <button onclick="likePost(this)">
+        ❤️ Like
+      </button>
+
+      <button onclick="toggleComments(this)">
+        💬 Comment
+      </button>
+
+      <button onclick="sharePost()">
+        🔗 Share
+      </button>
+
+      <button onclick="savePost(this)">
+        🔖 Save
+      </button>
+
+    </div>
+
+    <div class="comment-box">
+
+      <input
+        type="text"
+        placeholder="Write a comment..."
+        onkeydown="submitComment(event)"
+      >
+
+    </div>
+  `;
+
+  document.getElementById("feed").prepend(post);
+
+  document.getElementById("postText").value="";
+
+  updatePostCount();
+
+  alert("Post created on the frontend.");
+
+}
+
+
+/* LIKE */
+
+function likePost(button){
+
+  if(button.dataset.liked==="true"){
+
+    button.textContent="❤️ Like";
+
+    button.dataset.liked="false";
+
+  }else{
+
+    button.textContent="❤️ Liked";
+
+    button.dataset.liked="true";
+
+  }
+}
+
+
+/* COMMENTS */
+
+function toggleComments(button){
+
+  const post=button.closest(".post");
+
+  const box=post.querySelector(".comment-box");
+
+  if(box.style.display==="block"){
+
+    box.style.display="none";
+
+  }else{
+
+    box.style.display="block";
 
   }
 
 }
 
 
-/* CREATE ACCOUNT */
+function submitComment(event){
+
+  if(event.key!=="Enter"){
+    return;
+  }
+
+  const input=event.target;
+
+  const text=input.value.trim();
+
+  if(!text){
+    return;
+  }
+
+  const comment=document.createElement("div");
+
+  comment.style.padding="8px 16px";
+  comment.style.borderTop="1px solid #eee";
+
+  comment.innerHTML=
+    "<strong>You:</strong> "+escapeHTML(text);
+
+  input.closest(".comment-box").appendChild(comment);
+
+  input.value="";
+
+}
+
+
+/* SHARE */
+
+function sharePost(){
+
+  alert(
+    "Sharing will be connected to the full social system later."
+  );
+
+}
+
+
+/* SAVE */
+
+function savePost(button){
+
+  if(button.dataset.saved==="true"){
+
+    button.textContent="🔖 Save";
+    button.dataset.saved="false";
+
+  }else{
+
+    button.textContent="🔖 Saved";
+    button.dataset.saved="true";
+
+  }
+
+}
+
+
+/* STORIES */
+
+function addStory(){
+
+  alert(
+    "Story creation will be expanded with the Camera & Content stage."
+  );
+
+}
+
+
+/* PHOTO / VIDEO */
+
+function addPostPhoto(){
+
+  alert(
+    "Photo posting will be connected when the camera and media system is built."
+  );
+
+}
+
+
+function addPostVideo(){
+
+  alert(
+    "Video posting will be connected when the camera and media system is built."
+  );
+
+}
+
+
+/* PROFILE */
+
+function editProfile(){
+
+  const name=prompt(
+    "Enter the name you want displayed on your profile:"
+  );
+
+  if(name && name.trim()){
+
+    document.querySelector("#profile h2").textContent=
+      name.trim();
+
+  }
+
+}
+
+
+function followProfile(){
+
+  const count=document.getElementById("followingCount");
+
+  let value=parseInt(count.textContent)||0;
+
+  value++;
+
+  count.textContent=value;
+
+  alert("Profile followed on the frontend.");
+
+}
+
+
+/* POST COUNT */
+
+function updatePostCount(){
+
+  const posts=document.querySelectorAll("#feed .post").length;
+
+  document.getElementById("postCount").textContent=posts;
+
+}
+
+
+/* AUTH FORMS */
 
 function createAccount(event){
 
   event.preventDefault();
 
-  const name =
-    document.getElementById("signupName").value.trim();
-
-  const email =
-    document.getElementById("signupEmail").value.trim();
-
-  const password =
+  const password=
     document.getElementById("signupPassword").value;
 
-  const confirmPassword =
+  const confirm=
     document.getElementById("signupConfirmPassword").value;
 
-  if(password !== confirmPassword){
+  if(password!==confirm){
 
     alert("Passwords do not match.");
 
@@ -978,40 +1602,16 @@ function createAccount(event){
 
   }
 
-  if(password.length < 6){
-
-    alert("Password must contain at least 6 characters.");
-
-    return;
-
-  }
-
   alert(
-    "Account form completed successfully. Real account creation will be connected when we build the backend."
+    "Account form completed. Real account creation will be connected during the backend stage."
   );
 
 }
 
 
-/* SIGN IN */
-
 function signIn(event){
 
   event.preventDefault();
-
-  const email =
-    document.getElementById("signinEmail").value.trim();
-
-  const password =
-    document.getElementById("signinPassword").value;
-
-  if(email === "" || password === ""){
-
-    alert("Please enter your email and password.");
-
-    return;
-
-  }
 
   alert(
     "Sign-in form is working. Real authentication will be connected during the backend stage."
@@ -1020,9 +1620,24 @@ function signIn(event){
 }
 
 
+/* SECURITY */
+
+function escapeHTML(value){
+
+  const div=document.createElement("div");
+
+  div.textContent=value;
+
+  return div.innerHTML;
+
+}
+
+
 /* START */
 
-document.addEventListener("DOMContentLoaded", function(){
+document.addEventListener("DOMContentLoaded",()=>{
+
+  updatePostCount();
 
   showPage("home");
 
