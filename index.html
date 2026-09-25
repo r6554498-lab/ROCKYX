@@ -16,20 +16,17 @@ height:62px;background:#fff;border-bottom:1px solid #ddd;
 display:flex;align-items:center;gap:10px;padding:0 14px;
 position:sticky;top:0;z-index:10
 }
-
 .logo{font-weight:800;font-size:21px}
 .search{flex:1}
 .search input{
 width:100%;padding:10px 15px;border:1px solid #ddd;
 border-radius:25px;background:#f5f5f5
 }
-
 .actions{display:flex;gap:5px}
 .icon{
 border:0;background:#f1f2f4;border-radius:50%;
 width:40px;height:40px
 }
-
 .bell{position:relative}
 .badge{
 display:none;position:absolute;right:-2px;top:-3px;
@@ -39,19 +36,17 @@ padding:2px 6px;font-size:11px
 .badge.show{display:block}
 
 .side{
-position:fixed;top:62px;bottom:0;width:235px;
+position:fixed;top:62px;bottom:0;width:240px;
 background:#fff;border-right:1px solid #ddd;
 padding:9px;overflow:auto
 }
-
 .nav{
 width:100%;border:0;background:transparent;
 text-align:left;padding:10px;border-radius:8px;margin:1px 0
 }
 .nav:hover{background:#eef0f3}
 
-.main{margin-left:235px;padding:18px}
-
+.main{margin-left:240px;padding:18px}
 .page{display:none;max-width:1100px;margin:auto}
 .page.active{display:block}
 
@@ -62,7 +57,7 @@ border-radius:13px;padding:15px;margin-bottom:14px
 
 .grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
 gap:14px
 }
 
@@ -74,168 +69,93 @@ background:#111;color:#fff;margin:3px
 .red{background:#c62828}
 .gray{background:#e8eaed;color:#111}
 .green{background:#18863b}
-
-.money{font-size:27px;font-weight:800}
+.orange{background:#d97706}
 
 .stats{
 display:grid;
 grid-template-columns:repeat(4,1fr);
 gap:10px
 }
-
 .stat{
 background:#f0f1f3;
-padding:13px;
-border-radius:10px;
-text-align:center
+padding:13px;border-radius:10px;text-align:center
 }
-
 .stat b{
-display:block;
-font-size:20px;
-margin-bottom:4px
+display:block;font-size:20px;margin-bottom:4px
 }
 
 .storyrow{
-display:flex;
-gap:13px;
-overflow:auto
+display:flex;gap:13px;overflow:auto
 }
-
-.story{
-text-align:center;
-min-width:65px
-}
-
+.story{text-align:center;min-width:65px}
 .circle{
-width:58px;
-height:58px;
-border-radius:50%;
-background:#ddd;
-display:flex;
-align-items:center;
-justify-content:center;
-margin:auto
+width:58px;height:58px;border-radius:50%;
+background:#ddd;display:flex;align-items:center;
+justify-content:center;margin:auto
 }
 
 .post img,.post video{
-max-width:100%;
-margin-top:8px
+max-width:100%;margin-top:8px
 }
 
-.video,.product,.template{
-background:#fff;
-border:1px solid #ddd;
-border-radius:12px;
-overflow:hidden
+.video,.product,.service,.business,.booking{
+background:#fff;border:1px solid #ddd;
+border-radius:12px;overflow:hidden
 }
-
-.video video{
-width:100%;
-display:block;
-background:#111
-}
-
+.video video{width:100%;display:block;background:#111}
 .inside{padding:12px}
 
 .video-actions{
-display:flex;
-flex-wrap:wrap;
-gap:3px
+display:flex;flex-wrap:wrap;gap:3px
 }
 
 .check{
-display:flex;
-gap:7px;
-align-items:center;
-margin:7px 0
+display:flex;gap:7px;align-items:center;margin:7px 0
 }
-
 .check input{width:auto}
 
 .map{
-height:300px;
-border-radius:12px;
+height:300px;border-radius:12px;
 background:#dfe7d9;
-display:flex;
-align-items:center;
-justify-content:center
+display:flex;align-items:center;
+justify-content:center;
+color:#555
 }
 
-.notify{margin:9px 0}
-.notify.unread{background:#eef5ff}
-
-.dot{
+.tag{
 display:inline-block;
-width:8px;
-height:8px;
-background:#246bdb;
-border-radius:50%;
-margin-right:5px
+padding:5px 8px;
+background:#eef2ff;
+border-radius:15px;
+font-size:12px;
+margin:3px
 }
+
+.rating{
+font-weight:bold
+}
+
+input,textarea,select{
+width:100%;padding:10px;
+border:1px solid #ccc;
+border-radius:8px;margin:5px 0 10px
+}
+textarea{min-height:90px}
 
 .mobile{display:none}
 
-input,textarea,select{
-width:100%;
-padding:10px;
-border:1px solid #ccc;
-border-radius:8px;
-margin:5px 0 10px
-}
-
-textarea{min-height:90px}
-
-.modal{
-display:none;
-position:fixed;
-inset:0;
-background:#0008;
-align-items:center;
-justify-content:center;
-z-index:30
-}
-
-.modal.show{display:flex}
-
-.box{
-background:#fff;
-border-radius:14px;
-padding:20px;
-width:min(500px,94%)
-}
-
 @media(max-width:800px){
 .side{display:none}
-
-.main{
-margin:0;
-padding:12px 12px 70px
-}
-
+.main{margin:0;padding:12px 12px 70px}
 .mobile{
-display:flex;
-position:fixed;
-bottom:0;
-left:0;
-right:0;
-height:58px;
-background:#fff;
-border-top:1px solid #ddd;
-z-index:20;
-justify-content:space-around
+display:flex;position:fixed;bottom:0;left:0;right:0;
+height:58px;background:#fff;border-top:1px solid #ddd;
+z-index:20;justify-content:space-around
 }
-
 .mobile button{
-border:0;
-background:none;
-font-size:11px
+border:0;background:none;font-size:11px
 }
-
-.stats{
-grid-template-columns:repeat(2,1fr)
-}
-
+.stats{grid-template-columns:repeat(2,1fr)}
 .logo{font-size:18px}
 .header{padding:0 8px}
 }
@@ -250,9 +170,9 @@ grid-template-columns:repeat(2,1fr)
 
 <div class="search">
 <input
-id="search"
-placeholder="Search products, businesses, services, people, videos, songs and sounds..."
-onkeydown="if(event.key==='Enter')searchAll()">
+id="globalSearch"
+placeholder="Search products, businesses, services, people, videos..."
+onkeydown="if(event.key==='Enter')globalSearch()">
 </div>
 
 <div class="actions">
@@ -270,9 +190,12 @@ onkeydown="if(event.key==='Enter')searchAll()">
 
 </header>
 
+
 <aside class="side" id="sidebar"></aside>
 
+
 <main class="main">
+
 
 <!-- HOME -->
 
@@ -280,7 +203,9 @@ onkeydown="if(event.key==='Enter')searchAll()">
 
 <div class="card">
 <h1>Welcome</h1>
-<p>Marketplace, social, entertainment and services in one place.</p>
+<p>
+Marketplace, social, entertainment and services in one place.
+</p>
 </div>
 
 <div class="card">
@@ -315,18 +240,23 @@ Kevin
 
 <div class="card">
 
-<h3>Create post</h3>
+<h3>Create Post</h3>
 
 <textarea
 id="postText"
-placeholder="What's happening?"></textarea>
+placeholder="What's happening?">
+</textarea>
 
 <input
 id="postFile"
 type="file"
 accept="image/*,video/*">
 
-<button class="btn blue" onclick="post()">Post</button>
+<button
+class="btn blue"
+onclick="post()">
+Post
+</button>
 
 </div>
 
@@ -344,12 +274,12 @@ accept="image/*,video/*">
 <h2>Explore</h2>
 
 <input
-id="explore"
-placeholder="Search">
+id="exploreSearch"
+placeholder="Search RockyX">
 
 <button
 class="btn blue"
-onclick="searchAll()">
+onclick="globalSearch()">
 Search
 </button>
 
@@ -374,25 +304,13 @@ type="file"
 accept="video/*">
 
 <label class="check">
-
-<input
-id="shortDL"
-type="checkbox"
-checked>
-
+<input id="shortDL" type="checkbox" checked>
 Allow viewers to download
-
 </label>
 
 <label class="check">
-
-<input
-id="shortWM"
-type="checkbox"
-checked>
-
+<input id="shortWM" type="checkbox" checked>
 Allow RockyX watermark on downloads
-
 </label>
 
 <button
@@ -408,7 +326,7 @@ Publish Short
 </section>
 
 
-<!-- LONG VIDEOS -->
+<!-- VIDEOS -->
 
 <section id="videos" class="page">
 
@@ -422,25 +340,13 @@ type="file"
 accept="video/*">
 
 <label class="check">
-
-<input
-id="longDL"
-type="checkbox"
-checked>
-
+<input id="longDL" type="checkbox" checked>
 Allow viewers to download
-
 </label>
 
 <label class="check">
-
-<input
-id="longWM"
-type="checkbox"
-checked>
-
+<input id="longWM" type="checkbox" checked>
 Allow RockyX watermark on downloads
-
 </label>
 
 <button
@@ -465,15 +371,13 @@ Publish Video
 <h2>Live</h2>
 
 <p>
-Live streaming interface prepared for the backend stage.
+Live streaming will connect to the backend later.
 </p>
 
 <button
 class="btn red"
 onclick="alert('Live streaming will be connected during the backend stage.')">
-
 🔴 Start Live
-
 </button>
 
 </div>
@@ -494,25 +398,15 @@ onclick="alert('Live streaming will be connected during the backend stage.')">
 <div class="grid">
 
 <div class="card">
-
 <h3>Sample Artist</h3>
 <p>Sample Song</p>
-
-<button class="btn">
-▶ Play
-</button>
-
+<button class="btn">▶ Play</button>
 </div>
 
 <div class="card">
-
 <h3>Sample Artist</h3>
 <p>Another Song</p>
-
-<button class="btn">
-▶ Play
-</button>
-
+<button class="btn">▶ Play</button>
 </div>
 
 </div>
@@ -562,46 +456,32 @@ style="width:100%;max-height:450px;background:#111">
 
 <canvas id="canvas" hidden></canvas>
 
-<button
-class="btn blue"
-onclick="startCam()">
+<button class="btn blue" onclick="startCam()">
 Start Camera
 </button>
 
-<button
-class="btn"
-onclick="takePhoto()">
+<button class="btn" onclick="takePhoto()">
 Take Photo
 </button>
 
-<button
-class="btn"
-onclick="record()">
+<button class="btn" onclick="record()">
 Start Recording
 </button>
 
-<button
-class="btn red"
-onclick="stopRecord()">
+<button class="btn red" onclick="stopRecord()">
 Stop Recording
 </button>
 
-<button
-class="btn gray"
-onclick="stopCam()">
+<button class="btn gray" onclick="stopCam()">
 Stop Camera
 </button>
 
-<select
-id="camFilter"
-onchange="camFilter()">
-
+<select id="camFilter" onchange="camFilter()">
 <option>normal</option>
 <option>grayscale</option>
 <option>sepia</option>
 <option>brightness</option>
 <option>contrast</option>
-
 </select>
 
 <div id="cameraOut"></div>
@@ -626,17 +506,14 @@ multiple
 accept="image/*,video/*"
 onchange="media()">
 
-<div
-id="mediaOut"
-class="grid">
-</div>
+<div id="mediaOut" class="grid"></div>
 
 </div>
 
 </section>
 
 
-<!-- CREATOR STUDIO -->
+<!-- CREATOR -->
 
 <section id="creator" class="page">
 
@@ -646,39 +523,27 @@ class="grid">
 
 <div class="grid">
 
-<button
-class="btn"
-onclick="show('camera')">
+<button class="btn" onclick="show('camera')">
 Camera
 </button>
 
-<button
-class="btn"
-onclick="show('photo')">
+<button class="btn" onclick="show('photo')">
 Photo Editor
 </button>
 
-<button
-class="btn"
-onclick="show('videoedit')">
+<button class="btn" onclick="show('videoedit')">
 Video Editor
 </button>
 
-<button
-class="btn"
-onclick="show('ai')">
+<button class="btn" onclick="show('ai')">
 AI Studio
 </button>
 
-<button
-class="btn"
-onclick="show('createTemplate')">
+<button class="btn" onclick="show('createTemplate')">
 Create Template
 </button>
 
-<button
-class="btn"
-onclick="show('sounds')">
+<button class="btn" onclick="show('sounds')">
 Add Sound
 </button>
 
@@ -689,7 +554,7 @@ Add Sound
 </section>
 
 
-<!-- PHOTO EDITOR -->
+<!-- PHOTO -->
 
 <section id="photo" class="page">
 
@@ -709,27 +574,19 @@ style="max-width:100%;display:none">
 
 <div>
 
-<button
-class="btn"
-onclick="photoFilter('none')">
+<button class="btn" onclick="photoFilter('none')">
 Normal
 </button>
 
-<button
-class="btn"
-onclick="photoFilter('grayscale')">
+<button class="btn" onclick="photoFilter('grayscale')">
 Grayscale
 </button>
 
-<button
-class="btn"
-onclick="photoFilter('sepia')">
+<button class="btn" onclick="photoFilter('sepia')">
 Sepia
 </button>
 
-<button
-class="btn"
-onclick="photoFilter('brightness')">
+<button class="btn" onclick="photoFilter('brightness')">
 Bright
 </button>
 
@@ -772,14 +629,8 @@ style="width:100%;background:#111">
 </div>
 
 <label class="check">
-
-<input
-id="editDL"
-type="checkbox"
-checked>
-
+<input id="editDL" type="checkbox" checked>
 Allow downloads
-
 </label>
 
 <button class="btn gray">
@@ -811,10 +662,6 @@ Publish Short
 
 <h2>AI Studio</h2>
 
-<p>
-Frontend controls ready for future AI services.
-</p>
-
 <div class="grid">
 
 <button class="btn">AI Captions</button>
@@ -841,15 +688,11 @@ Frontend controls ready for future AI services.
 
 <h2>Template Marketplace</h2>
 
-<input
-placeholder="Search templates">
+<input placeholder="Search templates">
 
 </div>
 
-<div
-id="templateList"
-class="grid">
-</div>
+<div id="templateList" class="grid"></div>
 
 </section>
 
@@ -867,12 +710,10 @@ id="tplName"
 placeholder="Template name">
 
 <select id="tplType">
-
 <option>Video</option>
 <option>Photo</option>
 <option>Social</option>
 <option>Business</option>
-
 </select>
 
 <textarea
@@ -881,21 +722,14 @@ placeholder="Description">
 </textarea>
 
 <label class="check">
-
-<input
-id="tplPremium"
-type="checkbox">
-
+<input id="tplPremium" type="checkbox">
 Request premium review
-
 </label>
 
 <button
 class="btn blue"
 onclick="createTpl()">
-
 Save Template
-
 </button>
 
 </div>
@@ -928,31 +762,16 @@ Save Template
 
 <div class="stats">
 
-<div class="stat">
-<b>1</b>
-Creator
-</div>
-
-<div class="stat">
-<b>2</b>
-Rising Creator
-</div>
-
-<div class="stat">
-<b>3</b>
-Premium Creator
-</div>
-
-<div class="stat">
-<b>4</b>
-RockyX Partner
-</div>
+<div class="stat"><b>1</b>Creator</div>
+<div class="stat"><b>2</b>Rising Creator</div>
+<div class="stat"><b>3</b>Premium Creator</div>
+<div class="stat"><b>4</b>RockyX Partner</div>
 
 </div>
 
 <p>
-Eligibility will later use configurable performance,
-originality, copyright and community requirements.
+Creator levels and premium eligibility will use configurable
+performance, originality, copyright and community requirements.
 </p>
 
 </div>
@@ -970,25 +789,10 @@ originality, copyright and community requirements.
 
 <div class="stats">
 
-<div class="stat">
-<b>0</b>
-Uses
-</div>
-
-<div class="stat">
-<b>0</b>
-Saves
-</div>
-
-<div class="stat">
-<b>0</b>
-Shares
-</div>
-
-<div class="stat">
-<b>GHS 0</b>
-Earnings
-</div>
+<div class="stat"><b>0</b>Uses</div>
+<div class="stat"><b>0</b>Saves</div>
+<div class="stat"><b>0</b>Shares</div>
+<div class="stat"><b>GHS 0</b>Earnings</div>
 
 </div>
 
@@ -1007,25 +811,10 @@ Earnings
 
 <div class="stats">
 
-<div class="stat">
-<b>GHS 0</b>
-Available
-</div>
-
-<div class="stat">
-<b>GHS 0</b>
-Pending
-</div>
-
-<div class="stat">
-<b>GHS 0</b>
-Lifetime
-</div>
-
-<div class="stat">
-<b>0</b>
-Payouts
-</div>
+<div class="stat"><b>GHS 0</b>Available</div>
+<div class="stat"><b>GHS 0</b>Pending</div>
+<div class="stat"><b>GHS 0</b>Lifetime</div>
+<div class="stat"><b>0</b>Payouts</div>
 
 </div>
 
@@ -1062,10 +851,7 @@ onchange="renderProducts()">
 
 </div>
 
-<div
-id="products"
-class="grid">
-</div>
+<div id="products" class="grid"></div>
 
 </section>
 
@@ -1104,12 +890,10 @@ Checkout
 <h2>Checkout</h2>
 
 <select id="country">
-
 <option>Ghana</option>
 <option>Nigeria</option>
 <option>United Kingdom</option>
 <option>United States</option>
-
 </select>
 
 <input
@@ -1130,9 +914,7 @@ placeholder="Delivery address">
 <button
 class="btn blue"
 onclick="preparePayment()">
-
 Proceed to Payment
-
 </button>
 
 </div>
@@ -1151,26 +933,20 @@ Proceed to Payment
 <div id="paymentOut"></div>
 
 <select id="method">
-
 <option>Mobile Money</option>
 <option>Bank Card</option>
 <option>Bank Transfer</option>
-
 </select>
 
-<div class="card">
-
-Demo payment only.
-Real payment providers will be connected during the backend stage.
-
-</div>
+<p>
+Demo payment only. Real payment providers will be connected
+during the backend stage.
+</p>
 
 <button
 class="btn blue"
 onclick="pay()">
-
 Complete Demo Payment
-
 </button>
 
 </div>
@@ -1216,9 +992,7 @@ Complete Demo Payment
 
 <h2>Seller Tools</h2>
 
-<input
-id="newName"
-placeholder="Product name">
+<input id="newName" placeholder="Product name">
 
 <textarea
 id="newDesc"
@@ -1230,17 +1004,10 @@ id="newPrice"
 type="number"
 placeholder="Price">
 
-<input
-id="newImage"
-type="file"
-accept="image/*">
-
 <button
 class="btn blue"
 onclick="sellerProduct()">
-
 Add Product
-
 </button>
 
 </div>
@@ -1302,36 +1069,561 @@ GHS 0
 <button
 class="btn blue"
 onclick="payout()">
-
 Request Demo Payout
-
 </button>
 
 </div>
 
+<div class="card" id="payoutOut"></div>
+
+</section>
+
+
+<!-- STAGE 7: BUSINESSES -->
+
+<section id="businesses" class="page">
+
+<div class="card">
+
+<h2>Businesses</h2>
+
+<p>
+Discover businesses, restaurants, hotels, shops and other
+business accounts on RockyX.
+</p>
+
+<input
+id="businessSearch"
+placeholder="Search businesses"
+oninput="renderBusinesses()">
+
+<select
+id="businessType"
+onchange="renderBusinesses()">
+
+<option>All</option>
+<option>Shop</option>
+<option>Restaurant</option>
+<option>Hotel</option>
+<option>Beauty</option>
+<option>Technology</option>
+<option>Other</option>
+
+</select>
+
+</div>
+
 <div
-class="card"
-id="payoutOut">
+id="businessList"
+class="grid">
 </div>
 
 </section>
 
 
-<!-- NEARBY -->
+<!-- BUSINESS PROFILE -->
 
-<section id="nearby" class="page">
+<section id="businessProfile" class="page">
+
+<div id="businessProfileOut"></div>
+
+</section>
+
+
+<!-- CREATE BUSINESS -->
+
+<section id="createBusiness" class="page">
 
 <div class="card">
 
-<h2>Nearby</h2>
+<h2>Create Business Profile</h2>
+
+<input
+id="bizName"
+placeholder="Business name">
+
+<select id="bizType">
+
+<option>Shop</option>
+<option>Restaurant</option>
+<option>Hotel</option>
+<option>Beauty</option>
+<option>Technology</option>
+<option>Other</option>
+
+</select>
+
+<textarea
+id="bizDescription"
+placeholder="Business description">
+</textarea>
+
+<input
+id="bizPhone"
+placeholder="Business phone">
+
+<input
+id="bizLocation"
+placeholder="Business location">
+
+<input
+id="bizHours"
+placeholder="Opening hours">
+
+<label class="check">
+
+<input
+id="bizVerified"
+type="checkbox">
+
+Request verification later
+
+</label>
+
+<button
+class="btn blue"
+onclick="createBusiness()">
+
+Create Business
+
+</button>
+
+</div>
+
+</section>
+
+
+<!-- BUSINESS TOOLS -->
+
+<section id="businessTools" class="page">
+
+<div class="card">
+
+<h2>Business Tools</h2>
+
+<div class="grid">
+
+<button
+class="btn"
+onclick="show('createBusiness')">
+Business Profile
+</button>
+
+<button
+class="btn"
+onclick="show('businessProducts')">
+Products
+</button>
+
+<button
+class="btn"
+onclick="show('businessServices')">
+Services
+</button>
+
+<button
+class="btn"
+onclick="show('businessBookings')">
+Bookings
+</button>
+
+<button
+class="btn"
+onclick="show('businessEarnings')">
+Earnings
+</button>
+
+<button
+class="btn"
+onclick="show('businessAnalytics')">
+Analytics
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- BUSINESS PRODUCTS -->
+
+<section id="businessProducts" class="page">
+
+<div class="card">
+
+<h2>Business Products</h2>
+
+<input
+id="bpName"
+placeholder="Product name">
+
+<input
+id="bpPrice"
+type="number"
+placeholder="Price">
+
+<button
+class="btn blue"
+onclick="addBusinessProduct()">
+
+Add Product
+
+</button>
+
+<div id="bpList"></div>
+
+</div>
+
+</section>
+
+
+<!-- BUSINESS SERVICES -->
+
+<section id="businessServices" class="page">
+
+<div class="card">
+
+<h2>Business Services</h2>
+
+<input
+id="bsName"
+placeholder="Service name">
+
+<input
+id="bsPrice"
+type="number"
+placeholder="Starting price">
+
+<textarea
+id="bsDescription"
+placeholder="Service description">
+</textarea>
+
+<button
+class="btn blue"
+onclick="addBusinessService()">
+
+Add Service
+
+</button>
+
+<div id="bsList"></div>
+
+</div>
+
+</section>
+
+
+<!-- STAGE 7: SERVICES -->
+
+<section id="services" class="page">
+
+<div class="card">
+
+<h2>Services</h2>
 
 <p>
-Nearby discovery and maps will be connected in Stage 8.
+Find service providers and send booking or service requests.
 </p>
 
-<div class="map">
-Map area
+<input
+id="serviceSearch"
+placeholder="Search services"
+oninput="renderServices()">
+
+<select
+id="serviceCategory"
+onchange="renderServices()">
+
+<option>All</option>
+<option>Cleaning</option>
+<option>Plumbing</option>
+<option>Electrician</option>
+<option>Beauty</option>
+<option>Photography</option>
+<option>Repair</option>
+<option>Delivery</option>
+<option>Other</option>
+
+</select>
+
 </div>
+
+<div
+id="serviceList"
+class="grid">
+</div>
+
+</section>
+
+
+<!-- CREATE SERVICE -->
+
+<section id="createService" class="page">
+
+<div class="card">
+
+<h2>Create Service Listing</h2>
+
+<input
+id="providerName"
+placeholder="Provider or business name">
+
+<input
+id="providerService"
+placeholder="Service name">
+
+<select id="providerCategory">
+
+<option>Cleaning</option>
+<option>Plumbing</option>
+<option>Electrician</option>
+<option>Beauty</option>
+<option>Photography</option>
+<option>Repair</option>
+<option>Delivery</option>
+<option>Other</option>
+
+</select>
+
+<textarea
+id="providerDescription"
+placeholder="Describe the service">
+</textarea>
+
+<input
+id="providerPrice"
+type="number"
+placeholder="Starting price">
+
+<input
+id="providerLocation"
+placeholder="Service location">
+
+<input
+id="providerPhone"
+placeholder="Phone number">
+
+<button
+class="btn blue"
+onclick="createService()">
+
+Publish Service
+
+</button>
+
+</div>
+
+</section>
+
+
+<!-- PROVIDER TOOLS -->
+
+<section id="providerTools" class="page">
+
+<div class="card">
+
+<h2>Provider Tools</h2>
+
+<div class="grid">
+
+<button
+class="btn"
+onclick="show('createService')">
+Create Service
+</button>
+
+<button
+class="btn"
+onclick="show('providerBookings')">
+Bookings
+</button>
+
+<button
+class="btn"
+onclick="show('providerEarnings')">
+Earnings
+</button>
+
+<button
+class="btn"
+onclick="show('providerReviews')">
+Reviews
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- BOOKINGS -->
+
+<section id="bookings" class="page">
+
+<div class="card">
+
+<h2>My Bookings</h2>
+
+<div id="bookingList"></div>
+
+</div>
+
+</section>
+
+
+<!-- PROVIDER BOOKINGS -->
+
+<section id="providerBookings" class="page">
+
+<div class="card">
+
+<h2>Provider Bookings</h2>
+
+<div id="providerBookingList"></div>
+
+</div>
+
+</section>
+
+
+<!-- BUSINESS BOOKINGS -->
+
+<section id="businessBookings" class="page">
+
+<div class="card">
+
+<h2>Business Bookings</h2>
+
+<div id="businessBookingList"></div>
+
+</div>
+
+</section>
+
+
+<!-- PROVIDER EARNINGS -->
+
+<section id="providerEarnings" class="page">
+
+<div class="card">
+
+<h2>Provider Earnings</h2>
+
+<div class="stats">
+
+<div class="stat">
+<b id="providerGross">GHS 0</b>
+Gross
+</div>
+
+<div class="stat">
+<b id="providerCommission">GHS 0</b>
+Commission
+</div>
+
+<div class="stat">
+<b id="providerNet">GHS 0</b>
+Available
+</div>
+
+<div class="stat">
+<b>5%</b>
+Demo Commission
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- BUSINESS EARNINGS -->
+
+<section id="businessEarnings" class="page">
+
+<div class="card">
+
+<h2>Business Earnings</h2>
+
+<div class="stats">
+
+<div class="stat">
+<b id="businessGross">GHS 0</b>
+Gross
+</div>
+
+<div class="stat">
+<b id="businessCommission">GHS 0</b>
+Commission
+</div>
+
+<div class="stat">
+<b id="businessNet">GHS 0</b>
+Available
+</div>
+
+<div class="stat">
+<b>5%</b>
+Demo Commission
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- BUSINESS ANALYTICS -->
+
+<section id="businessAnalytics" class="page">
+
+<div class="card">
+
+<h2>Business Analytics</h2>
+
+<div class="stats">
+
+<div class="stat">
+<b id="bizViews">0</b>
+Profile Views
+</div>
+
+<div class="stat">
+<b id="bizOrders">0</b>
+Orders
+</div>
+
+<div class="stat">
+<b id="bizBookings">0</b>
+Bookings
+</div>
+
+<div class="stat">
+<b id="bizRevenue">GHS 0</b>
+Revenue
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- REVIEWS -->
+
+<section id="providerReviews" class="page">
+
+<div class="card">
+
+<h2>Reviews</h2>
+
+<div id="reviewList"></div>
 
 </div>
 
@@ -1346,7 +1638,12 @@ Map area
 
 <h2>Transport</h2>
 
-<select>
+<p>
+Transport providers can offer rides, delivery and other
+transport services.
+</p>
+
+<select id="transportType">
 
 <option>Taxi</option>
 <option>Ride-hailing</option>
@@ -1360,8 +1657,20 @@ Map area
 
 </select>
 
+<input
+id="transportLocation"
+placeholder="Pickup or service location">
+
+<button
+class="btn blue"
+onclick="requestTransport()">
+
+Request Transport
+
+</button>
+
 <div class="map">
-Transport map area
+Transport map area — Stage 8 navigation
 </div>
 
 </div>
@@ -1369,32 +1678,21 @@ Transport map area
 </section>
 
 
-<!-- BUSINESSES -->
+<!-- NEARBY -->
 
-<section id="businesses" class="page">
+<section id="nearby" class="page">
 
 <div class="card">
 
-<h2>Businesses</h2>
+<h2>Nearby</h2>
 
-<input
-placeholder="Search businesses">
+<p>
+Nearby discovery and real maps will be connected in Stage 8.
+</p>
 
+<div class="map">
+Nearby map area
 </div>
-
-</section>
-
-
-<!-- SERVICES -->
-
-<section id="services" class="page">
-
-<div class="card">
-
-<h2>Services</h2>
-
-<input
-placeholder="Search services">
 
 </div>
 
@@ -1459,25 +1757,10 @@ Clear All
 
 <div class="stats">
 
-<div class="stat">
-<b>0</b>
-Posts
-</div>
-
-<div class="stat">
-<b>0</b>
-Followers
-</div>
-
-<div class="stat">
-<b>0</b>
-Following
-</div>
-
-<div class="stat">
-<b>0</b>
-Likes
-</div>
+<div class="stat"><b>0</b>Posts</div>
+<div class="stat"><b>0</b>Followers</div>
+<div class="stat"><b>0</b>Following</div>
+<div class="stat"><b>0</b>Likes</div>
 
 </div>
 
@@ -1541,19 +1824,16 @@ Allow downloads by default
 <button
 class="btn blue"
 onclick="alert('Settings saved in this demo.')">
-
 Save Settings
-
 </button>
 
 </div>
 
 </section>
 
+
 </main>
 
-
-<!-- MOBILE NAVIGATION -->
 
 <nav class="mobile">
 
@@ -1597,6 +1877,7 @@ m=>({
 
 
 const nav=[
+
 ['home','🏠 Home'],
 ['explore','🔎 Explore'],
 ['shorts','🎬 Shorts'],
@@ -1616,6 +1897,7 @@ const nav=[
 ['program','🏆 Creator Program'],
 ['analytics','📊 Template Analytics'],
 ['creatorEarnings','💰 Creator Earnings'],
+
 ['market','🛍️ Marketplace'],
 ['cart','🛒 Cart'],
 ['checkout','💳 Checkout'],
@@ -1624,15 +1906,33 @@ const nav=[
 ['seller','🏪 Seller Tools'],
 ['sellerEarnings','💵 Seller Earnings'],
 ['payouts','💸 Payouts'],
-['nearby','📍 Nearby'],
-['transport','🚕 Transport'],
+
 ['businesses','🏢 Businesses'],
+['createBusiness','➕ Create Business'],
+['businessTools','⚙️ Business Tools'],
+['businessProducts','📦 Business Products'],
+['businessServices','🛠️ Business Services'],
+['businessBookings','📅 Business Bookings'],
+['businessEarnings','💰 Business Earnings'],
+['businessAnalytics','📊 Business Analytics'],
+
 ['services','🛠️ Services'],
+['createService','➕ Create Service'],
+['providerTools','⚙️ Provider Tools'],
+['bookings','📅 My Bookings'],
+['providerBookings','📋 Provider Bookings'],
+['providerEarnings','💵 Provider Earnings'],
+['providerReviews','⭐ Provider Reviews'],
+
+['transport','🚕 Transport'],
+['nearby','📍 Nearby'],
+
 ['messages','💬 Messages'],
 ['notifications','🔔 Notifications'],
 ['profile','👤 Profile'],
 ['account','⚙️ Account'],
 ['settings','🔐 Settings']
+
 ];
 
 
@@ -1653,33 +1953,96 @@ let tx=[];
 let payouts=[];
 let templates=[];
 let savedSounds=[];
-let currentPayment=null;
+
+let businesses=[
+{
+id:1,
+name:'Rocky Fashion Shop',
+type:'Shop',
+description:'Fashion and clothing store.',
+phone:'0240000000',
+location:'Accra',
+hours:'8:00 AM - 6:00 PM',
+verified:false,
+products:[],
+services:[],
+rating:4.5
+},
+{
+id:2,
+name:'Golden Taste Restaurant',
+type:'Restaurant',
+description:'Local and international meals.',
+phone:'0241111111',
+location:'Accra',
+hours:'10:00 AM - 10:00 PM',
+verified:false,
+products:[],
+services:[],
+rating:4.3
+}
+];
 
 
-let products=[
+let services=[
 
 {
 id:1,
-name:'Wireless Headphones',
-description:'Wireless headphones',
-price:250,
-cat:'Electronics'
+provider:'QuickFix Services',
+name:'Plumbing',
+category:'Plumbing',
+description:'Home plumbing and repairs.',
+price:150,
+location:'Accra',
+phone:'0242222222',
+rating:4.6
 },
 
 {
 id:2,
-name:'Classic T-Shirt',
-description:'Comfortable shirt',
-price:100,
-cat:'Fashion'
+provider:'Clean Home',
+name:'House Cleaning',
+category:'Cleaning',
+description:'Home and office cleaning.',
+price:200,
+location:'Accra',
+phone:'0243333333',
+rating:4.7
 },
 
 {
 id:3,
-name:'Bluetooth Speaker',
-description:'Portable speaker',
-price:350,
-cat:'Electronics'
+provider:'Beauty Point',
+name:'Beauty Services',
+category:'Beauty',
+description:'Beauty and personal care services.',
+price:120,
+location:'Accra',
+phone:'0244444444',
+rating:4.4
+}
+
+];
+
+
+let bookings=[];
+
+let businessProducts=[];
+
+let businessServices=[];
+
+let reviews=[
+
+{
+provider:'QuickFix Services',
+rating:5,
+text:'Good service.'
+},
+
+{
+provider:'Clean Home',
+rating:4,
+text:'Very professional.'
 }
 
 ];
@@ -1739,6 +2102,33 @@ renderTemplates();
 if(id==='sounds')
 renderSounds();
 
+if(id==='businesses')
+renderBusinesses();
+
+if(id==='services')
+renderServices();
+
+if(id==='bookings')
+renderBookings();
+
+if(id==='providerBookings')
+renderProviderBookings();
+
+if(id==='businessBookings')
+renderBusinessBookings();
+
+if(id==='providerEarnings')
+renderProviderEarnings();
+
+if(id==='businessEarnings')
+renderBusinessEarnings();
+
+if(id==='businessAnalytics')
+renderBusinessAnalytics();
+
+if(id==='providerReviews')
+renderReviews();
+
 }
 
 
@@ -1747,9 +2137,13 @@ function notify(title,message){
 notices.unshift({
 
 id:Date.now()+Math.random(),
+
 title:title,
+
 message:message,
+
 read:false,
+
 time:new Date().toLocaleString()
 
 });
@@ -1763,8 +2157,7 @@ function renderNotices(){
 
 let n=$('notices');
 
-if(!n)
-return;
+if(!n)return;
 
 n.innerHTML=notices.length?
 
@@ -1777,13 +2170,9 @@ ${x.read?'':'<span class="dot"></span>'}
 ${esc(x.title)}
 </h3>
 
-<p>
-${esc(x.message)}
-</p>
+<p>${esc(x.message)}</p>
 
-<small>
-${esc(x.time)}
-</small>
+<small>${esc(x.time)}</small>
 
 ${x.read?'':`
 
@@ -1792,9 +2181,7 @@ ${x.read?'':`
 <button
 class="btn gray"
 onclick="readNotice(${x.id})">
-
 Mark Read
-
 </button>
 
 `}
@@ -1807,15 +2194,11 @@ Mark Read
 
 '<div class="card">No notifications.</div>';
 
-
 let u=notices.filter(x=>!x.read).length;
 
 $('badge').textContent=u;
 
-$('badge').classList.toggle(
-'show',
-u>0
-);
+$('badge').classList.toggle('show',u>0);
 
 }
 
@@ -1824,8 +2207,7 @@ function readNotice(id){
 
 let n=notices.find(x=>x.id===id);
 
-if(n)
-n.read=true;
+if(n)n.read=true;
 
 renderNotices();
 
@@ -1872,7 +2254,6 @@ let u=URL.createObjectURL(f);
 media=f.type.startsWith('image')
 
 ?`<img src="${u}">`
-
 :`<video src="${u}" controls></video>`;
 
 }
@@ -1892,11 +2273,8 @@ ${media}
 <div>
 
 <button class="btn gray">❤️ Like</button>
-
 <button class="btn gray">💬 Comment</button>
-
 <button class="btn gray">↗ Share</button>
-
 <button class="btn gray">🔖 Save</button>
 
 </div>
@@ -1906,19 +2284,16 @@ ${media}
 );
 
 $('postText').value='';
-
 $('postFile').value='';
 
 }
 
 
-function searchAll(){
+function globalSearch(){
 
-let q=(
-$('search').value||
-$('explore').value||
-''
-).trim();
+let q=$('globalSearch').value||
+$('exploreSearch').value||
+'';
 
 show('explore');
 
@@ -1929,8 +2304,7 @@ $('results').innerHTML=
 <h2>Search Results</h2>
 
 <p>
-Demo results for
-<b>${esc(q||'everything')}</b>.
+Demo results for <b>${esc(q||'everything')}</b>.
 </p>
 
 </div>`;
@@ -1984,16 +2358,12 @@ $('cam').style.filter=
 
 v==='grayscale'
 ?'grayscale(100%)'
-
 :v==='sepia'
 ?'sepia(100%)'
-
 :v==='brightness'
 ?'brightness(140%)'
-
 :v==='contrast'
 ?'contrast(150%)'
-
 :'none';
 
 }
@@ -2002,25 +2372,17 @@ v==='grayscale'
 function takePhoto(){
 
 let v=$('cam');
-
 let c=$('canvas');
 
 if(!v.videoWidth)
 return alert('Start the camera first.');
 
 c.width=v.videoWidth;
-
 c.height=v.videoHeight;
 
-c.getContext('2d').drawImage(
-v,
-0,
-0
-);
+c.getContext('2d').drawImage(v,0,0);
 
-c.toBlob(
-
-b=>{
+c.toBlob(b=>{
 
 let u=URL.createObjectURL(b);
 
@@ -2030,9 +2392,7 @@ $('cameraOut').insertAdjacentHTML(
 
 `<div class="card">
 
-<img
-src="${u}"
-style="max-width:100%">
+<img src="${u}" style="max-width:100%">
 
 <br>
 
@@ -2040,20 +2400,14 @@ style="max-width:100%">
 class="btn blue"
 href="${u}"
 download="RockyX-photo.jpg">
-
 Download Photo
-
 </a>
 
 </div>`
 
 );
 
-},
-
-'image/jpeg'
-
-);
+},'image/jpeg');
 
 }
 
@@ -2067,17 +2421,13 @@ chunks=[];
 
 rec=new MediaRecorder(camStream);
 
-rec.ondataavailable=e=>
-chunks.push(e.data);
+rec.ondataavailable=e=>chunks.push(e.data);
 
 rec.onstop=()=>{
 
 let u=URL.createObjectURL(
 
-new Blob(
-chunks,
-{type:'video/webm'}
-)
+new Blob(chunks,{type:'video/webm'})
 
 );
 
@@ -2097,9 +2447,7 @@ style="width:100%">
 class="btn blue"
 href="${u}"
 download="RockyX-camera.webm">
-
 Download Video
-
 </a>
 
 </div>`
@@ -2117,10 +2465,7 @@ alert('Recording started.');
 
 function stopRecord(){
 
-if(
-rec &&
-rec.state!=='inactive'
-){
+if(rec&&rec.state!=='inactive'){
 
 rec.stop();
 
@@ -2133,8 +2478,7 @@ alert('Recording stopped.');
 
 function media(){
 
-[...$('mediaIn').files]
-.forEach(f=>{
+[...$('mediaIn').files].forEach(f=>{
 
 let u=URL.createObjectURL(f);
 
@@ -2146,11 +2490,8 @@ $('mediaOut').insertAdjacentHTML(
 
 ${
 f.type.startsWith('image')
-
 ?`<img src="${u}" style="width:100%">`
-
 :`<video src="${u}" controls style="width:100%"></video>`
-
 }
 
 </div>`
@@ -2169,36 +2510,23 @@ let f=$(short?'shortIn':'longIn').files[0];
 if(!f)
 return alert('Choose a video first.');
 
-let allow=
-$(short?'shortDL':'longDL').checked;
+let allow=$(short?'shortDL':'longDL').checked;
 
-let wm=
-$(short?'shortWM':'longWM').checked;
+let wm=$(short?'shortWM':'longWM').checked;
 
 let obj={
-
 id:Date.now(),
-
 name:f.name,
-
 url:URL.createObjectURL(f),
-
 allow:allow,
-
 wm:wm
-
 };
 
-(short?shorts:longs)
-.unshift(obj);
+(short?shorts:longs).unshift(obj);
 
 renderVideos();
 
-alert(
-short
-?'Short published.'
-:'Video published.'
-);
+alert(short?'Short published.':'Video published.');
 
 }
 
@@ -2217,56 +2545,32 @@ playsinline>
 
 <div class="inside">
 
-<b>
-${esc(v.name)}
-</b>
+<b>${esc(v.name)}</b>
 
 <div class="video-actions">
 
-<button class="btn gray">
-❤️ Like
-</button>
-
-<button class="btn gray">
-💬 Comment
-</button>
-
-<button class="btn gray">
-🔖 Save
-</button>
+<button class="btn gray">❤️ Like</button>
+<button class="btn gray">💬 Comment</button>
+<button class="btn gray">🔖 Save</button>
 
 ${
-v.allow
+v.allow?
 
-?`
-
-<a
+`<a
 class="btn blue"
 href="${v.url}"
 download="RockyX-${esc(v.name)}">
-
 ⬇ Download
-
-</a>
-
-`
+</a>`
 
 :''
-
 }
 
 </div>
 
 <small>
-
-${
-v.allow
-?'Downloads allowed'
-:'Downloads disabled'
-}
-
+${v.allow?'Downloads allowed':'Downloads disabled'}
 ${v.wm?' • watermark may apply':''}
-
 </small>
 
 </div>
@@ -2274,15 +2578,11 @@ ${v.wm?' • watermark may apply':''}
 </div>`;
 
 $('shortList').innerHTML=
-
 shorts.map(card).join('')||
-
 '<div class="card">No Shorts yet.</div>';
 
 $('longList').innerHTML=
-
 longs.map(card).join('')||
-
 '<div class="card">No long videos yet.</div>';
 
 }
@@ -2293,8 +2593,7 @@ function editPreview(){
 let f=$('editIn').files[0];
 
 if(f)
-$('editPrev').src=
-URL.createObjectURL(f);
+$('editPrev').src=URL.createObjectURL(f);
 
 }
 
@@ -2307,29 +2606,18 @@ if(!f)
 return alert('Choose a video first.');
 
 let o={
-
 id:Date.now(),
-
 name:f.name,
-
 url:URL.createObjectURL(f),
-
 allow:$('editDL').checked,
-
 wm:true
-
 };
 
-(short?shorts:longs)
-.unshift(o);
+(short?shorts:longs).unshift(o);
 
 renderVideos();
 
-alert(
-short
-?'Published as Short.'
-:'Published video.'
-);
+alert(short?'Published as Short.':'Published video.');
 
 }
 
@@ -2340,11 +2628,8 @@ let f=$('photoIn').files[0];
 
 if(f){
 
-$('photoPrev').src=
-URL.createObjectURL(f);
-
-$('photoPrev').style.display=
-'block';
+$('photoPrev').src=URL.createObjectURL(f);
+$('photoPrev').style.display='block';
 
 }
 
@@ -2357,13 +2642,10 @@ $('photoPrev').style.filter=
 
 v==='grayscale'
 ?'grayscale(100%)'
-
 :v==='sepia'
 ?'sepia(100%)'
-
 :v==='brightness'
 ?'brightness(140%)'
-
 :'none';
 
 }
@@ -2372,12 +2654,10 @@ v==='grayscale'
 function renderSounds(){
 
 let a=[
-
 'Original Sound',
 'Trending Beat',
 'Afrobeat Sample',
 'Creator Sound'
-
 ];
 
 $('soundList').innerHTML=
@@ -2391,24 +2671,17 @@ a.map(s=>
 <button
 class="btn gray"
 onclick="saveSound('${s}')">
-
 Save Sound
-
 </button>
 
 </div>`
 
 ).join('');
 
-
 $('savedSounds').innerHTML=
 
-savedSounds.map(x=>
-`<p>🔊 ${esc(x)}</p>`
-).join('')
-
+savedSounds.map(x=>`<p>🔊 ${esc(x)}</p>`).join('')
 ||
-
 'No saved sounds.';
 
 }
@@ -2434,15 +2707,10 @@ return alert('Enter a template name.');
 templates.push({
 
 id:Date.now(),
-
 name:n,
-
 type:$('tplType').value,
-
 desc:$('tplDesc').value,
-
 premium:$('tplPremium').checked,
-
 status:'Draft'
 
 });
@@ -2467,38 +2735,27 @@ if(my)
 
 my.innerHTML=
 
-templates.length
-
-?
+templates.length?
 
 templates.map(t=>
 
 `<div class="card">
 
-<h3>
-${esc(t.name)}
-</h3>
+<h3>${esc(t.name)}</h3>
 
-<p>
-${esc(t.type)} • ${t.status}
-</p>
+<p>${esc(t.type)} • ${t.status}</p>
 
 <button
 class="btn blue"
 onclick="publishTpl(${t.id})">
-
 Publish
-
 </button>
 
 </div>`
 
 ).join('')
 
-:
-
-'No templates yet.';
-
+:'No templates yet.';
 
 let l=$('templateList');
 
@@ -2507,12 +2764,10 @@ if(l)
 l.innerHTML=
 
 [
-
 'Modern Business',
 'Short Intro',
 'Music Promo',
 'Photo Story'
-
 ].map(n=>
 
 `<div class="template">
@@ -2554,21 +2809,45 @@ notify(
 }
 
 
+let products=[
+
+{
+id:1,
+name:'Wireless Headphones',
+description:'Wireless headphones',
+price:250,
+cat:'Electronics'
+},
+
+{
+id:2,
+name:'Classic T-Shirt',
+description:'Comfortable shirt',
+price:100,
+cat:'Fashion'
+},
+
+{
+id:3,
+name:'Bluetooth Speaker',
+description:'Portable speaker',
+price:350,
+cat:'Electronics'
+}
+
+];
+
+
 function renderProducts(){
 
-let q=(
-$('prodSearch').value||''
-).toLowerCase();
+let q=($('prodSearch').value||'').toLowerCase();
 
 let c=$('prodCat').value;
 
 let a=products.filter(
-
 p=>
-
 p.name.toLowerCase().includes(q)&&
 (c==='All'||p.cat===c)
-
 );
 
 $('products').innerHTML=
@@ -2584,33 +2863,23 @@ background:#eee;
 display:flex;
 align-items:center;
 justify-content:center">
-
 Product
-
 </div>
 
 <div class="inside">
 
-<h3>
-${esc(p.name)}
-</h3>
+<h3>${esc(p.name)}</h3>
 
-<p>
-${esc(p.description)}
-</p>
+<p>${esc(p.description)}</p>
 
-<b>
-GHS ${p.price.toFixed(2)}
-</b>
+<b>GHS ${p.price.toFixed(2)}</b>
 
 <br>
 
 <button
 class="btn blue"
 onclick="addCart(${p.id})">
-
 Add to Cart
-
 </button>
 
 </div>
@@ -2620,7 +2889,6 @@ Add to Cart
 ).join('')
 
 ||
-
 '<div class="card">No products found.</div>';
 
 }
@@ -2632,11 +2900,8 @@ let p=products.find(x=>x.id===id);
 
 let e=cart.find(x=>x.id===id);
 
-if(e)
-e.qty++;
-
-else
-cart.push({...p,qty:1});
+if(e)e.qty++;
+else cart.push({...p,qty:1});
 
 renderCart();
 
@@ -2652,23 +2917,18 @@ function renderCart(){
 
 let total=
 cart.reduce(
-(s,x)=>s+x.price*x.qty,
-0
+(s,x)=>s+x.price*x.qty,0
 );
 
 $('cartOut').innerHTML=
 
-cart.length
-
-?
+cart.length?
 
 cart.map(x=>
 
 `<div class="card">
 
-<b>
-${esc(x.name)}
-</b>
+<b>${esc(x.name)}</b>
 
 <p>
 GHS ${x.price.toFixed(2)} × ${x.qty}
@@ -2696,9 +2956,7 @@ Remove
 
 ).join('')
 
-:
-
-'Cart is empty.';
+:'Cart is empty.';
 
 $('cartTotal').textContent=
 'Total: GHS '+total.toFixed(2);
@@ -2726,8 +2984,7 @@ renderCart();
 
 function removeCart(id){
 
-cart=
-cart.filter(x=>x.id!==id);
+cart=cart.filter(x=>x.id!==id);
 
 renderCart();
 
@@ -2743,18 +3000,19 @@ $('checkoutSummary').innerHTML=
 Demo total:
 
 <b>
-
 GHS ${
-cart
-.reduce((s,x)=>s+x.price*x.qty,0)
-.toFixed(2)
+cart.reduce(
+(s,x)=>s+x.price*x.qty,0
+).toFixed(2)
 }
-
 </b>
 
 </div>`;
 
 }
+
+
+let currentPayment=null;
 
 
 function preparePayment(){
@@ -2771,27 +3029,18 @@ return alert('Complete delivery details.');
 
 let total=
 cart.reduce(
-(s,x)=>s+x.price*x.qty,
-0
+(s,x)=>s+x.price*x.qty,0
 );
 
 currentPayment={
 
 id:'PAY'+Date.now(),
-
 total:total,
-
 currency:'GHS',
-
 name:$('buyerName').value,
-
 phone:$('buyerPhone').value,
-
 address:$('address').value,
-
-items:JSON.parse(
-JSON.stringify(cart)
-)
+items:JSON.parse(JSON.stringify(cart))
 
 };
 
@@ -2799,16 +3048,12 @@ $('paymentOut').innerHTML=
 
 `<div class="card">
 
-<p>
-Reference:
+<p>Reference:
 <b>${currentPayment.id}</b>
 </p>
 
-<p>
-Amount:
-<b>
-GHS ${total.toFixed(2)}
-</b>
+<p>Amount:
+<b>GHS ${total.toFixed(2)}</b>
 </p>
 
 </div>`;
@@ -2820,8 +3065,7 @@ show('payment');
 
 function pay(){
 
-if(!currentPayment)
-return;
+if(!currentPayment)return;
 
 let p=currentPayment;
 
@@ -2830,61 +3074,42 @@ let c=p.total*.05;
 let o={
 
 id:'RX'+Date.now(),
-
 paymentId:p.id,
-
 date:new Date().toLocaleString(),
-
 total:p.total,
-
 currency:'GHS',
-
 commission:c,
-
 sellerAmount:p.total-c,
-
 status:'Processing',
-
 paymentStatus:'Paid',
-
 method:$('method').value
 
 };
 
 orders.unshift(o);
-
 tx.unshift(o);
-
 cart=[];
-
 
 notify(
 'Payment successful',
 `Your payment of GHS ${p.total.toFixed(2)} was successful. Order ${o.id} is processing.`
 );
 
-
 notify(
 'New order received',
 `A paid order ${o.id} was created. Seller amount: GHS ${o.sellerAmount.toFixed(2)}.`
 );
 
-
 currentPayment=null;
 
 renderCart();
-
 renderOrders();
-
 renderTx();
-
 renderSeller();
 
 show('orders');
 
-alert(
-'Demo payment completed successfully.'
-);
+alert('Demo payment completed successfully.');
 
 }
 
@@ -2897,48 +3122,28 @@ orders.map(o=>
 
 `<div class="card">
 
-<h3>
-Order ${o.id}
-</h3>
+<h3>Order ${o.id}</h3>
 
-<p>
-${o.date}
-</p>
+<p>${o.date}</p>
 
-<p>
-Total:
-GHS ${o.total.toFixed(2)}
-</p>
+<p>Total: GHS ${o.total.toFixed(2)}</p>
 
-<p>
-Commission:
-GHS ${o.commission.toFixed(2)}
-</p>
+<p>Commission: GHS ${o.commission.toFixed(2)}</p>
 
-<p>
-Seller:
-GHS ${o.sellerAmount.toFixed(2)}
-</p>
+<p>Seller: GHS ${o.sellerAmount.toFixed(2)}</p>
 
-<p>
-Status:
-${o.status}
-</p>
+<p>Status: ${o.status}</p>
 
 <button
 class="btn gray"
 onclick="statusOrder('${o.id}','Shipped')">
-
 Mark Shipped
-
 </button>
 
 <button
 class="btn gray"
 onclick="statusOrder('${o.id}','Delivered')">
-
 Mark Delivered
-
 </button>
 
 </div>`
@@ -2946,7 +3151,6 @@ Mark Delivered
 ).join('')
 
 ||
-
 'No orders yet.';
 
 }
@@ -2980,9 +3184,7 @@ tx.map(o=>
 
 `<div class="card">
 
-<b>
-${o.paymentId}
-</b>
+<b>${o.paymentId}</b>
 
 <p>
 GHS ${o.total.toFixed(2)} • Paid
@@ -2998,7 +3200,6 @@ GHS ${o.commission.toFixed(2)}
 ).join('')
 
 ||
-
 'No transactions yet.';
 
 }
@@ -3007,9 +3208,7 @@ GHS ${o.commission.toFixed(2)}
 function sellerProduct(){
 
 let n=$('newName').value.trim();
-
 let d=$('newDesc').value.trim();
-
 let p=Number($('newPrice').value);
 
 if(!n||!d||!p)
@@ -3018,13 +3217,9 @@ return alert('Complete product details.');
 products.unshift({
 
 id:Date.now(),
-
 name:n,
-
 description:d,
-
 price:p,
-
 cat:'Other'
 
 });
@@ -3043,26 +3238,12 @@ alert('Product added.');
 
 function renderSeller(){
 
-let g=
-orders.reduce(
-(s,o)=>s+o.total,
-0
-);
+let g=orders.reduce((s,o)=>s+o.total,0);
+let c=orders.reduce((s,o)=>s+o.commission,0);
 
-let c=
-orders.reduce(
-(s,o)=>s+o.commission,
-0
-);
-
-$('gross').textContent=
-'GHS '+g.toFixed(2);
-
-$('comm').textContent=
-'GHS '+c.toFixed(2);
-
-$('net').textContent=
-'GHS '+(g-c).toFixed(2);
+$('gross').textContent='GHS '+g.toFixed(2);
+$('comm').textContent='GHS '+c.toFixed(2);
+$('net').textContent='GHS '+(g-c).toFixed(2);
 
 }
 
@@ -3071,12 +3252,10 @@ function renderPayouts(){
 
 let b=
 orders.reduce(
-(s,o)=>s+o.sellerAmount,
-0
+(s,o)=>s+o.sellerAmount,0
 );
 
-$('balance').textContent=
-'GHS '+b.toFixed(2);
+$('balance').textContent='GHS '+b.toFixed(2);
 
 $('payoutOut').innerHTML=
 
@@ -3084,10 +3263,8 @@ payouts.map(p=>
 
 `<div class="card">
 
-${p.id}
-—
-GHS ${p.amount.toFixed(2)}
-—
+${p.id} —
+GHS ${p.amount.toFixed(2)} —
 ${p.status}
 
 </div>`
@@ -3095,7 +3272,6 @@ ${p.status}
 ).join('')
 
 ||
-
 'No payouts yet.';
 
 }
@@ -3105,21 +3281,16 @@ function payout(){
 
 let b=
 orders.reduce(
-(s,o)=>s+o.sellerAmount,
-0
+(s,o)=>s+o.sellerAmount,0
 );
 
 if(!b)
 return alert('No payout balance.');
 
 let p={
-
 id:'PO'+Date.now(),
-
 amount:b,
-
 status:'Pending'
-
 };
 
 payouts.unshift(p);
@@ -3131,9 +3302,7 @@ notify(
 `Your payout request for GHS ${b.toFixed(2)} is pending.`
 );
 
-alert(
-'Demo payout request created.'
-);
+alert('Demo payout request created.');
 
 }
 
@@ -3142,13 +3311,11 @@ function signup(){
 
 let n=prompt('Full name');
 
-if(!n)
-return;
+if(!n)return;
 
 let e=prompt('Email');
 
-if(!e)
-return;
+if(!e)return;
 
 $('accountStatus').textContent=
 'Signed in as '+n;
@@ -3158,9 +3325,7 @@ notify(
 'Your demo account was created successfully.'
 );
 
-alert(
-'Demo account created.'
-);
+alert('Demo account created.');
 
 }
 
@@ -3179,8 +3344,603 @@ notify(
 'You successfully signed in.'
 );
 
+alert('Demo sign in successful.');
+
+}
+
+}
+
+
+/* =========================
+   STAGE 7 — BUSINESSES
+========================= */
+
+
+function renderBusinesses(){
+
+let q=
+($('businessSearch').value||'')
+.toLowerCase();
+
+let type=$('businessType').value;
+
+let list=businesses.filter(b=>
+
+b.name.toLowerCase().includes(q)&&
+(type==='All'||b.type===type)
+
+);
+
+$('businessList').innerHTML=
+
+list.map(b=>
+
+`<div class="business">
+
+<div class="inside">
+
+<span class="tag">
+${esc(b.type)}
+</span>
+
+${b.verified?
+'<span class="tag">✓ Verified</span>':
+''}
+
+<h3>${esc(b.name)}</h3>
+
+<p>${esc(b.description)}</p>
+
+<p>📍 ${esc(b.location)}</p>
+
+<p>🕒 ${esc(b.hours)}</p>
+
+<p class="rating">
+⭐ ${b.rating}
+</p>
+
+<button
+class="btn blue"
+onclick="openBusiness(${b.id})">
+View Business
+</button>
+
+<button
+class="btn gray"
+onclick="contactBusiness(${b.id})">
+Contact
+</button>
+
+</div>
+
+</div>`
+
+).join('')
+
+||
+'<div class="card">No businesses found.</div>';
+
+}
+
+
+function createBusiness(){
+
+let name=$('bizName').value.trim();
+
+if(!name)
+return alert('Enter the business name.');
+
+let b={
+
+id:Date.now(),
+
+name:name,
+
+type:$('bizType').value,
+
+description:$('bizDescription').value,
+
+phone:$('bizPhone').value,
+
+location:$('bizLocation').value,
+
+hours:$('bizHours').value,
+
+verified:false,
+
+products:[],
+
+services:[],
+
+rating:0
+
+};
+
+businesses.unshift(b);
+
+renderBusinesses();
+
+notify(
+'Business created',
+`${name} has been added to your demo business account.`
+);
+
+alert('Business profile created.');
+
+show('businesses');
+
+}
+
+
+function openBusiness(id){
+
+let b=businesses.find(x=>x.id===id);
+
+if(!b)return;
+
+$('businessProfileOut').innerHTML=
+
+`<div class="card">
+
+<span class="tag">${esc(b.type)}</span>
+
+${b.verified?
+'<span class="tag">✓ Verified</span>':
+''}
+
+<h1>${esc(b.name)}</h1>
+
+<p>${esc(b.description)}</p>
+
+<p>📍 ${esc(b.location)}</p>
+
+<p>🕒 ${esc(b.hours)}</p>
+
+<p>📞 ${esc(b.phone)}</p>
+
+<p>⭐ ${b.rating||'New business'}</p>
+
+<button
+class="btn blue"
+onclick="contactBusiness(${b.id})">
+Contact Business
+</button>
+
+<button
+class="btn green"
+onclick="requestBusiness(${b.id})">
+Request Service
+</button>
+
+</div>
+
+<div class="card">
+
+<h3>Business Products</h3>
+
+<div id="businessProfileProducts">
+No products added yet.
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>Business Services</h3>
+
+<div id="businessProfileServices">
+No services added yet.
+</div>
+
+</div>
+
+<div class="map">
+Business location map — Stage 8
+</div>`;
+
+show('businessProfile');
+
+}
+
+
+function contactBusiness(id){
+
+let b=businesses.find(x=>x.id===id);
+
+if(!b)return;
+
+notify(
+'Business contact',
+`You selected ${b.name}. Messaging will be connected in the backend.`
+);
+
+show('messages');
+
+}
+
+
+function requestBusiness(id){
+
+let b=businesses.find(x=>x.id===id);
+
+if(!b)return;
+
+notify(
+'Business request',
+`A service request was started for ${b.name}.`
+);
+
 alert(
-'Demo sign in successful.'
+`Service request started for ${b.name}.`
+);
+
+}
+
+
+function addBusinessProduct(){
+
+let n=$('bpName').value.trim();
+
+let p=Number($('bpPrice').value);
+
+if(!n||!p)
+return alert('Enter product name and price.');
+
+businessProducts.push({
+
+id:Date.now(),
+name:n,
+price:p
+
+});
+
+renderBusinessProducts();
+
+notify(
+'Business product added',
+`${n} was added to your business products.`
+);
+
+}
+
+
+function renderBusinessProducts(){
+
+$('bpList').innerHTML=
+
+businessProducts.map(p=>
+
+`<div class="card">
+
+<b>${esc(p.name)}</b>
+
+<p>
+GHS ${p.price.toFixed(2)}
+</p>
+
+</div>`
+
+).join('')
+
+||
+'<p>No business products yet.</p>';
+
+}
+
+
+function addBusinessService(){
+
+let n=$('bsName').value.trim();
+
+let p=Number($('bsPrice').value);
+
+if(!n||!p)
+return alert('Enter service name and price.');
+
+businessServices.push({
+
+id:Date.now(),
+name:n,
+price:p,
+description:$('bsDescription').value
+
+});
+
+renderBusinessServices();
+
+notify(
+'Business service added',
+`${n} was added to your business services.`
+);
+
+}
+
+
+function renderBusinessServices(){
+
+$('bsList').innerHTML=
+
+businessServices.map(s=>
+
+`<div class="card">
+
+<b>${esc(s.name)}</b>
+
+<p>
+Starting from GHS ${s.price.toFixed(2)}
+</p>
+
+<p>${esc(s.description)}</p>
+
+</div>`
+
+).join('')
+
+||
+'<p>No business services yet.</p>';
+
+}
+
+
+/* =========================
+   SERVICES
+========================= */
+
+
+function renderServices(){
+
+let q=
+($('serviceSearch').value||'')
+.toLowerCase();
+
+let cat=$('serviceCategory').value;
+
+let list=services.filter(s=>
+
+(
+s.name.toLowerCase().includes(q)||
+s.provider.toLowerCase().includes(q)
+)&&
+(cat==='All'||s.category===cat)
+
+);
+
+$('serviceList').innerHTML=
+
+list.map(s=>
+
+`<div class="service">
+
+<div class="inside">
+
+<span class="tag">
+${esc(s.category)}
+</span>
+
+<h3>
+${esc(s.name)}
+</h3>
+
+<h4>
+${esc(s.provider)}
+</h4>
+
+<p>${esc(s.description)}</p>
+
+<p>
+📍 ${esc(s.location)}
+</p>
+
+<p>
+💰 From GHS ${s.price.toFixed(2)}
+</p>
+
+<p class="rating">
+⭐ ${s.rating}
+</p>
+
+<button
+class="btn blue"
+onclick="bookService(${s.id})">
+Book Service
+</button>
+
+<button
+class="btn gray"
+onclick="contactProvider(${s.id})">
+Contact Provider
+</button>
+
+</div>
+
+</div>`
+
+).join('')
+
+||
+'<div class="card">No services found.</div>';
+
+}
+
+
+function createService(){
+
+let provider=$('providerName').value.trim();
+
+let name=$('providerService').value.trim();
+
+if(!provider||!name)
+return alert('Enter provider and service name.');
+
+let s={
+
+id:Date.now(),
+
+provider:provider,
+
+name:name,
+
+category:$('providerCategory').value,
+
+description:$('providerDescription').value,
+
+price:Number($('providerPrice').value)||0,
+
+location:$('providerLocation').value,
+
+phone:$('providerPhone').value,
+
+rating:0
+
+};
+
+services.unshift(s);
+
+renderServices();
+
+notify(
+'Service published',
+`${name} has been published as a service listing.`
+);
+
+alert('Service published.');
+
+show('services');
+
+}
+
+
+function bookService(id){
+
+let s=services.find(x=>x.id===id);
+
+if(!s)return;
+
+let date=prompt(
+'Enter preferred booking date and time'
+);
+
+if(!date)return;
+
+let b={
+
+id:'BK'+Date.now(),
+
+serviceId:s.id,
+
+provider:s.provider,
+
+service:s.name,
+
+date:date,
+
+price:s.price,
+
+status:'Requested',
+
+paymentStatus:'Pending'
+
+};
+
+bookings.unshift(b);
+
+renderBookings();
+
+notify(
+'Booking requested',
+`Your booking request for ${s.name} was sent to ${s.provider}.`
+);
+
+notify(
+'New booking request',
+`${s.provider} received a new booking request for ${s.name}.`
+);
+
+alert('Booking request sent.');
+
+}
+
+
+function contactProvider(id){
+
+let s=services.find(x=>x.id===id);
+
+if(!s)return;
+
+notify(
+'Provider contact',
+`You selected ${s.provider}. Messaging will be connected in the backend.`
+);
+
+show('messages');
+
+}
+
+
+function renderBookings(){
+
+$('bookingList').innerHTML=
+
+bookings.map(b=>
+
+`<div class="booking card">
+
+<h3>${esc(b.service)}</h3>
+
+<p>
+Provider:
+${esc(b.provider)}
+</p>
+
+<p>
+Date:
+${esc(b.date)}
+</p>
+
+<p>
+Price:
+GHS ${b.price.toFixed(2)}
+</p>
+
+<p>
+Status:
+<b>${esc(b.status)}</b>
+</p>
+
+<p>
+Payment:
+${esc(b.paymentStatus)}
+</p>
+
+<button
+class="btn red"
+onclick="cancelBooking('${b.id}')">
+Cancel
+</button>
+
+</div>`
+
+).join('')
+
+||
+'<p>No bookings yet.</p>';
+
+}
+
+
+function cancelBooking(id){
+
+let b=bookings.find(x=>x.id===id);
+
+if(b){
+
+b.status='Cancelled';
+
+renderBookings();
+
+notify(
+'Booking cancelled',
+`Booking ${b.id} has been cancelled.`
 );
 
 }
@@ -3188,42 +3948,270 @@ alert(
 }
 
 
+function renderProviderBookings(){
+
+$('providerBookingList').innerHTML=
+
+bookings.map(b=>
+
+`<div class="card">
+
+<h3>
+${esc(b.service)}
+</h3>
+
+<p>
+Customer booking: ${b.id}
+</p>
+
+<p>
+Date: ${esc(b.date)}
+</p>
+
+<p>
+Amount:
+GHS ${b.price.toFixed(2)}
+</p>
+
+<p>
+Status:
+${esc(b.status)}
+</p>
+
+<button
+class="btn green"
+onclick="updateBooking('${b.id}','Accepted')">
+Accept
+</button>
+
+<button
+class="btn blue"
+onclick="updateBooking('${b.id}','Completed')">
+Complete
+</button>
+
+<button
+class="btn red"
+onclick="updateBooking('${b.id}','Declined')">
+Decline
+</button>
+
+</div>`
+
+).join('')
+
+||
+'<p>No provider bookings.</p>';
+
+}
+
+
+function renderBusinessBookings(){
+
+$('businessBookingList').innerHTML=
+
+bookings.map(b=>
+
+`<div class="card">
+
+<h3>${esc(b.service)}</h3>
+
+<p>
+Booking ID:
+${b.id}
+</p>
+
+<p>
+Date:
+${esc(b.date)}
+</p>
+
+<p>
+Status:
+${esc(b.status)}
+</p>
+
+</div>`
+
+).join('')
+
+||
+'<p>No business bookings.</p>';
+
+}
+
+
+function updateBooking(id,status){
+
+let b=bookings.find(x=>x.id===id);
+
+if(!b)return;
+
+b.status=status;
+
+renderProviderBookings();
+renderBusinessBookings();
+renderBookings();
+
+notify(
+'Booking updated',
+`Booking ${b.id} is now ${status}.`
+);
+
+}
+
+
+function renderProviderEarnings(){
+
+let gross=bookings
+.filter(b=>b.status==='Completed')
+.reduce((s,b)=>s+b.price,0);
+
+let commission=gross*.05;
+
+$('providerGross').textContent=
+'GHS '+gross.toFixed(2);
+
+$('providerCommission').textContent=
+'GHS '+commission.toFixed(2);
+
+$('providerNet').textContent=
+'GHS '+(gross-commission).toFixed(2);
+
+}
+
+
+function renderBusinessEarnings(){
+
+let gross=orders.reduce(
+(s,o)=>s+o.total,0
+);
+
+let commission=gross*.05;
+
+$('businessGross').textContent=
+'GHS '+gross.toFixed(2);
+
+$('businessCommission').textContent=
+'GHS '+commission.toFixed(2);
+
+$('businessNet').textContent=
+'GHS '+(gross-commission).toFixed(2);
+
+}
+
+
+function renderBusinessAnalytics(){
+
+$('bizViews').textContent=
+businesses.length*7;
+
+$('bizOrders').textContent=
+orders.length;
+
+$('bizBookings').textContent=
+bookings.length;
+
+let revenue=orders.reduce(
+(s,o)=>s+o.total,0
+);
+
+$('bizRevenue').textContent=
+'GHS '+revenue.toFixed(2);
+
+}
+
+
+function renderReviews(){
+
+$('reviewList').innerHTML=
+
+reviews.map(r=>
+
+`<div class="card">
+
+<b>${esc(r.provider)}</b>
+
+<p>
+⭐ ${r.rating}/5
+</p>
+
+<p>
+${esc(r.text)}
+</p>
+
+</div>`
+
+).join('')
+
+||
+'No reviews yet.';
+
+}
+
+
+function requestTransport(){
+
+let type=$('transportType').value;
+
+let location=$('transportLocation').value.trim();
+
+if(!location)
+return alert('Enter your pickup or service location.');
+
+notify(
+'Transport request',
+`Your ${type} request from ${location} was created.`
+);
+
+alert(
+`${type} request created.`
+);
+
+}
+
+
+/* INITIAL DATA */
+
 $('feed').innerHTML=
 
-'<div class="post">'+
+`<div class="post">
 
-'<b>RockyX Creator</b>'+
+<b>RockyX Creator</b>
 
-'<p>Welcome to the social feed.</p>'+
+<p>
+Welcome to the RockyX social feed.
+</p>
 
-'<button class="btn gray">❤️ Like</button>'+
+<button class="btn gray">❤️ Like</button>
+<button class="btn gray">💬 Comment</button>
+<button class="btn gray">↗ Share</button>
 
-'<button class="btn gray">💬 Comment</button>'+
-
-'<button class="btn gray">↗ Share</button>'+
-
-'</div>';
+</div>`;
 
 
 renderProducts();
-
 renderCart();
-
 renderCheckout();
-
 renderVideos();
-
 renderSounds();
-
 renderTemplates();
-
 renderOrders();
-
 renderTx();
-
 renderSeller();
-
 renderPayouts();
+
+renderBusinesses();
+renderServices();
+renderBookings();
+renderProviderBookings();
+renderBusinessBookings();
+renderProviderEarnings();
+renderBusinessEarnings();
+renderBusinessAnalytics();
+renderReviews();
+renderBusinessProducts();
+renderBusinessServices();
 
 renderNotices();
 
