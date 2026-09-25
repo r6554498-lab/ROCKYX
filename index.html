@@ -1,4219 +1,5582 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RockyX</title>
 
+<!-- Leaflet -->
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
+
 <style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#f5f6f8;color:#151515}
-button,input,select,textarea{font:inherit}
-button{cursor:pointer}
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
 
-.header{
-height:62px;background:#fff;border-bottom:1px solid #ddd;
-display:flex;align-items:center;gap:10px;padding:0 14px;
-position:sticky;top:0;z-index:10
+:root{
+  --bg:#f5f7fb;
+  --card:#ffffff;
+  --text:#172033;
+  --muted:#6b7280;
+  --border:#e5e7eb;
+  --primary:#2563eb;
+  --primary-dark:#1d4ed8;
+  --success:#16a34a;
+  --danger:#dc2626;
+  --warning:#d97706;
+  --shadow:0 4px 18px rgba(0,0,0,.07);
 }
-.logo{font-weight:800;font-size:21px}
-.search{flex:1}
-.search input{
-width:100%;padding:10px 15px;border:1px solid #ddd;
-border-radius:25px;background:#f5f5f5
+
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:var(--bg);
+  color:var(--text);
 }
-.actions{display:flex;gap:5px}
-.icon{
-border:0;background:#f1f2f4;border-radius:50%;
-width:40px;height:40px
+
+button,
+input,
+select,
+textarea{
+  font:inherit;
 }
-.bell{position:relative}
+
+button{
+  cursor:pointer;
+}
+
+.hidden{
+  display:none!important;
+}
+
+/* HEADER */
+header{
+  height:64px;
+  background:#fff;
+  border-bottom:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:0 18px;
+  position:sticky;
+  top:0;
+  z-index:1000;
+}
+
+.logo{
+  font-size:25px;
+  font-weight:800;
+  color:var(--primary);
+  min-width:80px;
+}
+
+.search-box{
+  flex:1;
+  max-width:650px;
+  position:relative;
+}
+
+.search-box input{
+  width:100%;
+  border:1px solid var(--border);
+  border-radius:24px;
+  padding:12px 18px;
+  outline:none;
+  background:#f8fafc;
+}
+
+.search-box input:focus{
+  border-color:var(--primary);
+  background:#fff;
+}
+
+.header-actions{
+  margin-left:auto;
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+
+.icon-btn{
+  width:42px;
+  height:42px;
+  border:0;
+  border-radius:50%;
+  background:#f1f5f9;
+  position:relative;
+}
+
+.icon-btn:hover{
+  background:#e2e8f0;
+}
+
 .badge{
-display:none;position:absolute;right:-2px;top:-3px;
-background:#d71920;color:#fff;border-radius:20px;
-padding:2px 6px;font-size:11px
+  position:absolute;
+  right:-2px;
+  top:-2px;
+  min-width:19px;
+  height:19px;
+  padding:0 5px;
+  border-radius:20px;
+  background:#ef4444;
+  color:white;
+  font-size:11px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
-.badge.show{display:block}
 
-.side{
-position:fixed;top:62px;bottom:0;width:240px;
-background:#fff;border-right:1px solid #ddd;
-padding:9px;overflow:auto
+.auth-btn{
+  border:0;
+  padding:10px 15px;
+  border-radius:10px;
+  background:var(--primary);
+  color:white;
+  font-weight:600;
 }
-.nav{
-width:100%;border:0;background:transparent;
-text-align:left;padding:10px;border-radius:8px;margin:1px 0
+
+/* LAYOUT */
+.app{
+  display:flex;
+  min-height:calc(100vh - 64px);
 }
-.nav:hover{background:#eef0f3}
 
-.main{margin-left:240px;padding:18px}
-.page{display:none;max-width:1100px;margin:auto}
-.page.active{display:block}
+.sidebar{
+  width:245px;
+  background:#fff;
+  border-right:1px solid var(--border);
+  padding:14px 10px;
+  position:fixed;
+  top:64px;
+  bottom:0;
+  overflow-y:auto;
+}
 
-.card,.post,.notify{
-background:#fff;border:1px solid #ddd;
-border-radius:13px;padding:15px;margin-bottom:14px
+.nav-btn{
+  width:100%;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:11px 13px;
+  margin-bottom:4px;
+  border:0;
+  background:transparent;
+  border-radius:10px;
+  color:var(--text);
+  text-align:left;
+}
+
+.nav-btn:hover,
+.nav-btn.active{
+  background:#eff6ff;
+  color:var(--primary);
+}
+
+.nav-section{
+  margin:18px 10px 7px;
+  font-size:11px;
+  text-transform:uppercase;
+  color:#94a3b8;
+  font-weight:700;
+}
+
+.main{
+  margin-left:245px;
+  width:calc(100% - 245px);
+  padding:22px;
+}
+
+.page{
+  display:none;
+}
+
+.page.active{
+  display:block;
+}
+
+.page-title{
+  font-size:26px;
+  margin-bottom:6px;
+}
+
+.page-subtitle{
+  color:var(--muted);
+  margin-bottom:20px;
+}
+
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:15px;
+  padding:18px;
+  box-shadow:var(--shadow);
+  margin-bottom:18px;
 }
 
 .grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:14px
+  display:grid;
+  gap:16px;
+}
+
+.grid-2{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+}
+
+.grid-3{
+  grid-template-columns:repeat(3,minmax(0,1fr));
+}
+
+.grid-4{
+  grid-template-columns:repeat(4,minmax(0,1fr));
 }
 
 .btn{
-border:0;border-radius:8px;padding:9px 13px;
-background:#111;color:#fff;margin:3px
+  border:0;
+  border-radius:9px;
+  padding:10px 15px;
+  font-weight:600;
+  background:var(--primary);
+  color:#fff;
 }
-.blue{background:#246bdb}
-.red{background:#c62828}
-.gray{background:#e8eaed;color:#111}
-.green{background:#18863b}
-.orange{background:#d97706}
 
-.stats{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:10px
+.btn:hover{
+  background:var(--primary-dark);
 }
+
+.btn.secondary{
+  background:#e2e8f0;
+  color:#172033;
+}
+
+.btn.success{
+  background:var(--success);
+}
+
+.btn.danger{
+  background:var(--danger);
+}
+
+.btn.warning{
+  background:var(--warning);
+}
+
+.input,
+select,
+textarea{
+  width:100%;
+  border:1px solid var(--border);
+  border-radius:9px;
+  padding:11px 12px;
+  background:#fff;
+  outline:none;
+}
+
+textarea{
+  min-height:100px;
+  resize:vertical;
+}
+
+.form-group{
+  margin-bottom:14px;
+}
+
+.form-group label{
+  display:block;
+  font-size:13px;
+  font-weight:600;
+  margin-bottom:6px;
+}
+
+.flex{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+
+.space-between{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+
+.muted{
+  color:var(--muted);
+}
+
+.small{
+  font-size:13px;
+}
+
 .stat{
-background:#f0f1f3;
-padding:13px;border-radius:10px;text-align:center
-}
-.stat b{
-display:block;font-size:20px;margin-bottom:4px
-}
-
-.storyrow{
-display:flex;gap:13px;overflow:auto
-}
-.story{text-align:center;min-width:65px}
-.circle{
-width:58px;height:58px;border-radius:50%;
-background:#ddd;display:flex;align-items:center;
-justify-content:center;margin:auto
+  padding:20px;
+  border-radius:13px;
+  background:#fff;
+  border:1px solid var(--border);
 }
 
-.post img,.post video{
-max-width:100%;margin-top:8px
+.stat-number{
+  font-size:27px;
+  font-weight:800;
+  margin-top:7px;
 }
 
-.video,.product,.service,.business,.booking{
-background:#fff;border:1px solid #ddd;
-border-radius:12px;overflow:hidden
-}
-.video video{width:100%;display:block;background:#111}
-.inside{padding:12px}
-
-.video-actions{
-display:flex;flex-wrap:wrap;gap:3px
+/* HOME */
+.hero{
+  background:linear-gradient(135deg,#2563eb,#4f46e5);
+  color:white;
+  border-radius:18px;
+  padding:35px;
+  margin-bottom:20px;
 }
 
-.check{
-display:flex;gap:7px;align-items:center;margin:7px 0
+.hero h1{
+  font-size:34px;
+  margin-bottom:10px;
 }
-.check input{width:auto}
+
+.quick-card{
+  cursor:pointer;
+  transition:.2s;
+}
+
+.quick-card:hover{
+  transform:translateY(-2px);
+}
+
+/* MAP */
+.map-wrapper{
+  position:relative;
+}
 
 .map{
-height:300px;border-radius:12px;
-background:#dfe7d9;
-display:flex;align-items:center;
-justify-content:center;
-color:#555
+  width:100%;
+  height:500px;
+  border-radius:14px;
+  overflow:hidden;
+  border:1px solid var(--border);
+}
+
+.map-toolbar{
+  position:absolute;
+  z-index:500;
+  top:12px;
+  left:12px;
+  right:12px;
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  pointer-events:none;
+}
+
+.map-toolbar>*{
+  pointer-events:auto;
+}
+
+.map-control{
+  background:#fff;
+  border:1px solid var(--border);
+  box-shadow:0 2px 10px rgba(0,0,0,.12);
+  border-radius:9px;
+  padding:9px 12px;
+}
+
+.map-search{
+  flex:1;
+  min-width:220px;
+}
+
+.map-search input{
+  border:0;
+  outline:0;
+  width:100%;
+}
+
+.category-bar{
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  padding-bottom:5px;
+  margin-bottom:15px;
+}
+
+.category-chip{
+  white-space:nowrap;
+  border:1px solid var(--border);
+  background:#fff;
+  border-radius:20px;
+  padding:8px 13px;
+}
+
+.category-chip.active{
+  background:var(--primary);
+  color:#fff;
+  border-color:var(--primary);
+}
+
+.location-card{
+  border:1px solid var(--border);
+  background:#fff;
+  border-radius:13px;
+  padding:15px;
+  margin-bottom:10px;
+}
+
+.location-card:hover{
+  border-color:var(--primary);
+}
+
+.location-icon{
+  width:42px;
+  height:42px;
+  border-radius:10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#eff6ff;
+  font-size:21px;
+}
+
+.location-list{
+  max-height:500px;
+  overflow-y:auto;
+}
+
+.distance{
+  color:var(--primary);
+  font-size:13px;
+  font-weight:600;
+}
+
+.route-panel{
+  background:#eff6ff;
+  border:1px solid #bfdbfe;
+  border-radius:12px;
+  padding:15px;
+  margin-top:15px;
+}
+
+.privacy-box{
+  background:#f8fafc;
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:15px;
+}
+
+.switch{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.switch input{
+  width:18px;
+  height:18px;
+}
+
+/* CONTENT CARDS */
+.product-card,
+.business-card,
+.service-card,
+.video-card{
+  border:1px solid var(--border);
+  border-radius:13px;
+  overflow:hidden;
+  background:#fff;
+}
+
+.product-image,
+.video-image{
+  height:180px;
+  background:#e2e8f0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:45px;
+}
+
+.product-body,
+.business-body,
+.service-body,
+.video-body{
+  padding:15px;
+}
+
+.price{
+  font-weight:800;
+  color:var(--primary);
 }
 
 .tag{
-display:inline-block;
-padding:5px 8px;
-background:#eef2ff;
-border-radius:15px;
-font-size:12px;
-margin:3px
+  display:inline-block;
+  padding:5px 9px;
+  border-radius:15px;
+  background:#f1f5f9;
+  font-size:12px;
+  margin:3px;
 }
 
-.rating{
-font-weight:bold
+/* MODAL */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(15,23,42,.55);
+  z-index:3000;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
 }
 
-input,textarea,select{
-width:100%;padding:10px;
-border:1px solid #ccc;
-border-radius:8px;margin:5px 0 10px
+.modal.show{
+  display:flex;
 }
-textarea{min-height:90px}
 
-.mobile{display:none}
+.modal-box{
+  width:min(600px,100%);
+  max-height:90vh;
+  overflow-y:auto;
+  background:#fff;
+  border-radius:16px;
+  padding:22px;
+}
 
-@media(max-width:800px){
-.side{display:none}
-.main{margin:0;padding:12px 12px 70px}
-.mobile{
-display:flex;position:fixed;bottom:0;left:0;right:0;
-height:58px;background:#fff;border-top:1px solid #ddd;
-z-index:20;justify-content:space-around
+/* MOBILE */
+.mobile-nav{
+  display:none;
 }
-.mobile button{
-border:0;background:none;font-size:11px
-}
-.stats{grid-template-columns:repeat(2,1fr)}
-.logo{font-size:18px}
-.header{padding:0 8px}
+
+@media(max-width:900px){
+  .sidebar{
+    display:none;
+  }
+
+  .main{
+    margin-left:0;
+    width:100%;
+    padding:14px;
+    padding-bottom:85px;
+  }
+
+  .header-actions .auth-btn{
+    display:none;
+  }
+
+  .logo{
+    min-width:auto;
+  }
+
+  .grid-2,
+  .grid-3,
+  .grid-4{
+    grid-template-columns:1fr;
+  }
+
+  .mobile-nav{
+    display:flex;
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    height:64px;
+    background:#fff;
+    border-top:1px solid var(--border);
+    z-index:2000;
+    justify-content:space-around;
+  }
+
+  .mobile-nav button{
+    border:0;
+    background:transparent;
+    font-size:11px;
+    color:#64748b;
+  }
+
+  .mobile-nav button strong{
+    display:block;
+    font-size:20px;
+  }
+
+  .map{
+    height:430px;
+  }
+
+  .hero h1{
+    font-size:27px;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<header class="header">
+<header>
+  <div class="logo">RockyX</div>
 
-<div class="logo">RockyX</div>
+  <div class="search-box">
+    <input
+      id="globalSearch"
+      type="search"
+      placeholder="Search products, businesses, services, people, videos and places..."
+      onkeydown="if(event.key==='Enter') performGlobalSearch()"
+    >
+  </div>
 
-<div class="search">
-<input
-id="globalSearch"
-placeholder="Search products, businesses, services, people, videos..."
-onkeydown="if(event.key==='Enter')globalSearch()">
-</div>
+  <div class="header-actions">
+    <button class="icon-btn" onclick="showPage('notifications')" title="Notifications">
+      🔔
+      <span id="notificationBadge" class="badge">0</span>
+    </button>
 
-<div class="actions">
+    <button class="icon-btn" onclick="showPage('messages')" title="Messages">
+      💬
+    </button>
 
-<span class="bell">
-<button class="icon" onclick="show('notifications')">🔔</button>
-<span id="badge" class="badge">0</span>
-</span>
+    <button class="icon-btn" onclick="showPage('cart')" title="Cart">
+      🛒
+    </button>
 
-<button class="icon" onclick="show('messages')">💬</button>
-
-<button class="icon" onclick="show('account')">👤</button>
-
-</div>
-
+    <button class="auth-btn" onclick="showPage('account')">
+      Account
+    </button>
+  </div>
 </header>
 
+<div class="app">
 
-<aside class="side" id="sidebar"></aside>
+<aside class="sidebar">
 
+  <button class="nav-btn active" data-page="home" onclick="showPage('home')">🏠 Home</button>
+  <button class="nav-btn" data-page="explore" onclick="showPage('explore')">🔎 Explore</button>
+  <button class="nav-btn" data-page="shorts" onclick="showPage('shorts')">🎬 Shorts</button>
+  <button class="nav-btn" data-page="videos" onclick="showPage('videos')">▶️ Videos</button>
+  <button class="nav-btn" data-page="live" onclick="showPage('live')">🔴 Live</button>
+
+  <div class="nav-section">Create</div>
+  <button class="nav-btn" data-page="camera" onclick="showPage('camera')">📷 Camera</button>
+  <button class="nav-btn" data-page="media" onclick="showPage('media')">🖼️ Media</button>
+  <button class="nav-btn" data-page="creator" onclick="showPage('creator')">⭐ Creator Studio</button>
+  <button class="nav-btn" data-page="photo" onclick="showPage('photo')">🎨 Photo Editor</button>
+  <button class="nav-btn" data-page="videoedit" onclick="showPage('videoedit')">✂️ Video Editor</button>
+  <button class="nav-btn" data-page="ai" onclick="showPage('ai')">✨ AI Studio</button>
+
+  <div class="nav-section">Music</div>
+  <button class="nav-btn" data-page="music" onclick="showPage('music')">🎵 Music</button>
+  <button class="nav-btn" data-page="sounds" onclick="showPage('sounds')">🔊 Sounds</button>
+
+  <div class="nav-section">Marketplace</div>
+  <button class="nav-btn" data-page="market" onclick="showPage('market')">🛍️ Marketplace</button>
+  <button class="nav-btn" data-page="cart" onclick="showPage('cart')">🛒 Cart</button>
+  <button class="nav-btn" data-page="orders" onclick="showPage('orders')">📦 Orders</button>
+  <button class="nav-btn" data-page="seller" onclick="showPage('seller')">🏪 Seller</button>
+
+  <div class="nav-section">Business</div>
+  <button class="nav-btn" data-page="businesses" onclick="showPage('businesses')">🏢 Businesses</button>
+  <button class="nav-btn" data-page="services" onclick="showPage('services')">🛠️ Services</button>
+  <button class="nav-btn" data-page="bookings" onclick="showPage('bookings')">📅 Bookings</button>
+  <button class="nav-btn" data-page="transport" onclick="showPage('transport')">🚕 Transport</button>
+
+  <div class="nav-section">Discover</div>
+  <button class="nav-btn" data-page="nearby" onclick="showPage('nearby')">📍 Nearby</button>
+  <button class="nav-btn" data-page="navigation" onclick="showPage('navigation')">🧭 Navigation</button>
+
+  <div class="nav-section">Account</div>
+  <button class="nav-btn" data-page="messages" onclick="showPage('messages')">💬 Messages</button>
+  <button class="nav-btn" data-page="notifications" onclick="showPage('notifications')">🔔 Notifications</button>
+  <button class="nav-btn" data-page="profile" onclick="showPage('profile')">👤 Profile</button>
+  <button class="nav-btn" data-page="account" onclick="showPage('account')">⚙️ Account</button>
+  <button class="nav-btn" data-page="settings" onclick="showPage('settings')">🔐 Settings</button>
+
+</aside>
 
 <main class="main">
 
-
 <!-- HOME -->
-
 <section id="home" class="page active">
+  <div class="hero">
+    <h1>Welcome to RockyX</h1>
+    <p>Marketplace, social network, entertainment and services — all in one place.</p>
+    <br>
+    <div class="flex">
+      <button class="btn" onclick="showPage('nearby')">Explore Nearby</button>
+      <button class="btn secondary" onclick="showPage('market')">Shop</button>
+    </div>
+  </div>
 
-<div class="card">
-<h1>Welcome</h1>
-<p>
-Marketplace, social, entertainment and services in one place.
-</p>
-</div>
+  <div class="grid grid-4">
+    <div class="stat quick-card" onclick="showPage('nearby')">
+      <div>📍</div>
+      <div class="stat-number">Nearby</div>
+      <div class="muted">Find places and services</div>
+    </div>
 
-<div class="card">
+    <div class="stat quick-card" onclick="showPage('market')">
+      <div>🛍️</div>
+      <div class="stat-number">Market</div>
+      <div class="muted">Products and sellers</div>
+    </div>
 
-<h3>Stories</h3>
+    <div class="stat quick-card" onclick="showPage('services')">
+      <div>🛠️</div>
+      <div class="stat-number">Services</div>
+      <div class="muted">Find service providers</div>
+    </div>
 
-<div class="storyrow">
+    <div class="stat quick-card" onclick="showPage('transport')">
+      <div>🚕</div>
+      <div class="stat-number">Transport</div>
+      <div class="muted">Find transport providers</div>
+    </div>
+  </div>
 
-<div class="story">
-<div class="circle">+</div>
-Add
-</div>
+  <br>
 
-<div class="story">
-<div class="circle">A</div>
-Alex
-</div>
-
-<div class="story">
-<div class="circle">M</div>
-Mary
-</div>
-
-<div class="story">
-<div class="circle">K</div>
-Kevin
-</div>
-
-</div>
-
-</div>
-
-<div class="card">
-
-<h3>Create Post</h3>
-
-<textarea
-id="postText"
-placeholder="What's happening?">
-</textarea>
-
-<input
-id="postFile"
-type="file"
-accept="image/*,video/*">
-
-<button
-class="btn blue"
-onclick="post()">
-Post
-</button>
-
-</div>
-
-<div id="feed"></div>
-
+  <div class="card">
+    <h2>Discover around you</h2>
+    <p class="muted">Use Nearby to discover businesses, products, services and useful places.</p>
+    <br>
+    <button class="btn" onclick="showPage('nearby')">Open Nearby Map</button>
+  </div>
 </section>
 
 
 <!-- EXPLORE -->
-
 <section id="explore" class="page">
+  <h1 class="page-title">Explore</h1>
+  <p class="page-subtitle">Discover content, businesses, products and places.</p>
 
-<div class="card">
+  <div class="grid grid-3">
+    <div class="card quick-card" onclick="showPage('shorts')">
+      <h2>🎬 Shorts</h2>
+      <p class="muted">Watch short videos.</p>
+    </div>
 
-<h2>Explore</h2>
+    <div class="card quick-card" onclick="showPage('videos')">
+      <h2>▶️ Videos</h2>
+      <p class="muted">Watch longer videos.</p>
+    </div>
 
-<input
-id="exploreSearch"
-placeholder="Search RockyX">
+    <div class="card quick-card" onclick="showPage('nearby')">
+      <h2>📍 Nearby</h2>
+      <p class="muted">Find things around you.</p>
+    </div>
+  </div>
 
-<button
-class="btn blue"
-onclick="globalSearch()">
-Search
-</button>
-
-</div>
-
-<div id="results"></div>
-
+  <div id="globalSearchResults"></div>
 </section>
 
 
 <!-- SHORTS -->
-
 <section id="shorts" class="page">
+  <h1 class="page-title">Shorts</h1>
+  <p class="page-subtitle">Short-form videos.</p>
 
-<div class="card">
+  <div class="grid grid-3">
+    <div class="video-card">
+      <div class="video-image">🎬</div>
+      <div class="video-body">
+        <h3>Demo Short</h3>
+        <p class="muted">RockyX Creator</p>
+        <br>
+        <button class="btn" onclick="downloadDemo('RockyX Short')">Download</button>
+      </div>
+    </div>
 
-<h2>Shorts</h2>
+    <div class="video-card">
+      <div class="video-image">🎵</div>
+      <div class="video-body">
+        <h3>Music Short</h3>
+        <p class="muted">Artist Creator</p>
+        <br>
+        <button class="btn" onclick="downloadDemo('Music Short')">Download</button>
+      </div>
+    </div>
 
-<input
-id="shortIn"
-type="file"
-accept="video/*">
-
-<label class="check">
-<input id="shortDL" type="checkbox" checked>
-Allow viewers to download
-</label>
-
-<label class="check">
-<input id="shortWM" type="checkbox" checked>
-Allow RockyX watermark on downloads
-</label>
-
-<button
-class="btn blue"
-onclick="addVideo(true)">
-Publish Short
-</button>
-
-</div>
-
-<div id="shortList" class="grid"></div>
-
+    <div class="video-card">
+      <div class="video-image">🛍️</div>
+      <div class="video-body">
+        <h3>Product Short</h3>
+        <p class="muted">Seller</p>
+        <br>
+        <button class="btn" onclick="downloadDemo('Product Short')">Download</button>
+      </div>
+    </div>
+  </div>
 </section>
 
 
 <!-- VIDEOS -->
-
 <section id="videos" class="page">
+  <h1 class="page-title">Videos</h1>
+  <p class="page-subtitle">Long-form video content.</p>
 
-<div class="card">
-
-<h2>Long Videos</h2>
-
-<input
-id="longIn"
-type="file"
-accept="video/*">
-
-<label class="check">
-<input id="longDL" type="checkbox" checked>
-Allow viewers to download
-</label>
-
-<label class="check">
-<input id="longWM" type="checkbox" checked>
-Allow RockyX watermark on downloads
-</label>
-
-<button
-class="btn blue"
-onclick="addVideo(false)">
-Publish Video
-</button>
-
-</div>
-
-<div id="longList" class="grid"></div>
-
+  <div class="grid grid-3">
+    <div class="video-card">
+      <div class="video-image">▶️</div>
+      <div class="video-body">
+        <h3>Welcome to RockyX</h3>
+        <p class="muted">RockyX Creator</p>
+        <br>
+        <button class="btn" onclick="downloadDemo('RockyX Video')">Download</button>
+      </div>
+    </div>
+  </div>
 </section>
 
 
 <!-- LIVE -->
-
 <section id="live" class="page">
+  <h1 class="page-title">Live</h1>
+  <p class="page-subtitle">Live streaming area.</p>
 
-<div class="card">
-
-<h2>Live</h2>
-
-<p>
-Live streaming will connect to the backend later.
-</p>
-
-<button
-class="btn red"
-onclick="alert('Live streaming will be connected during the backend stage.')">
-🔴 Start Live
-</button>
-
-</div>
-
-</section>
-
-
-<!-- MUSIC -->
-
-<section id="music" class="page">
-
-<div class="card">
-
-<h2>Music</h2>
-
-<input placeholder="Search songs, artists or albums">
-
-<div class="grid">
-
-<div class="card">
-<h3>Sample Artist</h3>
-<p>Sample Song</p>
-<button class="btn">▶ Play</button>
-</div>
-
-<div class="card">
-<h3>Sample Artist</h3>
-<p>Another Song</p>
-<button class="btn">▶ Play</button>
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- SOUNDS -->
-
-<section id="sounds" class="page">
-
-<div class="card">
-
-<h2>Sounds</h2>
-
-<div id="soundList"></div>
-
-</div>
-
-<div class="card">
-
-<h3>Saved Sounds</h3>
-
-<div id="savedSounds"></div>
-
-</div>
-
+  <div class="card">
+    <h2>🔴 Start a Live Stream</h2>
+    <p class="muted">
+      Live streaming will connect to the production streaming system during backend integration.
+    </p>
+    <br>
+    <button class="btn" onclick="notify('Live feature prepared for backend integration.')">
+      Start Live
+    </button>
+  </div>
 </section>
 
 
 <!-- CAMERA -->
-
 <section id="camera" class="page">
+  <h1 class="page-title">Camera</h1>
+  <p class="page-subtitle">Use your device camera and media.</p>
 
-<div class="card">
+  <div class="card">
+    <video id="cameraPreview" autoplay playsinline
+      style="width:100%;max-height:450px;background:#111;border-radius:12px;">
+    </video>
 
-<h2>Camera</h2>
+    <br><br>
 
-<video
-id="cam"
-autoplay
-playsinline
-style="width:100%;max-height:450px;background:#111">
-</video>
+    <div class="flex">
+      <button class="btn" onclick="startCamera()">Start Camera</button>
+      <button class="btn secondary" onclick="stopCamera()">Stop Camera</button>
+      <button class="btn" onclick="takePhoto()">Take Photo</button>
+    </div>
 
-<canvas id="canvas" hidden></canvas>
-
-<button class="btn blue" onclick="startCam()">
-Start Camera
-</button>
-
-<button class="btn" onclick="takePhoto()">
-Take Photo
-</button>
-
-<button class="btn" onclick="record()">
-Start Recording
-</button>
-
-<button class="btn red" onclick="stopRecord()">
-Stop Recording
-</button>
-
-<button class="btn gray" onclick="stopCam()">
-Stop Camera
-</button>
-
-<select id="camFilter" onchange="camFilter()">
-<option>normal</option>
-<option>grayscale</option>
-<option>sepia</option>
-<option>brightness</option>
-<option>contrast</option>
-</select>
-
-<div id="cameraOut"></div>
-
-</div>
-
+    <canvas id="photoCanvas" class="hidden"></canvas>
+  </div>
 </section>
 
 
 <!-- MEDIA -->
-
 <section id="media" class="page">
+  <h1 class="page-title">Media</h1>
+  <p class="page-subtitle">Choose photos and videos from your device.</p>
 
-<div class="card">
-
-<h2>Media</h2>
-
-<input
-id="mediaIn"
-type="file"
-multiple
-accept="image/*,video/*"
-onchange="media()">
-
-<div id="mediaOut" class="grid"></div>
-
-</div>
-
+  <div class="card">
+    <input id="mediaInput" type="file" accept="image/*,video/*" multiple>
+    <br><br>
+    <div id="mediaPreview"></div>
+  </div>
 </section>
 
 
 <!-- CREATOR -->
-
 <section id="creator" class="page">
+  <h1 class="page-title">Creator Studio</h1>
+  <p class="page-subtitle">Create and manage your content.</p>
 
-<div class="card">
+  <div class="grid grid-3">
+    <div class="card">
+      <h3>✂️ Quick Edit</h3>
+      <p class="muted">Edit your content.</p>
+    </div>
 
-<h2>Creator Studio</h2>
+    <div class="card">
+      <h3>🎨 Photo Editor</h3>
+      <p class="muted">Edit photos.</p>
+    </div>
 
-<div class="grid">
+    <div class="card">
+      <h3>🎬 Video Editor</h3>
+      <p class="muted">Edit videos.</p>
+    </div>
 
-<button class="btn" onclick="show('camera')">
-Camera
-</button>
+    <div class="card">
+      <h3>✨ AI Studio</h3>
+      <p class="muted">AI-powered creative tools.</p>
+    </div>
 
-<button class="btn" onclick="show('photo')">
-Photo Editor
-</button>
+    <div class="card">
+      <h3>📐 Templates</h3>
+      <p class="muted">Create reusable templates.</p>
+    </div>
 
-<button class="btn" onclick="show('videoedit')">
-Video Editor
-</button>
-
-<button class="btn" onclick="show('ai')">
-AI Studio
-</button>
-
-<button class="btn" onclick="show('createTemplate')">
-Create Template
-</button>
-
-<button class="btn" onclick="show('sounds')">
-Add Sound
-</button>
-
-</div>
-
-</div>
-
+    <div class="card">
+      <h3>📊 Analytics</h3>
+      <p class="muted">Track performance.</p>
+    </div>
+  </div>
 </section>
 
 
-<!-- PHOTO -->
-
+<!-- PHOTO EDITOR -->
 <section id="photo" class="page">
+  <h1 class="page-title">Photo Editor</h1>
 
-<div class="card">
+  <div class="card">
+    <input id="photoEditorInput" type="file" accept="image/*">
 
-<h2>Photo Editor</h2>
+    <br><br>
 
-<input
-id="photoIn"
-type="file"
-accept="image/*"
-onchange="previewPhoto()">
+    <img id="photoEditorPreview"
+      style="max-width:100%;max-height:500px;border-radius:12px;">
 
-<img
-id="photoPrev"
-style="max-width:100%;display:none">
+    <br><br>
 
-<div>
-
-<button class="btn" onclick="photoFilter('none')">
-Normal
-</button>
-
-<button class="btn" onclick="photoFilter('grayscale')">
-Grayscale
-</button>
-
-<button class="btn" onclick="photoFilter('sepia')">
-Sepia
-</button>
-
-<button class="btn" onclick="photoFilter('brightness')">
-Bright
-</button>
-
-</div>
-
-</div>
-
+    <div class="flex">
+      <button class="btn" onclick="applyPhotoFilter('none')">Original</button>
+      <button class="btn secondary" onclick="applyPhotoFilter('grayscale(1)')">Black & White</button>
+      <button class="btn secondary" onclick="applyPhotoFilter('contrast(1.3)')">Contrast</button>
+      <button class="btn secondary" onclick="applyPhotoFilter('brightness(1.2)')">Bright</button>
+    </div>
+  </div>
 </section>
 
 
 <!-- VIDEO EDITOR -->
-
 <section id="videoedit" class="page">
+  <h1 class="page-title">Video Editor</h1>
 
-<div class="card">
+  <div class="card">
+    <input id="editorVideoInput" type="file" accept="video/*">
 
-<h2>Video Editor</h2>
+    <br><br>
 
-<input
-id="editIn"
-type="file"
-accept="video/*"
-onchange="editPreview()">
+    <video id="editorPreview"
+      controls
+      style="width:100%;max-height:500px;background:#111;border-radius:12px;">
+    </video>
 
-<video
-id="editPrev"
-controls
-style="width:100%;background:#111">
-</video>
+    <br><br>
 
-<div class="grid">
-
-<button class="btn">✂️ Trim</button>
-<button class="btn">➕ Text</button>
-<button class="btn">🔊 Sound</button>
-<button class="btn">✨ Effects</button>
-<button class="btn">🎨 Filters</button>
-<button class="btn">📝 Captions</button>
-
-</div>
-
-<label class="check">
-<input id="editDL" type="checkbox" checked>
-Allow downloads
-</label>
-
-<button class="btn gray">
-Save Draft
-</button>
-
-<button
-class="btn blue"
-onclick="publishEdited(false)">
-Publish Video
-</button>
-
-<button
-class="btn blue"
-onclick="publishEdited(true)">
-Publish Short
-</button>
-
-</div>
-
+    <div class="flex">
+      <button class="btn" onclick="notify('Text tool ready.')">Add Text</button>
+      <button class="btn" onclick="notify('Sound tool ready.')">Add Sound</button>
+      <button class="btn" onclick="notify('Trim tool ready.')">Trim</button>
+      <button class="btn" onclick="notify('Draft saved on this device.')">Save Draft</button>
+    </div>
+  </div>
 </section>
 
 
 <!-- AI -->
-
 <section id="ai" class="page">
+  <h1 class="page-title">AI Studio</h1>
 
-<div class="card">
+  <div class="grid grid-3">
+    <div class="card"><h3>✨ AI Captions</h3><p class="muted">Automatic captions.</p></div>
+    <div class="card"><h3>🪄 Background Removal</h3><p class="muted">Remove backgrounds.</p></div>
+    <div class="card"><h3>✨ Enhancement</h3><p class="muted">Improve media quality.</p></div>
+    <div class="card"><h3>🎵 Beat Editing</h3><p class="muted">Edit around music beats.</p></div>
+    <div class="card"><h3>📝 Text Generation</h3><p class="muted">Generate creative text.</p></div>
+    <div class="card"><h3>🎨 AI Effects</h3><p class="muted">Creative effects.</p></div>
+  </div>
+</section>
 
-<h2>AI Studio</h2>
 
-<div class="grid">
+<!-- MUSIC -->
+<section id="music" class="page">
+  <h1 class="page-title">Music</h1>
 
-<button class="btn">AI Captions</button>
-<button class="btn">Background Removal</button>
-<button class="btn">Object Removal</button>
-<button class="btn">Image Enhancement</button>
-<button class="btn">AI Effects</button>
-<button class="btn">Automatic Editing</button>
-<button class="btn">Template Suggestions</button>
-<button class="btn">Beat-Aware Editing</button>
+  <div class="card">
+    <input class="input" placeholder="Search songs, artists and albums..."
+      oninput="searchMusic(this.value)">
+  </div>
 
-</div>
+  <div id="musicResults" class="grid grid-3"></div>
+</section>
 
-</div>
 
+<!-- SOUNDS -->
+<section id="sounds" class="page">
+  <h1 class="page-title">Sounds</h1>
+
+  <div class="grid grid-3">
+    <div class="card">
+      <h3>Original Sound</h3>
+      <p class="muted">RockyX Creator</p>
+      <br>
+      <button class="btn" onclick="saveSound('Original Sound')">Save Sound</button>
+    </div>
+
+    <div class="card">
+      <h3>Trending Beat</h3>
+      <p class="muted">Artist</p>
+      <br>
+      <button class="btn" onclick="saveSound('Trending Beat')">Save Sound</button>
+    </div>
+  </div>
+
+  <br>
+
+  <div class="card">
+    <h3>Saved Sounds</h3>
+    <div id="savedSounds"></div>
+  </div>
 </section>
 
 
 <!-- TEMPLATES -->
-
 <section id="templates" class="page">
+  <h1 class="page-title">Templates</h1>
 
-<div class="card">
+  <div class="grid grid-3">
+    <div class="card">
+      <h3>🎬 Video Template</h3>
+      <p class="muted">Demo template</p>
+      <br>
+      <button class="btn">Use Template</button>
+    </div>
 
-<h2>Template Marketplace</h2>
+    <div class="card">
+      <h3>📸 Photo Template</h3>
+      <p class="muted">Demo template</p>
+      <br>
+      <button class="btn">Use Template</button>
+    </div>
 
-<input placeholder="Search templates">
-
-</div>
-
-<div id="templateList" class="grid"></div>
-
+    <div class="card">
+      <h3>⭐ Premium Template</h3>
+      <p class="muted">Eligibility can be configured later.</p>
+      <br>
+      <button class="btn">View</button>
+    </div>
+  </div>
 </section>
 
 
-<!-- CREATE TEMPLATE -->
-
-<section id="createTemplate" class="page">
-
-<div class="card">
-
-<h2>Create Template</h2>
-
-<input
-id="tplName"
-placeholder="Template name">
-
-<select id="tplType">
-<option>Video</option>
-<option>Photo</option>
-<option>Social</option>
-<option>Business</option>
-</select>
-
-<textarea
-id="tplDesc"
-placeholder="Description">
-</textarea>
-
-<label class="check">
-<input id="tplPremium" type="checkbox">
-Request premium review
-</label>
-
-<button
-class="btn blue"
-onclick="createTpl()">
-Save Template
-</button>
-
-</div>
-
-</section>
-
-
-<!-- MY TEMPLATES -->
-
-<section id="myTemplates" class="page">
-
-<div class="card">
-
-<h2>My Templates</h2>
-
-<div id="myTpl"></div>
-
-</div>
-
-</section>
-
-
-<!-- CREATOR PROGRAM -->
-
-<section id="program" class="page">
-
-<div class="card">
-
-<h2>Creator Program</h2>
-
-<div class="stats">
-
-<div class="stat"><b>1</b>Creator</div>
-<div class="stat"><b>2</b>Rising Creator</div>
-<div class="stat"><b>3</b>Premium Creator</div>
-<div class="stat"><b>4</b>RockyX Partner</div>
-
-</div>
-
-<p>
-Creator levels and premium eligibility will use configurable
-performance, originality, copyright and community requirements.
-</p>
-
-</div>
-
-</section>
-
-
-<!-- ANALYTICS -->
-
-<section id="analytics" class="page">
-
-<div class="card">
-
-<h2>Template Analytics</h2>
-
-<div class="stats">
-
-<div class="stat"><b>0</b>Uses</div>
-<div class="stat"><b>0</b>Saves</div>
-<div class="stat"><b>0</b>Shares</div>
-<div class="stat"><b>GHS 0</b>Earnings</div>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- CREATOR EARNINGS -->
-
-<section id="creatorEarnings" class="page">
-
-<div class="card">
-
-<h2>Creator Earnings</h2>
-
-<div class="stats">
-
-<div class="stat"><b>GHS 0</b>Available</div>
-<div class="stat"><b>GHS 0</b>Pending</div>
-<div class="stat"><b>GHS 0</b>Lifetime</div>
-<div class="stat"><b>0</b>Payouts</div>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- MARKETPLACE -->
-
+<!-- MARKET -->
 <section id="market" class="page">
+  <h1 class="page-title">Marketplace</h1>
+  <p class="page-subtitle">Discover products and sellers.</p>
 
-<div class="card">
+  <div class="card">
+    <input id="marketSearch"
+      class="input"
+      placeholder="Search products..."
+      oninput="renderProducts(this.value)">
+  </div>
 
-<h2>Marketplace</h2>
-
-<input
-id="prodSearch"
-placeholder="Search products"
-oninput="renderProducts()">
-
-<select
-id="prodCat"
-onchange="renderProducts()">
-
-<option>All</option>
-<option>Electronics</option>
-<option>Fashion</option>
-<option>Food</option>
-<option>Home</option>
-<option>Other</option>
-
-</select>
-
-</div>
-
-<div id="products" class="grid"></div>
-
+  <div id="productList" class="grid grid-3"></div>
 </section>
 
 
 <!-- CART -->
-
 <section id="cart" class="page">
+  <h1 class="page-title">Cart</h1>
 
-<div class="card">
+  <div id="cartList"></div>
 
-<h2>Cart</h2>
-
-<div id="cartOut"></div>
-
-<h3 id="cartTotal">
-Total: GHS 0.00
-</h3>
-
-<button
-class="btn blue"
-onclick="show('checkout')">
-Checkout
-</button>
-
-</div>
-
+  <div class="card">
+    <div class="space-between">
+      <strong>Total</strong>
+      <strong id="cartTotal">GHS 0.00</strong>
+    </div>
+    <br>
+    <button class="btn" onclick="showPage('checkout')">Checkout</button>
+  </div>
 </section>
 
 
 <!-- CHECKOUT -->
-
 <section id="checkout" class="page">
+  <h1 class="page-title">Checkout</h1>
 
-<div class="card">
+  <div class="card">
+    <div class="form-group">
+      <label>Full name</label>
+      <input id="checkoutName" class="input">
+    </div>
 
-<h2>Checkout</h2>
+    <div class="form-group">
+      <label>Phone</label>
+      <input id="checkoutPhone" class="input">
+    </div>
 
-<select id="country">
-<option>Ghana</option>
-<option>Nigeria</option>
-<option>United Kingdom</option>
-<option>United States</option>
-</select>
+    <div class="form-group">
+      <label>Delivery address</label>
+      <textarea id="checkoutAddress"></textarea>
+    </div>
 
-<input
-id="buyerName"
-placeholder="Full name">
-
-<input
-id="buyerPhone"
-placeholder="Phone number">
-
-<textarea
-id="address"
-placeholder="Delivery address">
-</textarea>
-
-<div id="checkoutSummary"></div>
-
-<button
-class="btn blue"
-onclick="preparePayment()">
-Proceed to Payment
-</button>
-
-</div>
-
+    <button class="btn" onclick="placeOrder()">Place Order</button>
+  </div>
 </section>
 
 
 <!-- PAYMENT -->
-
 <section id="payment" class="page">
+  <h1 class="page-title">Payment</h1>
 
-<div class="card">
-
-<h2>Payment</h2>
-
-<div id="paymentOut"></div>
-
-<select id="method">
-<option>Mobile Money</option>
-<option>Bank Card</option>
-<option>Bank Transfer</option>
-</select>
-
-<p>
-Demo payment only. Real payment providers will be connected
-during the backend stage.
-</p>
-
-<button
-class="btn blue"
-onclick="pay()">
-Complete Demo Payment
-</button>
-
-</div>
-
+  <div class="card">
+    <h2>Payment</h2>
+    <p class="muted">
+      Payment gateway connection will be completed during backend integration.
+    </p>
+    <br>
+    <button class="btn" onclick="notify('Payment system prepared for backend integration.')">
+      Continue
+    </button>
+  </div>
 </section>
 
 
 <!-- ORDERS -->
-
 <section id="orders" class="page">
+  <h1 class="page-title">Orders</h1>
 
-<div class="card">
-
-<h2>Orders</h2>
-
-<div id="ordersOut"></div>
-
-</div>
-
+  <div id="ordersList"></div>
 </section>
 
 
 <!-- TRANSACTIONS -->
-
 <section id="transactions" class="page">
+  <h1 class="page-title">Transactions</h1>
 
-<div class="card">
-
-<h2>Transactions</h2>
-
-<div id="txOut"></div>
-
-</div>
-
+  <div class="card">
+    <p class="muted">Transaction records will be connected to the backend later.</p>
+  </div>
 </section>
 
 
 <!-- SELLER -->
-
 <section id="seller" class="page">
+  <h1 class="page-title">Seller Center</h1>
 
-<div class="card">
+  <div class="grid grid-3">
+    <div class="stat">
+      <div class="muted">Products</div>
+      <div class="stat-number">12</div>
+    </div>
 
-<h2>Seller Tools</h2>
+    <div class="stat">
+      <div class="muted">Orders</div>
+      <div class="stat-number">8</div>
+    </div>
 
-<input id="newName" placeholder="Product name">
+    <div class="stat">
+      <div class="muted">Revenue</div>
+      <div class="stat-number">GHS 2,450</div>
+    </div>
+  </div>
 
-<textarea
-id="newDesc"
-placeholder="Description">
-</textarea>
+  <br>
 
-<input
-id="newPrice"
-type="number"
-placeholder="Price">
-
-<button
-class="btn blue"
-onclick="sellerProduct()">
-Add Product
-</button>
-
-</div>
-
+  <div class="card">
+    <button class="btn" onclick="notify('Product creation prepared.')">
+      Add Product
+    </button>
+  </div>
 </section>
 
 
-<!-- SELLER EARNINGS -->
-
-<section id="sellerEarnings" class="page">
-
-<div class="card">
-
-<h2>Seller Earnings</h2>
-
-<div class="stats">
-
-<div class="stat">
-<b id="gross">GHS 0</b>
-Gross
-</div>
-
-<div class="stat">
-<b id="comm">GHS 0</b>
-Commission
-</div>
-
-<div class="stat">
-<b id="net">GHS 0</b>
-Seller Balance
-</div>
-
-<div class="stat">
-<b>5%</b>
-Demo Rate
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- PAYOUTS -->
-
-<section id="payouts" class="page">
-
-<div class="card">
-
-<h2>Payouts</h2>
-
-<div
-class="money"
-id="balance">
-GHS 0
-</div>
-
-<button
-class="btn blue"
-onclick="payout()">
-Request Demo Payout
-</button>
-
-</div>
-
-<div class="card" id="payoutOut"></div>
-
-</section>
-
-
-<!-- STAGE 7: BUSINESSES -->
-
+<!-- BUSINESSES -->
 <section id="businesses" class="page">
+  <h1 class="page-title">Businesses</h1>
+  <p class="page-subtitle">Discover businesses and their locations.</p>
 
-<div class="card">
-
-<h2>Businesses</h2>
-
-<p>
-Discover businesses, restaurants, hotels, shops and other
-business accounts on RockyX.
-</p>
-
-<input
-id="businessSearch"
-placeholder="Search businesses"
-oninput="renderBusinesses()">
-
-<select
-id="businessType"
-onchange="renderBusinesses()">
-
-<option>All</option>
-<option>Shop</option>
-<option>Restaurant</option>
-<option>Hotel</option>
-<option>Beauty</option>
-<option>Technology</option>
-<option>Other</option>
-
-</select>
-
-</div>
-
-<div
-id="businessList"
-class="grid">
-</div>
-
+  <div class="grid grid-2" id="businessList"></div>
 </section>
 
 
 <!-- BUSINESS PROFILE -->
-
 <section id="businessProfile" class="page">
+  <h1 class="page-title">Business Profile</h1>
 
-<div id="businessProfileOut"></div>
-
+  <div id="businessProfileContent"></div>
 </section>
 
 
 <!-- CREATE BUSINESS -->
-
 <section id="createBusiness" class="page">
+  <h1 class="page-title">Create Business</h1>
 
-<div class="card">
+  <div class="card">
+    <div class="form-group">
+      <label>Business name</label>
+      <input id="businessName" class="input">
+    </div>
 
-<h2>Create Business Profile</h2>
+    <div class="form-group">
+      <label>Category</label>
+      <select id="businessCategory">
+        <option>Shop</option>
+        <option>Restaurant</option>
+        <option>Hotel</option>
+        <option>Beauty</option>
+        <option>Technology</option>
+        <option>Other</option>
+      </select>
+    </div>
 
-<input
-id="bizName"
-placeholder="Business name">
+    <div class="form-group">
+      <label>Business description</label>
+      <textarea id="businessDescription"></textarea>
+    </div>
 
-<select id="bizType">
-
-<option>Shop</option>
-<option>Restaurant</option>
-<option>Hotel</option>
-<option>Beauty</option>
-<option>Technology</option>
-<option>Other</option>
-
-</select>
-
-<textarea
-id="bizDescription"
-placeholder="Business description">
-</textarea>
-
-<input
-id="bizPhone"
-placeholder="Business phone">
-
-<input
-id="bizLocation"
-placeholder="Business location">
-
-<input
-id="bizHours"
-placeholder="Opening hours">
-
-<label class="check">
-
-<input
-id="bizVerified"
-type="checkbox">
-
-Request verification later
-
-</label>
-
-<button
-class="btn blue"
-onclick="createBusiness()">
-
-Create Business
-
-</button>
-
-</div>
-
+    <button class="btn" onclick="createBusiness()">Create Business</button>
+  </div>
 </section>
 
 
 <!-- BUSINESS TOOLS -->
-
 <section id="businessTools" class="page">
+  <h1 class="page-title">Business Tools</h1>
 
-<div class="card">
-
-<h2>Business Tools</h2>
-
-<div class="grid">
-
-<button
-class="btn"
-onclick="show('createBusiness')">
-Business Profile
-</button>
-
-<button
-class="btn"
-onclick="show('businessProducts')">
-Products
-</button>
-
-<button
-class="btn"
-onclick="show('businessServices')">
-Services
-</button>
-
-<button
-class="btn"
-onclick="show('businessBookings')">
-Bookings
-</button>
-
-<button
-class="btn"
-onclick="show('businessEarnings')">
-Earnings
-</button>
-
-<button
-class="btn"
-onclick="show('businessAnalytics')">
-Analytics
-</button>
-
-</div>
-
-</div>
-
+  <div class="grid grid-3">
+    <div class="card"><h3>📦 Products</h3></div>
+    <div class="card"><h3>🛠️ Services</h3></div>
+    <div class="card"><h3>📊 Analytics</h3></div>
+    <div class="card"><h3>💰 Earnings</h3></div>
+    <div class="card"><h3>📅 Bookings</h3></div>
+    <div class="card"><h3>⭐ Reviews</h3></div>
+  </div>
 </section>
 
 
-<!-- BUSINESS PRODUCTS -->
-
-<section id="businessProducts" class="page">
-
-<div class="card">
-
-<h2>Business Products</h2>
-
-<input
-id="bpName"
-placeholder="Product name">
-
-<input
-id="bpPrice"
-type="number"
-placeholder="Price">
-
-<button
-class="btn blue"
-onclick="addBusinessProduct()">
-
-Add Product
-
-</button>
-
-<div id="bpList"></div>
-
-</div>
-
-</section>
-
-
-<!-- BUSINESS SERVICES -->
-
-<section id="businessServices" class="page">
-
-<div class="card">
-
-<h2>Business Services</h2>
-
-<input
-id="bsName"
-placeholder="Service name">
-
-<input
-id="bsPrice"
-type="number"
-placeholder="Starting price">
-
-<textarea
-id="bsDescription"
-placeholder="Service description">
-</textarea>
-
-<button
-class="btn blue"
-onclick="addBusinessService()">
-
-Add Service
-
-</button>
-
-<div id="bsList"></div>
-
-</div>
-
-</section>
-
-
-<!-- STAGE 7: SERVICES -->
-
+<!-- SERVICES -->
 <section id="services" class="page">
+  <h1 class="page-title">Services</h1>
 
-<div class="card">
+  <div class="card">
+    <input id="serviceSearch"
+      class="input"
+      placeholder="Search services..."
+      oninput="renderServices(this.value)">
+  </div>
 
-<h2>Services</h2>
-
-<p>
-Find service providers and send booking or service requests.
-</p>
-
-<input
-id="serviceSearch"
-placeholder="Search services"
-oninput="renderServices()">
-
-<select
-id="serviceCategory"
-onchange="renderServices()">
-
-<option>All</option>
-<option>Cleaning</option>
-<option>Plumbing</option>
-<option>Electrician</option>
-<option>Beauty</option>
-<option>Photography</option>
-<option>Repair</option>
-<option>Delivery</option>
-<option>Other</option>
-
-</select>
-
-</div>
-
-<div
-id="serviceList"
-class="grid">
-</div>
-
+  <div id="serviceList" class="grid grid-3"></div>
 </section>
 
 
 <!-- CREATE SERVICE -->
-
 <section id="createService" class="page">
+  <h1 class="page-title">Create Service</h1>
 
-<div class="card">
+  <div class="card">
+    <div class="form-group">
+      <label>Service name</label>
+      <input id="serviceName" class="input">
+    </div>
 
-<h2>Create Service Listing</h2>
+    <div class="form-group">
+      <label>Category</label>
+      <input id="serviceCategory" class="input">
+    </div>
 
-<input
-id="providerName"
-placeholder="Provider or business name">
+    <div class="form-group">
+      <label>Price</label>
+      <input id="servicePrice" class="input" type="number">
+    </div>
 
-<input
-id="providerService"
-placeholder="Service name">
-
-<select id="providerCategory">
-
-<option>Cleaning</option>
-<option>Plumbing</option>
-<option>Electrician</option>
-<option>Beauty</option>
-<option>Photography</option>
-<option>Repair</option>
-<option>Delivery</option>
-<option>Other</option>
-
-</select>
-
-<textarea
-id="providerDescription"
-placeholder="Describe the service">
-</textarea>
-
-<input
-id="providerPrice"
-type="number"
-placeholder="Starting price">
-
-<input
-id="providerLocation"
-placeholder="Service location">
-
-<input
-id="providerPhone"
-placeholder="Phone number">
-
-<button
-class="btn blue"
-onclick="createService()">
-
-Publish Service
-
-</button>
-
-</div>
-
+    <button class="btn" onclick="createService()">Publish Service</button>
+  </div>
 </section>
 
 
 <!-- PROVIDER TOOLS -->
-
 <section id="providerTools" class="page">
+  <h1 class="page-title">Provider Tools</h1>
 
-<div class="card">
-
-<h2>Provider Tools</h2>
-
-<div class="grid">
-
-<button
-class="btn"
-onclick="show('createService')">
-Create Service
-</button>
-
-<button
-class="btn"
-onclick="show('providerBookings')">
-Bookings
-</button>
-
-<button
-class="btn"
-onclick="show('providerEarnings')">
-Earnings
-</button>
-
-<button
-class="btn"
-onclick="show('providerReviews')">
-Reviews
-</button>
-
-</div>
-
-</div>
-
+  <div class="grid grid-3">
+    <div class="card"><h3>🛠️ My Services</h3></div>
+    <div class="card"><h3>📅 Bookings</h3></div>
+    <div class="card"><h3>💰 Earnings</h3></div>
+    <div class="card"><h3>⭐ Reviews</h3></div>
+    <div class="card"><h3>📊 Analytics</h3></div>
+  </div>
 </section>
 
 
 <!-- BOOKINGS -->
-
 <section id="bookings" class="page">
+  <h1 class="page-title">Bookings</h1>
 
-<div class="card">
-
-<h2>My Bookings</h2>
-
-<div id="bookingList"></div>
-
-</div>
-
+  <div id="bookingList"></div>
 </section>
 
 
 <!-- PROVIDER BOOKINGS -->
-
 <section id="providerBookings" class="page">
+  <h1 class="page-title">Provider Bookings</h1>
 
-<div class="card">
-
-<h2>Provider Bookings</h2>
-
-<div id="providerBookingList"></div>
-
-</div>
-
+  <div class="card">
+    <p class="muted">Your incoming service bookings will appear here.</p>
+  </div>
 </section>
 
 
 <!-- BUSINESS BOOKINGS -->
-
 <section id="businessBookings" class="page">
+  <h1 class="page-title">Business Bookings</h1>
 
-<div class="card">
-
-<h2>Business Bookings</h2>
-
-<div id="businessBookingList"></div>
-
-</div>
-
+  <div class="card">
+    <p class="muted">Business bookings will appear here.</p>
+  </div>
 </section>
 
 
 <!-- PROVIDER EARNINGS -->
-
 <section id="providerEarnings" class="page">
+  <h1 class="page-title">Provider Earnings</h1>
 
-<div class="card">
+  <div class="grid grid-3">
+    <div class="stat">
+      <div class="muted">Available</div>
+      <div class="stat-number">GHS 850</div>
+    </div>
 
-<h2>Provider Earnings</h2>
+    <div class="stat">
+      <div class="muted">Pending</div>
+      <div class="stat-number">GHS 230</div>
+    </div>
 
-<div class="stats">
-
-<div class="stat">
-<b id="providerGross">GHS 0</b>
-Gross
-</div>
-
-<div class="stat">
-<b id="providerCommission">GHS 0</b>
-Commission
-</div>
-
-<div class="stat">
-<b id="providerNet">GHS 0</b>
-Available
-</div>
-
-<div class="stat">
-<b>5%</b>
-Demo Commission
-</div>
-
-</div>
-
-</div>
-
+    <div class="stat">
+      <div class="muted">Total</div>
+      <div class="stat-number">GHS 1,080</div>
+    </div>
+  </div>
 </section>
 
 
 <!-- BUSINESS EARNINGS -->
-
 <section id="businessEarnings" class="page">
+  <h1 class="page-title">Business Earnings</h1>
 
-<div class="card">
+  <div class="grid grid-3">
+    <div class="stat">
+      <div class="muted">Sales</div>
+      <div class="stat-number">GHS 4,500</div>
+    </div>
 
-<h2>Business Earnings</h2>
+    <div class="stat">
+      <div class="muted">Commission</div>
+      <div class="stat-number">GHS 225</div>
+    </div>
 
-<div class="stats">
-
-<div class="stat">
-<b id="businessGross">GHS 0</b>
-Gross
-</div>
-
-<div class="stat">
-<b id="businessCommission">GHS 0</b>
-Commission
-</div>
-
-<div class="stat">
-<b id="businessNet">GHS 0</b>
-Available
-</div>
-
-<div class="stat">
-<b>5%</b>
-Demo Commission
-</div>
-
-</div>
-
-</div>
-
+    <div class="stat">
+      <div class="muted">Net</div>
+      <div class="stat-number">GHS 4,275</div>
+    </div>
+  </div>
 </section>
 
 
 <!-- BUSINESS ANALYTICS -->
-
 <section id="businessAnalytics" class="page">
+  <h1 class="page-title">Business Analytics</h1>
 
-<div class="card">
-
-<h2>Business Analytics</h2>
-
-<div class="stats">
-
-<div class="stat">
-<b id="bizViews">0</b>
-Profile Views
-</div>
-
-<div class="stat">
-<b id="bizOrders">0</b>
-Orders
-</div>
-
-<div class="stat">
-<b id="bizBookings">0</b>
-Bookings
-</div>
-
-<div class="stat">
-<b id="bizRevenue">GHS 0</b>
-Revenue
-</div>
-
-</div>
-
-</div>
-
+  <div class="card">
+    <h3>Performance Overview</h3>
+    <p class="muted">Analytics will become connected to real business data after backend integration.</p>
+  </div>
 </section>
 
 
-<!-- REVIEWS -->
-
+<!-- PROVIDER REVIEWS -->
 <section id="providerReviews" class="page">
+  <h1 class="page-title">Provider Reviews</h1>
 
-<div class="card">
-
-<h2>Reviews</h2>
-
-<div id="reviewList"></div>
-
-</div>
-
+  <div class="card">
+    ⭐⭐⭐⭐⭐
+    <p>Customer reviews will appear here.</p>
+  </div>
 </section>
 
 
 <!-- TRANSPORT -->
-
 <section id="transport" class="page">
+  <h1 class="page-title">Transport</h1>
+  <p class="page-subtitle">Find transport services and locations.</p>
 
-<div class="card">
+  <div class="category-bar">
+    <button class="category-chip" onclick="filterTransport('Taxi')">🚕 Taxi</button>
+    <button class="category-chip" onclick="filterTransport('Ride-hailing')">🚗 Ride-hailing</button>
+    <button class="category-chip" onclick="filterTransport('Bus')">🚌 Bus</button>
+    <button class="category-chip" onclick="filterTransport('Minibus')">🚐 Minibus</button>
+    <button class="category-chip" onclick="filterTransport('Motorbike')">🏍️ Motorbike</button>
+    <button class="category-chip" onclick="filterTransport('Delivery')">📦 Delivery</button>
+    <button class="category-chip" onclick="filterTransport('Trucking')">🚛 Trucking</button>
+    <button class="category-chip" onclick="filterTransport('Car Rental')">🚘 Car Rental</button>
+    <button class="category-chip" onclick="filterTransport('Airport Transfer')">✈️ Airport</button>
+  </div>
 
-<h2>Transport</h2>
+  <div class="card">
+    <div class="flex">
+      <button class="btn" onclick="useMyLocation('transport')">
+        📍 Use My Location
+      </button>
 
-<p>
-Transport providers can offer rides, delivery and other
-transport services.
-</p>
+      <button class="btn secondary" onclick="showPage('nearby')">
+        Open Nearby
+      </button>
+    </div>
+  </div>
 
-<select id="transportType">
+  <div class="map-wrapper">
+    <div id="transportMap" class="map"></div>
+  </div>
 
-<option>Taxi</option>
-<option>Ride-hailing</option>
-<option>Bus</option>
-<option>Minibus</option>
-<option>Motorbike</option>
-<option>Delivery</option>
-<option>Trucking</option>
-<option>Car Rental</option>
-<option>Airport Transfer</option>
+  <br>
 
-</select>
-
-<input
-id="transportLocation"
-placeholder="Pickup or service location">
-
-<button
-class="btn blue"
-onclick="requestTransport()">
-
-Request Transport
-
-</button>
-
-<div class="map">
-Transport map area — Stage 8 navigation
-</div>
-
-</div>
-
+  <div id="transportList" class="grid grid-2"></div>
 </section>
 
 
 <!-- NEARBY -->
-
 <section id="nearby" class="page">
 
-<div class="card">
+  <h1 class="page-title">Nearby</h1>
+  <p class="page-subtitle">
+    Discover businesses, sellers, services, transport and useful places.
+  </p>
 
-<h2>Nearby</h2>
+  <div class="card">
 
-<p>
-Nearby discovery and real maps will be connected in Stage 8.
-</p>
+    <div class="category-bar">
 
-<div class="map">
-Nearby map area
-</div>
+      <button class="category-chip active"
+        onclick="setNearbyCategory('all',this)">
+        🌎 All
+      </button>
 
-</div>
+      <button class="category-chip"
+        onclick="setNearbyCategory('business',this)">
+        🏢 Businesses
+      </button>
+
+      <button class="category-chip"
+        onclick="setNearbyCategory('product',this)">
+        🛍️ Sellers
+      </button>
+
+      <button class="category-chip"
+        onclick="setNearbyCategory('restaurant',this)">
+        🍽️ Restaurants
+      </button>
+
+      <button class="category-chip"
+        onclick="setNearbyCategory('hotel',this)">
+        🏨 Hotels
+      </button>
+
+      <button class="category-chip"
+        onclick="setNearbyCategory('service',this)">
+        🛠️ Services
+      </button>
+
+      <button class="category-chip"
+        onclick="setNearbyCategory('transport',this)">
+        🚕 Transport
+      </button>
+
+      <button class="category-chip"
+        onclick="setNearbyCategory('fuel',this)">
+        ⛽ Fuel
+      </button>
+
+      <button class="category-chip"
+        onclick="setNearbyCategory('useful',this)">
+        📌 Useful
+      </button>
+
+    </div>
+
+    <div class="map-wrapper">
+
+      <div class="map-toolbar">
+
+        <div class="map-control map-search">
+          <input
+            id="locationSearch"
+            placeholder="Search a place or location..."
+            onkeydown="if(event.key==='Enter') searchLocation()"
+          >
+        </div>
+
+        <button class="map-control"
+          onclick="searchLocation()">
+          🔎 Search
+        </button>
+
+        <button class="map-control"
+          onclick="useMyLocation('main')">
+          📍 My Location
+        </button>
+
+        <button class="map-control"
+          onclick="clearMyLocation()">
+          Clear Location
+        </button>
+
+      </div>
+
+      <div id="map" class="map"></div>
+
+    </div>
+
+    <div id="routePanel" class="route-panel hidden"></div>
+
+  </div>
+
+
+  <div class="grid grid-2">
+
+    <div>
+      <div class="card">
+        <div class="space-between">
+          <h2>Nearby Places</h2>
+          <span id="nearbyCount" class="muted"></span>
+        </div>
+
+        <br>
+
+        <div id="nearbyList" class="location-list"></div>
+      </div>
+    </div>
+
+    <div>
+
+      <div class="card">
+
+        <h2>Location Privacy</h2>
+
+        <br>
+
+        <div class="privacy-box">
+
+          <div class="switch">
+            <input
+              id="locationSharing"
+              type="checkbox"
+              onchange="toggleLocationPrivacy()"
+            >
+
+            <label for="locationSharing">
+              Allow RockyX to use my location on this device
+            </label>
+          </div>
+
+          <br>
+
+          <p class="small muted">
+            Your browser will ask for permission before your exact location
+            is accessed. You can clear your location at any time.
+          </p>
+
+        </div>
+
+      </div>
+
+      <div class="card">
+
+        <h2>How Nearby Works</h2>
+
+        <br>
+
+        <p class="muted">
+          Choose a category, search for a place, select a marker,
+          or use your location to explore nearby places.
+        </p>
+
+        <br>
+
+        <button class="btn" onclick="showPage('navigation')">
+          🧭 Open Navigation
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- NAVIGATION -->
+<section id="navigation" class="page">
+
+  <h1 class="page-title">Navigation</h1>
+  <p class="page-subtitle">Choose an origin and destination.</p>
+
+  <div class="card">
+
+    <div class="form-group">
+      <label>Starting point</label>
+      <input
+        id="originInput"
+        class="input"
+        placeholder="Use My Location or enter a place"
+      >
+    </div>
+
+    <div class="form-group">
+      <label>Destination</label>
+      <input
+        id="destinationInput"
+        class="input"
+        placeholder="Enter destination"
+      >
+    </div>
+
+    <div class="flex">
+      <button class="btn"
+        onclick="useNavigationLocation()">
+        📍 Use My Location
+      </button>
+
+      <button class="btn"
+        onclick="calculateNavigation()">
+        🧭 Get Directions
+      </button>
+    </div>
+
+  </div>
+
+  <div id="navigationResult"></div>
+
+  <div class="card">
+    <p class="muted">
+      For full road navigation and turn-by-turn routing, the production
+      RockyX backend will connect to a dedicated routing/maps service.
+      This frontend provides the interactive map and route preview.
+    </p>
+  </div>
 
 </section>
 
 
 <!-- MESSAGES -->
-
 <section id="messages" class="page">
+  <h1 class="page-title">Messages</h1>
 
-<div class="card">
-
-<h2>Messages</h2>
-
-<div class="post">
-Alex — Hello 👋
-</div>
-
-<div class="post">
-Mary — How are you?
-</div>
-
-</div>
-
+  <div class="card">
+    <p class="muted">
+      Your conversations will appear here after backend messaging is connected.
+    </p>
+  </div>
 </section>
 
 
 <!-- NOTIFICATIONS -->
-
 <section id="notifications" class="page">
+  <h1 class="page-title">Notifications</h1>
 
-<div class="card">
+  <div class="card">
+    <div class="space-between">
+      <h2>Your Notifications</h2>
 
-<h2>Notifications</h2>
+      <div class="flex">
+        <button class="btn secondary" onclick="markNotificationsRead()">
+          Mark read
+        </button>
 
-<button
-class="btn blue"
-onclick="readAll()">
-Mark All Read
-</button>
+        <button class="btn danger" onclick="clearNotifications()">
+          Clear
+        </button>
+      </div>
+    </div>
+  </div>
 
-<button
-class="btn red"
-onclick="clearNotices()">
-Clear All
-</button>
-
-</div>
-
-<div id="notices"></div>
-
+  <div id="notificationsList"></div>
 </section>
 
 
 <!-- PROFILE -->
-
 <section id="profile" class="page">
+  <h1 class="page-title">Profile</h1>
 
-<div class="card">
-
-<h2>Your Profile</h2>
-
-<div class="stats">
-
-<div class="stat"><b>0</b>Posts</div>
-<div class="stat"><b>0</b>Followers</div>
-<div class="stat"><b>0</b>Following</div>
-<div class="stat"><b>0</b>Likes</div>
-
-</div>
-
-</div>
-
+  <div class="card">
+    <h2>Your Profile</h2>
+    <br>
+    <p><strong>Name:</strong> RockyX User</p>
+    <p><strong>Followers:</strong> 0</p>
+    <p><strong>Following:</strong> 0</p>
+  </div>
 </section>
 
 
 <!-- ACCOUNT -->
-
 <section id="account" class="page">
+  <h1 class="page-title">Account</h1>
 
-<div class="card">
+  <div class="card">
+    <h2>Account Settings</h2>
 
-<h2>Account</h2>
+    <br>
 
-<button
-class="btn blue"
-onclick="signup()">
-Create Account
-</button>
+    <div class="form-group">
+      <label>Name</label>
+      <input class="input" value="RockyX User">
+    </div>
 
-<button
-class="btn gray"
-onclick="signin()">
-Sign In
-</button>
+    <div class="form-group">
+      <label>Country</label>
+      <select>
+        <option>Ghana</option>
+        <option>Nigeria</option>
+        <option>United Kingdom</option>
+        <option>United States</option>
+        <option>Other</option>
+      </select>
+    </div>
 
-<p id="accountStatus">
-Not signed in
-</p>
-
-</div>
-
+    <button class="btn">Save Changes</button>
+  </div>
 </section>
 
 
 <!-- SETTINGS -->
-
 <section id="settings" class="page">
+  <h1 class="page-title">Settings</h1>
 
-<div class="card">
+  <div class="card">
+    <h3>Privacy</h3>
+    <br>
+    <p class="muted">
+      Manage location, profile and content privacy.
+    </p>
+    <br>
+    <button class="btn" onclick="showPage('nearby')">
+      Location Privacy
+    </button>
+  </div>
 
-<h2>Settings</h2>
+  <div class="card">
+    <h3>Security</h3>
+    <br>
+    <p class="muted">
+      Account security and authentication controls will be connected later.
+    </p>
+  </div>
 
-<label class="check">
-<input type="checkbox">
-Private account
-</label>
-
-<label class="check">
-<input type="checkbox" checked>
-Allow messages
-</label>
-
-<label class="check">
-<input type="checkbox" checked>
-Allow downloads by default
-</label>
-
-<button
-class="btn blue"
-onclick="alert('Settings saved in this demo.')">
-Save Settings
-</button>
-
-</div>
-
+  <div class="card">
+    <h3>Legal</h3>
+    <br>
+    <div class="flex">
+      <button class="btn secondary">Privacy Policy</button>
+      <button class="btn secondary">Terms</button>
+      <button class="btn secondary">Cookie Policy</button>
+      <button class="btn secondary">Community Guidelines</button>
+    </div>
+  </div>
 </section>
 
-
 </main>
+</div>
 
 
-<nav class="mobile">
+<!-- MOBILE NAV -->
+<nav class="mobile-nav">
+  <button onclick="showPage('home')">
+    <strong>🏠</strong>Home
+  </button>
 
-<button onclick="show('home')">
-🏠<br>Home
-</button>
+  <button onclick="showPage('explore')">
+    <strong>🔎</strong>Explore
+  </button>
 
-<button onclick="show('shorts')">
-🎬<br>Shorts
-</button>
+  <button onclick="showPage('nearby')">
+    <strong>📍</strong>Nearby
+  </button>
 
-<button onclick="show('market')">
-🛍️<br>Shop
-</button>
+  <button onclick="showPage('market')">
+    <strong>🛍️</strong>Market
+  </button>
 
-<button onclick="show('messages')">
-💬<br>Chat
-</button>
-
-<button onclick="show('account')">
-👤<br>Account
-</button>
-
+  <button onclick="showPage('account')">
+    <strong>👤</strong>Account
+  </button>
 </nav>
 
 
+<!-- MODAL -->
+<div id="modal" class="modal">
+  <div class="modal-box">
+    <div class="space-between">
+      <h2 id="modalTitle">Details</h2>
+      <button class="icon-btn" onclick="closeModal()">✕</button>
+    </div>
+
+    <br>
+
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+
+<!-- LEAFLET -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
 <script>
 
-const $=id=>document.getElementById(id);
-
-const esc=x=>String(x).replace(
-/[&<>"']/g,
-m=>({
-'&':'&amp;',
-'<':'&lt;',
-'>':'&gt;',
-'"':'&quot;',
-"'":'&#039;'
-}[m])
-);
+/* =========================================================
+   ROCKYX STAGE 8
+   FRONTEND ONLY
+   ========================================================= */
 
 
-const nav=[
+/* -----------------------------
+   APP DATA
+----------------------------- */
 
-['home','🏠 Home'],
-['explore','🔎 Explore'],
-['shorts','🎬 Shorts'],
-['videos','▶️ Videos'],
-['live','🔴 Live'],
-['music','🎵 Music'],
-['sounds','🔊 Sounds'],
-['camera','📷 Camera'],
-['media','🖼️ Media'],
-['creator','⭐ Creator Studio'],
-['photo','🖌️ Photo Editor'],
-['videoedit','🎞️ Video Editor'],
-['ai','✨ AI Studio'],
-['templates','🧩 Templates'],
-['createTemplate','➕ Create Template'],
-['myTemplates','📁 My Templates'],
-['program','🏆 Creator Program'],
-['analytics','📊 Template Analytics'],
-['creatorEarnings','💰 Creator Earnings'],
+let currentPage = "home";
 
-['market','🛍️ Marketplace'],
-['cart','🛒 Cart'],
-['checkout','💳 Checkout'],
-['orders','📦 Orders'],
-['transactions','🧾 Transactions'],
-['seller','🏪 Seller Tools'],
-['sellerEarnings','💵 Seller Earnings'],
-['payouts','💸 Payouts'],
+let notifications = [];
 
-['businesses','🏢 Businesses'],
-['createBusiness','➕ Create Business'],
-['businessTools','⚙️ Business Tools'],
-['businessProducts','📦 Business Products'],
-['businessServices','🛠️ Business Services'],
-['businessBookings','📅 Business Bookings'],
-['businessEarnings','💰 Business Earnings'],
-['businessAnalytics','📊 Business Analytics'],
+let cart = [];
 
-['services','🛠️ Services'],
-['createService','➕ Create Service'],
-['providerTools','⚙️ Provider Tools'],
-['bookings','📅 My Bookings'],
-['providerBookings','📋 Provider Bookings'],
-['providerEarnings','💵 Provider Earnings'],
-['providerReviews','⭐ Provider Reviews'],
+let orders = [];
 
-['transport','🚕 Transport'],
-['nearby','📍 Nearby'],
+let savedSounds = [];
 
-['messages','💬 Messages'],
-['notifications','🔔 Notifications'],
-['profile','👤 Profile'],
-['account','⚙️ Account'],
-['settings','🔐 Settings']
+let bookings = [];
 
+let businesses = [
+  {
+    id:1,
+    name:"Rocky Fashion Shop",
+    category:"Shop",
+    type:"business",
+    description:"Fashion and clothing.",
+    lat:5.6037,
+    lng:-0.1870
+  },
+  {
+    id:2,
+    name:"Golden Taste Restaurant",
+    category:"Restaurant",
+    type:"restaurant",
+    description:"Local and international food.",
+    lat:5.5600,
+    lng:-0.2050
+  },
+  {
+    id:3,
+    name:"City View Hotel",
+    category:"Hotel",
+    type:"hotel",
+    description:"Comfortable accommodation.",
+    lat:5.5800,
+    lng:-0.1700
+  }
 ];
 
 
-$('sidebar').innerHTML=nav.map(n=>
-`<button class="nav" onclick="show('${n[0]}')">${n[1]}</button>`
-).join('');
-
-
-let camStream=null;
-let rec=null;
-let chunks=[];
-
-let shorts=[];
-let longs=[];
-let cart=[];
-let orders=[];
-let tx=[];
-let payouts=[];
-let templates=[];
-let savedSounds=[];
-
-let businesses=[
-{
-id:1,
-name:'Rocky Fashion Shop',
-type:'Shop',
-description:'Fashion and clothing store.',
-phone:'0240000000',
-location:'Accra',
-hours:'8:00 AM - 6:00 PM',
-verified:false,
-products:[],
-services:[],
-rating:4.5
-},
-{
-id:2,
-name:'Golden Taste Restaurant',
-type:'Restaurant',
-description:'Local and international meals.',
-phone:'0241111111',
-location:'Accra',
-hours:'10:00 AM - 10:00 PM',
-verified:false,
-products:[],
-services:[],
-rating:4.3
-}
+let products = [
+  {
+    id:1,
+    name:"Fashion Shirt",
+    price:120,
+    seller:"Rocky Fashion Shop",
+    category:"Fashion"
+  },
+  {
+    id:2,
+    name:"Sneakers",
+    price:250,
+    seller:"Rocky Fashion Shop",
+    category:"Fashion"
+  },
+  {
+    id:3,
+    name:"Phone Accessories",
+    price:80,
+    seller:"Tech Seller",
+    category:"Electronics"
+  }
 ];
 
 
-let services=[
-
-{
-id:1,
-provider:'QuickFix Services',
-name:'Plumbing',
-category:'Plumbing',
-description:'Home plumbing and repairs.',
-price:150,
-location:'Accra',
-phone:'0242222222',
-rating:4.6
-},
-
-{
-id:2,
-provider:'Clean Home',
-name:'House Cleaning',
-category:'Cleaning',
-description:'Home and office cleaning.',
-price:200,
-location:'Accra',
-phone:'0243333333',
-rating:4.7
-},
-
-{
-id:3,
-provider:'Beauty Point',
-name:'Beauty Services',
-category:'Beauty',
-description:'Beauty and personal care services.',
-price:120,
-location:'Accra',
-phone:'0244444444',
-rating:4.4
-}
-
+let services = [
+  {
+    id:1,
+    name:"QuickFix Services",
+    category:"Repairs",
+    price:100,
+    provider:"QuickFix",
+    lat:5.5900,
+    lng:-0.1900
+  },
+  {
+    id:2,
+    name:"Clean Home",
+    category:"Cleaning",
+    price:150,
+    provider:"Clean Home",
+    lat:5.5700,
+    lng:-0.1800
+  },
+  {
+    id:3,
+    name:"Beauty Point",
+    category:"Beauty",
+    price:120,
+    provider:"Beauty Point",
+    lat:5.6100,
+    lng:-0.2000
+  }
 ];
 
 
-let bookings=[];
-
-let businessProducts=[];
-
-let businessServices=[];
-
-let reviews=[
-
-{
-provider:'QuickFix Services',
-rating:5,
-text:'Good service.'
-},
-
-{
-provider:'Clean Home',
-rating:4,
-text:'Very professional.'
-}
-
+let transportPlaces = [
+  {
+    id:1,
+    name:"City Taxi",
+    category:"Taxi",
+    lat:5.6000,
+    lng:-0.1900
+  },
+  {
+    id:2,
+    name:"Rocky Ride",
+    category:"Ride-hailing",
+    lat:5.5750,
+    lng:-0.1950
+  },
+  {
+    id:3,
+    name:"Airport Transfer",
+    category:"Airport Transfer",
+    lat:5.6050,
+    lng:-0.1700
+  },
+  {
+    id:4,
+    name:"Delivery Rider",
+    category:"Delivery",
+    lat:5.5850,
+    lng:-0.2100
+  }
 ];
 
 
-let notices=[
-
-{
-id:1,
-title:'Welcome',
-message:'Your RockyX notification center is ready.',
-read:false,
-time:new Date().toLocaleString()
-}
-
+let usefulPlaces = [
+  {
+    id:1,
+    name:"Fuel Station",
+    category:"fuel",
+    type:"fuel",
+    lat:5.5950,
+    lng:-0.1750
+  },
+  {
+    id:2,
+    name:"Hospital",
+    category:"useful",
+    type:"useful",
+    lat:5.5700,
+    lng:-0.1600
+  },
+  {
+    id:3,
+    name:"Police Station",
+    category:"useful",
+    type:"useful",
+    lat:5.6150,
+    lng:-0.1850
+  }
 ];
 
 
-function show(id){
+/* -----------------------------
+   MAP VARIABLES
+----------------------------- */
 
-document
-.querySelectorAll('.page')
-.forEach(p=>p.classList.remove('active'));
+let mainMap = null;
 
-if($(id))
-$(id).classList.add('active');
+let transportMap = null;
 
-window.scrollTo(0,0);
+let mainMarkers = [];
 
-if(id==='market')
-renderProducts();
+let transportMarkers = [];
 
-if(id==='cart')
-renderCart();
+let userMarker = null;
 
-if(id==='checkout')
-renderCheckout();
+let userCircle = null;
 
-if(id==='orders')
-renderOrders();
+let userCoordinates = null;
 
-if(id==='transactions')
-renderTx();
+let selectedDestination = null;
 
-if(id==='sellerEarnings')
-renderSeller();
+let nearbyCategory = "all";
 
-if(id==='payouts')
-renderPayouts();
+let routeLine = null;
 
-if(id==='notifications')
-renderNotices();
 
-if(id==='templates'||id==='myTemplates')
-renderTemplates();
+/* -----------------------------
+   PAGE NAVIGATION
+----------------------------- */
 
-if(id==='sounds')
-renderSounds();
+function showPage(page){
 
-if(id==='businesses')
-renderBusinesses();
+  currentPage = page;
 
-if(id==='services')
-renderServices();
+  document.querySelectorAll(".page").forEach(p=>{
+    p.classList.remove("active");
+  });
 
-if(id==='bookings')
-renderBookings();
+  const target = document.getElementById(page);
 
-if(id==='providerBookings')
-renderProviderBookings();
+  if(target){
+    target.classList.add("active");
+  }
 
-if(id==='businessBookings')
-renderBusinessBookings();
+  document.querySelectorAll(".nav-btn").forEach(btn=>{
+    btn.classList.remove("active");
 
-if(id==='providerEarnings')
-renderProviderEarnings();
+    if(btn.dataset.page === page){
+      btn.classList.add("active");
+    }
+  });
 
-if(id==='businessEarnings')
-renderBusinessEarnings();
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
 
-if(id==='businessAnalytics')
-renderBusinessAnalytics();
 
-if(id==='providerReviews')
-renderReviews();
+  if(page === "nearby"){
+    setTimeout(()=>{
+      initMainMap();
+      renderNearby();
+    },100);
+  }
+
+
+  if(page === "navigation"){
+    setTimeout(()=>{
+      initMainMap();
+    },100);
+  }
+
+
+  if(page === "transport"){
+    setTimeout(()=>{
+      initTransportMap();
+    },100);
+  }
+
+
+  if(page === "businesses"){
+    renderBusinesses();
+  }
+
+
+  if(page === "services"){
+    renderServices();
+  }
+
+
+  if(page === "market"){
+    renderProducts();
+  }
+
+
+  if(page === "cart"){
+    renderCart();
+  }
+
+
+  if(page === "orders"){
+    renderOrders();
+  }
+
+
+  if(page === "notifications"){
+    renderNotifications();
+  }
+
+
+  if(page === "sounds"){
+    renderSavedSounds();
+  }
+
+
+  if(page === "music"){
+    renderMusic();
+  }
+}
+
+
+/* -----------------------------
+   NOTIFICATIONS
+----------------------------- */
+
+function notify(message){
+
+  notifications.unshift({
+    id:Date.now(),
+    message:message,
+    read:false,
+    time:new Date().toLocaleTimeString()
+  });
+
+  updateNotificationBadge();
+
+  renderNotifications();
+}
+
+
+function renderNotifications(){
+
+  const box = document.getElementById("notificationsList");
+
+  if(!box) return;
+
+  if(notifications.length === 0){
+
+    box.innerHTML = `
+      <div class="card">
+        <p class="muted">No notifications yet.</p>
+      </div>
+    `;
+
+    return;
+  }
+
+
+  box.innerHTML = notifications.map(n=>`
+
+    <div class="card" style="${n.read ? "" : "border-left:4px solid #2563eb;"}">
+
+      <div class="space-between">
+
+        <div>
+          <strong>${escapeHTML(n.message)}</strong>
+          <div class="small muted">${n.time}</div>
+        </div>
+
+        ${
+          n.read
+          ? `<span class="tag">Read</span>`
+          : `<span class="tag">New</span>`
+        }
+
+      </div>
+
+    </div>
+
+  `).join("");
+}
+
+
+function markNotificationsRead(){
+
+  notifications.forEach(n=>{
+    n.read = true;
+  });
+
+  updateNotificationBadge();
+
+  renderNotifications();
+}
+
+
+function clearNotifications(){
+
+  notifications = [];
+
+  updateNotificationBadge();
+
+  renderNotifications();
+}
+
+
+function updateNotificationBadge(){
+
+  const badge = document.getElementById("notificationBadge");
+
+  if(!badge) return;
+
+  const unread = notifications.filter(n=>!n.read).length;
+
+  badge.textContent = unread;
+
+  badge.style.display = unread ? "flex" : "none";
+}
+
+
+/* -----------------------------
+   MAP INITIALIZATION
+----------------------------- */
+
+function initMainMap(){
+
+  const mapElement = document.getElementById("map");
+
+  if(!mapElement) return;
+
+
+  if(mainMap){
+
+    setTimeout(()=>{
+      mainMap.invalidateSize();
+    },200);
+
+    return;
+  }
+
+
+  mainMap = L.map("map").setView(
+    [5.6037,-0.1870],
+    12
+  );
+
+
+  L.tileLayer(
+    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+    {
+      maxZoom:19,
+      attribution:"© OpenStreetMap contributors"
+    }
+  ).addTo(mainMap);
+
+
+  mainMap.on("click",function(e){
+
+    selectedDestination = {
+      lat:e.latlng.lat,
+      lng:e.latlng.lng,
+      name:"Selected map location"
+    };
+
+    showDestinationMarker(
+      e.latlng.lat,
+      e.latlng.lng,
+      "Selected location"
+    );
+
+  });
+
+
+  renderNearbyMarkers();
+
+  setTimeout(()=>{
+    mainMap.invalidateSize();
+  },200);
+}
+
+
+/* -----------------------------
+   TRANSPORT MAP
+----------------------------- */
+
+function initTransportMap(){
+
+  const mapElement = document.getElementById("transportMap");
+
+  if(!mapElement) return;
+
+
+  if(transportMap){
+
+    setTimeout(()=>{
+      transportMap.invalidateSize();
+    },200);
+
+    return;
+  }
+
+
+  transportMap = L.map("transportMap").setView(
+    [5.6037,-0.1870],
+    12
+  );
+
+
+  L.tileLayer(
+    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+    {
+      maxZoom:19,
+      attribution:"© OpenStreetMap contributors"
+    }
+  ).addTo(transportMap);
+
+
+  renderTransportMarkers();
+
+  renderTransportList();
+
+  setTimeout(()=>{
+    transportMap.invalidateSize();
+  },200);
+}
+
+
+/* -----------------------------
+   MARKER ICON
+----------------------------- */
+
+function getIcon(category){
+
+  let emoji = "📍";
+
+  if(category === "business") emoji="🏢";
+  if(category === "restaurant") emoji="🍽️";
+  if(category === "hotel") emoji="🏨";
+  if(category === "product") emoji="🛍️";
+  if(category === "service") emoji="🛠️";
+  if(category === "transport") emoji="🚕";
+  if(category === "fuel") emoji="⛽";
+  if(category === "useful") emoji="📌";
+
+  return L.divIcon({
+
+    className:"custom-map-icon",
+
+    html:`
+      <div style="
+        width:38px;
+        height:38px;
+        background:#fff;
+        border:2px solid #2563eb;
+        border-radius:50%;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        font-size:19px;
+        box-shadow:0 2px 8px rgba(0,0,0,.25);
+      ">
+        ${emoji}
+      </div>
+    `,
+
+    iconSize:[38,38],
+
+    iconAnchor:[19,19]
+
+  });
+}
+
+
+/* -----------------------------
+   NEARBY DATA
+----------------------------- */
+
+function getNearbyItems(){
+
+  const items = [];
+
+
+  businesses.forEach(b=>{
+
+    items.push({
+
+      id:"business-"+b.id,
+
+      name:b.name,
+
+      category:b.category === "Restaurant"
+        ? "restaurant"
+        : b.category === "Hotel"
+        ? "hotel"
+        : "business",
+
+      type:b.type,
+
+      description:b.description,
+
+      lat:b.lat,
+
+      lng:b.lng
+
+    });
+
+  });
+
+
+  products.forEach(p=>{
+
+    const sellerBusiness =
+      businesses.find(
+        b=>b.name === p.seller
+      );
+
+    items.push({
+
+      id:"product-"+p.id,
+
+      name:p.name,
+
+      category:"product",
+
+      type:"product",
+
+      description:`Seller: ${p.seller}`,
+
+      lat:sellerBusiness
+        ? sellerBusiness.lat + 0.002
+        : 5.6037,
+
+      lng:sellerBusiness
+        ? sellerBusiness.lng + 0.002
+        : -0.1870
+
+    });
+
+  });
+
+
+  services.forEach(s=>{
+
+    items.push({
+
+      id:"service-"+s.id,
+
+      name:s.name,
+
+      category:"service",
+
+      type:"service",
+
+      description:`${s.category} service`,
+
+      lat:s.lat,
+
+      lng:s.lng
+
+    });
+
+  });
+
+
+  transportPlaces.forEach(t=>{
+
+    items.push({
+
+      id:"transport-"+t.id,
+
+      name:t.name,
+
+      category:"transport",
+
+      type:"transport",
+
+      description:t.category,
+
+      lat:t.lat,
+
+      lng:t.lng
+
+    });
+
+  });
+
+
+  usefulPlaces.forEach(p=>{
+
+    items.push({
+
+      id:p.category+"-"+p.id,
+
+      name:p.name,
+
+      category:p.category,
+
+      type:p.type,
+
+      description:p.category === "fuel"
+        ? "Fuel station"
+        : "Useful place",
+
+      lat:p.lat,
+
+      lng:p.lng
+
+    });
+
+  });
+
+
+  return items;
+}
+
+
+/* -----------------------------
+   RENDER NEARBY MARKERS
+----------------------------- */
+
+function renderNearbyMarkers(){
+
+  if(!mainMap) return;
+
+
+  mainMarkers.forEach(marker=>{
+    mainMap.removeLayer(marker);
+  });
+
+  mainMarkers = [];
+
+
+  const items = getNearbyItems();
+
+
+  const filtered =
+    nearbyCategory === "all"
+    ? items
+    : items.filter(
+      item=>item.category === nearbyCategory
+    );
+
+
+  filtered.forEach(item=>{
+
+    const marker = L.marker(
+      [item.lat,item.lng],
+      {
+        icon:getIcon(item.category)
+      }
+    ).addTo(mainMap);
+
+
+    marker.bindPopup(`
+
+      <div style="min-width:190px">
+
+        <h3>${escapeHTML(item.name)}</h3>
+
+        <p>${escapeHTML(item.description || "")}</p>
+
+        <br>
+
+        <button
+          onclick="selectNearbyPlace('${item.id}')"
+          style="
+            background:#2563eb;
+            color:#fff;
+            border:0;
+            padding:8px 12px;
+            border-radius:7px;
+            cursor:pointer;
+          "
+        >
+          Directions
+        </button>
+
+      </div>
+
+    `);
+
+
+    marker.on("click",()=>{
+
+      selectedDestination = {
+
+        lat:item.lat,
+
+        lng:item.lng,
+
+        name:item.name
+
+      };
+
+    });
+
+
+    mainMarkers.push(marker);
+
+  });
+}
+
+
+/* -----------------------------
+   RENDER NEARBY LIST
+----------------------------- */
+
+function renderNearby(){
+
+  renderNearbyMarkers();
+
+  const list =
+    document.getElementById("nearbyList");
+
+  const count =
+    document.getElementById("nearbyCount");
+
+
+  if(!list) return;
+
+
+  const items = getNearbyItems();
+
+
+  const filtered =
+    nearbyCategory === "all"
+    ? items
+    : items.filter(
+      item=>item.category === nearbyCategory
+    );
+
+
+  count.textContent =
+    filtered.length + " places";
+
+
+  if(filtered.length === 0){
+
+    list.innerHTML = `
+      <p class="muted">
+        No places found in this category.
+      </p>
+    `;
+
+    return;
+  }
+
+
+  list.innerHTML = filtered.map(item=>{
+
+    const distance =
+      userCoordinates
+      ? calculateDistance(
+          userCoordinates.lat,
+          userCoordinates.lng,
+          item.lat,
+          item.lng
+        )
+      : null;
+
+
+    return `
+
+      <div class="location-card">
+
+        <div class="flex">
+
+          <div class="location-icon">
+            ${getCategoryEmoji(item.category)}
+          </div>
+
+          <div style="flex:1">
+
+            <h3>${escapeHTML(item.name)}</h3>
+
+            <p class="muted small">
+              ${escapeHTML(item.description || "")}
+            </p>
+
+            ${
+              distance !== null
+              ? `<div class="distance">${formatDistance(distance)}</div>`
+              : ""
+            }
+
+          </div>
+
+        </div>
+
+        <br>
+
+        <div class="flex">
+
+          <button
+            class="btn"
+            onclick="selectNearbyPlace('${item.id}')"
+          >
+            🧭 Directions
+          </button>
+
+          <button
+            class="btn secondary"
+            onclick="focusPlace(${item.lat},${item.lng})"
+          >
+            📍 View
+          </button>
+
+        </div>
+
+      </div>
+
+    `;
+
+  }).join("");
+}
+
+
+/* -----------------------------
+   CATEGORY
+----------------------------- */
+
+function setNearbyCategory(category,button){
+
+  nearbyCategory = category;
+
+  document.querySelectorAll(
+    "#nearby .category-chip"
+  ).forEach(btn=>{
+    btn.classList.remove("active");
+  });
+
+  if(button){
+    button.classList.add("active");
+  }
+
+  renderNearby();
+}
+
+
+/* -----------------------------
+   CATEGORY EMOJI
+----------------------------- */
+
+function getCategoryEmoji(category){
+
+  if(category==="business") return "🏢";
+  if(category==="restaurant") return "🍽️";
+  if(category==="hotel") return "🏨";
+  if(category==="product") return "🛍️";
+  if(category==="service") return "🛠️";
+  if(category==="transport") return "🚕";
+  if(category==="fuel") return "⛽";
+  if(category==="useful") return "📌";
+
+  return "📍";
+}
+
+
+/* -----------------------------
+   SELECT PLACE
+----------------------------- */
+
+function selectNearbyPlace(id){
+
+  const items = getNearbyItems();
+
+  const item =
+    items.find(x=>x.id===id);
+
+  if(!item) return;
+
+
+  selectedDestination = {
+
+    lat:item.lat,
+
+    lng:item.lng,
+
+    name:item.name
+
+  };
+
+
+  if(mainMap){
+
+    mainMap.setView(
+      [item.lat,item.lng],
+      15
+    );
+
+    showDestinationMarker(
+      item.lat,
+      item.lng,
+      item.name
+    );
+
+  }
+
+
+  calculateRouteTo(
+    item.lat,
+    item.lng,
+    item.name
+  );
+}
+
+
+/* -----------------------------
+   FOCUS PLACE
+----------------------------- */
+
+function focusPlace(lat,lng){
+
+  if(!mainMap) return;
+
+  mainMap.setView(
+    [lat,lng],
+    16
+  );
 
 }
 
 
-function notify(title,message){
+/* -----------------------------
+   DESTINATION MARKER
+----------------------------- */
 
-notices.unshift({
+let destinationMarker = null;
 
-id:Date.now()+Math.random(),
+function showDestinationMarker(lat,lng,name){
 
-title:title,
-
-message:message,
-
-read:false,
-
-time:new Date().toLocaleString()
-
-});
-
-renderNotices();
-
-}
+  if(!mainMap) return;
 
 
-function renderNotices(){
+  if(destinationMarker){
 
-let n=$('notices');
+    mainMap.removeLayer(destinationMarker);
 
-if(!n)return;
+  }
 
-n.innerHTML=notices.length?
 
-notices.map(x=>
+  destinationMarker =
+    L.marker(
+      [lat,lng]
+    ).addTo(mainMap);
 
-`<div class="notify ${x.read?'':'unread'}">
 
-<h3>
-${x.read?'':'<span class="dot"></span>'}
-${esc(x.title)}
-</h3>
-
-<p>${esc(x.message)}</p>
-
-<small>${esc(x.time)}</small>
-
-${x.read?'':`
-
-<br>
-
-<button
-class="btn gray"
-onclick="readNotice(${x.id})">
-Mark Read
-</button>
-
-`}
-
-</div>`
-
-).join('')
-
-:
-
-'<div class="card">No notifications.</div>';
-
-let u=notices.filter(x=>!x.read).length;
-
-$('badge').textContent=u;
-
-$('badge').classList.toggle('show',u>0);
+  destinationMarker.bindPopup(
+    `<strong>${escapeHTML(name)}</strong>`
+  ).openPopup();
 
 }
 
 
-function readNotice(id){
+/* -----------------------------
+   GEOLOCATION
+----------------------------- */
 
-let n=notices.find(x=>x.id===id);
+function useMyLocation(source){
 
-if(n)n.read=true;
+  if(!navigator.geolocation){
 
-renderNotices();
+    alert("Your browser does not support location.");
+
+    return;
+
+  }
+
+
+  navigator.geolocation.getCurrentPosition(
+
+    function(position){
+
+      const lat =
+        position.coords.latitude;
+
+      const lng =
+        position.coords.longitude;
+
+
+      userCoordinates = {
+        lat:lat,
+        lng:lng
+      };
+
+
+      if(source === "transport"){
+
+        initTransportMap();
+
+        setTimeout(()=>{
+
+          if(transportMap){
+
+            transportMap.setView(
+              [lat,lng],
+              15
+            );
+
+            showTransportUserLocation(
+              lat,lng
+            );
+
+          }
+
+        },100);
+
+      }else{
+
+        initMainMap();
+
+        setTimeout(()=>{
+
+          if(mainMap){
+
+            mainMap.setView(
+              [lat,lng],
+              15
+            );
+
+            showUserLocation(
+              lat,lng
+            );
+
+            renderNearby();
+
+          }
+
+        },100);
+
+      }
+
+
+      notify("Your location was used on this device.");
+
+    },
+
+    function(error){
+
+      let message =
+        "Location permission was not granted.";
+
+      if(error.code === 1){
+        message =
+          "Location permission was denied. You can enable it in your browser settings.";
+      }
+
+      if(error.code === 2){
+        message =
+          "Your location could not be determined.";
+      }
+
+      if(error.code === 3){
+        message =
+          "Location request timed out.";
+      }
+
+      alert(message);
+
+    },
+
+    {
+      enableHighAccuracy:true,
+      timeout:10000,
+      maximumAge:60000
+    }
+
+  );
+}
+
+
+/* -----------------------------
+   USER LOCATION
+----------------------------- */
+
+function showUserLocation(lat,lng){
+
+  if(!mainMap) return;
+
+
+  if(userMarker){
+
+    mainMap.removeLayer(userMarker);
+
+  }
+
+
+  if(userCircle){
+
+    mainMap.removeLayer(userCircle);
+
+  }
+
+
+  userMarker =
+    L.marker(
+      [lat,lng],
+      {
+        icon:L.divIcon({
+
+          className:"user-location-icon",
+
+          html:`
+            <div style="
+              width:20px;
+              height:20px;
+              border-radius:50%;
+              background:#2563eb;
+              border:4px solid white;
+              box-shadow:0 0 0 4px rgba(37,99,235,.25);
+            "></div>
+          `,
+
+          iconSize:[20,20],
+
+          iconAnchor:[10,10]
+
+        })
+      }
+    ).addTo(mainMap);
+
+
+  userMarker.bindPopup(
+    "Your location"
+  );
+
+
+  userCircle =
+    L.circle(
+      [lat,lng],
+      {
+        radius:100,
+        color:"#2563eb",
+        fillOpacity:.08
+      }
+    ).addTo(mainMap);
 
 }
 
 
-function readAll(){
+/* -----------------------------
+   TRANSPORT USER LOCATION
+----------------------------- */
 
-notices.forEach(n=>n.read=true);
+function showTransportUserLocation(lat,lng){
 
-renderNotices();
-
-}
-
-
-function clearNotices(){
-
-if(confirm('Clear all notifications?')){
-
-notices=[];
-
-renderNotices();
-
-}
-
-}
+  if(!transportMap) return;
 
 
-function post(){
+  L.marker(
+    [lat,lng],
+    {
+      icon:L.divIcon({
 
-let t=$('postText').value.trim();
+        className:"transport-user",
 
-let f=$('postFile').files[0];
+        html:`
+          <div style="
+            width:20px;
+            height:20px;
+            border-radius:50%;
+            background:#16a34a;
+            border:4px solid white;
+          "></div>
+        `,
 
-if(!t&&!f)
-return alert('Write something or choose media.');
+        iconSize:[20,20],
 
-let media='';
+        iconAnchor:[10,10]
 
-if(f){
-
-let u=URL.createObjectURL(f);
-
-media=f.type.startsWith('image')
-
-?`<img src="${u}">`
-:`<video src="${u}" controls></video>`;
-
-}
-
-$('feed').insertAdjacentHTML(
-
-'afterbegin',
-
-`<div class="post">
-
-<b>You</b>
-
-<p>${esc(t)}</p>
-
-${media}
-
-<div>
-
-<button class="btn gray">❤️ Like</button>
-<button class="btn gray">💬 Comment</button>
-<button class="btn gray">↗ Share</button>
-<button class="btn gray">🔖 Save</button>
-
-</div>
-
-</div>`
-
-);
-
-$('postText').value='';
-$('postFile').value='';
+      })
+    }
+  )
+  .addTo(transportMap)
+  .bindPopup("Your location")
+  .openPopup();
 
 }
 
 
-function globalSearch(){
+/* -----------------------------
+   CLEAR LOCATION
+----------------------------- */
 
-let q=$('globalSearch').value||
-$('exploreSearch').value||
-'';
+function clearMyLocation(){
 
-show('explore');
-
-$('results').innerHTML=
-
-`<div class="card">
-
-<h2>Search Results</h2>
-
-<p>
-Demo results for <b>${esc(q||'everything')}</b>.
-</p>
-
-</div>`;
-
-}
+  userCoordinates = null;
 
 
-async function startCam(){
+  if(mainMap){
 
-try{
+    if(userMarker){
+      mainMap.removeLayer(userMarker);
+      userMarker=null;
+    }
 
-camStream=
-await navigator.mediaDevices.getUserMedia({
-video:true,
-audio:true
-});
+    if(userCircle){
+      mainMap.removeLayer(userCircle);
+      userCircle=null;
+    }
 
-$('cam').srcObject=camStream;
+  }
 
-}catch(e){
 
-alert('Camera permission was not granted.');
+  renderNearby();
 
-}
+  notify("Your location was cleared from the map.");
 
 }
 
 
-function stopCam(){
+/* -----------------------------
+   PRIVACY
+----------------------------- */
 
-if(camStream){
+function toggleLocationPrivacy(){
 
-camStream
-.getTracks()
-.forEach(t=>t.stop());
+  const checkbox =
+    document.getElementById(
+      "locationSharing"
+    );
 
-camStream=null;
-
-$('cam').srcObject=null;
-
-}
-
-}
+  if(!checkbox) return;
 
 
-function camFilter(){
+  if(checkbox.checked){
 
-let v=$('camFilter').value;
+    localStorage.setItem(
+      "rockyx_location_permission",
+      "enabled"
+    );
 
-$('cam').style.filter=
+    notify(
+      "Location access is enabled for this device."
+    );
 
-v==='grayscale'
-?'grayscale(100%)'
-:v==='sepia'
-?'sepia(100%)'
-:v==='brightness'
-?'brightness(140%)'
-:v==='contrast'
-?'contrast(150%)'
-:'none';
+  }else{
 
-}
+    localStorage.removeItem(
+      "rockyx_location_permission"
+    );
 
+    clearMyLocation();
 
-function takePhoto(){
+    notify(
+      "Location access was disabled."
+    );
 
-let v=$('cam');
-let c=$('canvas');
-
-if(!v.videoWidth)
-return alert('Start the camera first.');
-
-c.width=v.videoWidth;
-c.height=v.videoHeight;
-
-c.getContext('2d').drawImage(v,0,0);
-
-c.toBlob(b=>{
-
-let u=URL.createObjectURL(b);
-
-$('cameraOut').insertAdjacentHTML(
-
-'beforeend',
-
-`<div class="card">
-
-<img src="${u}" style="max-width:100%">
-
-<br>
-
-<a
-class="btn blue"
-href="${u}"
-download="RockyX-photo.jpg">
-Download Photo
-</a>
-
-</div>`
-
-);
-
-},'image/jpeg');
+  }
 
 }
 
 
-function record(){
+/* -----------------------------
+   DISTANCE
+----------------------------- */
 
-if(!camStream)
-return alert('Start the camera first.');
+function calculateDistance(
+  lat1,
+  lon1,
+  lat2,
+  lon2
+){
 
-chunks=[];
+  const R = 6371;
 
-rec=new MediaRecorder(camStream);
+  const dLat =
+    (lat2-lat1)*Math.PI/180;
 
-rec.ondataavailable=e=>chunks.push(e.data);
+  const dLon =
+    (lon2-lon1)*Math.PI/180;
 
-rec.onstop=()=>{
 
-let u=URL.createObjectURL(
+  const a =
+    Math.sin(dLat/2) *
+    Math.sin(dLat/2) +
 
-new Blob(chunks,{type:'video/webm'})
+    Math.cos(lat1*Math.PI/180) *
+    Math.cos(lat2*Math.PI/180) *
 
-);
+    Math.sin(dLon/2) *
+    Math.sin(dLon/2);
 
-$('cameraOut').insertAdjacentHTML(
 
-'beforeend',
+  const c =
+    2 *
+    Math.atan2(
+      Math.sqrt(a),
+      Math.sqrt(1-a)
+    );
 
-`<div class="card">
 
-<video
-src="${u}"
-controls
-style="width:100%">
-</video>
+  return R*c;
+}
 
-<a
-class="btn blue"
-href="${u}"
-download="RockyX-camera.webm">
-Download Video
-</a>
 
-</div>`
+function formatDistance(km){
 
-);
+  if(km < 1){
 
-};
+    return Math.round(km*1000)+" m away";
 
-rec.start();
+  }
 
-alert('Recording started.');
+  return km.toFixed(1)+" km away";
+}
+
+
+/* -----------------------------
+   ROUTE
+----------------------------- */
+
+async function calculateRouteTo(
+  lat,
+  lng,
+  name
+){
+
+  if(!userCoordinates){
+
+    alert(
+      "Use My Location first so RockyX can calculate the route."
+    );
+
+    return;
+
+  }
+
+
+  selectedDestination = {
+    lat:lat,
+    lng:lng,
+    name:name
+  };
+
+
+  const panel =
+    document.getElementById(
+      "routePanel"
+    );
+
+
+  panel.classList.remove("hidden");
+
+  panel.innerHTML = `
+    <strong>🧭 Route to ${escapeHTML(name)}</strong>
+    <br><br>
+    Calculating route...
+  `;
+
+
+  try{
+
+    /*
+      OSRM demo routing service.
+
+      Production RockyX will use a dedicated
+      routing service/backend.
+    */
+
+    const url =
+      `https://router.project-osrm.org/route/v1/driving/`+
+      `${userCoordinates.lng},${userCoordinates.lat};`+
+      `${lng},${lat}`+
+      `?overview=full&geometries=geojson`;
+
+
+    const response =
+      await fetch(url);
+
+
+    if(!response.ok){
+
+      throw new Error(
+        "Routing service unavailable"
+      );
+
+    }
+
+
+    const data =
+      await response.json();
+
+
+    if(
+      !data.routes ||
+      !data.routes.length
+    ){
+
+      throw new Error(
+        "No route found"
+      );
+
+    }
+
+
+    const route =
+      data.routes[0];
+
+
+    const distance =
+      route.distance / 1000;
+
+
+    const duration =
+      route.duration / 60;
+
+
+    if(routeLine){
+
+      mainMap.removeLayer(
+        routeLine
+      );
+
+    }
+
+
+    routeLine =
+      L.geoJSON(
+        route.geometry,
+        {
+          style:{
+            weight:5,
+            opacity:.8
+          }
+        }
+      ).addTo(mainMap);
+
+
+    mainMap.fitBounds(
+      routeLine.getBounds(),
+      {
+        padding:[40,40]
+      }
+    );
+
+
+    panel.innerHTML = `
+
+      <strong>
+        🧭 Route to ${escapeHTML(name)}
+      </strong>
+
+      <br><br>
+
+      <div class="grid grid-2">
+
+        <div>
+          <strong>Distance</strong>
+          <br>
+          ${distance.toFixed(1)} km
+        </div>
+
+        <div>
+          <strong>Estimated driving time</strong>
+          <br>
+          ${Math.round(duration)} minutes
+        </div>
+
+      </div>
+
+      <br>
+
+      <div class="flex">
+
+        <button
+          class="btn"
+          onclick="openExternalDirections()"
+        >
+          Open Navigation
+        </button>
+
+        <button
+          class="btn secondary"
+          onclick="clearRoute()"
+        >
+          Clear Route
+        </button>
+
+      </div>
+
+    `;
+
+
+  }catch(error){
+
+    console.log(error);
+
+
+    const distance =
+      calculateDistance(
+        userCoordinates.lat,
+        userCoordinates.lng,
+        lat,
+        lng
+      );
+
+
+    panel.innerHTML = `
+
+      <strong>
+        📍 ${escapeHTML(name)}
+      </strong>
+
+      <br><br>
+
+      Approximate straight-line distance:
+      <strong>
+        ${formatDistance(distance)}
+      </strong>
+
+      <br><br>
+
+      <p class="small muted">
+        Road routing is temporarily unavailable.
+        You can still open external navigation.
+      </p>
+
+      <br>
+
+      <button
+        class="btn"
+        onclick="openExternalDirections()"
+      >
+        Open Navigation
+      </button>
+
+    `;
+
+  }
 
 }
 
 
-function stopRecord(){
+/* -----------------------------
+   CLEAR ROUTE
+----------------------------- */
 
-if(rec&&rec.state!=='inactive'){
+function clearRoute(){
 
-rec.stop();
+  if(routeLine && mainMap){
 
-alert('Recording stopped.');
+    mainMap.removeLayer(routeLine);
 
-}
+    routeLine=null;
 
-}
+  }
 
 
-function media(){
+  const panel =
+    document.getElementById(
+      "routePanel"
+    );
 
-[...$('mediaIn').files].forEach(f=>{
 
-let u=URL.createObjectURL(f);
-
-$('mediaOut').insertAdjacentHTML(
-
-'beforeend',
-
-`<div class="card">
-
-${
-f.type.startsWith('image')
-?`<img src="${u}" style="width:100%">`
-:`<video src="${u}" controls style="width:100%"></video>`
-}
-
-</div>`
-
-);
-
-});
+  panel.classList.add("hidden");
 
 }
 
 
-function addVideo(short){
+/* -----------------------------
+   EXTERNAL NAVIGATION
+----------------------------- */
 
-let f=$(short?'shortIn':'longIn').files[0];
+function openExternalDirections(){
 
-if(!f)
-return alert('Choose a video first.');
+  if(
+    !selectedDestination
+  ){
 
-let allow=$(short?'shortDL':'longDL').checked;
+    alert(
+      "Select a destination first."
+    );
 
-let wm=$(short?'shortWM':'longWM').checked;
+    return;
 
-let obj={
-id:Date.now(),
-name:f.name,
-url:URL.createObjectURL(f),
-allow:allow,
-wm:wm
-};
-
-(short?shorts:longs).unshift(obj);
-
-renderVideos();
-
-alert(short?'Short published.':'Video published.');
-
-}
+  }
 
 
-function renderVideos(){
+  const destination =
+    `${selectedDestination.lat},${selectedDestination.lng}`;
 
-let card=v=>
 
-`<div class="video">
+  let url;
 
-<video
-src="${v.url}"
-controls
-playsinline>
-</video>
 
-<div class="inside">
+  if(userCoordinates){
 
-<b>${esc(v.name)}</b>
+    url =
+      `https://www.google.com/maps/dir/?api=1`+
+      `&origin=${userCoordinates.lat},${userCoordinates.lng}`+
+      `&destination=${destination}`;
 
-<div class="video-actions">
+  }else{
 
-<button class="btn gray">❤️ Like</button>
-<button class="btn gray">💬 Comment</button>
-<button class="btn gray">🔖 Save</button>
+    url =
+      `https://www.google.com/maps/search/?api=1`+
+      `&query=${destination}`;
 
-${
-v.allow?
+  }
 
-`<a
-class="btn blue"
-href="${v.url}"
-download="RockyX-${esc(v.name)}">
-⬇ Download
-</a>`
 
-:''
-}
-
-</div>
-
-<small>
-${v.allow?'Downloads allowed':'Downloads disabled'}
-${v.wm?' • watermark may apply':''}
-</small>
-
-</div>
-
-</div>`;
-
-$('shortList').innerHTML=
-shorts.map(card).join('')||
-'<div class="card">No Shorts yet.</div>';
-
-$('longList').innerHTML=
-longs.map(card).join('')||
-'<div class="card">No long videos yet.</div>';
+  window.open(
+    url,
+    "_blank"
+  );
 
 }
 
 
-function editPreview(){
+/* -----------------------------
+   SEARCH LOCATION
+----------------------------- */
 
-let f=$('editIn').files[0];
+async function searchLocation(){
 
-if(f)
-$('editPrev').src=URL.createObjectURL(f);
-
-}
-
-
-function publishEdited(short){
-
-let f=$('editIn').files[0];
-
-if(!f)
-return alert('Choose a video first.');
-
-let o={
-id:Date.now(),
-name:f.name,
-url:URL.createObjectURL(f),
-allow:$('editDL').checked,
-wm:true
-};
-
-(short?shorts:longs).unshift(o);
-
-renderVideos();
-
-alert(short?'Published as Short.':'Published video.');
-
-}
+  const input =
+    document.getElementById(
+      "locationSearch"
+    );
 
 
-function previewPhoto(){
-
-let f=$('photoIn').files[0];
-
-if(f){
-
-$('photoPrev').src=URL.createObjectURL(f);
-$('photoPrev').style.display='block';
-
-}
-
-}
+  const query =
+    input.value.trim();
 
 
-function photoFilter(v){
+  if(!query){
 
-$('photoPrev').style.filter=
+    alert(
+      "Enter a location to search."
+    );
 
-v==='grayscale'
-?'grayscale(100%)'
-:v==='sepia'
-?'sepia(100%)'
-:v==='brightness'
-?'brightness(140%)'
-:'none';
+    return;
 
-}
+  }
 
 
-function renderSounds(){
+  try{
 
-let a=[
-'Original Sound',
-'Trending Beat',
-'Afrobeat Sample',
-'Creator Sound'
-];
-
-$('soundList').innerHTML=
-
-a.map(s=>
-
-`<div class="card">
-
-<b>${s}</b>
-
-<button
-class="btn gray"
-onclick="saveSound('${s}')">
-Save Sound
-</button>
-
-</div>`
-
-).join('');
-
-$('savedSounds').innerHTML=
-
-savedSounds.map(x=>`<p>🔊 ${esc(x)}</p>`).join('')
-||
-'No saved sounds.';
-
-}
+    const url =
+      `https://nominatim.openstreetmap.org/search`+
+      `?format=json&limit=5&q=`+
+      encodeURIComponent(query);
 
 
-function saveSound(s){
+    const response =
+      await fetch(url);
 
-if(!savedSounds.includes(s))
-savedSounds.push(s);
 
-renderSounds();
+    const results =
+      await response.json();
+
+
+    if(!results.length){
+
+      alert(
+        "Location not found."
+      );
+
+      return;
+
+    }
+
+
+    const result =
+      results[0];
+
+
+    const lat =
+      parseFloat(result.lat);
+
+    const lng =
+      parseFloat(result.lon);
+
+
+    initMainMap();
+
+
+    mainMap.setView(
+      [lat,lng],
+      15
+    );
+
+
+    showDestinationMarker(
+      lat,
+      lng,
+      result.display_name
+    );
+
+
+    selectedDestination = {
+
+      lat:lat,
+
+      lng:lng,
+
+      name:result.display_name
+
+    };
+
+
+  }catch(error){
+
+    alert(
+      "Location search is temporarily unavailable."
+    );
+
+  }
 
 }
 
 
-function createTpl(){
+/* -----------------------------
+   NAVIGATION
+----------------------------- */
 
-let n=$('tplName').value.trim();
+function useNavigationLocation(){
 
-if(!n)
-return alert('Enter a template name.');
+  if(!navigator.geolocation){
 
-templates.push({
+    alert(
+      "Location is not supported."
+    );
 
-id:Date.now(),
-name:n,
-type:$('tplType').value,
-desc:$('tplDesc').value,
-premium:$('tplPremium').checked,
-status:'Draft'
+    return;
 
-});
-
-renderTemplates();
-
-notify(
-'Template saved',
-`Your template ${n} was saved as a draft.`
-);
-
-alert('Template saved.');
-
-}
+  }
 
 
-function renderTemplates(){
+  navigator.geolocation.getCurrentPosition(
 
-let my=$('myTpl');
+    position=>{
 
-if(my)
+      const lat =
+        position.coords.latitude;
 
-my.innerHTML=
+      const lng =
+        position.coords.longitude;
 
-templates.length?
 
-templates.map(t=>
+      userCoordinates = {
+        lat:lat,
+        lng:lng
+      };
 
-`<div class="card">
 
-<h3>${esc(t.name)}</h3>
+      document.getElementById(
+        "originInput"
+      ).value =
+        `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
 
-<p>${esc(t.type)} • ${t.status}</p>
 
-<button
-class="btn blue"
-onclick="publishTpl(${t.id})">
-Publish
-</button>
+      notify(
+        "Your current location was selected."
+      );
 
-</div>`
+    },
 
-).join('')
+    ()=>{
+      alert(
+        "Location permission was not granted."
+      );
+    }
 
-:'No templates yet.';
-
-let l=$('templateList');
-
-if(l)
-
-l.innerHTML=
-
-[
-'Modern Business',
-'Short Intro',
-'Music Promo',
-'Photo Story'
-].map(n=>
-
-`<div class="template">
-
-<div class="inside">
-
-<h3>${n}</h3>
-
-<button class="btn blue">
-Use Template
-</button>
-
-</div>
-
-</div>`
-
-).join('');
+  );
 
 }
 
 
-function publishTpl(id){
+async function calculateNavigation(){
 
-let t=templates.find(x=>x.id===id);
+  const destination =
+    document.getElementById(
+      "destinationInput"
+    ).value.trim();
 
-if(t){
 
-t.status='Published';
+  if(!destination){
 
-renderTemplates();
+    alert(
+      "Enter a destination."
+    );
 
-notify(
-'Template published',
-`Your template ${t.name} is published.`
-);
+    return;
+
+  }
+
+
+  if(!userCoordinates){
+
+    alert(
+      "Use My Location first."
+    );
+
+    return;
+
+  }
+
+
+  try{
+
+    const url =
+      `https://nominatim.openstreetmap.org/search`+
+      `?format=json&limit=1&q=`+
+      encodeURIComponent(destination);
+
+
+    const response =
+      await fetch(url);
+
+
+    const results =
+      await response.json();
+
+
+    if(!results.length){
+
+      alert(
+        "Destination could not be found."
+      );
+
+      return;
+
+    }
+
+
+    const result =
+      results[0];
+
+
+    const lat =
+      parseFloat(result.lat);
+
+    const lng =
+      parseFloat(result.lon);
+
+
+    selectedDestination = {
+
+      lat:lat,
+
+      lng:lng,
+
+      name:result.display_name
+
+    };
+
+
+    showPage("nearby");
+
+
+    setTimeout(()=>{
+
+      initMainMap();
+
+
+      mainMap.setView(
+        [lat,lng],
+        15
+      );
+
+
+      showDestinationMarker(
+        lat,
+        lng,
+        result.display_name
+      );
+
+
+      calculateRouteTo(
+        lat,
+        lng,
+        result.display_name
+      );
+
+    },200);
+
+
+  }catch(error){
+
+    alert(
+      "Navigation search is temporarily unavailable."
+    );
+
+  }
 
 }
 
-}
+
+/* -----------------------------
+   TRANSPORT MARKERS
+----------------------------- */
+
+function renderTransportMarkers(){
+
+  if(!transportMap) return;
 
 
-let products=[
+  transportMarkers.forEach(marker=>{
 
-{
-id:1,
-name:'Wireless Headphones',
-description:'Wireless headphones',
-price:250,
-cat:'Electronics'
-},
+    transportMap.removeLayer(marker);
 
-{
-id:2,
-name:'Classic T-Shirt',
-description:'Comfortable shirt',
-price:100,
-cat:'Fashion'
-},
-
-{
-id:3,
-name:'Bluetooth Speaker',
-description:'Portable speaker',
-price:350,
-cat:'Electronics'
-}
-
-];
+  });
 
 
-function renderProducts(){
+  transportMarkers=[];
 
-let q=($('prodSearch').value||'').toLowerCase();
 
-let c=$('prodCat').value;
+  transportPlaces.forEach(item=>{
 
-let a=products.filter(
-p=>
-p.name.toLowerCase().includes(q)&&
-(c==='All'||p.cat===c)
-);
+    const marker =
+      L.marker(
+        [item.lat,item.lng],
+        {
+          icon:getIcon("transport")
+        }
+      )
+      .addTo(transportMap);
 
-$('products').innerHTML=
 
-a.map(p=>
+    marker.bindPopup(`
 
-`<div class="product">
+      <strong>
+        ${escapeHTML(item.name)}
+      </strong>
 
-<div
-style="
-height:140px;
-background:#eee;
-display:flex;
-align-items:center;
-justify-content:center">
-Product
-</div>
+      <br>
 
-<div class="inside">
+      ${escapeHTML(item.category)}
 
-<h3>${esc(p.name)}</h3>
+      <br><br>
 
-<p>${esc(p.description)}</p>
+      <button
+        onclick="requestTransport('${item.name}')"
+        style="
+          background:#2563eb;
+          color:#fff;
+          border:0;
+          padding:8px 12px;
+          border-radius:7px;
+        "
+      >
+        Request
+      </button>
 
-<b>GHS ${p.price.toFixed(2)}</b>
+    `);
 
-<br>
 
-<button
-class="btn blue"
-onclick="addCart(${p.id})">
-Add to Cart
-</button>
+    transportMarkers.push(marker);
 
-</div>
-
-</div>`
-
-).join('')
-
-||
-'<div class="card">No products found.</div>';
+  });
 
 }
 
 
-function addCart(id){
+/* -----------------------------
+   TRANSPORT LIST
+----------------------------- */
 
-let p=products.find(x=>x.id===id);
+function renderTransportList(
+  category=""
+){
 
-let e=cart.find(x=>x.id===id);
+  const box =
+    document.getElementById(
+      "transportList"
+    );
 
-if(e)e.qty++;
-else cart.push({...p,qty:1});
 
-renderCart();
+  if(!box) return;
 
-notify(
-'Cart updated',
-`${p.name} was added to your cart.`
-);
+
+  const data =
+    category
+    ? transportPlaces.filter(
+        x=>x.category===category
+      )
+    : transportPlaces;
+
+
+  box.innerHTML =
+    data.map(item=>`
+
+      <div class="location-card">
+
+        <div class="flex">
+
+          <div class="location-icon">
+            🚕
+          </div>
+
+          <div>
+
+            <h3>
+              ${escapeHTML(item.name)}
+            </h3>
+
+            <p class="muted">
+              ${escapeHTML(item.category)}
+            </p>
+
+          </div>
+
+        </div>
+
+        <br>
+
+        <button
+          class="btn"
+          onclick="requestTransport('${item.name}')"
+        >
+          Request
+        </button>
+
+      </div>
+
+    `).join("");
+
+}
+
+
+/* -----------------------------
+   TRANSPORT FILTER
+----------------------------- */
+
+function filterTransport(category){
+
+  renderTransportList(
+    category
+  );
+
+
+  if(transportMap){
+
+    const item =
+      transportPlaces.find(
+        x=>x.category===category
+      );
+
+
+    if(item){
+
+      transportMap.setView(
+        [item.lat,item.lng],
+        14
+      );
+
+    }
+
+  }
+
+}
+
+
+/* -----------------------------
+   TRANSPORT REQUEST
+----------------------------- */
+
+function requestTransport(name){
+
+  notify(
+    `Transport request started with ${name}.`
+  );
+
+
+  alert(
+    `Transport request started with ${name}.`
+  );
+
+}
+
+
+/* -----------------------------
+   PRODUCTS
+----------------------------- */
+
+function renderProducts(search=""){
+
+  const box =
+    document.getElementById(
+      "productList"
+    );
+
+
+  if(!box) return;
+
+
+  const term =
+    search.toLowerCase();
+
+
+  const data =
+    products.filter(p=>
+      !term ||
+      p.name.toLowerCase().includes(term) ||
+      p.category.toLowerCase().includes(term) ||
+      p.seller.toLowerCase().includes(term)
+    );
+
+
+  box.innerHTML =
+    data.map(p=>`
+
+      <div class="product-card">
+
+        <div class="product-image">
+          🛍️
+        </div>
+
+        <div class="product-body">
+
+          <h3>${escapeHTML(p.name)}</h3>
+
+          <p class="muted">
+            ${escapeHTML(p.seller)}
+          </p>
+
+          <br>
+
+          <div class="space-between">
+
+            <span class="price">
+              GHS ${p.price.toFixed(2)}
+            </span>
+
+            <button
+              class="btn"
+              onclick="addToCart(${p.id})"
+            >
+              Add
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    `).join("");
+
+}
+
+
+/* -----------------------------
+   CART
+----------------------------- */
+
+function addToCart(id){
+
+  const product =
+    products.find(
+      p=>p.id===id
+    );
+
+
+  if(!product) return;
+
+
+  cart.push(product);
+
+  notify(
+    `${product.name} was added to your cart.`
+  );
+
+  alert(
+    `${product.name} added to cart.`
+  );
 
 }
 
 
 function renderCart(){
 
-let total=
-cart.reduce(
-(s,x)=>s+x.price*x.qty,0
-);
-
-$('cartOut').innerHTML=
-
-cart.length?
-
-cart.map(x=>
-
-`<div class="card">
-
-<b>${esc(x.name)}</b>
-
-<p>
-GHS ${x.price.toFixed(2)} × ${x.qty}
-</p>
-
-<button
-class="btn gray"
-onclick="qty(${x.id},-1)">
-−
-</button>
-
-<button
-class="btn gray"
-onclick="qty(${x.id},1)">
-+
-</button>
-
-<button
-class="btn red"
-onclick="removeCart(${x.id})">
-Remove
-</button>
-
-</div>`
-
-).join('')
-
-:'Cart is empty.';
-
-$('cartTotal').textContent=
-'Total: GHS '+total.toFixed(2);
-
-}
+  const box =
+    document.getElementById(
+      "cartList"
+    );
 
 
-function qty(id,n){
-
-let x=cart.find(a=>a.id===id);
-
-if(x){
-
-x.qty+=n;
-
-if(x.qty<1)
-cart=cart.filter(a=>a.id!==id);
-
-}
-
-renderCart();
-
-}
+  const totalBox =
+    document.getElementById(
+      "cartTotal"
+    );
 
 
-function removeCart(id){
-
-cart=cart.filter(x=>x.id!==id);
-
-renderCart();
-
-}
+  if(!box) return;
 
 
-function renderCheckout(){
+  if(cart.length===0){
 
-$('checkoutSummary').innerHTML=
+    box.innerHTML=`
+      <div class="card">
+        <p class="muted">Your cart is empty.</p>
+      </div>
+    `;
 
-`<div class="card">
+    if(totalBox){
+      totalBox.textContent="GHS 0.00";
+    }
 
-Demo total:
+    return;
 
-<b>
-GHS ${
-cart.reduce(
-(s,x)=>s+x.price*x.qty,0
-).toFixed(2)
-}
-</b>
+  }
 
-</div>`;
+
+  let total=0;
+
+
+  box.innerHTML =
+    cart.map((p,index)=>{
+
+      total+=p.price;
+
+      return `
+
+        <div class="card">
+
+          <div class="space-between">
+
+            <div>
+              <strong>
+                ${escapeHTML(p.name)}
+              </strong>
+
+              <div class="muted">
+                ${escapeHTML(p.seller)}
+              </div>
+            </div>
+
+            <div>
+
+              <strong>
+                GHS ${p.price.toFixed(2)}
+              </strong>
+
+              <button
+                class="btn danger"
+                onclick="removeFromCart(${index})"
+              >
+                Remove
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      `;
+
+    }).join("");
+
+
+  if(totalBox){
+
+    totalBox.textContent =
+      `GHS ${total.toFixed(2)}`;
+
+  }
 
 }
 
 
-let currentPayment=null;
+function removeFromCart(index){
 
+  cart.splice(index,1);
 
-function preparePayment(){
-
-if(!cart.length)
-return alert('Cart is empty.');
-
-if(
-!$('buyerName').value||
-!$('buyerPhone').value||
-!$('address').value
-)
-return alert('Complete delivery details.');
-
-let total=
-cart.reduce(
-(s,x)=>s+x.price*x.qty,0
-);
-
-currentPayment={
-
-id:'PAY'+Date.now(),
-total:total,
-currency:'GHS',
-name:$('buyerName').value,
-phone:$('buyerPhone').value,
-address:$('address').value,
-items:JSON.parse(JSON.stringify(cart))
-
-};
-
-$('paymentOut').innerHTML=
-
-`<div class="card">
-
-<p>Reference:
-<b>${currentPayment.id}</b>
-</p>
-
-<p>Amount:
-<b>GHS ${total.toFixed(2)}</b>
-</p>
-
-</div>`;
-
-show('payment');
+  renderCart();
 
 }
 
 
-function pay(){
+/* -----------------------------
+   ORDERS
+----------------------------- */
 
-if(!currentPayment)return;
+function placeOrder(){
 
-let p=currentPayment;
+  if(cart.length===0){
 
-let c=p.total*.05;
+    alert(
+      "Your cart is empty."
+    );
 
-let o={
+    return;
 
-id:'RX'+Date.now(),
-paymentId:p.id,
-date:new Date().toLocaleString(),
-total:p.total,
-currency:'GHS',
-commission:c,
-sellerAmount:p.total-c,
-status:'Processing',
-paymentStatus:'Paid',
-method:$('method').value
+  }
 
-};
 
-orders.unshift(o);
-tx.unshift(o);
-cart=[];
+  const name =
+    document.getElementById(
+      "checkoutName"
+    ).value.trim();
 
-notify(
-'Payment successful',
-`Your payment of GHS ${p.total.toFixed(2)} was successful. Order ${o.id} is processing.`
-);
 
-notify(
-'New order received',
-`A paid order ${o.id} was created. Seller amount: GHS ${o.sellerAmount.toFixed(2)}.`
-);
+  const phone =
+    document.getElementById(
+      "checkoutPhone"
+    ).value.trim();
 
-currentPayment=null;
 
-renderCart();
-renderOrders();
-renderTx();
-renderSeller();
+  const address =
+    document.getElementById(
+      "checkoutAddress"
+    ).value.trim();
 
-show('orders');
 
-alert('Demo payment completed successfully.');
+  if(!name || !phone || !address){
+
+    alert(
+      "Please complete the checkout information."
+    );
+
+    return;
+
+  }
+
+
+  const total =
+    cart.reduce(
+      (sum,p)=>sum+p.price,
+      0
+    );
+
+
+  const order = {
+
+    id:"RX-"+Date.now(),
+
+    name:name,
+
+    phone:phone,
+
+    address:address,
+
+    total:total,
+
+    status:"Pending",
+
+    createdAt:new Date().toLocaleString()
+
+  };
+
+
+  orders.unshift(order);
+
+  cart=[];
+
+
+  notify(
+    `Order ${order.id} was created successfully.`
+  );
+
+
+  alert(
+    `Order created successfully.\nOrder ID: ${order.id}`
+  );
+
+
+  showPage("orders");
 
 }
 
 
 function renderOrders(){
 
-$('ordersOut').innerHTML=
-
-orders.map(o=>
-
-`<div class="card">
-
-<h3>Order ${o.id}</h3>
-
-<p>${o.date}</p>
-
-<p>Total: GHS ${o.total.toFixed(2)}</p>
-
-<p>Commission: GHS ${o.commission.toFixed(2)}</p>
-
-<p>Seller: GHS ${o.sellerAmount.toFixed(2)}</p>
-
-<p>Status: ${o.status}</p>
-
-<button
-class="btn gray"
-onclick="statusOrder('${o.id}','Shipped')">
-Mark Shipped
-</button>
-
-<button
-class="btn gray"
-onclick="statusOrder('${o.id}','Delivered')">
-Mark Delivered
-</button>
-
-</div>`
-
-).join('')
-
-||
-'No orders yet.';
-
-}
+  const box =
+    document.getElementById(
+      "ordersList"
+    );
 
 
-function statusOrder(id,s){
-
-let o=orders.find(x=>x.id===id);
-
-if(o){
-
-o.status=s;
-
-renderOrders();
-
-notify(
-'Order updated',
-`Order ${o.id} is now ${s}.`
-);
-
-}
-
-}
+  if(!box) return;
 
 
-function renderTx(){
+  if(orders.length===0){
 
-$('txOut').innerHTML=
+    box.innerHTML=`
+      <div class="card">
+        <p class="muted">
+          No orders yet.
+        </p>
+      </div>
+    `;
 
-tx.map(o=>
+    return;
 
-`<div class="card">
+  }
 
-<b>${o.paymentId}</b>
 
-<p>
-GHS ${o.total.toFixed(2)} • Paid
-</p>
+  box.innerHTML =
+    orders.map(order=>`
 
-<p>
-Commission:
-GHS ${o.commission.toFixed(2)}
-</p>
+      <div class="card">
 
-</div>`
+        <div class="space-between">
 
-).join('')
+          <div>
 
-||
-'No transactions yet.';
+            <h3>
+              ${escapeHTML(order.id)}
+            </h3>
+
+            <p class="muted">
+              ${escapeHTML(order.createdAt)}
+            </p>
+
+          </div>
+
+          <span class="tag">
+            ${escapeHTML(order.status)}
+          </span>
+
+        </div>
+
+        <br>
+
+        <strong>
+          GHS ${order.total.toFixed(2)}
+        </strong>
+
+        <br><br>
+
+        <p>
+          ${escapeHTML(order.address)}
+        </p>
+
+      </div>
+
+    `).join("");
 
 }
 
 
-function sellerProduct(){
-
-let n=$('newName').value.trim();
-let d=$('newDesc').value.trim();
-let p=Number($('newPrice').value);
-
-if(!n||!d||!p)
-return alert('Complete product details.');
-
-products.unshift({
-
-id:Date.now(),
-name:n,
-description:d,
-price:p,
-cat:'Other'
-
-});
-
-renderProducts();
-
-notify(
-'Product added',
-`${n} is now in the demo marketplace.`
-);
-
-alert('Product added.');
-
-}
-
-
-function renderSeller(){
-
-let g=orders.reduce((s,o)=>s+o.total,0);
-let c=orders.reduce((s,o)=>s+o.commission,0);
-
-$('gross').textContent='GHS '+g.toFixed(2);
-$('comm').textContent='GHS '+c.toFixed(2);
-$('net').textContent='GHS '+(g-c).toFixed(2);
-
-}
-
-
-function renderPayouts(){
-
-let b=
-orders.reduce(
-(s,o)=>s+o.sellerAmount,0
-);
-
-$('balance').textContent='GHS '+b.toFixed(2);
-
-$('payoutOut').innerHTML=
-
-payouts.map(p=>
-
-`<div class="card">
-
-${p.id} —
-GHS ${p.amount.toFixed(2)} —
-${p.status}
-
-</div>`
-
-).join('')
-
-||
-'No payouts yet.';
-
-}
-
-
-function payout(){
-
-let b=
-orders.reduce(
-(s,o)=>s+o.sellerAmount,0
-);
-
-if(!b)
-return alert('No payout balance.');
-
-let p={
-id:'PO'+Date.now(),
-amount:b,
-status:'Pending'
-};
-
-payouts.unshift(p);
-
-renderPayouts();
-
-notify(
-'Payout requested',
-`Your payout request for GHS ${b.toFixed(2)} is pending.`
-);
-
-alert('Demo payout request created.');
-
-}
-
-
-function signup(){
-
-let n=prompt('Full name');
-
-if(!n)return;
-
-let e=prompt('Email');
-
-if(!e)return;
-
-$('accountStatus').textContent=
-'Signed in as '+n;
-
-notify(
-'Account created',
-'Your demo account was created successfully.'
-);
-
-alert('Demo account created.');
-
-}
-
-
-function signin(){
-
-let e=prompt('Email');
-
-if(e){
-
-$('accountStatus').textContent=
-'Signed in as '+e;
-
-notify(
-'Signed in',
-'You successfully signed in.'
-);
-
-alert('Demo sign in successful.');
-
-}
-
-}
-
-
-/* =========================
-   STAGE 7 — BUSINESSES
-========================= */
-
+/* -----------------------------
+   BUSINESSES
+----------------------------- */
 
 function renderBusinesses(){
 
-let q=
-($('businessSearch').value||'')
-.toLowerCase();
-
-let type=$('businessType').value;
-
-let list=businesses.filter(b=>
-
-b.name.toLowerCase().includes(q)&&
-(type==='All'||b.type===type)
-
-);
-
-$('businessList').innerHTML=
-
-list.map(b=>
-
-`<div class="business">
-
-<div class="inside">
-
-<span class="tag">
-${esc(b.type)}
-</span>
-
-${b.verified?
-'<span class="tag">✓ Verified</span>':
-''}
-
-<h3>${esc(b.name)}</h3>
-
-<p>${esc(b.description)}</p>
-
-<p>📍 ${esc(b.location)}</p>
-
-<p>🕒 ${esc(b.hours)}</p>
-
-<p class="rating">
-⭐ ${b.rating}
-</p>
-
-<button
-class="btn blue"
-onclick="openBusiness(${b.id})">
-View Business
-</button>
-
-<button
-class="btn gray"
-onclick="contactBusiness(${b.id})">
-Contact
-</button>
-
-</div>
-
-</div>`
-
-).join('')
-
-||
-'<div class="card">No businesses found.</div>';
-
-}
+  const box =
+    document.getElementById(
+      "businessList"
+    );
 
 
-function createBusiness(){
+  if(!box) return;
 
-let name=$('bizName').value.trim();
 
-if(!name)
-return alert('Enter the business name.');
+  box.innerHTML =
+    businesses.map(b=>`
 
-let b={
+      <div class="business-card">
 
-id:Date.now(),
+        <div class="business-body">
 
-name:name,
+          <h2>${escapeHTML(b.name)}</h2>
 
-type:$('bizType').value,
+          <span class="tag">
+            ${escapeHTML(b.category)}
+          </span>
 
-description:$('bizDescription').value,
+          <br><br>
 
-phone:$('bizPhone').value,
+          <p class="muted">
+            ${escapeHTML(b.description)}
+          </p>
 
-location:$('bizLocation').value,
+          <br>
 
-hours:$('bizHours').value,
+          <div class="flex">
 
-verified:false,
+            <button
+              class="btn"
+              onclick="openBusiness(${b.id})"
+            >
+              View Business
+            </button>
 
-products:[],
+            <button
+              class="btn secondary"
+              onclick="focusBusiness(${b.lat},${b.lng})"
+            >
+              📍 Map
+            </button>
 
-services:[],
+          </div>
 
-rating:0
+        </div>
 
-};
+      </div>
 
-businesses.unshift(b);
-
-renderBusinesses();
-
-notify(
-'Business created',
-`${name} has been added to your demo business account.`
-);
-
-alert('Business profile created.');
-
-show('businesses');
+    `).join("");
 
 }
 
 
 function openBusiness(id){
 
-let b=businesses.find(x=>x.id===id);
+  const business =
+    businesses.find(
+      b=>b.id===id
+    );
 
-if(!b)return;
 
-$('businessProfileOut').innerHTML=
+  if(!business) return;
 
-`<div class="card">
 
-<span class="tag">${esc(b.type)}</span>
+  document.getElementById(
+    "businessProfileContent"
+  ).innerHTML=`
 
-${b.verified?
-'<span class="tag">✓ Verified</span>':
-''}
+    <div class="card">
 
-<h1>${esc(b.name)}</h1>
+      <h2>
+        ${escapeHTML(business.name)}
+      </h2>
 
-<p>${esc(b.description)}</p>
+      <br>
 
-<p>📍 ${esc(b.location)}</p>
+      <span class="tag">
+        ${escapeHTML(business.category)}
+      </span>
 
-<p>🕒 ${esc(b.hours)}</p>
+      <p>
+        ${escapeHTML(business.description)}
+      </p>
 
-<p>📞 ${esc(b.phone)}</p>
+      <br>
 
-<p>⭐ ${b.rating||'New business'}</p>
+      <button
+        class="btn"
+        onclick="openBusinessLocation(
+          ${business.lat},
+          ${business.lng},
+          '${escapeJS(business.name)}'
+        )"
+      >
+        📍 View Location
+      </button>
 
-<button
-class="btn blue"
-onclick="contactBusiness(${b.id})">
-Contact Business
-</button>
+    </div>
 
-<button
-class="btn green"
-onclick="requestBusiness(${b.id})">
-Request Service
-</button>
+  `;
 
-</div>
 
-<div class="card">
-
-<h3>Business Products</h3>
-
-<div id="businessProfileProducts">
-No products added yet.
-</div>
-
-</div>
-
-<div class="card">
-
-<h3>Business Services</h3>
-
-<div id="businessProfileServices">
-No services added yet.
-</div>
-
-</div>
-
-<div class="map">
-Business location map — Stage 8
-</div>`;
-
-show('businessProfile');
+  showPage("businessProfile");
 
 }
 
 
-function contactBusiness(id){
+function focusBusiness(lat,lng){
 
-let b=businesses.find(x=>x.id===id);
+  showPage("nearby");
 
-if(!b)return;
+  setTimeout(()=>{
 
-notify(
-'Business contact',
-`You selected ${b.name}. Messaging will be connected in the backend.`
-);
+    initMainMap();
 
-show('messages');
+    mainMap.setView(
+      [lat,lng],
+      16
+    );
 
-}
-
-
-function requestBusiness(id){
-
-let b=businesses.find(x=>x.id===id);
-
-if(!b)return;
-
-notify(
-'Business request',
-`A service request was started for ${b.name}.`
-);
-
-alert(
-`Service request started for ${b.name}.`
-);
+  },150);
 
 }
 
 
-function addBusinessProduct(){
+function openBusinessLocation(
+  lat,
+  lng,
+  name
+){
 
-let n=$('bpName').value.trim();
+  showPage("nearby");
 
-let p=Number($('bpPrice').value);
+  setTimeout(()=>{
 
-if(!n||!p)
-return alert('Enter product name and price.');
+    initMainMap();
 
-businessProducts.push({
+    mainMap.setView(
+      [lat,lng],
+      16
+    );
 
-id:Date.now(),
-name:n,
-price:p
+    selectedDestination={
+      lat:lat,
+      lng:lng,
+      name:name
+    };
 
-});
+    showDestinationMarker(
+      lat,
+      lng,
+      name
+    );
 
-renderBusinessProducts();
-
-notify(
-'Business product added',
-`${n} was added to your business products.`
-);
-
-}
-
-
-function renderBusinessProducts(){
-
-$('bpList').innerHTML=
-
-businessProducts.map(p=>
-
-`<div class="card">
-
-<b>${esc(p.name)}</b>
-
-<p>
-GHS ${p.price.toFixed(2)}
-</p>
-
-</div>`
-
-).join('')
-
-||
-'<p>No business products yet.</p>';
+  },150);
 
 }
 
 
-function addBusinessService(){
+/* -----------------------------
+   CREATE BUSINESS
+----------------------------- */
 
-let n=$('bsName').value.trim();
+function createBusiness(){
 
-let p=Number($('bsPrice').value);
+  const name =
+    document.getElementById(
+      "businessName"
+    ).value.trim();
 
-if(!n||!p)
-return alert('Enter service name and price.');
 
-businessServices.push({
+  const category =
+    document.getElementById(
+      "businessCategory"
+    ).value;
 
-id:Date.now(),
-name:n,
-price:p,
-description:$('bsDescription').value
 
-});
+  const description =
+    document.getElementById(
+      "businessDescription"
+    ).value.trim();
 
-renderBusinessServices();
 
-notify(
-'Business service added',
-`${n} was added to your business services.`
-);
+  if(!name){
+
+    alert(
+      "Enter a business name."
+    );
+
+    return;
+
+  }
+
+
+  const business={
+
+    id:Date.now(),
+
+    name:name,
+
+    category:category,
+
+    type:"business",
+
+    description:
+      description ||
+      "New RockyX business.",
+
+    /*
+      Demo coordinates.
+
+      Production business creation will allow
+      the owner to select the exact location.
+    */
+
+    lat:5.6037,
+
+    lng:-0.1870
+
+  };
+
+
+  businesses.push(business);
+
+
+  notify(
+    `Business "${name}" was created.`
+  );
+
+
+  alert(
+    "Business created successfully."
+  );
+
+
+  document.getElementById(
+    "businessName"
+  ).value="";
+
+
+  document.getElementById(
+    "businessDescription"
+  ).value="";
+
+
+  renderBusinesses();
+
+  showPage("businesses");
 
 }
 
 
-function renderBusinessServices(){
-
-$('bsList').innerHTML=
-
-businessServices.map(s=>
-
-`<div class="card">
-
-<b>${esc(s.name)}</b>
-
-<p>
-Starting from GHS ${s.price.toFixed(2)}
-</p>
-
-<p>${esc(s.description)}</p>
-
-</div>`
-
-).join('')
-
-||
-'<p>No business services yet.</p>';
-
-}
-
-
-/* =========================
+/* -----------------------------
    SERVICES
-========================= */
+----------------------------- */
+
+function renderServices(search=""){
+
+  const box =
+    document.getElementById(
+      "serviceList"
+    );
 
 
-function renderServices(){
+  if(!box) return;
 
-let q=
-($('serviceSearch').value||'')
-.toLowerCase();
 
-let cat=$('serviceCategory').value;
+  const term =
+    search.toLowerCase();
 
-let list=services.filter(s=>
 
-(
-s.name.toLowerCase().includes(q)||
-s.provider.toLowerCase().includes(q)
-)&&
-(cat==='All'||s.category===cat)
+  const data =
+    services.filter(s=>
+      !term ||
+      s.name.toLowerCase().includes(term) ||
+      s.category.toLowerCase().includes(term) ||
+      s.provider.toLowerCase().includes(term)
+    );
 
-);
 
-$('serviceList').innerHTML=
+  box.innerHTML =
+    data.map(s=>`
 
-list.map(s=>
+      <div class="service-card">
 
-`<div class="service">
+        <div class="service-body">
 
-<div class="inside">
+          <h3>
+            ${escapeHTML(s.name)}
+          </h3>
 
-<span class="tag">
-${esc(s.category)}
-</span>
+          <span class="tag">
+            ${escapeHTML(s.category)}
+          </span>
 
-<h3>
-${esc(s.name)}
-</h3>
+          <p class="muted">
+            Provider:
+            ${escapeHTML(s.provider)}
+          </p>
 
-<h4>
-${esc(s.provider)}
-</h4>
+          <br>
 
-<p>${esc(s.description)}</p>
+          <strong class="price">
+            GHS ${s.price.toFixed(2)}
+          </strong>
 
-<p>
-📍 ${esc(s.location)}
-</p>
+          <br><br>
 
-<p>
-💰 From GHS ${s.price.toFixed(2)}
-</p>
+          <div class="flex">
 
-<p class="rating">
-⭐ ${s.rating}
-</p>
+            <button
+              class="btn"
+              onclick="bookService(${s.id})"
+            >
+              Book
+            </button>
 
-<button
-class="btn blue"
-onclick="bookService(${s.id})">
-Book Service
-</button>
+            <button
+              class="btn secondary"
+              onclick="focusPlace(${s.lat},${s.lng})"
+            >
+              📍 Location
+            </button>
 
-<button
-class="btn gray"
-onclick="contactProvider(${s.id})">
-Contact Provider
-</button>
+          </div>
 
-</div>
+        </div>
 
-</div>`
+      </div>
 
-).join('')
-
-||
-'<div class="card">No services found.</div>';
+    `).join("");
 
 }
 
+
+/* -----------------------------
+   CREATE SERVICE
+----------------------------- */
 
 function createService(){
 
-let provider=$('providerName').value.trim();
+  const name =
+    document.getElementById(
+      "serviceName"
+    ).value.trim();
 
-let name=$('providerService').value.trim();
 
-if(!provider||!name)
-return alert('Enter provider and service name.');
+  const category =
+    document.getElementById(
+      "serviceCategory"
+    ).value.trim();
 
-let s={
 
-id:Date.now(),
+  const price =
+    Number(
+      document.getElementById(
+        "servicePrice"
+      ).value
+    );
 
-provider:provider,
 
-name:name,
+  if(!name || !category || !price){
 
-category:$('providerCategory').value,
+    alert(
+      "Complete all service fields."
+    );
 
-description:$('providerDescription').value,
+    return;
 
-price:Number($('providerPrice').value)||0,
+  }
 
-location:$('providerLocation').value,
 
-phone:$('providerPhone').value,
+  services.push({
 
-rating:0
+    id:Date.now(),
 
-};
+    name:name,
 
-services.unshift(s);
+    category:category,
 
-renderServices();
+    price:price,
 
-notify(
-'Service published',
-`${name} has been published as a service listing.`
-);
+    provider:"New Provider",
 
-alert('Service published.');
+    lat:5.6037,
 
-show('services');
+    lng:-0.1870
+
+  });
+
+
+  notify(
+    `Service "${name}" was published.`
+  );
+
+
+  alert(
+    "Service published successfully."
+  );
+
+
+  showPage("services");
 
 }
 
+
+/* -----------------------------
+   SERVICE BOOKING
+----------------------------- */
 
 function bookService(id){
 
-let s=services.find(x=>x.id===id);
-
-if(!s)return;
-
-let date=prompt(
-'Enter preferred booking date and time'
-);
-
-if(!date)return;
-
-let b={
-
-id:'BK'+Date.now(),
-
-serviceId:s.id,
-
-provider:s.provider,
-
-service:s.name,
-
-date:date,
-
-price:s.price,
-
-status:'Requested',
-
-paymentStatus:'Pending'
-
-};
-
-bookings.unshift(b);
-
-renderBookings();
-
-notify(
-'Booking requested',
-`Your booking request for ${s.name} was sent to ${s.provider}.`
-);
-
-notify(
-'New booking request',
-`${s.provider} received a new booking request for ${s.name}.`
-);
-
-alert('Booking request sent.');
-
-}
+  const service =
+    services.find(
+      s=>s.id===id
+    );
 
 
-function contactProvider(id){
+  if(!service) return;
 
-let s=services.find(x=>x.id===id);
 
-if(!s)return;
+  const booking={
 
-notify(
-'Provider contact',
-`You selected ${s.provider}. Messaging will be connected in the backend.`
-);
+    id:"BK-"+Date.now(),
 
-show('messages');
+    service:service.name,
+
+    provider:service.provider,
+
+    price:service.price,
+
+    status:"Pending",
+
+    createdAt:new Date().toLocaleString()
+
+  };
+
+
+  bookings.unshift(booking);
+
+
+  notify(
+    `Booking created for ${service.name}.`
+  );
+
+
+  alert(
+    `Booking created.\nBooking ID: ${booking.id}`
+  );
+
+
+  renderBookings();
 
 }
 
 
 function renderBookings(){
 
-$('bookingList').innerHTML=
+  const box =
+    document.getElementById(
+      "bookingList"
+    );
 
-bookings.map(b=>
 
-`<div class="booking card">
+  if(!box) return;
 
-<h3>${esc(b.service)}</h3>
 
-<p>
-Provider:
-${esc(b.provider)}
-</p>
+  if(bookings.length===0){
 
-<p>
-Date:
-${esc(b.date)}
-</p>
+    box.innerHTML=`
+      <div class="card">
+        <p class="muted">
+          No bookings yet.
+        </p>
+      </div>
+    `;
 
-<p>
-Price:
-GHS ${b.price.toFixed(2)}
-</p>
+    return;
 
-<p>
-Status:
-<b>${esc(b.status)}</b>
-</p>
+  }
 
-<p>
-Payment:
-${esc(b.paymentStatus)}
-</p>
 
-<button
-class="btn red"
-onclick="cancelBooking('${b.id}')">
-Cancel
-</button>
+  box.innerHTML =
+    bookings.map(b=>`
 
-</div>`
+      <div class="card">
 
-).join('')
+        <div class="space-between">
 
-||
-'<p>No bookings yet.</p>';
+          <div>
+
+            <h3>
+              ${escapeHTML(b.service)}
+            </h3>
+
+            <p class="muted">
+              ${escapeHTML(b.provider)}
+            </p>
+
+          </div>
+
+          <span class="tag">
+            ${escapeHTML(b.status)}
+          </span>
+
+        </div>
+
+        <br>
+
+        <p>
+          Booking:
+          ${escapeHTML(b.id)}
+        </p>
+
+        <strong>
+          GHS ${b.price.toFixed(2)}
+        </strong>
+
+      </div>
+
+    `).join("");
 
 }
 
 
-function cancelBooking(id){
+/* -----------------------------
+   MUSIC
+----------------------------- */
 
-let b=bookings.find(x=>x.id===id);
+const musicData=[
 
-if(b){
+  {
+    title:"RockyX Sound",
+    artist:"RockyX Artist",
+    album:"Single"
+  },
 
-b.status='Cancelled';
+  {
+    title:"Ghana Vibes",
+    artist:"Demo Artist",
+    album:"Ghana Vibes"
+  },
 
-renderBookings();
+  {
+    title:"Future",
+    artist:"Demo Artist",
+    album:"Future"
+  }
 
-notify(
-'Booking cancelled',
-`Booking ${b.id} has been cancelled.`
+];
+
+
+function renderMusic(search=""){
+
+  const box =
+    document.getElementById(
+      "musicResults"
+    );
+
+
+  if(!box) return;
+
+
+  const term =
+    search.toLowerCase();
+
+
+  const data =
+    musicData.filter(m=>
+      !term ||
+      m.title.toLowerCase().includes(term) ||
+      m.artist.toLowerCase().includes(term) ||
+      m.album.toLowerCase().includes(term)
+    );
+
+
+  box.innerHTML =
+    data.map(m=>`
+
+      <div class="card">
+
+        <h3>
+          🎵 ${escapeHTML(m.title)}
+        </h3>
+
+        <p class="muted">
+          ${escapeHTML(m.artist)}
+        </p>
+
+        <p class="small">
+          Album: ${escapeHTML(m.album)}
+        </p>
+
+        <br>
+
+        <button
+          class="btn"
+          onclick="notify('Music playback selected.')"
+        >
+          ▶ Play
+        </button>
+
+      </div>
+
+    `).join("");
+
+}
+
+
+function searchMusic(value){
+
+  renderMusic(value);
+
+}
+
+
+/* -----------------------------
+   SOUNDS
+----------------------------- */
+
+function saveSound(sound){
+
+  if(!savedSounds.includes(sound)){
+
+    savedSounds.push(sound);
+
+    notify(
+      `${sound} was saved.`
+    );
+
+  }
+
+  renderSavedSounds();
+
+}
+
+
+function renderSavedSounds(){
+
+  const box =
+    document.getElementById(
+      "savedSounds"
+    );
+
+
+  if(!box) return;
+
+
+  if(savedSounds.length===0){
+
+    box.innerHTML =
+      `<p class="muted">No saved sounds.</p>`;
+
+    return;
+
+  }
+
+
+  box.innerHTML =
+    savedSounds.map(sound=>`
+
+      <div class="tag">
+        🔊 ${escapeHTML(sound)}
+      </div>
+
+    `).join("");
+
+}
+
+
+/* -----------------------------
+   CAMERA
+----------------------------- */
+
+let cameraStream=null;
+
+
+async function startCamera(){
+
+  try{
+
+    cameraStream =
+      await navigator.mediaDevices.getUserMedia({
+        video:true,
+        audio:true
+      });
+
+
+    document.getElementById(
+      "cameraPreview"
+    ).srcObject =
+      cameraStream;
+
+
+  }catch(error){
+
+    alert(
+      "Camera permission was not granted."
+    );
+
+  }
+
+}
+
+
+function stopCamera(){
+
+  if(!cameraStream) return;
+
+
+  cameraStream
+    .getTracks()
+    .forEach(track=>track.stop());
+
+
+  cameraStream=null;
+
+}
+
+
+function takePhoto(){
+
+  const video =
+    document.getElementById(
+      "cameraPreview"
+    );
+
+
+  const canvas =
+    document.getElementById(
+      "photoCanvas"
+    );
+
+
+  if(
+    !video.videoWidth ||
+    !video.videoHeight
+  ){
+
+    alert(
+      "Start the camera first."
+    );
+
+    return;
+
+  }
+
+
+  canvas.width =
+    video.videoWidth;
+
+  canvas.height =
+    video.videoHeight;
+
+
+  const ctx =
+    canvas.getContext("2d");
+
+
+  ctx.drawImage(
+    video,
+    0,
+    0
+  );
+
+
+  const image =
+    canvas.toDataURL(
+      "image/png"
+    );
+
+
+  const link =
+    document.createElement("a");
+
+
+  link.href=image;
+
+  link.download=
+    "rockyx-photo.png";
+
+  link.click();
+
+
+  notify(
+    "Photo saved to your device."
+  );
+
+}
+
+
+/* -----------------------------
+   MEDIA
+----------------------------- */
+
+document.getElementById(
+  "mediaInput"
+)?.addEventListener(
+  "change",
+  function(){
+
+    const box =
+      document.getElementById(
+        "mediaPreview"
+      );
+
+
+    box.innerHTML="";
+
+
+    Array.from(this.files)
+      .forEach(file=>{
+
+        const url =
+          URL.createObjectURL(
+            file
+          );
+
+
+        if(
+          file.type.startsWith(
+            "image/"
+          )
+        ){
+
+          box.innerHTML += `
+            <img
+              src="${url}"
+              style="
+                width:180px;
+                height:180px;
+                object-fit:cover;
+                border-radius:10px;
+                margin:5px;
+              "
+            >
+          `;
+
+        }else{
+
+          box.innerHTML += `
+            <video
+              src="${url}"
+              controls
+              style="
+                width:250px;
+                max-height:220px;
+                margin:5px;
+                border-radius:10px;
+              "
+            ></video>
+          `;
+
+        }
+
+      });
+
+  }
 );
 
-}
 
-}
+/* -----------------------------
+   PHOTO EDITOR
+----------------------------- */
 
+document.getElementById(
+  "photoEditorInput"
+)?.addEventListener(
+  "change",
+  function(){
 
-function renderProviderBookings(){
-
-$('providerBookingList').innerHTML=
-
-bookings.map(b=>
-
-`<div class="card">
-
-<h3>
-${esc(b.service)}
-</h3>
-
-<p>
-Customer booking: ${b.id}
-</p>
-
-<p>
-Date: ${esc(b.date)}
-</p>
-
-<p>
-Amount:
-GHS ${b.price.toFixed(2)}
-</p>
-
-<p>
-Status:
-${esc(b.status)}
-</p>
-
-<button
-class="btn green"
-onclick="updateBooking('${b.id}','Accepted')">
-Accept
-</button>
-
-<button
-class="btn blue"
-onclick="updateBooking('${b.id}','Completed')">
-Complete
-</button>
-
-<button
-class="btn red"
-onclick="updateBooking('${b.id}','Declined')">
-Decline
-</button>
-
-</div>`
-
-).join('')
-
-||
-'<p>No provider bookings.</p>';
-
-}
+    const file =
+      this.files[0];
 
 
-function renderBusinessBookings(){
-
-$('businessBookingList').innerHTML=
-
-bookings.map(b=>
-
-`<div class="card">
-
-<h3>${esc(b.service)}</h3>
-
-<p>
-Booking ID:
-${b.id}
-</p>
-
-<p>
-Date:
-${esc(b.date)}
-</p>
-
-<p>
-Status:
-${esc(b.status)}
-</p>
-
-</div>`
-
-).join('')
-
-||
-'<p>No business bookings.</p>';
-
-}
+    if(!file) return;
 
 
-function updateBooking(id,status){
+    const url =
+      URL.createObjectURL(
+        file
+      );
 
-let b=bookings.find(x=>x.id===id);
 
-if(!b)return;
+    document.getElementById(
+      "photoEditorPreview"
+    ).src=url;
 
-b.status=status;
-
-renderProviderBookings();
-renderBusinessBookings();
-renderBookings();
-
-notify(
-'Booking updated',
-`Booking ${b.id} is now ${status}.`
+  }
 );
 
-}
 
+function applyPhotoFilter(filter){
 
-function renderProviderEarnings(){
-
-let gross=bookings
-.filter(b=>b.status==='Completed')
-.reduce((s,b)=>s+b.price,0);
-
-let commission=gross*.05;
-
-$('providerGross').textContent=
-'GHS '+gross.toFixed(2);
-
-$('providerCommission').textContent=
-'GHS '+commission.toFixed(2);
-
-$('providerNet').textContent=
-'GHS '+(gross-commission).toFixed(2);
+  document.getElementById(
+    "photoEditorPreview"
+  ).style.filter =
+    filter;
 
 }
 
 
-function renderBusinessEarnings(){
+/* -----------------------------
+   VIDEO EDITOR
+----------------------------- */
 
-let gross=orders.reduce(
-(s,o)=>s+o.total,0
+document.getElementById(
+  "editorVideoInput"
+)?.addEventListener(
+  "change",
+  function(){
+
+    const file =
+      this.files[0];
+
+
+    if(!file) return;
+
+
+    document.getElementById(
+      "editorPreview"
+    ).src =
+      URL.createObjectURL(
+        file
+      );
+
+  }
 );
 
-let commission=gross*.05;
 
-$('businessGross').textContent=
-'GHS '+gross.toFixed(2);
+/* -----------------------------
+   DOWNLOAD DEMO
+----------------------------- */
 
-$('businessCommission').textContent=
-'GHS '+commission.toFixed(2);
+function downloadDemo(name){
 
-$('businessNet').textContent=
-'GHS '+(gross-commission).toFixed(2);
+  notify(
+    `${name} download requested.`
+  );
+
+
+  alert(
+    "The browser/device controls whether a media file can be downloaded. Production downloads will use the creator's download permission and watermark settings."
+  );
 
 }
 
 
-function renderBusinessAnalytics(){
+/* -----------------------------
+   GLOBAL SEARCH
+----------------------------- */
 
-$('bizViews').textContent=
-businesses.length*7;
+function performGlobalSearch(){
 
-$('bizOrders').textContent=
-orders.length;
+  const input =
+    document.getElementById(
+      "globalSearch"
+    );
 
-$('bizBookings').textContent=
-bookings.length;
 
-let revenue=orders.reduce(
-(s,o)=>s+o.total,0
+  const query =
+    input.value.trim();
+
+
+  if(!query) return;
+
+
+  const results =
+    [];
+
+
+  products.forEach(p=>{
+
+    if(
+      p.name.toLowerCase().includes(
+        query.toLowerCase()
+      )
+    ){
+
+      results.push({
+        type:"Product",
+        name:p.name,
+        action:()=>showPage("market")
+      });
+
+    }
+
+  });
+
+
+  businesses.forEach(b=>{
+
+    if(
+      b.name.toLowerCase().includes(
+        query.toLowerCase()
+      )
+    ){
+
+      results.push({
+        type:"Business",
+        name:b.name,
+        action:()=>openBusiness(b.id)
+      });
+
+    }
+
+  });
+
+
+  services.forEach(s=>{
+
+    if(
+      s.name.toLowerCase().includes(
+        query.toLowerCase()
+      )
+    ){
+
+      results.push({
+        type:"Service",
+        name:s.name,
+        action:()=>showPage("services")
+      });
+
+    }
+
+  });
+
+
+  showPage("explore");
+
+
+  const box =
+    document.getElementById(
+      "globalSearchResults"
+    );
+
+
+  if(results.length===0){
+
+    box.innerHTML=`
+
+      <div class="card">
+        <h3>No results found</h3>
+        <p class="muted">
+          Try another search.
+        </p>
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  box.innerHTML=`
+
+    <div class="card">
+
+      <h2>Search Results</h2>
+
+      <br>
+
+      ${results.map((r,index)=>`
+
+        <div class="location-card">
+
+          <strong>
+            ${escapeHTML(r.name)}
+          </strong>
+
+          <span class="tag">
+            ${escapeHTML(r.type)}
+          </span>
+
+          <br><br>
+
+          <button
+            class="btn"
+            onclick="globalSearchOpen(${index})"
+          >
+            Open
+          </button>
+
+        </div>
+
+      `).join("")}
+
+    </div>
+
+  `;
+
+
+  window.globalResults =
+    results;
+
+}
+
+
+function globalSearchOpen(index){
+
+  if(
+    window.globalResults &&
+    window.globalResults[index]
+  ){
+
+    window.globalResults[index]
+      .action();
+
+  }
+
+}
+
+
+/* -----------------------------
+   SECURITY HELPERS
+----------------------------- */
+
+function escapeHTML(value){
+
+  return String(value)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+function escapeJS(value){
+
+  return String(value)
+    .replace(/\\/g,"\\\\")
+    .replace(/'/g,"\\'")
+    .replace(/"/g,'\\"')
+    .replace(/\n/g,"\\n")
+    .replace(/\r/g,"\\r");
+
+}
+
+
+/* -----------------------------
+   MODAL
+----------------------------- */
+
+function openModal(title,content){
+
+  document.getElementById(
+    "modalTitle"
+  ).textContent=title;
+
+
+  document.getElementById(
+    "modalContent"
+  ).innerHTML=content;
+
+
+  document.getElementById(
+    "modal"
+  ).classList.add("show");
+
+}
+
+
+function closeModal(){
+
+  document.getElementById(
+    "modal"
+  ).classList.remove("show");
+
+}
+
+
+/* -----------------------------
+   INITIALIZATION
+----------------------------- */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function(){
+
+    updateNotificationBadge();
+
+    renderProducts();
+
+    renderBusinesses();
+
+    renderServices();
+
+    renderTransportList();
+
+    renderMusic();
+
+    renderSavedSounds();
+
+    renderBookings();
+
+    renderNotifications();
+
+
+    const savedPermission =
+      localStorage.getItem(
+        "rockyx_location_permission"
+      );
+
+
+    const checkbox =
+      document.getElementById(
+        "locationSharing"
+      );
+
+
+    if(checkbox){
+
+      checkbox.checked =
+        savedPermission === "enabled";
+
+    }
+
+  }
 );
 
-$('bizRevenue').textContent=
-'GHS '+revenue.toFixed(2);
 
-}
+/* -----------------------------
+   CLOSE MODAL ON BACKGROUND
+----------------------------- */
 
+document.getElementById(
+  "modal"
+)?.addEventListener(
+  "click",
+  function(event){
 
-function renderReviews(){
+    if(event.target === this){
 
-$('reviewList').innerHTML=
+      closeModal();
 
-reviews.map(r=>
+    }
 
-`<div class="card">
-
-<b>${esc(r.provider)}</b>
-
-<p>
-⭐ ${r.rating}/5
-</p>
-
-<p>
-${esc(r.text)}
-</p>
-
-</div>`
-
-).join('')
-
-||
-'No reviews yet.';
-
-}
-
-
-function requestTransport(){
-
-let type=$('transportType').value;
-
-let location=$('transportLocation').value.trim();
-
-if(!location)
-return alert('Enter your pickup or service location.');
-
-notify(
-'Transport request',
-`Your ${type} request from ${location} was created.`
+  }
 );
-
-alert(
-`${type} request created.`
-);
-
-}
-
-
-/* INITIAL DATA */
-
-$('feed').innerHTML=
-
-`<div class="post">
-
-<b>RockyX Creator</b>
-
-<p>
-Welcome to the RockyX social feed.
-</p>
-
-<button class="btn gray">❤️ Like</button>
-<button class="btn gray">💬 Comment</button>
-<button class="btn gray">↗ Share</button>
-
-</div>`;
-
-
-renderProducts();
-renderCart();
-renderCheckout();
-renderVideos();
-renderSounds();
-renderTemplates();
-renderOrders();
-renderTx();
-renderSeller();
-renderPayouts();
-
-renderBusinesses();
-renderServices();
-renderBookings();
-renderProviderBookings();
-renderBusinessBookings();
-renderProviderEarnings();
-renderBusinessEarnings();
-renderBusinessAnalytics();
-renderReviews();
-renderBusinessProducts();
-renderBusinessServices();
-
-renderNotices();
 
 </script>
 
