@@ -10,15 +10,13 @@
 body{
   font-family:Arial,Helvetica,sans-serif;
   background:#f5f6f8;
-  color:#17202a;
+  color:#171717;
 }
 button,input,textarea,select{font:inherit}
 button{cursor:pointer}
 a{text-decoration:none;color:inherit}
 
 .header{
-  position:fixed;
-  top:0;left:0;right:0;
   height:64px;
   background:#fff;
   border-bottom:1px solid #ddd;
@@ -26,353 +24,324 @@ a{text-decoration:none;color:inherit}
   align-items:center;
   gap:12px;
   padding:0 18px;
+  position:sticky;
+  top:0;
   z-index:1000;
 }
 .logo{
-  width:40px;height:40px;
-  border-radius:12px;
-  background:#111;
-  color:#fff;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:bold;
-  font-size:20px;
-}
-.header-title{
-  font-size:20px;
-  font-weight:700;
+  font-size:22px;
+  font-weight:800;
+  min-width:65px;
 }
 .search{
   flex:1;
-  max-width:620px;
+  max-width:650px;
   margin:auto;
 }
 .search input{
   width:100%;
-  padding:12px 16px;
+  padding:12px 18px;
   border:1px solid #ddd;
   border-radius:25px;
   outline:none;
+  background:#f5f5f5;
 }
 .header-actions{
   display:flex;
-  gap:7px;
+  gap:8px;
 }
 .icon-btn{
-  width:40px;height:40px;
   border:0;
   background:#f1f2f4;
   border-radius:50%;
+  width:40px;
+  height:40px;
 }
 
+.layout{
+  display:flex;
+  min-height:calc(100vh - 64px);
+}
 .sidebar{
-  position:fixed;
-  top:64px;
-  left:0;
-  bottom:0;
   width:230px;
   background:#fff;
   border-right:1px solid #ddd;
-  padding:14px 10px;
+  padding:15px 10px;
+  position:fixed;
+  top:64px;
+  bottom:0;
   overflow-y:auto;
 }
 .nav-btn{
   width:100%;
+  padding:12px;
+  margin:2px 0;
   border:0;
   background:transparent;
-  padding:11px 13px;
-  margin:2px 0;
   text-align:left;
-  border-radius:10px;
+  border-radius:9px;
 }
 .nav-btn:hover,.nav-btn.active{
-  background:#eef1f5;
+  background:#eef0f3;
   font-weight:bold;
 }
 
 .main{
   margin-left:230px;
-  padding:84px 20px 90px;
-  max-width:1500px;
+  width:calc(100% - 230px);
+  padding:22px;
 }
 .page{display:none}
 .page.active{display:block}
 
+.container{
+  max-width:1100px;
+  margin:auto;
+}
 .card{
   background:#fff;
-  border:1px solid #e1e4e8;
-  border-radius:15px;
+  border:1px solid #e1e1e1;
+  border-radius:14px;
   padding:18px;
   margin-bottom:18px;
 }
-.card h2,.card h3{margin-bottom:10px}
+h1{margin-bottom:8px}
+h2{margin-bottom:12px}
+h3{margin-bottom:8px}
+
+.btn{
+  border:0;
+  padding:10px 15px;
+  border-radius:9px;
+  background:#111;
+  color:white;
+  margin:3px;
+}
+.btn.secondary{
+  background:#eceef1;
+  color:#111;
+}
+.btn.success{background:#16833b}
+.btn.danger{background:#c62828}
+.btn.blue{background:#246bdb}
+
+input,textarea,select{
+  width:100%;
+  padding:11px;
+  border:1px solid #ccc;
+  border-radius:8px;
+  margin:5px 0 10px;
+}
+textarea{min-height:100px;resize:vertical}
 
 .grid{
   display:grid;
   grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
-  gap:16px;
+  gap:15px;
 }
-.product-card{
+.product-card,.video-card,.template-card,.music-card{
   background:#fff;
   border:1px solid #ddd;
-  border-radius:15px;
+  border-radius:12px;
   overflow:hidden;
 }
-.product-image{
+.product-card img,
+.video-card video,
+.template-card img{
   width:100%;
-  height:190px;
-  background:#e8ebef;
+  display:block;
+}
+.product-content,.video-content,.template-content{
+  padding:13px;
+}
+
+.video-card video{
+  max-height:350px;
+  background:#000;
+}
+.video-actions{
   display:flex;
-  align-items:center;
-  justify-content:center;
-  overflow:hidden;
-}
-.product-image img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-.product-image span{font-size:50px}
-.product-info{padding:14px}
-.product-info h3{margin-bottom:7px}
-.price{
-  font-weight:bold;
-  font-size:18px;
-  margin:8px 0;
-}
-.muted{color:#69727d;font-size:14px}
-
-.btn{
-  border:0;
-  border-radius:9px;
-  padding:10px 14px;
-  background:#111;
-  color:#fff;
-  margin:4px 2px;
-}
-.btn.secondary{
-  background:#eef0f2;
-  color:#17202a;
-}
-.btn.success{background:#16834a}
-.btn.danger{background:#c62828}
-.btn.small{
-  padding:7px 10px;
-  font-size:13px;
-}
-
-input,textarea,select{
-  width:100%;
-  border:1px solid #d8dce1;
-  border-radius:9px;
-  padding:11px;
-  margin:6px 0;
-  outline:none;
-}
-textarea{min-height:100px;resize:vertical}
-
-.row{
-  display:flex;
-  gap:10px;
   flex-wrap:wrap;
-  align-items:center;
+  gap:4px;
+  padding-top:8px;
 }
-.space{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  align-items:center;
-}
-.badge{
-  display:inline-block;
-  padding:5px 9px;
-  background:#eef1f5;
-  border-radius:20px;
-  font-size:12px;
-}
-
-.hero{
-  background:#fff;
-  border:1px solid #ddd;
-  border-radius:18px;
-  padding:25px;
-  margin-bottom:18px;
-}
-.hero h1{font-size:30px;margin-bottom:8px}
 
 .story-row{
   display:flex;
   gap:12px;
   overflow-x:auto;
-  padding-bottom:8px;
+  padding:5px 0 15px;
 }
 .story{
   min-width:75px;
   text-align:center;
 }
 .story-circle{
-  width:58px;height:58px;
+  width:62px;
+  height:62px;
   border-radius:50%;
   background:#ddd;
   margin:auto auto 5px;
   display:flex;
   align-items:center;
   justify-content:center;
+  font-weight:bold;
 }
 
 .post{
   background:#fff;
   border:1px solid #ddd;
-  border-radius:15px;
-  padding:16px;
+  border-radius:14px;
+  padding:15px;
   margin-bottom:15px;
 }
 .post-actions{
   display:flex;
-  gap:8px;
+  gap:6px;
   margin-top:10px;
+  flex-wrap:wrap;
 }
-
-.media-preview{
-  width:100%;
-  max-height:430px;
-  object-fit:contain;
-  background:#111;
-  border-radius:12px;
-  margin-top:10px;
-}
-
-.camera-box{
-  background:#111;
-  border-radius:15px;
-  overflow:hidden;
-  max-width:700px;
-}
-.camera-box video{
-  width:100%;
-  display:block;
+.post img,.post video{
+  max-width:100%;
+  margin-top:12px;
+  border-radius:10px;
 }
 
 .stats{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
-  gap:12px;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
 }
 .stat{
-  background:#f5f6f8;
-  border-radius:12px;
+  background:#f3f4f6;
   padding:15px;
+  border-radius:10px;
+  text-align:center;
 }
 .stat strong{
   display:block;
-  font-size:23px;
-  margin-top:5px;
+  font-size:22px;
+}
+
+.profile-head{
+  display:flex;
+  align-items:center;
+  gap:18px;
+}
+.avatar{
+  width:85px;
+  height:85px;
+  border-radius:50%;
+  background:#ddd;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:30px;
+  font-weight:bold;
 }
 
 .modal{
+  display:none;
   position:fixed;
   inset:0;
   background:rgba(0,0,0,.55);
-  display:none;
+  z-index:2000;
   align-items:center;
   justify-content:center;
-  z-index:3000;
   padding:20px;
 }
 .modal.show{display:flex}
 .modal-box{
-  width:100%;
-  max-width:600px;
+  background:#fff;
+  width:min(500px,100%);
   max-height:90vh;
   overflow-y:auto;
-  background:#fff;
-  border-radius:18px;
+  border-radius:15px;
   padding:22px;
 }
-
-.cart-item{
-  display:flex;
-  justify-content:space-between;
-  gap:15px;
-  padding:14px 0;
-  border-bottom:1px solid #eee;
-}
-.cart-total{
-  font-size:22px;
-  font-weight:bold;
-  margin-top:15px;
-}
-
-.order{
-  border:1px solid #ddd;
-  border-radius:12px;
-  padding:15px;
-  margin-bottom:12px;
-}
-.status{
-  padding:5px 9px;
-  border-radius:15px;
-  background:#eef1f5;
-  font-size:12px;
+.close{
+  float:right;
+  border:0;
+  background:#eee;
+  border-radius:50%;
+  width:32px;
+  height:32px;
 }
 
 .mobile-nav{
   display:none;
 }
 
-.editor-tools{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
-  gap:8px;
-}
-
-.template-card{
-  border:1px solid #ddd;
-  border-radius:13px;
+.notice{
+  background:#eef5ff;
+  border:1px solid #c9ddff;
   padding:12px;
-  background:#fff;
+  border-radius:10px;
+  margin-bottom:15px;
 }
 
-table{
+.check-row{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin:8px 0;
+}
+.check-row input{
+  width:auto;
+  margin:0;
+}
+
+.map-box{
+  height:350px;
+  background:#dfe7d9;
+  border-radius:12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#555;
+}
+
+.editor-preview{
   width:100%;
-  border-collapse:collapse;
-}
-th,td{
-  text-align:left;
-  padding:11px;
-  border-bottom:1px solid #eee;
+  max-height:450px;
+  background:#111;
+  border-radius:10px;
+  margin:10px 0;
 }
 
-@media(max-width:850px){
-  .header-title{display:none}
+@media(max-width:800px){
   .sidebar{display:none}
-  .main{margin-left:0;padding:76px 12px 90px}
-  .header{padding:0 10px}
-  .search{max-width:none}
-  .header-actions .hide-mobile{display:none}
+  .main{
+    margin-left:0;
+    width:100%;
+    padding:12px;
+    padding-bottom:75px;
+  }
+  .header{
+    padding:0 10px;
+  }
+  .header .logo{min-width:auto}
+  .header-actions .icon-btn:nth-child(1){display:none}
   .mobile-nav{
     display:flex;
     position:fixed;
     bottom:0;
-    left:0;right:0;
-    height:64px;
+    left:0;
+    right:0;
+    height:62px;
     background:#fff;
     border-top:1px solid #ddd;
-    z-index:2000;
+    z-index:1500;
     justify-content:space-around;
   }
   .mobile-nav button{
     border:0;
-    background:transparent;
+    background:none;
     font-size:11px;
   }
-}
-
-.empty{
-  padding:35px;
-  text-align:center;
-  color:#777;
+  .stats{
+    grid-template-columns:repeat(2,1fr);
+  }
 }
 </style>
 </head>
@@ -380,22 +349,22 @@ th,td{
 <body>
 
 <header class="header">
-  <div class="logo">X</div>
-  <div class="header-title">RockyX</div>
+  <div class="logo">RockyX</div>
 
   <div class="search">
     <input id="globalSearch"
-      placeholder="Search products, people, videos, songs and services..."
-      onkeydown="if(event.key==='Enter')performGlobalSearch()">
+      placeholder="Search products, businesses, services, people, videos, songs and sounds..."
+      onkeydown="if(event.key==='Enter')performSearch()">
   </div>
 
   <div class="header-actions">
     <button class="icon-btn" onclick="showPage('notifications')">🔔</button>
     <button class="icon-btn" onclick="showPage('messages')">💬</button>
-    <button class="icon-btn" onclick="showPage('cart')">🛒</button>
-    <button class="icon-btn hide-mobile" onclick="showPage('account')">👤</button>
+    <button class="icon-btn" onclick="showPage('account')">👤</button>
   </div>
 </header>
+
+<div class="layout">
 
 <aside class="sidebar">
 
@@ -407,35 +376,30 @@ th,td{
 <button class="nav-btn" onclick="showPage('music',this)">🎵 Music</button>
 <button class="nav-btn" onclick="showPage('sounds',this)">🔊 Sounds</button>
 
-<hr>
-
 <button class="nav-btn" onclick="showPage('camera',this)">📷 Camera</button>
 <button class="nav-btn" onclick="showPage('media',this)">🖼️ Media</button>
 
-<hr>
+<button class="nav-btn" onclick="showPage('creator',this)">⭐ Creator Studio</button>
+<button class="nav-btn" onclick="showPage('photoEditor',this)">🖌️ Photo Editor</button>
+<button class="nav-btn" onclick="showPage('videoEditor',this)">🎞️ Video Editor</button>
+<button class="nav-btn" onclick="showPage('aiStudio',this)">✨ AI Studio</button>
+
+<button class="nav-btn" onclick="showPage('templates',this)">🧩 Templates</button>
+<button class="nav-btn" onclick="showPage('templateCreator',this)">➕ Create Template</button>
+<button class="nav-btn" onclick="showPage('myTemplates',this)">📁 My Templates</button>
+<button class="nav-btn" onclick="showPage('creatorProgram',this)">🏆 Creator Program</button>
+<button class="nav-btn" onclick="showPage('templateAnalytics',this)">📊 Template Analytics</button>
+<button class="nav-btn" onclick="showPage('creatorEarnings',this)">💰 Creator Earnings</button>
 
 <button class="nav-btn" onclick="showPage('marketplace',this)">🛍️ Marketplace</button>
 <button class="nav-btn" onclick="showPage('cart',this)">🛒 Cart</button>
 <button class="nav-btn" onclick="showPage('orders',this)">📦 Orders</button>
-<button class="nav-btn" onclick="showPage('seller',this)">🏪 Seller Tools</button>
-
-<hr>
+<button class="nav-btn" onclick="showPage('sellerTools',this)">🏪 Seller Tools</button>
 
 <button class="nav-btn" onclick="showPage('nearby',this)">📍 Nearby</button>
 <button class="nav-btn" onclick="showPage('transport',this)">🚕 Transport</button>
 <button class="nav-btn" onclick="showPage('businesses',this)">🏢 Businesses</button>
 <button class="nav-btn" onclick="showPage('services',this)">🛠️ Services</button>
-
-<hr>
-
-<button class="nav-btn" onclick="showPage('creator',this)">⭐ Creator Studio</button>
-<button class="nav-btn" onclick="showPage('templates',this)">✨ Templates</button>
-<button class="nav-btn" onclick="showPage('myTemplates',this)">📁 My Templates</button>
-<button class="nav-btn" onclick="showPage('creatorProgram',this)">🏆 Creator Program</button>
-<button class="nav-btn" onclick="showPage('templateAnalytics',this)">📊 Template Analytics</button>
-<button class="nav-btn" onclick="showPage('earnings',this)">💰 Earnings</button>
-
-<hr>
 
 <button class="nav-btn" onclick="showPage('messages',this)">💬 Messages</button>
 <button class="nav-btn" onclick="showPage('notifications',this)">🔔 Notifications</button>
@@ -449,921 +413,828 @@ th,td{
 
 <!-- HOME -->
 <section id="home" class="page active">
+<div class="container">
 
-<div class="hero">
+<div class="card">
 <h1>Welcome</h1>
-<p>Marketplace, social network, entertainment and services — all in one place.</p>
-
-<div class="row" style="margin-top:15px">
-<button class="btn" onclick="showPage('marketplace')">Shop</button>
-<button class="btn secondary" onclick="showPage('shorts')">Watch Shorts</button>
-<button class="btn secondary" onclick="showPage('services')">Find Services</button>
-</div>
+<p>Your marketplace, social, entertainment and services platform.</p>
 </div>
 
 <div class="card">
 <h3>Stories</h3>
 <div class="story-row">
-<div class="story"><div class="story-circle">➕</div><small>Your story</small></div>
-<div class="story"><div class="story-circle">👤</div><small>Ama</small></div>
-<div class="story"><div class="story-circle">🛍️</div><small>Shop</small></div>
-<div class="story"><div class="story-circle">🎵</div><small>Music</small></div>
+<div class="story"><div class="story-circle">+</div>Add</div>
+<div class="story"><div class="story-circle">A</div>Alex</div>
+<div class="story"><div class="story-circle">M</div>Mary</div>
+<div class="story"><div class="story-circle">K</div>Kevin</div>
+<div class="story"><div class="story-circle">J</div>John</div>
 </div>
 </div>
 
 <div class="card">
-<h3>Create Post</h3>
+<h3>Create a post</h3>
 <textarea id="postText" placeholder="What's happening?"></textarea>
-<button class="btn" onclick="createPost()">Post</button>
+<input type="file" id="postMedia" accept="image/*,video/*">
+<button class="btn blue" onclick="createPost()">Post</button>
 </div>
 
 <div id="feed"></div>
 
+</div>
 </section>
-
 
 <!-- EXPLORE -->
 <section id="explore" class="page">
-<div class="hero">
-<h1>Explore</h1>
-<p>Discover products, creators, videos, music and services.</p>
+<div class="container">
+<div class="card">
+<h2>Explore</h2>
+<input id="exploreSearch" placeholder="Search RockyX">
+<button class="btn" onclick="performSearch()">Search</button>
 </div>
-
-<div class="grid">
-<div class="card"><h3>🛍️ Marketplace</h3><button class="btn" onclick="showPage('marketplace')">Explore</button></div>
-<div class="card"><h3>🎬 Shorts</h3><button class="btn" onclick="showPage('shorts')">Watch</button></div>
-<div class="card"><h3>🎵 Music</h3><button class="btn" onclick="showPage('music')">Listen</button></div>
-<div class="card"><h3>📍 Nearby</h3><button class="btn" onclick="showPage('nearby')">Discover</button></div>
+<div id="searchResults"></div>
 </div>
 </section>
-
 
 <!-- CAMERA -->
 <section id="camera" class="page">
-<div class="hero">
-<h1>Camera</h1>
-<p>Create photos and videos directly from your device.</p>
-</div>
-
+<div class="container">
 <div class="card">
-<div class="camera-box">
-<video id="cameraVideo" autoplay playsinline></video>
-</div>
+<h2>Camera</h2>
 
-<div class="row" style="margin-top:12px">
+<video id="cameraVideo" autoplay playsinline class="editor-preview"></video>
+<canvas id="cameraCanvas" style="display:none"></canvas>
+
 <button class="btn" onclick="startCamera()">Start Camera</button>
-<button class="btn" onclick="takePhoto()">Take Photo</button>
+<button class="btn secondary" onclick="takePhoto()">Take Photo</button>
 <button class="btn" onclick="startRecording()">Start Recording</button>
 <button class="btn danger" onclick="stopRecording()">Stop Recording</button>
 <button class="btn secondary" onclick="stopCamera()">Stop Camera</button>
+
+<div style="margin-top:15px">
+<select id="cameraFilter" onchange="applyFilter()">
+<option value="normal">Normal</option>
+<option value="grayscale">Grayscale</option>
+<option value="sepia">Sepia</option>
+<option value="brightness">Bright</option>
+<option value="contrast">Contrast</option>
+<option value="saturate">Saturated</option>
+<option value="cool">Cool</option>
+<option value="warm">Warm</option>
+</select>
 </div>
 
-<canvas id="cameraCanvas" style="display:none"></canvas>
-<div id="cameraResult"></div>
+<div id="cameraDownloads"></div>
+</div>
 </div>
 </section>
-
 
 <!-- MEDIA -->
 <section id="media" class="page">
-<div class="hero">
-<h1>Media</h1>
-<p>Choose photos and videos from your device.</p>
-</div>
-
+<div class="container">
 <div class="card">
-<input type="file" id="mediaInput" accept="image/*,video/*" multiple onchange="previewMedia()">
-<div id="mediaPreview" class="grid"></div>
+<h2>Media</h2>
+<input type="file" id="mediaInput" accept="image/*,video/*" multiple onchange="loadMedia()">
+<div id="mediaGrid" class="grid"></div>
+</div>
 </div>
 </section>
-
 
 <!-- SHORTS -->
 <section id="shorts" class="page">
-<div class="hero">
-<h1>Shorts</h1>
-<p>Watch and create short vertical videos.</p>
-</div>
+<div class="container">
 
 <div class="card">
+<h2>Shorts</h2>
+<p>Upload a short video and decide whether viewers can download it.</p>
+
 <input type="file" id="shortInput" accept="video/*">
-<button class="btn" onclick="addShort()">Add Short</button>
-<div id="shortList"></div>
+
+<div class="check-row">
+<input type="checkbox" id="shortAllowDownload" checked>
+<label for="shortAllowDownload">Allow viewers to download this video</label>
+</div>
+
+<div class="check-row">
+<input type="checkbox" id="shortWatermark" checked>
+<label for="shortWatermark">Allow RockyX watermark on downloads</label>
+</div>
+
+<button class="btn blue" onclick="addShort()">Publish Short</button>
+</div>
+
+<div id="shortsList" class="grid"></div>
+
 </div>
 </section>
-
 
 <!-- VIDEOS -->
 <section id="videos" class="page">
-<div class="hero">
-<h1>Videos</h1>
-<p>Long-form video content.</p>
-</div>
+<div class="container">
 
 <div class="card">
+<h2>Long Videos</h2>
+<p>Upload longer videos and control viewer downloads.</p>
+
 <input type="file" id="longVideoInput" accept="video/*">
-<button class="btn" onclick="addLongVideo()">Add Video</button>
-<div id="videoList"></div>
+
+<div class="check-row">
+<input type="checkbox" id="longAllowDownload" checked>
+<label for="longAllowDownload">Allow viewers to download this video</label>
+</div>
+
+<div class="check-row">
+<input type="checkbox" id="longWatermark" checked>
+<label for="longWatermark">Allow RockyX watermark on downloads</label>
+</div>
+
+<button class="btn blue" onclick="addLongVideo()">Publish Video</button>
+</div>
+
+<div id="videoResults" class="grid"></div>
+
 </div>
 </section>
-
-
-<!-- LIVE -->
-<section id="live" class="page">
-<div class="hero">
-<h1>Live</h1>
-<p>Live streaming will be connected during the backend phase.</p>
-</div>
-<div class="card">
-<h3>Live Streaming</h3>
-<p class="muted">The frontend structure is ready for live streaming, viewers, comments and moderation.</p>
-<button class="btn" onclick="alert('Live streaming backend will be connected after Stage 10.')">Start Live</button>
-</div>
-</section>
-
 
 <!-- MUSIC -->
 <section id="music" class="page">
-<div class="hero">
-<h1>Music</h1>
-<p>Discover songs, artists and albums.</p>
+<div class="container">
+<div class="card">
+<h2>Music</h2>
+<input placeholder="Search songs, artists or albums">
 </div>
-
 <div class="grid">
-<div class="card"><h3>🎵 New Song</h3><p class="muted">Example artist</p><button class="btn">▶ Play</button></div>
-<div class="card"><h3>🎵 My Song</h3><p class="muted">Example artist</p><button class="btn">▶ Play</button></div>
-<div class="card"><h3>💿 Album</h3><p class="muted">Example artist</p><button class="btn">View Album</button></div>
+<div class="music-card"><div class="product-content"><h3>Sample Artist</h3><p>Sample Song</p><button class="btn">▶ Play</button></div></div>
+<div class="music-card"><div class="product-content"><h3>Sample Artist</h3><p>Another Song</p><button class="btn">▶ Play</button></div></div>
+</div>
 </div>
 </section>
 
-
 <!-- SOUNDS -->
 <section id="sounds" class="page">
-<div class="hero">
-<h1>Sounds</h1>
-<p>Find sounds for your videos.</p>
-</div>
-
-<div class="grid">
+<div class="container">
 <div class="card">
-<h3>Original Sound</h3>
-<button class="btn" onclick="saveSound('Original Sound')">Save Sound</button>
+<h2>Sounds</h2>
+<input id="soundSearch" placeholder="Search sounds">
 </div>
-<div class="card">
-<h3>Trending Beat</h3>
-<button class="btn" onclick="saveSound('Trending Beat')">Save Sound</button>
-</div>
-</div>
-
+<div id="soundsList"></div>
 <div class="card">
 <h3>Saved Sounds</h3>
 <div id="savedSounds"></div>
 </div>
+</div>
 </section>
 
+<!-- CREATOR STUDIO -->
+<section id="creator" class="page">
+<div class="container">
+<div class="card">
+<h2>Creator Studio</h2>
+<p>Create, edit and manage your content.</p>
+
+<div class="grid">
+<button class="btn" onclick="showPage('photoEditor')">🖌️ Edit Photo</button>
+<button class="btn" onclick="showPage('videoEditor')">🎞️ Edit Video</button>
+<button class="btn" onclick="showPage('aiStudio')">✨ AI Studio</button>
+<button class="btn" onclick="showPage('templateCreator')">🧩 Create Template</button>
+<button class="btn" onclick="showPage('sounds')">🔊 Add Sound</button>
+<button class="btn" onclick="showPage('shorts')">🎬 Create Short</button>
+</div>
+</div>
+</div>
+</section>
+
+<!-- PHOTO EDITOR -->
+<section id="photoEditor" class="page">
+<div class="container">
+<div class="card">
+<h2>Photo Editor</h2>
+<input type="file" id="photoInput" accept="image/*" onchange="previewPhoto()">
+<img id="photoPreview" class="editor-preview" style="display:none">
+<div class="grid">
+<button class="btn" onclick="photoFilter('none')">Normal</button>
+<button class="btn" onclick="photoFilter('grayscale')">Grayscale</button>
+<button class="btn" onclick="photoFilter('sepia')">Sepia</button>
+<button class="btn" onclick="photoFilter('brightness')">Bright</button>
+</div>
+</div>
+</div>
+</section>
+
+<!-- VIDEO EDITOR -->
+<section id="videoEditor" class="page">
+<div class="container">
+<div class="card">
+<h2>Video Editor</h2>
+<input type="file" id="editorVideoInput" accept="video/*" onchange="loadEditorVideo()">
+
+<video id="editorPreview" controls class="editor-preview"></video>
+
+<div class="grid">
+<button class="btn">✂️ Trim</button>
+<button class="btn">➕ Add Text</button>
+<button class="btn">🔊 Add Sound</button>
+<button class="btn">✨ Effects</button>
+<button class="btn">🎨 Filters</button>
+<button class="btn">📝 Captions</button>
+</div>
+
+<button class="btn secondary">Save Draft</button>
+<button class="btn blue" onclick="publishEditedVideo()">Publish Video</button>
+<button class="btn blue" onclick="publishEditedVideo(true)">Publish as Short</button>
+</div>
+</div>
+</section>
+
+<!-- AI STUDIO -->
+<section id="aiStudio" class="page">
+<div class="container">
+<div class="card">
+<h2>AI Studio</h2>
+<p>Frontend tools prepared for future AI integration.</p>
+<div class="grid">
+<button class="btn">AI Captions</button>
+<button class="btn">Background Removal</button>
+<button class="btn">Object Removal</button>
+<button class="btn">Image Enhancement</button>
+<button class="btn">AI Effects</button>
+<button class="btn">Automatic Editing</button>
+<button class="btn">Template Suggestions</button>
+<button class="btn">Beat-Aware Editing</button>
+</div>
+</div>
+</div>
+</section>
+
+<!-- TEMPLATES -->
+<section id="templates" class="page">
+<div class="container">
+<div class="card">
+<h2>Template Marketplace</h2>
+<input id="templateSearch" placeholder="Search templates">
+<select id="templateCategory">
+<option>All</option>
+<option>Social</option>
+<option>Business</option>
+<option>Music</option>
+<option>Video</option>
+<option>Photo</option>
+</select>
+</div>
+<div id="templateList" class="grid"></div>
+</div>
+</section>
+
+<!-- TEMPLATE CREATOR -->
+<section id="templateCreator" class="page">
+<div class="container">
+<div class="card">
+<h2>Create Template</h2>
+
+<input id="templateName" placeholder="Template name">
+
+<select id="templateType">
+<option>Video</option>
+<option>Photo</option>
+<option>Social</option>
+<option>Business</option>
+</select>
+
+<textarea id="templateDescription" placeholder="Describe your template"></textarea>
+
+<div class="check-row">
+<input type="checkbox" id="templatePremium">
+<label for="templatePremium">Request premium review</label>
+</div>
+
+<button class="btn blue" onclick="createTemplate()">Save Template</button>
+</div>
+</div>
+</section>
+
+<!-- MY TEMPLATES -->
+<section id="myTemplates" class="page">
+<div class="container">
+<div class="card">
+<h2>My Templates</h2>
+<div id="myTemplateList" class="grid"></div>
+</div>
+</div>
+</section>
+
+<!-- CREATOR PROGRAM -->
+<section id="creatorProgram" class="page">
+<div class="container">
+<div class="card">
+<h2>Creator Program</h2>
+
+<div class="stats">
+<div class="stat"><strong>1</strong>Creator</div>
+<div class="stat"><strong>2</strong>Rising Creator</div>
+<div class="stat"><strong>3</strong>Premium Creator</div>
+<div class="stat"><strong>4</strong>RockyX Partner</div>
+</div>
+
+<p style="margin-top:15px">
+Creator levels will later use performance, originality,
+community compliance and other configurable requirements.
+</p>
+</div>
+</div>
+</section>
+
+<!-- TEMPLATE ANALYTICS -->
+<section id="templateAnalytics" class="page">
+<div class="container">
+<div class="card">
+<h2>Template Analytics</h2>
+<div class="stats">
+<div class="stat"><strong>0</strong>Uses</div>
+<div class="stat"><strong>0</strong>Saves</div>
+<div class="stat"><strong>0</strong>Shares</div>
+<div class="stat"><strong>0</strong>Earnings</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- CREATOR EARNINGS -->
+<section id="creatorEarnings" class="page">
+<div class="container">
+<div class="card">
+<h2>Creator Earnings</h2>
+<div class="stats">
+<div class="stat"><strong>GHS 0.00</strong>Available</div>
+<div class="stat"><strong>GHS 0.00</strong>Pending</div>
+<div class="stat"><strong>GHS 0.00</strong>Lifetime</div>
+<div class="stat"><strong>0</strong>Payouts</div>
+</div>
+</div>
+</div>
+</section>
 
 <!-- MARKETPLACE -->
 <section id="marketplace" class="page">
-
-<div class="hero">
-<div class="space">
-<div>
-<h1>Marketplace</h1>
-<p>Discover products from sellers.</p>
-</div>
-<button class="btn" onclick="showPage('cart')">🛒 Cart <span id="cartCount">0</span></button>
-</div>
-</div>
+<div class="container">
 
 <div class="card">
-<div class="row">
-<input id="productSearch"
-placeholder="Search products..."
-oninput="renderProducts()"
-style="flex:1;min-width:220px">
+<h2>Marketplace</h2>
+<input id="productSearch" placeholder="Search products" oninput="renderProducts()">
 
-<select id="productCategory" onchange="renderProducts()" style="max-width:220px">
-<option value="">All categories</option>
+<select id="productCategory" onchange="renderProducts()">
+<option>All</option>
 <option>Electronics</option>
 <option>Fashion</option>
-<option>Beauty</option>
 <option>Food</option>
 <option>Home</option>
-<option>Services</option>
 </select>
-</div>
 </div>
 
 <div id="productList" class="grid"></div>
 
+</div>
 </section>
-
-
-<!-- PRODUCT DETAILS -->
-<section id="productDetails" class="page">
-<div id="productDetailContent"></div>
-</section>
-
 
 <!-- CART -->
 <section id="cart" class="page">
-
-<div class="hero">
-<h1>Shopping Cart</h1>
-<p>Review your selected products.</p>
-</div>
-
+<div class="container">
 <div class="card">
-<div id="cartItems"></div>
-<div id="cartSummary"></div>
+<h2>Shopping Cart</h2>
+<div id="cartList"></div>
+<h3 id="cartTotal">Total: GHS 0.00</h3>
+<button class="btn blue" onclick="showPage('checkout')">Checkout</button>
 </div>
-
+</div>
 </section>
-
 
 <!-- CHECKOUT -->
 <section id="checkout" class="page">
-
-<div class="hero">
-<h1>Checkout</h1>
-<p>Enter your delivery information.</p>
-</div>
-
+<div class="container">
 <div class="card">
-<h3>Delivery Details</h3>
+<h2>Checkout</h2>
 
 <input id="checkoutName" placeholder="Full name">
 <input id="checkoutPhone" placeholder="Phone number">
 <textarea id="checkoutAddress" placeholder="Delivery address"></textarea>
 
-<select id="checkoutCountry">
-<option value="Ghana">Ghana</option>
-<option value="Nigeria">Nigeria</option>
-<option value="Kenya">Kenya</option>
-<option value="South Africa">South Africa</option>
-<option value="United Kingdom">United Kingdom</option>
-<option value="United States">United States</option>
-</select>
-
-<div id="checkoutTotal" class="cart-total"></div>
-
-<button class="btn success" onclick="placeDemoOrder()">Place Order</button>
-<button class="btn secondary" onclick="showPage('cart')">Back to Cart</button>
+<button class="btn blue" onclick="placeOrder()">Place Demo Order</button>
 </div>
-
+</div>
 </section>
-
 
 <!-- ORDERS -->
 <section id="orders" class="page">
-
-<div class="hero">
-<h1>Orders</h1>
-<p>Track your marketplace purchases.</p>
-</div>
-
+<div class="container">
+<div class="card">
+<h2>Orders</h2>
 <div id="ordersList"></div>
-
+</div>
+</div>
 </section>
 
-
 <!-- SELLER TOOLS -->
-<section id="seller" class="page">
+<section id="sellerTools" class="page">
+<div class="container">
 
-<div class="hero">
-<h1>Seller Tools</h1>
-<p>Manage products, sales and seller activity.</p>
+<div class="card">
+<h2>Seller Tools</h2>
+
+<input id="sellerProductName" placeholder="Product name">
+<textarea id="sellerProductDescription" placeholder="Description"></textarea>
+<input id="sellerProductPrice" type="number" placeholder="Price">
+<input id="sellerProductImage" type="file" accept="image/*">
+
+<button class="btn blue" onclick="addSellerProduct()">Add Product</button>
 </div>
 
 <div class="stats">
-<div class="stat">Products<strong id="sellerProducts">0</strong></div>
-<div class="stat">Orders<strong id="sellerOrders">0</strong></div>
-<div class="stat">Sales<strong id="sellerSales">GHS 0.00</strong></div>
-<div class="stat">Commission<strong id="sellerCommission">GHS 0.00</strong></div>
+<div class="stat"><strong>0</strong>Sales</div>
+<div class="stat"><strong>0</strong>Orders</div>
+<div class="stat"><strong>5%</strong>Demo Commission</div>
+<div class="stat"><strong>GHS 0</strong>Earnings</div>
 </div>
 
-<div class="card">
-<h3>Add Product</h3>
-
-<input id="newProductName" placeholder="Product name">
-<textarea id="newProductDescription" placeholder="Product description"></textarea>
-<input id="newProductPrice" type="number" placeholder="Price">
-<select id="newProductCategory">
-<option>Electronics</option>
-<option>Fashion</option>
-<option>Beauty</option>
-<option>Food</option>
-<option>Home</option>
-<option>Services</option>
-</select>
-<input id="newProductImage" type="file" accept="image/*">
-
-<button class="btn" onclick="addSellerProduct()">Create Product</button>
 </div>
-
-<div class="card">
-<h3>My Products</h3>
-<div id="sellerProductList"></div>
-</div>
-
 </section>
-
 
 <!-- NEARBY -->
 <section id="nearby" class="page">
-<div class="hero">
-<h1>Nearby</h1>
-<p>Discover businesses, products and services near you.</p>
-</div>
+<div class="container">
 <div class="card">
-<div style="height:320px;background:#e7eaee;border-radius:15px;display:flex;align-items:center;justify-content:center">
-📍 Map will be connected during the map/backend stage.
+<h2>Nearby</h2>
+<p>Businesses, sellers, restaurants, hotels, services and useful places.</p>
+<div class="map-box">Map / nearby discovery will be connected in Stage 8.</div>
 </div>
 </div>
 </section>
-
 
 <!-- TRANSPORT -->
 <section id="transport" class="page">
-<div class="hero">
-<h1>Transport</h1>
-<p>Find transport providers.</p>
-</div>
+<div class="container">
+<div class="card">
+<h2>Transport</h2>
 
-<div class="grid">
-<div class="card"><h3>🚕 Taxi</h3><button class="btn">Find</button></div>
-<div class="card"><h3>🚗 Ride-hailing</h3><button class="btn">Find</button></div>
-<div class="card"><h3>🚌 Bus</h3><button class="btn">Find</button></div>
-<div class="card"><h3>🏍️ Motorbike</h3><button class="btn">Find</button></div>
-<div class="card"><h3>📦 Delivery</h3><button class="btn">Find</button></div>
-<div class="card"><h3>🚚 Trucking</h3><button class="btn">Find</button></div>
-<div class="card"><h3>🚙 Car Rental</h3><button class="btn">Find</button></div>
-<div class="card"><h3>✈️ Airport Transfer</h3><button class="btn">Find</button></div>
+<select>
+<option>Taxi</option>
+<option>Ride-hailing</option>
+<option>Bus</option>
+<option>Minibus</option>
+<option>Motorbike</option>
+<option>Delivery</option>
+<option>Trucking</option>
+<option>Car Rental</option>
+<option>Airport Transfer</option>
+</select>
+
+<div class="map-box">Transport map will be connected in Stage 8.</div>
+</div>
 </div>
 </section>
-
 
 <!-- BUSINESSES -->
 <section id="businesses" class="page">
-<div class="hero">
-<h1>Businesses</h1>
-<p>Discover businesses and shops.</p>
+<div class="container">
+<div class="card">
+<h2>Businesses</h2>
+<input placeholder="Search businesses">
 </div>
-
-<div class="grid">
-<div class="card"><h3>🏪 Shop</h3><p class="muted">Business profile</p></div>
-<div class="card"><h3>🍽️ Restaurant</h3><p class="muted">Business profile</p></div>
-<div class="card"><h3>🏨 Hotel</h3><p class="muted">Business profile</p></div>
 </div>
 </section>
-
 
 <!-- SERVICES -->
 <section id="services" class="page">
-<div class="hero">
-<h1>Services</h1>
-<p>Find service providers.</p>
-</div>
-
-<div class="grid">
-<div class="card"><h3>🔧 Repairs</h3><button class="btn">Find Provider</button></div>
-<div class="card"><h3>💻 Technology</h3><button class="btn">Find Provider</button></div>
-<div class="card"><h3>🚚 Delivery</h3><button class="btn">Find Provider</button></div>
-<div class="card"><h3>🏠 Home Services</h3><button class="btn">Find Provider</button></div>
-</div>
-</section>
-
-
-<!-- CREATOR STUDIO -->
-<section id="creator" class="page">
-
-<div class="hero">
-<h1>Creator Studio</h1>
-<p>Create and manage your content.</p>
-</div>
-
-<div class="editor-tools">
-<button class="btn" onclick="showPage('photoEditor')">🖼️ Edit Photo</button>
-<button class="btn" onclick="showPage('videoEditor')">🎬 Edit Video</button>
-<button class="btn" onclick="showPage('aiStudio')">🤖 AI Studio</button>
-<button class="btn" onclick="showPage('templates')">✨ Templates</button>
-<button class="btn" onclick="showPage('sounds')">🔊 Add Sound</button>
-<button class="btn" onclick="alert('Captions tool ready for backend integration.')">📝 Captions</button>
-<button class="btn" onclick="alert('Effects tool ready.')">✨ Effects</button>
-<button class="btn" onclick="alert('Filters tool ready.')">🎨 Filters</button>
-</div>
-
-</section>
-
-
-<!-- PHOTO EDITOR -->
-<section id="photoEditor" class="page">
-<div class="hero">
-<h1>Photo Editor</h1>
-<p>Edit photos on your device.</p>
-</div>
-
+<div class="container">
 <div class="card">
-<input type="file" id="photoEditorInput" accept="image/*" onchange="loadPhotoEditor()">
-<div id="photoEditorPreview"></div>
-
-<div class="editor-tools" style="margin-top:15px">
-<button class="btn secondary" onclick="photoFilter('grayscale(1)')">Grayscale</button>
-<button class="btn secondary" onclick="photoFilter('sepia(1)')">Sepia</button>
-<button class="btn secondary" onclick="photoFilter('brightness(1.2)')">Brightness</button>
-<button class="btn secondary" onclick="photoFilter('contrast(1.3)')">Contrast</button>
-<button class="btn secondary" onclick="photoFilter('saturate(1.5)')">Saturation</button>
-<button class="btn secondary" onclick="photoFilter('none')">Reset</button>
+<h2>Services</h2>
+<input placeholder="Search services">
 </div>
-
-<button class="btn" onclick="savePhotoEdit()">Save Photo</button>
 </div>
 </section>
-
-
-<!-- VIDEO EDITOR -->
-<section id="videoEditor" class="page">
-<div class="hero">
-<h1>Video Editor</h1>
-<p>Create and edit videos locally.</p>
-</div>
-
-<div class="card">
-<input type="file" id="editorVideoInput" accept="video/*" onchange="loadEditorVideo()">
-<video id="editorPreview" class="media-preview" controls></video>
-
-<div class="editor-tools" style="margin-top:15px">
-<button class="btn secondary" onclick="alert('Trim controls will be expanded in the advanced editor.')">✂️ Trim</button>
-<button class="btn secondary" onclick="alert('Split tool ready.')">Split</button>
-<button class="btn secondary" onclick="alert('Speed control ready.')">Speed</button>
-<button class="btn secondary" onclick="alert('Text tool ready.')">Text</button>
-<button class="btn secondary" onclick="alert('Effects ready.')">Effects</button>
-<button class="btn secondary" onclick="alert('Music ready.')">Music</button>
-</div>
-
-<button class="btn" onclick="saveVideoDraft()">Save Draft</button>
-<button class="btn" onclick="alert('Publishing will connect to the backend later.')">Publish</button>
-</div>
-</section>
-
-
-<!-- AI STUDIO -->
-<section id="aiStudio" class="page">
-<div class="hero">
-<h1>AI Studio</h1>
-<p>AI-powered creation tools.</p>
-</div>
-
-<div class="grid">
-<div class="card"><h3>🤖 Auto Captions</h3><button class="btn">Use Tool</button></div>
-<div class="card"><h3>🖼️ Background Removal</h3><button class="btn">Use Tool</button></div>
-<div class="card"><h3>✨ Image Enhancement</h3><button class="btn">Use Tool</button></div>
-<div class="card"><h3>📝 Text Generation</h3><button class="btn">Use Tool</button></div>
-<div class="card"><h3>🎬 Automatic Editing</h3><button class="btn">Use Tool</button></div>
-<div class="card"><h3>🎵 Beat Editing</h3><button class="btn">Use Tool</button></div>
-</div>
-</section>
-
-
-<!-- TEMPLATES -->
-<section id="templates" class="page">
-
-<div class="hero">
-<h1>Templates</h1>
-<p>Discover templates created by the community.</p>
-</div>
-
-<div class="grid" id="templateList"></div>
-
-</section>
-
-
-<!-- MY TEMPLATES -->
-<section id="myTemplates" class="page">
-
-<div class="hero">
-<h1>My Templates</h1>
-<button class="btn" onclick="createTemplate()">Create Template</button>
-</div>
-
-<div id="myTemplateList" class="grid"></div>
-
-</section>
-
-
-<!-- CREATOR PROGRAM -->
-<section id="creatorProgram" class="page">
-
-<div class="hero">
-<h1>Creator Program</h1>
-<p>Your creator level can grow as your activity and performance develop.</p>
-</div>
-
-<div class="card">
-<h3>Creator Level</h3>
-<div class="stats">
-<div class="stat">Current<strong>Creator</strong></div>
-<div class="stat">Progress<strong>0%</strong></div>
-</div>
-</div>
-
-<div class="grid">
-<div class="card"><h3>Creator</h3><p>Starting creator level.</p></div>
-<div class="card"><h3>Rising Creator</h3><p>Performance-based level.</p></div>
-<div class="card"><h3>Premium Creator</h3><p>Advanced creator level.</p></div>
-<div class="card"><h3>RockyX Partner</h3><p>Partner program level.</p></div>
-<div class="card"><h3>Pro Partner</h3><p>Advanced partner level.</p></div>
-</div>
-
-</section>
-
-
-<!-- TEMPLATE ANALYTICS -->
-<section id="templateAnalytics" class="page">
-
-<div class="hero">
-<h1>Template Analytics</h1>
-<p>Track template performance.</p>
-</div>
-
-<div class="stats">
-<div class="stat">Uses<strong>0</strong></div>
-<div class="stat">Saves<strong>0</strong></div>
-<div class="stat">Shares<strong>0</strong></div>
-<div class="stat">Engagement<strong>0</strong></div>
-</div>
-
-</section>
-
-
-<!-- EARNINGS -->
-<section id="earnings" class="page">
-
-<div class="hero">
-<h1>Earnings</h1>
-<p>Creator and marketplace earnings dashboard.</p>
-</div>
-
-<div class="stats">
-<div class="stat">Available<strong id="availableBalance">GHS 0.00</strong></div>
-<div class="stat">Pending<strong id="pendingBalance">GHS 0.00</strong></div>
-<div class="stat">Marketplace<strong id="marketplaceRevenue">GHS 0.00</strong></div>
-<div class="stat">Creator<strong id="creatorRevenue">GHS 0.00</strong></div>
-</div>
-
-<div class="card">
-<h3>Payouts</h3>
-<p class="muted">
-Real payouts will be connected after the backend and payment stage.
-</p>
-<button class="btn" onclick="alert('Payout system will be connected during backend development.')">
-Request Payout
-</button>
-</div>
-
-</section>
-
 
 <!-- MESSAGES -->
 <section id="messages" class="page">
-<div class="hero">
-<h1>Messages</h1>
-<p>Your conversations.</p>
-</div>
-
+<div class="container">
 <div class="card">
-<p>💬 No messages yet.</p>
+<h2>Messages</h2>
+<div class="post">Alex — Hello 👋</div>
+<div class="post">Mary — How are you?</div>
+</div>
 </div>
 </section>
-
 
 <!-- NOTIFICATIONS -->
 <section id="notifications" class="page">
-<div class="hero">
-<h1>Notifications</h1>
-<p>Stay updated.</p>
-</div>
-
+<div class="container">
 <div class="card">
-<p>🔔 No new notifications.</p>
+<h2>Notifications</h2>
+<div class="post">Someone liked your post.</div>
+<div class="post">You have a new follower.</div>
+</div>
 </div>
 </section>
-
 
 <!-- PROFILE -->
 <section id="profile" class="page">
-
-<div class="hero">
-<h1>Your Profile</h1>
-<p>Manage your profile and creator activity.</p>
-</div>
-
-<div class="stats">
-<div class="stat">Posts<strong>0</strong></div>
-<div class="stat">Followers<strong>0</strong></div>
-<div class="stat">Following<strong>0</strong></div>
-</div>
+<div class="container">
 
 <div class="card">
-<input id="profileName" placeholder="Your name">
-<textarea id="profileBio" placeholder="Your bio"></textarea>
-<button class="btn" onclick="saveProfile()">Save Profile</button>
+<div class="profile-head">
+<div class="avatar">R</div>
+<div>
+<h2>Your Profile</h2>
+<p>@creator</p>
+</div>
 </div>
 
-</section>
+<div class="stats" style="margin-top:20px">
+<div class="stat"><strong>0</strong>Posts</div>
+<div class="stat"><strong>0</strong>Followers</div>
+<div class="stat"><strong>0</strong>Following</div>
+<div class="stat"><strong>0</strong>Likes</div>
+</div>
 
+<button class="btn">Edit Profile</button>
+<button class="btn secondary">Follow</button>
+</div>
+
+</div>
+</section>
 
 <!-- ACCOUNT -->
 <section id="account" class="page">
-
-<div class="hero">
-<h1>Account</h1>
-<p>Create an account or sign in.</p>
-</div>
+<div class="container">
 
 <div class="card">
-<h3>Sign In</h3>
-<input id="signinEmail" type="email" placeholder="Email address">
-<input id="signinPassword" type="password" placeholder="Password">
-<button class="btn" onclick="signin()">Sign In</button>
+<h2>Account</h2>
+
+<button class="btn blue" onclick="openSignup()">Create Account</button>
+<button class="btn secondary" onclick="openSignin()">Sign In</button>
+
+<p id="accountStatus" style="margin-top:15px">Not signed in</p>
 </div>
 
+</div>
+</section>
+
+<!-- SETTINGS -->
+<section id="settings" class="page">
+<div class="container">
+
 <div class="card">
-<h3>Create Account</h3>
+<h2>Settings</h2>
+
+<label>Username</label>
+<input placeholder="Username">
+
+<label>Email</label>
+<input type="email" placeholder="Email">
+
+<div class="check-row">
+<input type="checkbox">
+<label>Private account</label>
+</div>
+
+<div class="check-row">
+<input type="checkbox">
+<label>Allow messages</label>
+</div>
+
+<div class="check-row">
+<input type="checkbox" checked>
+<label>Allow video downloads by default</label>
+</div>
+
+<button class="btn blue">Save Settings</button>
+</div>
+
+</div>
+</section>
+
+<!-- LIVE -->
+<section id="live" class="page">
+<div class="container">
+<div class="card">
+<h2>Live</h2>
+<p>Live streaming interface prepared for the future backend/live system.</p>
+<button class="btn danger">🔴 Start Live</button>
+</div>
+</div>
+</section>
+
+</main>
+</div>
+
+<!-- MOBILE NAV -->
+<nav class="mobile-nav">
+<button onclick="showPage('home')">🏠<br>Home</button>
+<button onclick="showPage('shorts')">🎬<br>Shorts</button>
+<button onclick="showPage('marketplace')">🛍️<br>Shop</button>
+<button onclick="showPage('messages')">💬<br>Chat</button>
+<button onclick="showPage('account')">👤<br>Account</button>
+</nav>
+
+<!-- SIGN UP MODAL -->
+<div id="signupModal" class="modal">
+<div class="modal-box">
+<button class="close" onclick="closeModals()">×</button>
+<h2>Create Account</h2>
+
 <input id="signupName" placeholder="Full name">
 <input id="signupEmail" type="email" placeholder="Email address">
-<input id="signupPhone" placeholder="Phone number">
+<input id="signupPhone" type="tel" placeholder="Phone number">
 
 <select id="signupCountry">
 <option value="">Select country</option>
 <option>Ghana</option>
 <option>Nigeria</option>
-<option>Kenya</option>
-<option>South Africa</option>
 <option>United Kingdom</option>
 <option>United States</option>
+<option>Other</option>
 </select>
 
 <input id="signupPassword" type="password" placeholder="Password">
 <input id="signupConfirm" type="password" placeholder="Confirm password">
 
-<button class="btn" onclick="signup()">Create Account</button>
+<button class="btn blue" onclick="createAccount()">Create Account</button>
+<button class="btn secondary" onclick="switchToSignin()">Already have an account?</button>
+</div>
 </div>
 
-<div id="accountStatus" class="card">
-Not signed in.
+<!-- SIGN IN MODAL -->
+<div id="signinModal" class="modal">
+<div class="modal-box">
+<button class="close" onclick="closeModals()">×</button>
+<h2>Sign In</h2>
+
+<input id="signinEmail" type="email" placeholder="Email address">
+<input id="signinPassword" type="password" placeholder="Password">
+
+<button class="btn blue" onclick="signIn()">Sign In</button>
+<button class="btn secondary" onclick="switchToSignup()">Create account</button>
 </div>
-
-</section>
-
-
-<!-- SETTINGS -->
-<section id="settings" class="page">
-
-<div class="hero">
-<h1>Settings</h1>
-<p>Manage your account preferences.</p>
 </div>
-
-<div class="card">
-<h3>Privacy</h3>
-<label><input type="checkbox"> Private account</label><br>
-<label><input type="checkbox"> Allow messages</label><br>
-<label><input type="checkbox"> Show nearby activity</label>
-</div>
-
-<div class="card">
-<h3>Security</h3>
-<button class="btn" onclick="alert('Security tools will be connected during the backend stage.')">Security Settings</button>
-</div>
-
-</section>
-
-</main>
-
-
-<!-- MOBILE NAV -->
-<nav class="mobile-nav">
-<button onclick="showPage('home')">🏠<br>Home</button>
-<button onclick="showPage('explore')">🔎<br>Explore</button>
-<button onclick="showPage('shorts')">🎬<br>Shorts</button>
-<button onclick="showPage('marketplace')">🛍️<br>Shop</button>
-<button onclick="showPage('account')">👤<br>Account</button>
-</nav>
-
 
 <!-- PRODUCT MODAL -->
 <div id="productModal" class="modal">
 <div class="modal-box">
-<div class="space">
-<h2 id="modalProductName"></h2>
-<button class="icon-btn" onclick="closeProductModal()">✕</button>
-</div>
-<div id="modalProductContent"></div>
+<button class="close" onclick="closeProductModal()">×</button>
+<div id="productModalContent"></div>
 </div>
 </div>
-
 
 <script>
 
 /* =========================
-   STORAGE
+   GLOBAL STATE
 ========================= */
 
-let products = JSON.parse(localStorage.getItem("rockyxProducts") || "null");
+let cameraStream=null;
+let mediaRecorder=null;
+let recordedChunks=[];
+let cameraDownloads=[];
 
-if(!products){
-  products = [
-    {
-      id:1,
-      name:"Wireless Headphones",
-      description:"Wireless headphones for music and videos.",
-      price:250,
-      category:"Electronics",
-      seller:"Demo Seller",
-      image:""
-    },
-    {
-      id:2,
-      name:"Classic Sneakers",
-      description:"Comfortable everyday sneakers.",
-      price:350,
-      category:"Fashion",
-      seller:"Demo Seller",
-      image:""
-    },
-    {
-      id:3,
-      name:"Beauty Set",
-      description:"A sample beauty product set.",
-      price:180,
-      category:"Beauty",
-      seller:"Demo Seller",
-      image:""
-    },
-    {
-      id:4,
-      name:"Home Decoration",
-      description:"Modern home decoration item.",
-      price:120,
-      category:"Home",
-      seller:"Demo Seller",
-      image:""
-    }
-  ];
+let shorts=[];
+let longVideos=[];
+let products=[
+ {
+  id:1,
+  name:"Wireless Headphones",
+  description:"Wireless headphones",
+  price:250,
+  category:"Electronics",
+  image:""
+ },
+ {
+  id:2,
+  name:"Classic T-Shirt",
+  description:"Comfortable T-shirt",
+  price:100,
+  category:"Fashion",
+  image:""
+ },
+ {
+  id:3,
+  name:"Home Speaker",
+  description:"Bluetooth speaker",
+  price:350,
+  category:"Electronics",
+  image:""
+ }
+];
 
-  saveProducts();
-}
-
-let cart = JSON.parse(localStorage.getItem("rockyxCart") || "[]");
-let orders = JSON.parse(localStorage.getItem("rockyxOrders") || "[]");
-let sellerProducts = JSON.parse(localStorage.getItem("rockyxSellerProducts") || "[]");
-let savedSounds = JSON.parse(localStorage.getItem("rockyxSavedSounds") || "[]");
-let templates = JSON.parse(localStorage.getItem("rockyxTemplates") || "[]");
-
-
-function saveProducts(){
-  localStorage.setItem("rockyxProducts",JSON.stringify(products));
-}
-
-function saveCart(){
-  localStorage.setItem("rockyxCart",JSON.stringify(cart));
-}
-
-function saveOrders(){
-  localStorage.setItem("rockyxOrders",JSON.stringify(orders));
-}
-
-function saveSellerProducts(){
-  localStorage.setItem("rockyxSellerProducts",JSON.stringify(sellerProducts));
-}
+let cart=[];
+let orders=[];
+let myTemplates=[];
 
 
 /* =========================
    PAGE NAVIGATION
 ========================= */
 
-function showPage(page,button){
+function showPage(id,button){
 
-  document.querySelectorAll(".page").forEach(p=>{
-    p.classList.remove("active");
-  });
+ document.querySelectorAll(".page").forEach(p=>{
+   p.classList.remove("active");
+ });
 
-  const target=document.getElementById(page);
+ const page=document.getElementById(id);
 
-  if(target){
-    target.classList.add("active");
-  }
+ if(page){
+   page.classList.add("active");
+   window.scrollTo({top:0,behavior:"smooth"});
+ }
 
-  document.querySelectorAll(".nav-btn").forEach(b=>{
-    b.classList.remove("active");
-  });
+ if(button){
+   document.querySelectorAll(".nav-btn").forEach(b=>b.classList.remove("active"));
+   button.classList.add("active");
+ }
 
-  if(button){
-    button.classList.add("active");
-  }
-
-  window.scrollTo(0,0);
-
-  if(page==="marketplace") renderProducts();
-  if(page==="cart") renderCart();
-  if(page==="orders") renderOrders();
-  if(page==="seller") renderSeller();
-  if(page==="templates") renderTemplates();
-  if(page==="myTemplates") renderMyTemplates();
-  if(page==="sounds") renderSavedSounds();
+ if(id==="marketplace") renderProducts();
+ if(id==="cart") renderCart();
+ if(id==="orders") renderOrders();
+ if(id==="templates") renderTemplates();
+ if(id==="myTemplates") renderMyTemplates();
 }
 
 
 /* =========================
-   GLOBAL SEARCH
+   POSTS
 ========================= */
-
-function performGlobalSearch(){
-
-  const query=document.getElementById("globalSearch").value.trim().toLowerCase();
-
-  if(!query)return;
-
-  const found=products.filter(p =>
-    p.name.toLowerCase().includes(query) ||
-    p.category.toLowerCase().includes(query) ||
-    p.description.toLowerCase().includes(query)
-  );
-
-  showPage("marketplace");
-
-  document.getElementById("productSearch").value=query;
-
-  renderProducts();
-
-  if(!found.length){
-    alert("No marketplace products matched your search. Other search categories will be connected later.");
-  }
-}
-
-
-/* =========================
-   FEED
-========================= */
-
-let posts=[
-  {
-    name:"Demo Creator",
-    text:"Welcome to the new platform.",
-    likes:0
-  },
-  {
-    name:"Demo Seller",
-    text:"New products are available in the marketplace.",
-    likes:0
-  }
-];
-
-function renderFeed(){
-
-  const feed=document.getElementById("feed");
-
-  feed.innerHTML=posts.map((p,i)=>`
-    <div class="post">
-      <div class="space">
-        <strong>${escapeHTML(p.name)}</strong>
-        <span class="muted">Now</span>
-      </div>
-      <p style="margin-top:10px">${escapeHTML(p.text)}</p>
-      <div class="post-actions">
-        <button class="btn small secondary" onclick="likePost(${i})">❤️ ${p.likes}</button>
-        <button class="btn small secondary">💬 Comment</button>
-        <button class="btn small secondary">↗ Share</button>
-        <button class="btn small secondary">🔖 Save</button>
-      </div>
-    </div>
-  `).join("");
-}
 
 function createPost(){
 
-  const text=document.getElementById("postText").value.trim();
+ const text=document.getElementById("postText").value.trim();
+ const file=document.getElementById("postMedia").files[0];
 
-  if(!text){
-    alert("Write something first.");
-    return;
-  }
+ if(!text && !file){
+   alert("Write something or choose media.");
+   return;
+ }
 
-  posts.unshift({
-    name:"You",
-    text,
-    likes:0
-  });
+ const post=document.createElement("div");
+ post.className="post";
 
-  document.getElementById("postText").value="";
+ let media="";
 
-  renderFeed();
+ if(file){
+   const url=URL.createObjectURL(file);
+
+   if(file.type.startsWith("image")){
+     media=`<img src="${url}">`;
+   }else{
+     media=`<video src="${url}" controls></video>`;
+   }
+ }
+
+ post.innerHTML=`
+ <strong>You</strong>
+ <p style="margin-top:8px">${escapeHTML(text)}</p>
+ ${media}
+ <div class="post-actions">
+   <button class="btn secondary">❤️ Like</button>
+   <button class="btn secondary">💬 Comment</button>
+   <button class="btn secondary">↗ Share</button>
+   <button class="btn secondary">🔖 Save</button>
+ </div>
+ `;
+
+ document.getElementById("feed").prepend(post);
+
+ document.getElementById("postText").value="";
+ document.getElementById("postMedia").value="";
+
+ alert("Post created.");
 }
 
-function likePost(index){
-  posts[index].likes++;
-  renderFeed();
+
+/* =========================
+   SEARCH
+========================= */
+
+function performSearch(){
+
+ const query=document.getElementById("globalSearch").value.trim()
+   || document.getElementById("exploreSearch")?.value.trim();
+
+ if(!query){
+   alert("Enter something to search.");
+   return;
+ }
+
+ showPage("explore");
+
+ document.getElementById("searchResults").innerHTML=`
+ <div class="card">
+ <h2>Search results</h2>
+ <p>Showing demo results for: <strong>${escapeHTML(query)}</strong></p>
+ </div>
+
+ <div class="grid">
+ <div class="card"><h3>Products</h3><p>Product results will appear here.</p></div>
+ <div class="card"><h3>People</h3><p>People results will appear here.</p></div>
+ <div class="card"><h3>Videos</h3><p>Video results will appear here.</p></div>
+ <div class="card"><h3>Music</h3><p>Music results will appear here.</p></div>
+ </div>
+ `;
 }
 
 
@@ -1371,108 +1242,150 @@ function likePost(index){
    CAMERA
 ========================= */
 
-let cameraStream=null;
-let mediaRecorder=null;
-let recordedChunks=[];
-
 async function startCamera(){
 
-  try{
+ try{
 
-    cameraStream=await navigator.mediaDevices.getUserMedia({
-      video:true,
-      audio:true
-    });
+   cameraStream=await navigator.mediaDevices.getUserMedia({
+     video:true,
+     audio:true
+   });
 
-    document.getElementById("cameraVideo").srcObject=cameraStream;
+   document.getElementById("cameraVideo").srcObject=cameraStream;
 
-  }catch(error){
+ }catch(error){
 
-    alert("Camera permission was not available.");
-  }
+   alert("Camera access was not allowed or is unavailable.");
+
+ }
+
 }
 
 function stopCamera(){
 
-  if(cameraStream){
+ if(cameraStream){
 
-    cameraStream.getTracks().forEach(track=>track.stop());
+   cameraStream.getTracks().forEach(track=>track.stop());
 
-    cameraStream=null;
+   cameraStream=null;
 
-    document.getElementById("cameraVideo").srcObject=null;
-  }
+   document.getElementById("cameraVideo").srcObject=null;
+ }
 }
 
 function takePhoto(){
 
-  const video=document.getElementById("cameraVideo");
-  const canvas=document.getElementById("cameraCanvas");
+ const video=document.getElementById("cameraVideo");
+ const canvas=document.getElementById("cameraCanvas");
 
-  if(!video.videoWidth){
-    alert("Start the camera first.");
-    return;
-  }
+ if(!video.videoWidth){
+   alert("Start the camera first.");
+   return;
+ }
 
-  canvas.width=video.videoWidth;
-  canvas.height=video.videoHeight;
+ canvas.width=video.videoWidth;
+ canvas.height=video.videoHeight;
 
-  const ctx=canvas.getContext("2d");
+ const ctx=canvas.getContext("2d");
 
-  ctx.drawImage(video,0,0);
+ ctx.filter=getCanvasFilter();
 
-  const image=canvas.toDataURL("image/png");
+ ctx.drawImage(video,0,0,canvas.width,canvas.height);
 
-  document.getElementById("cameraResult").innerHTML=`
-    <div class="card">
-      <img src="${image}" class="media-preview">
-      <a class="btn" href="${image}" download="rockyx-photo.png">Download Photo</a>
-    </div>
-  `;
+ canvas.toBlob(blob=>{
+
+   const url=URL.createObjectURL(blob);
+
+   cameraDownloads.push({
+     type:"photo",
+     url
+   });
+
+   document.getElementById("cameraDownloads").innerHTML+=`
+   <div class="card">
+   <img src="${url}" style="max-width:100%">
+   <br>
+   <a class="btn blue" href="${url}" download="rockyx-photo.jpg">Download Photo</a>
+   </div>
+   `;
+
+ },"image/jpeg",.95);
+
 }
 
 function startRecording(){
 
-  if(!cameraStream){
-    alert("Start the camera first.");
-    return;
-  }
+ if(!cameraStream){
+   alert("Start the camera first.");
+   return;
+ }
 
-  recordedChunks=[];
+ recordedChunks=[];
 
-  mediaRecorder=new MediaRecorder(cameraStream);
+ mediaRecorder=new MediaRecorder(cameraStream);
 
-  mediaRecorder.ondataavailable=e=>{
-    if(e.data.size>0){
-      recordedChunks.push(e.data);
-    }
-  };
+ mediaRecorder.ondataavailable=e=>{
+   if(e.data.size>0) recordedChunks.push(e.data);
+ };
 
-  mediaRecorder.onstop=()=>{
+ mediaRecorder.onstop=()=>{
 
-    const blob=new Blob(recordedChunks,{type:"video/webm"});
+   const blob=new Blob(recordedChunks,{type:"video/webm"});
+   const url=URL.createObjectURL(blob);
 
-    const url=URL.createObjectURL(blob);
+   cameraDownloads.push({
+     type:"video",
+     url
+   });
 
-    document.getElementById("cameraResult").innerHTML=`
-      <div class="card">
-        <video class="media-preview" controls src="${url}"></video>
-        <a class="btn" href="${url}" download="rockyx-video.webm">Download Video</a>
-      </div>
-    `;
-  };
+   document.getElementById("cameraDownloads").innerHTML+=`
+   <div class="card">
+   <video src="${url}" controls style="max-width:100%"></video>
+   <br>
+   <a class="btn blue" href="${url}" download="rockyx-camera-video.webm">
+   Download Video
+   </a>
+   </div>
+   `;
 
-  mediaRecorder.start();
+ };
 
-  alert("Recording started.");
+ mediaRecorder.start();
+
+ alert("Recording started.");
 }
 
 function stopRecording(){
 
-  if(mediaRecorder && mediaRecorder.state!=="inactive"){
-    mediaRecorder.stop();
-    alert("Recording stopped.");
-  }
+ if(mediaRecorder && mediaRecorder.state!=="inactive"){
+   mediaRecorder.stop();
+   alert("Recording stopped.");
+ }
+}
+
+function applyFilter(){
+
+ const video=document.getElementById("cameraVideo");
+ video.style.filter=getCanvasFilterCSS();
+}
+
+function getCanvasFilter(){
+
+ const value=document.getElementById("cameraFilter").value;
+
+ if(value==="grayscale")return"grayscale(100%)";
+ if(value==="sepia")return"sepia(100%)";
+ if(value==="brightness")return"brightness(140%)";
+ if(value==="contrast")return"contrast(150%)";
+ if(value==="saturate")return"saturate(180%)";
+ if(value==="cool")return"brightness(105%) saturate(120%)";
+ if(value==="warm")return"sepia(20%) saturate(130%)";
+
+ return"none";
+}
+
+function getCanvasFilterCSS(){
+ return getCanvasFilter();
 }
 
 
@@ -1480,85 +1393,275 @@ function stopRecording(){
    MEDIA
 ========================= */
 
-function previewMedia(){
+function loadMedia(){
 
-  const input=document.getElementById("mediaInput");
-  const preview=document.getElementById("mediaPreview");
+ const files=[...document.getElementById("mediaInput").files];
+ const grid=document.getElementById("mediaGrid");
 
-  preview.innerHTML="";
+ files.forEach(file=>{
 
-  Array.from(input.files).forEach(file=>{
+   const url=URL.createObjectURL(file);
+   const box=document.createElement("div");
+   box.className="card";
 
-    const url=URL.createObjectURL(file);
+   if(file.type.startsWith("image")){
+     box.innerHTML=`<img src="${url}" style="width:100%">`;
+   }else{
+     box.innerHTML=`<video src="${url}" controls style="width:100%"></video>`;
+   }
 
-    if(file.type.startsWith("image/")){
-
-      preview.innerHTML+=`
-        <div class="card">
-          <img class="media-preview" src="${url}">
-          <p>${escapeHTML(file.name)}</p>
-        </div>
-      `;
-
-    }else{
-
-      preview.innerHTML+=`
-        <div class="card">
-          <video class="media-preview" controls src="${url}"></video>
-          <p>${escapeHTML(file.name)}</p>
-        </div>
-      `;
-    }
-  });
+   grid.appendChild(box);
+ });
 }
 
 
 /* =========================
-   SHORTS / VIDEOS
+   SHORTS
 ========================= */
 
 function addShort(){
 
-  const file=document.getElementById("shortInput").files[0];
+ const file=document.getElementById("shortInput").files[0];
 
-  if(!file){
-    alert("Choose a video first.");
-    return;
-  }
+ if(!file){
+   alert("Choose a short video first.");
+   return;
+ }
 
-  const url=URL.createObjectURL(file);
+ const allow=document.getElementById("shortAllowDownload").checked;
+ const watermark=document.getElementById("shortWatermark").checked;
 
-  document.getElementById("shortList").innerHTML=`
-    <div class="card">
-      <video class="media-preview" controls src="${url}"></video>
-      <div class="post-actions">
-        <button class="btn secondary">❤️ Like</button>
-        <button class="btn secondary">💬 Comment</button>
-        <button class="btn secondary">↗ Share</button>
-        <button class="btn secondary">🔖 Save</button>
-      </div>
-    </div>
-  `;
+ const url=URL.createObjectURL(file);
+
+ const short={
+   id:Date.now(),
+   name:file.name,
+   url:url,
+   allowDownloads:allow,
+   watermark:watermark
+ };
+
+ shorts.unshift(short);
+
+ renderShorts();
+
+ alert("Short published.");
 }
+
+function renderShorts(){
+
+ const container=document.getElementById("shortsList");
+
+ container.innerHTML="";
+
+ shorts.forEach(video=>{
+
+   const downloadButton=video.allowDownloads
+   ?`
+   <a
+     class="btn blue"
+     href="${video.url}"
+     download="${downloadFilename(video.name,'short')}"
+     onclick="showDownloadNotice(${video.id},'short')">
+     ⬇️ Download
+   </a>
+   `
+   :"";
+
+   const watermarkNotice=video.watermark
+   ?`<small>Download may include RockyX watermark.</small>`
+   :"";
+
+   container.innerHTML+=`
+   <div class="video-card">
+
+     <video src="${video.url}" controls playsinline></video>
+
+     <div class="video-content">
+
+       <h3>${escapeHTML(video.name)}</h3>
+
+       <div class="video-actions">
+
+         <button class="btn secondary" onclick="likeVideo(this)">
+           ❤️ Like
+         </button>
+
+         <button class="btn secondary">
+           💬 Comment
+         </button>
+
+         <button class="btn secondary" onclick="saveVideo(${video.id})">
+           🔖 Save
+         </button>
+
+         ${downloadButton}
+
+       </div>
+
+       <p style="margin-top:8px">
+       ${video.allowDownloads
+       ?"Downloads allowed"
+       :"Downloads disabled by creator"}
+       </p>
+
+       ${watermarkNotice}
+
+     </div>
+
+   </div>
+   `;
+ });
+}
+
+
+/* =========================
+   LONG VIDEOS
+========================= */
 
 function addLongVideo(){
 
-  const file=document.getElementById("longVideoInput").files[0];
+ const file=document.getElementById("longVideoInput").files[0];
 
-  if(!file){
-    alert("Choose a video first.");
-    return;
-  }
+ if(!file){
+   alert("Choose a video first.");
+   return;
+ }
 
-  const url=URL.createObjectURL(file);
+ const allow=document.getElementById("longAllowDownload").checked;
+ const watermark=document.getElementById("longWatermark").checked;
 
-  document.getElementById("videoList").innerHTML=`
-    <div class="card">
-      <video class="media-preview" controls src="${url}"></video>
-      <h3>${escapeHTML(file.name)}</h3>
-      <p class="muted">Local preview</p>
-    </div>
-  `;
+ const url=URL.createObjectURL(file);
+
+ longVideos.unshift({
+   id:Date.now(),
+   name:file.name,
+   url:url,
+   allowDownloads:allow,
+   watermark:watermark
+ });
+
+ renderLongVideos();
+
+ alert("Video published.");
+}
+
+function renderLongVideos(){
+
+ const container=document.getElementById("videoResults");
+
+ container.innerHTML="";
+
+ longVideos.forEach(video=>{
+
+   const downloadButton=video.allowDownloads
+   ?`
+   <a
+     class="btn blue"
+     href="${video.url}"
+     download="${downloadFilename(video.name,'video')}"
+     onclick="showDownloadNotice(${video.id},'video')">
+     ⬇️ Download
+   </a>
+   `
+   :"";
+
+   container.innerHTML+=`
+   <div class="video-card">
+
+   <video
+     src="${video.url}"
+     controls
+     playsinline>
+   </video>
+
+   <div class="video-content">
+
+   <h3>${escapeHTML(video.name)}</h3>
+
+   <div class="video-actions">
+
+   <button class="btn secondary">❤️ Like</button>
+   <button class="btn secondary">💬 Comment</button>
+   <button class="btn secondary">↗ Share</button>
+
+   <button
+     class="btn secondary"
+     onclick="saveLongVideo(${video.id})">
+     🔖 Save
+   </button>
+
+   ${downloadButton}
+
+   </div>
+
+   <p style="margin-top:8px">
+   ${video.allowDownloads
+   ?"Downloads allowed"
+   :"Downloads disabled by creator"}
+   </p>
+
+   ${video.watermark
+   ?"<small>Download may include RockyX watermark.</small>"
+   :""}
+
+   </div>
+   </div>
+   `;
+ });
+}
+
+
+/* =========================
+   DOWNLOAD SYSTEM
+========================= */
+
+function downloadFilename(original,type){
+
+ let name=original
+   .replace(/\.[^/.]+$/,"")
+   .replace(/[^a-z0-9-_ ]/gi,"")
+   .trim();
+
+ if(!name)name="video";
+
+ return `RockyX-${type}-${name}.webm`;
+}
+
+function showDownloadNotice(id,type){
+
+ setTimeout(()=>{
+
+   alert(
+     "Your video download has started. " +
+     "Depending on your device and browser, you may need to choose where to save it."
+   );
+
+ },100);
+
+}
+
+function saveVideo(id){
+
+ const video=shorts.find(v=>v.id===id);
+
+ if(video){
+   alert("Short saved to your RockyX saved content.");
+ }
+}
+
+function saveLongVideo(id){
+
+ const video=longVideos.find(v=>v.id===id);
+
+ if(video){
+   alert("Video saved to your RockyX saved content.");
+ }
+}
+
+function likeVideo(button){
+
+ button.textContent="❤️ Liked";
 }
 
 
@@ -1566,700 +1669,128 @@ function addLongVideo(){
    SOUNDS
 ========================= */
 
+let savedSoundList=[];
+
+function renderSounds(){
+
+ const sounds=[
+   "Original Sound",
+   "Trending Beat",
+   "Afrobeat Sample",
+   "Creator Sound"
+ ];
+
+ document.getElementById("soundsList").innerHTML=sounds.map((sound,i)=>`
+ <div class="card">
+ <strong>${sound}</strong>
+ <button class="btn secondary" onclick="saveSound('${sound}')">
+ Save Sound
+ </button>
+ </div>
+ `).join("");
+
+ renderSavedSounds();
+}
+
 function saveSound(sound){
 
-  if(!savedSounds.includes(sound)){
-    savedSounds.push(sound);
-  }
+ if(!savedSoundList.includes(sound)){
+   savedSoundList.push(sound);
+ }
 
-  localStorage.setItem(
-    "rockyxSavedSounds",
-    JSON.stringify(savedSounds)
-  );
-
-  renderSavedSounds();
-
-  alert("Sound saved.");
+ renderSavedSounds();
 }
 
 function renderSavedSounds(){
 
-  const box=document.getElementById("savedSounds");
-
-  if(!savedSounds.length){
-    box.innerHTML='<div class="empty">No saved sounds.</div>';
-    return;
-  }
-
-  box.innerHTML=savedSounds.map((s,i)=>`
-    <div class="cart-item">
-      <strong>🔊 ${escapeHTML(s)}</strong>
-      <button class="btn small danger" onclick="removeSound(${i})">Remove</button>
-    </div>
-  `).join("");
-}
-
-function removeSound(index){
-
-  savedSounds.splice(index,1);
-
-  localStorage.setItem(
-    "rockyxSavedSounds",
-    JSON.stringify(savedSounds)
-  );
-
-  renderSavedSounds();
+ document.getElementById("savedSounds").innerHTML=
+ savedSoundList.length
+ ?savedSoundList.map(s=>`<p>🔊 ${escapeHTML(s)}</p>`).join("")
+ :"No saved sounds yet.";
 }
 
 
 /* =========================
-   MARKETPLACE
+   VIDEO EDITOR
 ========================= */
 
-function currency(){
+function loadEditorVideo(){
 
-  const country=
-    document.getElementById("checkoutCountry")?.value ||
-    "Ghana";
+ const file=document.getElementById("editorVideoInput").files[0];
 
-  const currencies={
-    Ghana:"GHS",
-    Nigeria:"NGN",
-    Kenya:"KES",
-    "South Africa":"ZAR",
-    "United Kingdom":"GBP",
-    "United States":"USD"
-  };
+ if(!file)return;
 
-  return currencies[country] || "GHS";
+ document.getElementById("editorPreview").src=
+ URL.createObjectURL(file);
 }
 
-function renderProducts(){
+function publishEditedVideo(asShort=false){
 
-  const list=document.getElementById("productList");
+ const input=document.getElementById("editorVideoInput");
 
-  if(!list)return;
+ if(!input.files[0]){
+   alert("Choose a video first.");
+   return;
+ }
 
-  const search=
-    document.getElementById("productSearch")?.value
-    .toLowerCase() || "";
+ const file=input.files[0];
+ const url=URL.createObjectURL(file);
 
-  const category=
-    document.getElementById("productCategory")?.value || "";
+ if(asShort){
 
-  const filtered=products.filter(p=>{
+   shorts.unshift({
+     id:Date.now(),
+     name:file.name,
+     url:url,
+     allowDownloads:true,
+     watermark:true
+   });
 
-    const matchesSearch=
-      p.name.toLowerCase().includes(search) ||
-      p.description.toLowerCase().includes(search) ||
-      p.category.toLowerCase().includes(search);
+   renderShorts();
 
-    const matchesCategory=
-      !category || p.category===category;
+   alert("Edited video published as a Short.");
 
-    return matchesSearch && matchesCategory;
-  });
+ }else{
 
-  if(!filtered.length){
+   longVideos.unshift({
+     id:Date.now(),
+     name:file.name,
+     url:url,
+     allowDownloads:true,
+     watermark:true
+   });
 
-    list.innerHTML='<div class="empty">No products found.</div>';
-    return;
-  }
+   renderLongVideos();
 
-  list.innerHTML=filtered.map(p=>`
-
-    <div class="product-card">
-
-      <div class="product-image">
-
-        ${
-          p.image
-          ? `<img src="${p.image}">`
-          : `<span>🛍️</span>`
-        }
-
-      </div>
-
-      <div class="product-info">
-
-        <span class="badge">${escapeHTML(p.category)}</span>
-
-        <h3>${escapeHTML(p.name)}</h3>
-
-        <p class="muted">${escapeHTML(p.description)}</p>
-
-        <div class="price">GHS ${Number(p.price).toFixed(2)}</div>
-
-        <p class="muted">Seller: ${escapeHTML(p.seller)}</p>
-
-        <div>
-          <button class="btn small" onclick="openProduct(${p.id})">
-            View
-          </button>
-
-          <button class="btn small success" onclick="addToCart(${p.id})">
-            Add to Cart
-          </button>
-        </div>
-
-      </div>
-
-    </div>
-  `).join("");
-
-  updateCartCount();
-}
-
-
-function openProduct(id){
-
-  const p=products.find(x=>x.id===id);
-
-  if(!p)return;
-
-  document.getElementById("modalProductName").textContent=p.name;
-
-  document.getElementById("modalProductContent").innerHTML=`
-
-    <div class="product-image" style="height:250px">
-
-      ${
-        p.image
-        ? `<img src="${p.image}">`
-        : `<span>🛍️</span>`
-      }
-
-    </div>
-
-    <p style="margin-top:15px">
-      ${escapeHTML(p.description)}
-    </p>
-
-    <h2 style="margin-top:12px">
-      GHS ${Number(p.price).toFixed(2)}
-    </h2>
-
-    <p class="muted">
-      Category: ${escapeHTML(p.category)}
-    </p>
-
-    <p class="muted">
-      Seller: ${escapeHTML(p.seller)}
-    </p>
-
-    <button class="btn success" onclick="addToCart(${p.id});closeProductModal()">
-      Add to Cart
-    </button>
-  `;
-
-  document.getElementById("productModal").classList.add("show");
-}
-
-function closeProductModal(){
-
-  document.getElementById("productModal").classList.remove("show");
+   alert("Edited video published.");
+ }
 }
 
 
 /* =========================
-   CART
+   PHOTO EDITOR
 ========================= */
 
-function addToCart(id){
+function previewPhoto(){
 
-  const product=products.find(p=>p.id===id);
+ const file=document.getElementById("photoInput").files[0];
 
-  if(!product)return;
+ if(!file)return;
 
-  const existing=cart.find(item=>item.id===id);
+ const image=document.getElementById("photoPreview");
 
-  if(existing){
-    existing.quantity++;
-  }else{
-    cart.push({
-      id:product.id,
-      name:product.name,
-      price:Number(product.price),
-      seller:product.seller,
-      quantity:1
-    });
-  }
-
-  saveCart();
-  updateCartCount();
-  renderCart();
-
-  alert("Product added to cart.");
-}
-
-function removeFromCart(id){
-
-  cart=cart.filter(item=>item.id!==id);
-
-  saveCart();
-
-  renderCart();
-  updateCartCount();
-}
-
-function changeQuantity(id,amount){
-
-  const item=cart.find(x=>x.id===id);
-
-  if(!item)return;
-
-  item.quantity+=amount;
-
-  if(item.quantity<=0){
-    removeFromCart(id);
-    return;
-  }
-
-  saveCart();
-  renderCart();
-}
-
-function getCartTotal(){
-
-  return cart.reduce(
-    (total,item)=>total+(item.price*item.quantity),
-    0
-  );
-}
-
-function updateCartCount(){
-
-  const count=cart.reduce(
-    (total,item)=>total+item.quantity,
-    0
-  );
-
-  const el=document.getElementById("cartCount");
-
-  if(el)el.textContent=count;
-}
-
-function renderCart(){
-
-  const items=document.getElementById("cartItems");
-  const summary=document.getElementById("cartSummary");
-
-  if(!items)return;
-
-  if(!cart.length){
-
-    items.innerHTML='<div class="empty">Your cart is empty.</div>';
-    summary.innerHTML=`
-      <button class="btn" onclick="showPage('marketplace')">
-        Continue Shopping
-      </button>
-    `;
-    return;
-  }
-
-  items.innerHTML=cart.map(item=>`
-
-    <div class="cart-item">
-
-      <div>
-        <strong>${escapeHTML(item.name)}</strong>
-        <p class="muted">
-          GHS ${item.price.toFixed(2)} each
-        </p>
-
-        <div class="row">
-          <button class="btn small secondary"
-            onclick="changeQuantity(${item.id},-1)">−</button>
-
-          <strong>${item.quantity}</strong>
-
-          <button class="btn small secondary"
-            onclick="changeQuantity(${item.id},1)">+</button>
-        </div>
-      </div>
-
-      <div>
-        <strong>
-          GHS ${(item.price*item.quantity).toFixed(2)}
-        </strong>
-
-        <br>
-
-        <button class="btn small danger"
-          onclick="removeFromCart(${item.id})">
-          Remove
-        </button>
-      </div>
-
-    </div>
-  `).join("");
-
-  summary.innerHTML=`
-
-    <div class="cart-total">
-      Total: GHS ${getCartTotal().toFixed(2)}
-    </div>
-
-    <button class="btn success"
-      onclick="goCheckout()">
-      Proceed to Checkout
-    </button>
-
-    <button class="btn secondary"
-      onclick="showPage('marketplace')">
-      Continue Shopping
-    </button>
-  `;
-}
-
-
-/* =========================
-   CHECKOUT
-========================= */
-
-function goCheckout(){
-
-  if(!cart.length){
-    alert("Your cart is empty.");
-    return;
-  }
-
-  document.getElementById("checkoutTotal").textContent=
-    "Order total: GHS "+getCartTotal().toFixed(2);
-
-  showPage("checkout");
-}
-
-function placeDemoOrder(){
-
-  if(!cart.length){
-    alert("Your cart is empty.");
-    return;
-  }
-
-  const name=document.getElementById("checkoutName").value.trim();
-  const phone=document.getElementById("checkoutPhone").value.trim();
-  const address=document.getElementById("checkoutAddress").value.trim();
-  const country=document.getElementById("checkoutCountry").value;
-
-  if(!name || !phone || !address){
-    alert("Please complete your delivery details.");
-    return;
-  }
-
-  const subtotal=getCartTotal();
-
-  /*
-    Demo commission structure.
-
-    This is NOT a real payment.
-    Real commission calculations will be moved
-    to the secure backend later.
-  */
-
-  const commissionRate=0.05;
-  const commission=subtotal*commissionRate;
-  const sellerAmount=subtotal-commission;
-
-  const order={
-    id:"RX-"+Date.now(),
-    date:new Date().toLocaleString(),
-    customer:name,
-    phone,
-    address,
-    country,
-    currency:currency(),
-    items:JSON.parse(JSON.stringify(cart)),
-    subtotal,
-    commission,
-    sellerAmount,
-    status:"Pending",
-    paymentStatus:"Pending"
-  };
-
-  orders.unshift(order);
-
-  saveOrders();
-
-  cart=[];
-
-  saveCart();
-  updateCartCount();
-
-  document.getElementById("checkoutName").value="";
-  document.getElementById("checkoutPhone").value="";
-  document.getElementById("checkoutAddress").value="";
-
-  alert(
-    "Demo order created successfully.\n\n" +
-    "Real payment processing will be connected later."
-  );
-
-  showPage("orders");
-}
-
-
-/* =========================
-   ORDERS
-========================= */
-
-function renderOrders(){
-
-  const list=document.getElementById("ordersList");
-
-  if(!list)return;
-
-  if(!orders.length){
-
-    list.innerHTML=`
-      <div class="card empty">
-        You have no orders yet.
-      </div>
-    `;
-
-    return;
-  }
-
-  list.innerHTML=orders.map(order=>`
-
-    <div class="order">
-
-      <div class="space">
-
-        <strong>${escapeHTML(order.id)}</strong>
-
-        <span class="status">
-          ${escapeHTML(order.status)}
-        </span>
-
-      </div>
-
-      <p class="muted">${escapeHTML(order.date)}</p>
-
-      <p style="margin-top:10px">
-        Customer: ${escapeHTML(order.customer)}
-      </p>
-
-      <p>
-        Country: ${escapeHTML(order.country)}
-      </p>
-
-      <p>
-        Payment: ${escapeHTML(order.paymentStatus)}
-      </p>
-
-      <h3 style="margin-top:10px">
-        GHS ${Number(order.subtotal).toFixed(2)}
-      </h3>
-
-      <button class="btn small secondary"
-        onclick="viewOrder('${order.id}')">
-        View Order
-      </button>
-
-    </div>
-
-  `).join("");
-}
-
-function viewOrder(id){
-
-  const order=orders.find(o=>o.id===id);
-
-  if(!order)return;
-
-  let items=order.items.map(item=>
-    `${item.name} × ${item.quantity}`
-  ).join("\n");
-
-  alert(
-    "Order: "+order.id+
-    "\n\nProducts:\n"+items+
-    "\n\nTotal: GHS "+order.subtotal.toFixed(2)+
-    "\n\nStatus: "+order.status
-  );
-}
-
-
-/* =========================
-   SELLER TOOLS
-========================= */
-
-function addSellerProduct(){
-
-  const name=document.getElementById("newProductName").value.trim();
-  const description=document.getElementById("newProductDescription").value.trim();
-  const price=Number(document.getElementById("newProductPrice").value);
-  const category=document.getElementById("newProductCategory").value;
-  const file=document.getElementById("newProductImage").files[0];
-
-  if(!name || !description || !price || price<=0){
-    alert("Please complete the product information.");
-    return;
-  }
-
-  const createProduct=image=>{
-
-    const product={
-      id:Date.now(),
-      name,
-      description,
-      price,
-      category,
-      seller:"You",
-      image:image || ""
-    };
-
-    products.unshift(product);
-    sellerProducts.unshift(product);
-
-    saveProducts();
-    saveSellerProducts();
-
-    document.getElementById("newProductName").value="";
-    document.getElementById("newProductDescription").value="";
-    document.getElementById("newProductPrice").value="";
-    document.getElementById("newProductImage").value="";
-
-    renderSeller();
-    renderProducts();
-
-    alert("Product created on this device.");
-  };
-
-  if(file){
-
-    const reader=new FileReader();
-
-    reader.onload=e=>{
-      createProduct(e.target.result);
-    };
-
-    reader.readAsDataURL(file);
-
-  }else{
-
-    createProduct("");
-  }
-}
-
-function renderSeller(){
-
-  document.getElementById("sellerProducts").textContent=
-    sellerProducts.length;
-
-  const sellerOrders=orders.filter(order =>
-    order.items.some(item =>
-      sellerProducts.some(p=>p.id===item.id)
-    )
-  );
-
-  document.getElementById("sellerOrders").textContent=
-    sellerOrders.length;
-
-  const sales=sellerOrders.reduce(
-    (total,order)=>total+order.sellerAmount,
-    0
-  );
-
-  const commission=sellerOrders.reduce(
-    (total,order)=>total+order.commission,
-    0
-  );
-
-  document.getElementById("sellerSales").textContent=
-    "GHS "+sales.toFixed(2);
-
-  document.getElementById("sellerCommission").textContent=
-    "GHS "+commission.toFixed(2);
-
-  const list=document.getElementById("sellerProductList");
-
-  if(!sellerProducts.length){
-
-    list.innerHTML='<div class="empty">No products yet.</div>';
-    return;
-  }
-
-  list.innerHTML=sellerProducts.map(p=>`
-
-    <div class="cart-item">
-
-      <div>
-        <strong>${escapeHTML(p.name)}</strong>
-        <p class="muted">${escapeHTML(p.category)}</p>
-      </div>
-
-      <div>
-        <strong>GHS ${Number(p.price).toFixed(2)}</strong>
-      </div>
-
-    </div>
-
-  `).join("");
-}
-
-
-/* =========================
-   CREATOR / PHOTO EDITOR
-========================= */
-
-let photoEditorImage=null;
-
-function loadPhotoEditor(){
-
-  const file=document.getElementById("photoEditorInput").files[0];
-
-  if(!file)return;
-
-  const url=URL.createObjectURL(file);
-
-  photoEditorImage=document.createElement("img");
-
-  photoEditorImage.src=url;
-  photoEditorImage.className="media-preview";
-  photoEditorImage.style.filter="none";
-
-  const box=document.getElementById("photoEditorPreview");
-
-  box.innerHTML="";
-  box.appendChild(photoEditorImage);
+ image.src=URL.createObjectURL(file);
+ image.style.display="block";
 }
 
 function photoFilter(filter){
 
-  if(photoEditorImage){
-    photoEditorImage.style.filter=filter;
-  }
-}
+ const image=document.getElementById("photoPreview");
 
-function savePhotoEdit(){
-
-  if(!photoEditorImage){
-    alert("Choose a photo first.");
-    return;
-  }
-
-  alert(
-    "Your edited preview is ready. " +
-    "Advanced export tools will be expanded later."
-  );
-}
-
-function loadEditorVideo(){
-
-  const file=document.getElementById("editorVideoInput").files[0];
-
-  if(!file)return;
-
-  const url=URL.createObjectURL(file);
-
-  document.getElementById("editorPreview").src=url;
-}
-
-function saveVideoDraft(){
-
-  alert("Video draft saved locally for this demo.");
+ if(filter==="grayscale")image.style.filter="grayscale(100%)";
+ else if(filter==="sepia")image.style.filter="sepia(100%)";
+ else if(filter==="brightness")image.style.filter="brightness(140%)";
+ else image.style.filter="none";
 }
 
 
@@ -2269,279 +1800,531 @@ function saveVideoDraft(){
 
 function createTemplate(){
 
-  const name=prompt("Enter a template name:");
+ const name=document.getElementById("templateName").value.trim();
 
-  if(!name)return;
+ if(!name){
+   alert("Enter a template name.");
+   return;
+ }
 
-  templates.push({
-    id:Date.now(),
-    name,
-    category:"General",
-    uses:0,
-    saves:0,
-    status:"Draft"
-  });
+ const template={
+   id:Date.now(),
+   name:name,
+   type:document.getElementById("templateType").value,
+   description:document.getElementById("templateDescription").value,
+   premium:document.getElementById("templatePremium").checked,
+   status:"Draft"
+ };
 
-  localStorage.setItem(
-    "rockyxTemplates",
-    JSON.stringify(templates)
-  );
+ myTemplates.push(template);
 
-  renderMyTemplates();
+ renderMyTemplates();
 
-  alert("Template created as a draft.");
+ document.getElementById("templateName").value="";
+ document.getElementById("templateDescription").value="";
+
+ alert("Template saved.");
 }
 
 function renderTemplates(){
 
-  const box=document.getElementById("templateList");
+ const list=document.getElementById("templateList");
 
-  if(!templates.length){
+ const templates=[
+  {name:"Modern Business",type:"Business"},
+  {name:"Short Video Intro",type:"Video"},
+  {name:"Music Promo",type:"Music"},
+  {name:"Photo Story",type:"Photo"}
+ ];
 
-    box.innerHTML=`
-      <div class="empty">
-        No community templates yet.
-      </div>
-    `;
-
-    return;
-  }
-
-  box.innerHTML=templates
-    .filter(t=>t.status==="Published")
-    .map(t=>`
-
-      <div class="template-card">
-
-        <h3>${escapeHTML(t.name)}</h3>
-
-        <span class="badge">
-          ${escapeHTML(t.category)}
-        </span>
-
-        <p class="muted">
-          Uses: ${t.uses}
-        </p>
-
-        <button class="btn"
-          onclick="useTemplate(${t.id})">
-          Use Template
-        </button>
-
-      </div>
-
-    `).join("");
+ list.innerHTML=templates.map(t=>`
+ <div class="template-card">
+ <div class="template-content">
+ <h3>${t.name}</h3>
+ <p>${t.type}</p>
+ <button class="btn blue">Use Template</button>
+ </div>
+ </div>
+ `).join("");
 }
 
 function renderMyTemplates(){
 
-  const box=document.getElementById("myTemplateList");
+ const list=document.getElementById("myTemplateList");
 
-  if(!templates.length){
+ if(!myTemplates.length){
+   list.innerHTML="<div class='card'>No templates created yet.</div>";
+   return;
+ }
 
-    box.innerHTML=`
-      <div class="empty">
-        You haven't created any templates.
-      </div>
-    `;
+ list.innerHTML=myTemplates.map(t=>`
+ <div class="template-card">
+ <div class="template-content">
+ <h3>${escapeHTML(t.name)}</h3>
+ <p>${escapeHTML(t.type)}</p>
+ <p>${escapeHTML(t.status)}</p>
 
-    return;
-  }
+ ${t.premium
+ ?"<small>Premium review requested</small>"
+ :""}
 
-  box.innerHTML=templates.map(t=>`
+ <br>
 
-    <div class="template-card">
+ <button class="btn secondary"
+ onclick="publishTemplate(${t.id})">
+ Publish
+ </button>
 
-      <h3>${escapeHTML(t.name)}</h3>
-
-      <p class="muted">
-        Status: ${escapeHTML(t.status)}
-      </p>
-
-      <p>
-        Uses: ${t.uses} · Saves: ${t.saves}
-      </p>
-
-      <button class="btn small"
-        onclick="toggleTemplateStatus(${t.id})">
-        ${t.status==="Published"?"Unpublish":"Publish"}
-      </button>
-
-    </div>
-
-  `).join("");
+ <button class="btn danger"
+ onclick="deleteTemplate(${t.id})">
+ Delete
+ </button>
+ </div>
+ </div>
+ `).join("");
 }
 
-function toggleTemplateStatus(id){
+function publishTemplate(id){
 
-  const t=templates.find(x=>x.id===id);
+ const template=myTemplates.find(t=>t.id===id);
 
-  if(!t)return;
-
-  t.status=
-    t.status==="Published"
-    ? "Draft"
-    : "Published";
-
-  localStorage.setItem(
-    "rockyxTemplates",
-    JSON.stringify(templates)
-  );
-
-  renderMyTemplates();
-  renderTemplates();
+ if(template){
+   template.status="Published";
+   renderMyTemplates();
+ }
 }
 
-function useTemplate(id){
+function deleteTemplate(id){
 
-  const t=templates.find(x=>x.id===id);
+ myTemplates=myTemplates.filter(t=>t.id!==id);
 
-  if(!t)return;
-
-  t.uses++;
-
-  localStorage.setItem(
-    "rockyxTemplates",
-    JSON.stringify(templates)
-  );
-
-  alert("Template selected: "+t.name);
+ renderMyTemplates();
 }
 
 
 /* =========================
-   ACCOUNT
+   MARKETPLACE
 ========================= */
 
-function signup(){
+function renderProducts(){
 
-  const name=document.getElementById("signupName").value.trim();
-  const email=document.getElementById("signupEmail").value.trim();
-  const phone=document.getElementById("signupPhone").value.trim();
-  const country=document.getElementById("signupCountry").value;
-  const password=document.getElementById("signupPassword").value;
-  const confirm=document.getElementById("signupConfirm").value;
+ const list=document.getElementById("productList");
 
-  if(!name || !email || !phone || !country || !password){
-    alert("Please complete all required fields.");
-    return;
-  }
+ const query=
+ document.getElementById("productSearch").value.toLowerCase();
 
-  if(password!==confirm){
-    alert("Passwords do not match.");
-    return;
-  }
+ const category=
+ document.getElementById("productCategory").value;
 
-  /*
-    Frontend-only demo.
-    Passwords are intentionally NOT stored.
-    Real authentication comes during backend development.
-  */
+ const filtered=products.filter(p=>{
 
-  localStorage.setItem(
-    "rockyxDemoUser",
-    JSON.stringify({
-      name,
-      email,
-      phone,
-      country
-    })
-  );
+   const matchesSearch=
+     p.name.toLowerCase().includes(query);
 
-  document.getElementById("accountStatus").innerHTML=`
-    <strong>Demo account created.</strong>
-    <p class="muted">
-      Real secure authentication will be connected later.
-    </p>
-  `;
+   const matchesCategory=
+     category==="All" || p.category===category;
 
-  alert("Account created on this device.");
+   return matchesSearch && matchesCategory;
+
+ });
+
+ list.innerHTML=filtered.map(p=>`
+
+ <div class="product-card">
+
+ ${p.image
+ ?`<img src="${p.image}">`
+ :`<div style="height:160px;background:#eee;display:flex;align-items:center;justify-content:center">Product</div>`
+ }
+
+ <div class="product-content">
+
+ <h3>${escapeHTML(p.name)}</h3>
+ <p>${escapeHTML(p.description)}</p>
+ <strong>GHS ${Number(p.price).toFixed(2)}</strong>
+
+ <br>
+
+ <button class="btn blue"
+ onclick="openProduct(${p.id})">
+ View
+ </button>
+
+ <button class="btn"
+ onclick="addToCart(${p.id})">
+ Add to Cart
+ </button>
+
+ </div>
+ </div>
+
+ `).join("");
 }
 
-function signin(){
+function openProduct(id){
 
-  const email=document.getElementById("signinEmail").value.trim();
-  const password=document.getElementById("signinPassword").value;
+ const p=products.find(x=>x.id===id);
 
-  if(!email || !password){
-    alert("Enter your email and password.");
-    return;
-  }
+ if(!p)return;
 
-  alert(
-    "Frontend demo sign-in completed.\n" +
-    "Secure authentication will be connected during backend development."
-  );
+ document.getElementById("productModalContent").innerHTML=`
+ <h2>${escapeHTML(p.name)}</h2>
+ <p>${escapeHTML(p.description)}</p>
+ <h3>GHS ${Number(p.price).toFixed(2)}</h3>
+ <button class="btn blue" onclick="addToCart(${p.id});closeProductModal()">
+ Add to Cart
+ </button>
+ `;
 
-  document.getElementById("accountStatus").innerHTML=`
-    <strong>Signed in (demo).</strong>
-    <p>${escapeHTML(email)}</p>
-  `;
+ document.getElementById("productModal").classList.add("show");
+}
+
+function closeProductModal(){
+ document.getElementById("productModal").classList.remove("show");
+}
+
+function addToCart(id){
+
+ const existing=cart.find(item=>item.id===id);
+
+ if(existing){
+   existing.quantity++;
+ }else{
+   const p=products.find(x=>x.id===id);
+
+   cart.push({
+     ...p,
+     quantity:1
+   });
+ }
+
+ renderCart();
+
+ alert("Added to cart.");
+}
+
+function renderCart(){
+
+ const list=document.getElementById("cartList");
+
+ if(!cart.length){
+   list.innerHTML="<p>Your cart is empty.</p>";
+   document.getElementById("cartTotal").textContent="Total: GHS 0.00";
+   return;
+ }
+
+ let total=0;
+
+ list.innerHTML=cart.map(item=>{
+
+   total+=item.price*item.quantity;
+
+   return`
+   <div class="card">
+   <h3>${escapeHTML(item.name)}</h3>
+   <p>GHS ${item.price.toFixed(2)}</p>
+
+   <button class="btn secondary"
+   onclick="changeQuantity(${item.id},-1)">−</button>
+
+   ${item.quantity}
+
+   <button class="btn secondary"
+   onclick="changeQuantity(${item.id},1)">+</button>
+
+   <button class="btn danger"
+   onclick="removeCart(${item.id})">Remove</button>
+   </div>
+   `;
+
+ }).join("");
+
+ document.getElementById("cartTotal").textContent=
+ `Total: GHS ${total.toFixed(2)}`;
+}
+
+function changeQuantity(id,change){
+
+ const item=cart.find(x=>x.id===id);
+
+ if(!item)return;
+
+ item.quantity+=change;
+
+ if(item.quantity<=0){
+   cart=cart.filter(x=>x.id!==id);
+ }
+
+ renderCart();
+}
+
+function removeCart(id){
+
+ cart=cart.filter(x=>x.id!==id);
+
+ renderCart();
 }
 
 
 /* =========================
-   PROFILE
+   ORDERS
 ========================= */
 
-function saveProfile(){
+function placeOrder(){
 
-  const name=document.getElementById("profileName").value.trim();
-  const bio=document.getElementById("profileBio").value.trim();
+ if(!cart.length){
+   alert("Your cart is empty.");
+   return;
+ }
 
-  localStorage.setItem(
-    "rockyxProfile",
-    JSON.stringify({name,bio})
-  );
+ const name=document.getElementById("checkoutName").value.trim();
+ const phone=document.getElementById("checkoutPhone").value.trim();
+ const address=document.getElementById("checkoutAddress").value.trim();
 
-  alert("Profile saved on this device.");
+ if(!name || !phone || !address){
+   alert("Complete your delivery details.");
+   return;
+ }
+
+ const total=cart.reduce(
+   (sum,item)=>sum+(item.price*item.quantity),0
+ );
+
+ const order={
+   id:"RX"+Date.now(),
+   date:new Date().toLocaleString(),
+   name,
+   phone,
+   address,
+   total,
+   status:"Pending",
+   paymentStatus:"Pending"
+ };
+
+ orders.unshift(order);
+
+ cart=[];
+
+ renderCart();
+ renderOrders();
+
+ alert("Demo order created.");
+
+ showPage("orders");
+}
+
+function renderOrders(){
+
+ const list=document.getElementById("ordersList");
+
+ if(!orders.length){
+   list.innerHTML="<p>No orders yet.</p>";
+   return;
+ }
+
+ list.innerHTML=orders.map(o=>`
+ <div class="card">
+ <h3>Order ${o.id}</h3>
+ <p>Date: ${o.date}</p>
+ <p>Total: GHS ${o.total.toFixed(2)}</p>
+ <p>Status: ${o.status}</p>
+ <p>Payment: ${o.paymentStatus}</p>
+ </div>
+ `).join("");
 }
 
 
 /* =========================
-   UTILITIES
+   SELLER
+========================= */
+
+function addSellerProduct(){
+
+ const name=document.getElementById("sellerProductName").value.trim();
+ const description=document.getElementById("sellerProductDescription").value.trim();
+ const price=Number(document.getElementById("sellerProductPrice").value);
+ const file=document.getElementById("sellerProductImage").files[0];
+
+ if(!name || !description || !price){
+   alert("Complete the product details.");
+   return;
+ }
+
+ let image="";
+
+ if(file){
+   image=URL.createObjectURL(file);
+ }
+
+ products.unshift({
+   id:Date.now(),
+   name,
+   description,
+   price,
+   category:"Other",
+   image
+ });
+
+ document.getElementById("sellerProductName").value="";
+ document.getElementById("sellerProductDescription").value="";
+ document.getElementById("sellerProductPrice").value="";
+ document.getElementById("sellerProductImage").value="";
+
+ renderProducts();
+
+ alert("Product added.");
+}
+
+
+/* =========================
+   AUTH FRONTEND
+========================= */
+
+function openSignup(){
+ closeModals();
+ document.getElementById("signupModal").classList.add("show");
+}
+
+function openSignin(){
+ closeModals();
+ document.getElementById("signinModal").classList.add("show");
+}
+
+function closeModals(){
+ document.getElementById("signupModal").classList.remove("show");
+ document.getElementById("signinModal").classList.remove("show");
+}
+
+function switchToSignin(){
+ openSignin();
+}
+
+function switchToSignup(){
+ openSignup();
+}
+
+function createAccount(){
+
+ const name=document.getElementById("signupName").value.trim();
+ const email=document.getElementById("signupEmail").value.trim();
+ const phone=document.getElementById("signupPhone").value.trim();
+ const country=document.getElementById("signupCountry").value;
+ const password=document.getElementById("signupPassword").value;
+ const confirm=document.getElementById("signupConfirm").value;
+
+ if(!name || !email || !phone || !country || !password || !confirm){
+   alert("Please complete all fields.");
+   return;
+ }
+
+ if(password!==confirm){
+   alert("Passwords do not match.");
+   return;
+ }
+
+ if(password.length<6){
+   alert("Password must be at least 6 characters.");
+   return;
+ }
+
+ localStorage.setItem("rockyxDemoUser",JSON.stringify({
+   name,email,phone,country
+ }));
+
+ document.getElementById("accountStatus").textContent=
+ `Signed in as ${name}`;
+
+ closeModals();
+
+ alert("Demo account created successfully.");
+}
+
+function signIn(){
+
+ const email=document.getElementById("signinEmail").value.trim();
+ const password=document.getElementById("signinPassword").value;
+
+ if(!email || !password){
+   alert("Enter your email and password.");
+   return;
+ }
+
+ document.getElementById("accountStatus").textContent=
+ `Signed in as ${email}`;
+
+ closeModals();
+
+ alert("Demo sign in successful.");
+}
+
+
+/* =========================
+   HELPERS
 ========================= */
 
 function escapeHTML(value){
 
-  return String(value)
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
+ return String(value)
+   .replace(/&/g,"&amp;")
+   .replace(/</g,"&lt;")
+   .replace(/>/g,"&gt;")
+   .replace(/"/g,"&quot;")
+   .replace(/'/g,"&#039;");
 }
 
 
 /* =========================
-   STARTUP
+   INITIAL DEMO CONTENT
 ========================= */
 
-document.addEventListener("DOMContentLoaded",()=>{
+function loadDemoFeed(){
 
-  renderFeed();
-  renderProducts();
-  renderCart();
-  renderOrders();
-  renderSeller();
-  renderTemplates();
-  renderMyTemplates();
-  renderSavedSounds();
-  updateCartCount();
+ const feed=document.getElementById("feed");
 
-  const profile=
-    JSON.parse(localStorage.getItem("rockyxProfile") || "null");
+ feed.innerHTML=`
 
-  if(profile){
+ <div class="post">
+ <strong>RockyX Creator</strong>
+ <p style="margin-top:8px">
+ Welcome to the social feed.
+ </p>
 
-    document.getElementById("profileName").value=
-      profile.name || "";
+ <div class="post-actions">
+ <button class="btn secondary">❤️ Like</button>
+ <button class="btn secondary">💬 Comment</button>
+ <button class="btn secondary">↗ Share</button>
+ <button class="btn secondary">🔖 Save</button>
+ </div>
+ </div>
 
-    document.getElementById("profileBio").value=
-      profile.bio || "";
-  }
+ <div class="post">
+ <strong>Marketplace Seller</strong>
+ <p style="margin-top:8px">
+ New products are available in the marketplace.
+ </p>
 
-});
+ <div class="post-actions">
+ <button class="btn secondary">❤️ Like</button>
+ <button class="btn secondary">💬 Comment</button>
+ <button class="btn secondary">↗ Share</button>
+ </div>
+ </div>
+
+ `;
+}
+
+
+/* =========================
+   START
+========================= */
+
+loadDemoFeed();
+renderProducts();
+renderCart();
+renderOrders();
+renderTemplates();
+renderMyTemplates();
+renderSounds();
 
 </script>
 
