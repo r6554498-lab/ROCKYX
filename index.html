@@ -2,4157 +2,2387 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>RockyX</title>
 
-<!-- Leaflet -->
-<link
-  rel="stylesheet"
-  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-/>
+<link rel="stylesheet"
+href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
-
-:root{
-  --bg:#f5f7fb;
-  --card:#ffffff;
-  --text:#172033;
-  --muted:#6b7280;
-  --border:#e5e7eb;
-  --primary:#2563eb;
-  --primary-dark:#1d4ed8;
-  --success:#16a34a;
-  --danger:#dc2626;
-  --warning:#d97706;
-  --shadow:0 4px 18px rgba(0,0,0,.07);
-}
-
+*{box-sizing:border-box}
 body{
-  font-family:Arial,Helvetica,sans-serif;
-  background:var(--bg);
-  color:var(--text);
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f5f6f8;
+  color:#161616
 }
-
-button,
-input,
-select,
-textarea{
-  font:inherit;
-}
-
-button{
-  cursor:pointer;
-}
-
-.hidden{
-  display:none!important;
-}
-
-/* HEADER */
-header{
-  height:64px;
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+.header{
+  height:62px;
   background:#fff;
-  border-bottom:1px solid var(--border);
+  border-bottom:1px solid #ddd;
   display:flex;
   align-items:center;
-  gap:14px;
-  padding:0 18px;
+  gap:10px;
+  padding:0 14px;
   position:sticky;
   top:0;
-  z-index:1000;
+  z-index:20
 }
-
-.logo{
-  font-size:25px;
-  font-weight:800;
-  color:var(--primary);
-  min-width:80px;
-}
-
-.search-box{
-  flex:1;
-  max-width:650px;
-  position:relative;
-}
-
-.search-box input{
+.logo{font-size:22px;font-weight:800}
+.search{flex:1}
+.search input{
   width:100%;
-  border:1px solid var(--border);
-  border-radius:24px;
-  padding:12px 18px;
-  outline:none;
-  background:#f8fafc;
+  padding:10px 15px;
+  border:1px solid #ddd;
+  border-radius:25px;
+  background:#f5f5f5
 }
-
-.search-box input:focus{
-  border-color:var(--primary);
-  background:#fff;
-}
-
-.header-actions{
-  margin-left:auto;
-  display:flex;
-  gap:8px;
-  align-items:center;
-}
-
-.icon-btn{
-  width:42px;
-  height:42px;
+.actions{display:flex;gap:5px}
+.icon{
   border:0;
+  background:#eee;
   border-radius:50%;
-  background:#f1f5f9;
-  position:relative;
+  width:40px;
+  height:40px
 }
-
-.icon-btn:hover{
-  background:#e2e8f0;
-}
-
+.bell{position:relative}
 .badge{
   position:absolute;
-  right:-2px;
-  top:-2px;
-  min-width:19px;
-  height:19px;
-  padding:0 5px;
+  top:-4px;
+  right:-3px;
+  background:#d71920;
+  color:#fff;
   border-radius:20px;
-  background:#ef4444;
-  color:white;
+  padding:2px 6px;
   font-size:11px;
+  display:none
+}
+.badge.show{display:block}
+
+.side{
+  position:fixed;
+  top:62px;
+  bottom:0;
+  width:225px;
+  background:#fff;
+  border-right:1px solid #ddd;
+  padding:10px;
+  overflow:auto
+}
+.nav{
+  width:100%;
+  border:0;
+  background:transparent;
+  text-align:left;
+  padding:10px;
+  border-radius:8px;
+  margin:2px 0
+}
+.nav:hover{background:#eef0f3}
+
+.main{
+  margin-left:225px;
+  padding:20px
+}
+.page{
+  display:none;
+  max-width:1100px;
+  margin:auto
+}
+.page.active{display:block}
+
+.card{
+  background:#fff;
+  border:1px solid #ddd;
+  border-radius:13px;
+  padding:16px;
+  margin-bottom:15px
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  gap:14px
+}
+.btn{
+  border:0;
+  border-radius:8px;
+  padding:9px 13px;
+  background:#111;
+  color:#fff;
+  margin:3px
+}
+.blue{background:#246bdb}
+.red{background:#c62828}
+.green{background:#18863b}
+.gray{background:#e9ebee;color:#111}
+
+input,textarea,select{
+  width:100%;
+  padding:10px;
+  border:1px solid #ccc;
+  border-radius:8px;
+  margin:5px 0 10px
+}
+textarea{min-height:90px}
+
+.check{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  margin:8px 0
+}
+.check input{width:auto}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px
+}
+.stat{
+  background:#f1f2f4;
+  padding:14px;
+  border-radius:10px;
+  text-align:center
+}
+.stat b{
+  display:block;
+  font-size:21px
+}
+
+.post,.product,.video,.template,.notify{
+  background:#fff;
+  border:1px solid #ddd;
+  border-radius:12px;
+  padding:14px;
+  margin-bottom:12px
+}
+.video video{
+  width:100%;
+  background:#111
+}
+.video-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:4px
+}
+.post img,.post video{
+  max-width:100%;
+  margin-top:10px
+}
+
+.storyrow{
+  display:flex;
+  gap:12px;
+  overflow:auto
+}
+.story{
+  min-width:65px;
+  text-align:center
+}
+.circle{
+  width:58px;
+  height:58px;
+  border-radius:50%;
+  background:#ddd;
   display:flex;
   align-items:center;
   justify-content:center;
+  margin:auto
 }
 
-.auth-btn{
-  border:0;
-  padding:10px 15px;
-  border-radius:10px;
-  background:var(--primary);
-  color:white;
-  font-weight:600;
+.mapbox{
+  height:340px;
+  border-radius:12px;
+  overflow:hidden;
+  border:1px solid #ddd
 }
 
-/* LAYOUT */
-.app{
+.notify.unread{background:#eef5ff}
+.dot{
+  display:inline-block;
+  width:8px;
+  height:8px;
+  background:#246bdb;
+  border-radius:50%;
+  margin-right:5px
+}
+
+.security-row{
   display:flex;
-  min-height:calc(100vh - 64px);
-}
-
-.sidebar{
-  width:245px;
-  background:#fff;
-  border-right:1px solid var(--border);
-  padding:14px 10px;
-  position:fixed;
-  top:64px;
-  bottom:0;
-  overflow-y:auto;
-}
-
-.nav-btn{
-  width:100%;
-  display:flex;
-  align-items:center;
-  gap:12px;
-  padding:11px 13px;
-  margin-bottom:4px;
-  border:0;
-  background:transparent;
-  border-radius:10px;
-  color:var(--text);
-  text-align:left;
-}
-
-.nav-btn:hover,
-.nav-btn.active{
-  background:#eff6ff;
-  color:var(--primary);
-}
-
-.nav-section{
-  margin:18px 10px 7px;
-  font-size:11px;
-  text-transform:uppercase;
-  color:#94a3b8;
-  font-weight:700;
-}
-
-.main{
-  margin-left:245px;
-  width:calc(100% - 245px);
-  padding:22px;
-}
-
-.page{
-  display:none;
-}
-
-.page.active{
-  display:block;
-}
-
-.page-title{
-  font-size:26px;
-  margin-bottom:6px;
-}
-
-.page-subtitle{
-  color:var(--muted);
-  margin-bottom:20px;
-}
-
-.card{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:15px;
-  padding:18px;
-  box-shadow:var(--shadow);
-  margin-bottom:18px;
-}
-
-.grid{
-  display:grid;
-  gap:16px;
-}
-
-.grid-2{
-  grid-template-columns:repeat(2,minmax(0,1fr));
-}
-
-.grid-3{
-  grid-template-columns:repeat(3,minmax(0,1fr));
-}
-
-.grid-4{
-  grid-template-columns:repeat(4,minmax(0,1fr));
-}
-
-.btn{
-  border:0;
-  border-radius:9px;
-  padding:10px 15px;
-  font-weight:600;
-  background:var(--primary);
-  color:#fff;
-}
-
-.btn:hover{
-  background:var(--primary-dark);
-}
-
-.btn.secondary{
-  background:#e2e8f0;
-  color:#172033;
-}
-
-.btn.success{
-  background:var(--success);
-}
-
-.btn.danger{
-  background:var(--danger);
-}
-
-.btn.warning{
-  background:var(--warning);
-}
-
-.input,
-select,
-textarea{
-  width:100%;
-  border:1px solid var(--border);
-  border-radius:9px;
-  padding:11px 12px;
-  background:#fff;
-  outline:none;
-}
-
-textarea{
-  min-height:100px;
-  resize:vertical;
-}
-
-.form-group{
-  margin-bottom:14px;
-}
-
-.form-group label{
-  display:block;
-  font-size:13px;
-  font-weight:600;
-  margin-bottom:6px;
-}
-
-.flex{
-  display:flex;
-  gap:10px;
-  align-items:center;
-  flex-wrap:wrap;
-}
-
-.space-between{
-  display:flex;
-  align-items:center;
   justify-content:space-between;
+  align-items:center;
   gap:12px;
+  border:1px solid #ddd;
+  border-radius:10px;
+  padding:12px;
+  margin:8px 0;
+  background:#fff
 }
 
-.muted{
-  color:var(--muted);
+.trust-ok{color:#18863b;font-weight:bold}
+.trust-warn{color:#a66b00;font-weight:bold}
+.trust-danger{color:#c62828;font-weight:bold}
+
+.pill{
+  display:inline-block;
+  padding:4px 8px;
+  border-radius:20px;
+  background:#eef0f3;
+  font-size:12px;
+  margin:2px
 }
 
 .small{
   font-size:13px;
+  color:#666
 }
+.legal{line-height:1.6}
 
-.stat{
-  padding:20px;
-  border-radius:13px;
-  background:#fff;
-  border:1px solid var(--border);
-}
+.mobile{display:none}
 
-.stat-number{
-  font-size:27px;
-  font-weight:800;
-  margin-top:7px;
-}
-
-/* HOME */
-.hero{
-  background:linear-gradient(135deg,#2563eb,#4f46e5);
-  color:white;
-  border-radius:18px;
-  padding:35px;
-  margin-bottom:20px;
-}
-
-.hero h1{
-  font-size:34px;
-  margin-bottom:10px;
-}
-
-.quick-card{
-  cursor:pointer;
-  transition:.2s;
-}
-
-.quick-card:hover{
-  transform:translateY(-2px);
-}
-
-/* MAP */
-.map-wrapper{
-  position:relative;
-}
-
-.map{
-  width:100%;
-  height:500px;
-  border-radius:14px;
-  overflow:hidden;
-  border:1px solid var(--border);
-}
-
-.map-toolbar{
-  position:absolute;
-  z-index:500;
-  top:12px;
-  left:12px;
-  right:12px;
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  pointer-events:none;
-}
-
-.map-toolbar>*{
-  pointer-events:auto;
-}
-
-.map-control{
-  background:#fff;
-  border:1px solid var(--border);
-  box-shadow:0 2px 10px rgba(0,0,0,.12);
-  border-radius:9px;
-  padding:9px 12px;
-}
-
-.map-search{
-  flex:1;
-  min-width:220px;
-}
-
-.map-search input{
-  border:0;
-  outline:0;
-  width:100%;
-}
-
-.category-bar{
-  display:flex;
-  gap:8px;
-  overflow-x:auto;
-  padding-bottom:5px;
-  margin-bottom:15px;
-}
-
-.category-chip{
-  white-space:nowrap;
-  border:1px solid var(--border);
-  background:#fff;
-  border-radius:20px;
-  padding:8px 13px;
-}
-
-.category-chip.active{
-  background:var(--primary);
-  color:#fff;
-  border-color:var(--primary);
-}
-
-.location-card{
-  border:1px solid var(--border);
-  background:#fff;
-  border-radius:13px;
-  padding:15px;
-  margin-bottom:10px;
-}
-
-.location-card:hover{
-  border-color:var(--primary);
-}
-
-.location-icon{
-  width:42px;
-  height:42px;
-  border-radius:10px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:#eff6ff;
-  font-size:21px;
-}
-
-.location-list{
-  max-height:500px;
-  overflow-y:auto;
-}
-
-.distance{
-  color:var(--primary);
-  font-size:13px;
-  font-weight:600;
-}
-
-.route-panel{
-  background:#eff6ff;
-  border:1px solid #bfdbfe;
-  border-radius:12px;
-  padding:15px;
-  margin-top:15px;
-}
-
-.privacy-box{
-  background:#f8fafc;
-  border:1px solid var(--border);
-  border-radius:12px;
-  padding:15px;
-}
-
-.switch{
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-
-.switch input{
-  width:18px;
-  height:18px;
-}
-
-/* CONTENT CARDS */
-.product-card,
-.business-card,
-.service-card,
-.video-card{
-  border:1px solid var(--border);
-  border-radius:13px;
-  overflow:hidden;
-  background:#fff;
-}
-
-.product-image,
-.video-image{
-  height:180px;
-  background:#e2e8f0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:45px;
-}
-
-.product-body,
-.business-body,
-.service-body,
-.video-body{
-  padding:15px;
-}
-
-.price{
-  font-weight:800;
-  color:var(--primary);
-}
-
-.tag{
-  display:inline-block;
-  padding:5px 9px;
-  border-radius:15px;
-  background:#f1f5f9;
-  font-size:12px;
-  margin:3px;
-}
-
-/* MODAL */
-.modal{
-  position:fixed;
-  inset:0;
-  background:rgba(15,23,42,.55);
-  z-index:3000;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-}
-
-.modal.show{
-  display:flex;
-}
-
-.modal-box{
-  width:min(600px,100%);
-  max-height:90vh;
-  overflow-y:auto;
-  background:#fff;
-  border-radius:16px;
-  padding:22px;
-}
-
-/* MOBILE */
-.mobile-nav{
-  display:none;
-}
-
-@media(max-width:900px){
-  .sidebar{
-    display:none;
-  }
-
+@media(max-width:800px){
+  .side{display:none}
   .main{
-    margin-left:0;
-    width:100%;
-    padding:14px;
-    padding-bottom:85px;
+    margin:0;
+    padding:12px;
+    padding-bottom:70px
   }
-
-  .header-actions .auth-btn{
-    display:none;
-  }
-
-  .logo{
-    min-width:auto;
-  }
-
-  .grid-2,
-  .grid-3,
-  .grid-4{
-    grid-template-columns:1fr;
-  }
-
-  .mobile-nav{
+  .mobile{
     display:flex;
     position:fixed;
     bottom:0;
     left:0;
     right:0;
-    height:64px;
+    height:58px;
     background:#fff;
-    border-top:1px solid var(--border);
-    z-index:2000;
-    justify-content:space-around;
+    border-top:1px solid #ddd;
+    z-index:20;
+    justify-content:space-around
   }
-
-  .mobile-nav button{
+  .mobile button{
     border:0;
-    background:transparent;
-    font-size:11px;
-    color:#64748b;
+    background:none;
+    font-size:11px
   }
-
-  .mobile-nav button strong{
-    display:block;
-    font-size:20px;
-  }
-
-  .map{
-    height:430px;
-  }
-
-  .hero h1{
-    font-size:27px;
-  }
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .logo{font-size:18px}
 }
 </style>
 </head>
 
 <body>
 
-<header>
+<header class="header">
+
   <div class="logo">RockyX</div>
 
-  <div class="search-box">
+  <div class="search">
     <input
       id="globalSearch"
-      type="search"
-      placeholder="Search products, businesses, services, people, videos and places..."
-      onkeydown="if(event.key==='Enter') performGlobalSearch()"
-    >
+      placeholder="Search products, businesses, services, people, videos, songs and sounds..."
+      onkeydown="if(event.key==='Enter')globalSearch()">
   </div>
 
-  <div class="header-actions">
-    <button class="icon-btn" onclick="showPage('notifications')" title="Notifications">
-      🔔
+  <div class="actions">
+    <span class="bell">
+      <button class="icon" onclick="showPage('notifications')">🔔</button>
       <span id="notificationBadge" class="badge">0</span>
-    </button>
+    </span>
 
-    <button class="icon-btn" onclick="showPage('messages')" title="Messages">
-      💬
-    </button>
-
-    <button class="icon-btn" onclick="showPage('cart')" title="Cart">
-      🛒
-    </button>
-
-    <button class="auth-btn" onclick="showPage('account')">
-      Account
-    </button>
+    <button class="icon" onclick="showPage('messages')">💬</button>
+    <button class="icon" onclick="showPage('account')">👤</button>
   </div>
+
 </header>
 
-<div class="app">
 
-<aside class="sidebar">
+<aside class="side">
 
-  <button class="nav-btn active" data-page="home" onclick="showPage('home')">🏠 Home</button>
-  <button class="nav-btn" data-page="explore" onclick="showPage('explore')">🔎 Explore</button>
-  <button class="nav-btn" data-page="shorts" onclick="showPage('shorts')">🎬 Shorts</button>
-  <button class="nav-btn" data-page="videos" onclick="showPage('videos')">▶️ Videos</button>
-  <button class="nav-btn" data-page="live" onclick="showPage('live')">🔴 Live</button>
+<button class="nav" onclick="showPage('home')">🏠 Home</button>
+<button class="nav" onclick="showPage('explore')">🔎 Explore</button>
+<button class="nav" onclick="showPage('shorts')">🎬 Shorts</button>
+<button class="nav" onclick="showPage('videos')">▶️ Videos</button>
+<button class="nav" onclick="showPage('live')">🔴 Live</button>
+<button class="nav" onclick="showPage('music')">🎵 Music</button>
+<button class="nav" onclick="showPage('sounds')">🔊 Sounds</button>
+<button class="nav" onclick="showPage('camera')">📷 Camera</button>
 
-  <div class="nav-section">Create</div>
-  <button class="nav-btn" data-page="camera" onclick="showPage('camera')">📷 Camera</button>
-  <button class="nav-btn" data-page="media" onclick="showPage('media')">🖼️ Media</button>
-  <button class="nav-btn" data-page="creator" onclick="showPage('creator')">⭐ Creator Studio</button>
-  <button class="nav-btn" data-page="photo" onclick="showPage('photo')">🎨 Photo Editor</button>
-  <button class="nav-btn" data-page="videoedit" onclick="showPage('videoedit')">✂️ Video Editor</button>
-  <button class="nav-btn" data-page="ai" onclick="showPage('ai')">✨ AI Studio</button>
+<hr>
 
-  <div class="nav-section">Music</div>
-  <button class="nav-btn" data-page="music" onclick="showPage('music')">🎵 Music</button>
-  <button class="nav-btn" data-page="sounds" onclick="showPage('sounds')">🔊 Sounds</button>
+<button class="nav" onclick="showPage('creator')">⭐ Creator Studio</button>
+<button class="nav" onclick="showPage('templates')">🧩 Templates</button>
+<button class="nav" onclick="showPage('creatorProgram')">🏆 Creator Program</button>
+<button class="nav" onclick="showPage('creatorEarnings')">💰 Creator Earnings</button>
 
-  <div class="nav-section">Marketplace</div>
-  <button class="nav-btn" data-page="market" onclick="showPage('market')">🛍️ Marketplace</button>
-  <button class="nav-btn" data-page="cart" onclick="showPage('cart')">🛒 Cart</button>
-  <button class="nav-btn" data-page="orders" onclick="showPage('orders')">📦 Orders</button>
-  <button class="nav-btn" data-page="seller" onclick="showPage('seller')">🏪 Seller</button>
+<hr>
 
-  <div class="nav-section">Business</div>
-  <button class="nav-btn" data-page="businesses" onclick="showPage('businesses')">🏢 Businesses</button>
-  <button class="nav-btn" data-page="services" onclick="showPage('services')">🛠️ Services</button>
-  <button class="nav-btn" data-page="bookings" onclick="showPage('bookings')">📅 Bookings</button>
-  <button class="nav-btn" data-page="transport" onclick="showPage('transport')">🚕 Transport</button>
+<button class="nav" onclick="showPage('marketplace')">🛍️ Marketplace</button>
+<button class="nav" onclick="showPage('cart')">🛒 Cart</button>
+<button class="nav" onclick="showPage('orders')">📦 Orders</button>
+<button class="nav" onclick="showPage('seller')">🏪 Seller Tools</button>
+<button class="nav" onclick="showPage('payouts')">💸 Payouts</button>
 
-  <div class="nav-section">Discover</div>
-  <button class="nav-btn" data-page="nearby" onclick="showPage('nearby')">📍 Nearby</button>
-  <button class="nav-btn" data-page="navigation" onclick="showPage('navigation')">🧭 Navigation</button>
+<hr>
 
-  <div class="nav-section">Account</div>
-  <button class="nav-btn" data-page="messages" onclick="showPage('messages')">💬 Messages</button>
-  <button class="nav-btn" data-page="notifications" onclick="showPage('notifications')">🔔 Notifications</button>
-  <button class="nav-btn" data-page="profile" onclick="showPage('profile')">👤 Profile</button>
-  <button class="nav-btn" data-page="account" onclick="showPage('account')">⚙️ Account</button>
-  <button class="nav-btn" data-page="settings" onclick="showPage('settings')">🔐 Settings</button>
+<button class="nav" onclick="showPage('businesses')">🏢 Businesses</button>
+<button class="nav" onclick="showPage('services')">🛠️ Services</button>
+<button class="nav" onclick="showPage('transport')">🚕 Transport</button>
+<button class="nav" onclick="showPage('nearby')">📍 Nearby</button>
+<button class="nav" onclick="showPage('navigation')">🧭 Navigation</button>
+
+<hr>
+
+<button class="nav" onclick="showPage('messages')">💬 Messages</button>
+<button class="nav" onclick="showPage('notifications')">🔔 Notifications</button>
+<button class="nav" onclick="showPage('profile')">👤 Profile</button>
+<button class="nav" onclick="showPage('account')">⚙️ Account</button>
+
+<hr>
+
+<button class="nav" onclick="showPage('verification')">✅ Verification</button>
+<button class="nav" onclick="showPage('identity')">🪪 Identity Check</button>
+<button class="nav" onclick="showPage('safety')">🛡️ Safety Center</button>
+<button class="nav" onclick="showPage('reports')">🚩 Reports</button>
+<button class="nav" onclick="showPage('blocked')">⛔ Blocked Users</button>
+<button class="nav" onclick="showPage('privacy')">🔒 Privacy</button>
+<button class="nav" onclick="showPage('security')">🔐 Security</button>
+<button class="nav" onclick="showPage('legal')">📄 Legal & Policies</button>
 
 </aside>
 
+
 <main class="main">
 
+
 <!-- HOME -->
+
 <section id="home" class="page active">
-  <div class="hero">
-    <h1>Welcome to RockyX</h1>
-    <p>Marketplace, social network, entertainment and services — all in one place.</p>
-    <br>
-    <div class="flex">
-      <button class="btn" onclick="showPage('nearby')">Explore Nearby</button>
-      <button class="btn secondary" onclick="showPage('market')">Shop</button>
-    </div>
-  </div>
 
-  <div class="grid grid-4">
-    <div class="stat quick-card" onclick="showPage('nearby')">
-      <div>📍</div>
-      <div class="stat-number">Nearby</div>
-      <div class="muted">Find places and services</div>
-    </div>
+<div class="card">
+<h1>Welcome</h1>
+<p>Marketplace, social, entertainment and services in one place.</p>
+</div>
 
-    <div class="stat quick-card" onclick="showPage('market')">
-      <div>🛍️</div>
-      <div class="stat-number">Market</div>
-      <div class="muted">Products and sellers</div>
-    </div>
+<div class="card">
+<h3>Stories</h3>
 
-    <div class="stat quick-card" onclick="showPage('services')">
-      <div>🛠️</div>
-      <div class="stat-number">Services</div>
-      <div class="muted">Find service providers</div>
-    </div>
+<div class="storyrow">
+<div class="story"><div class="circle">+</div>Add</div>
+<div class="story"><div class="circle">A</div>Alex</div>
+<div class="story"><div class="circle">M</div>Mary</div>
+<div class="story"><div class="circle">K</div>Kevin</div>
+</div>
 
-    <div class="stat quick-card" onclick="showPage('transport')">
-      <div>🚕</div>
-      <div class="stat-number">Transport</div>
-      <div class="muted">Find transport providers</div>
-    </div>
-  </div>
+</div>
 
-  <br>
+<div class="card">
 
-  <div class="card">
-    <h2>Discover around you</h2>
-    <p class="muted">Use Nearby to discover businesses, products, services and useful places.</p>
-    <br>
-    <button class="btn" onclick="showPage('nearby')">Open Nearby Map</button>
-  </div>
+<h3>Create Post</h3>
+
+<textarea id="postText" placeholder="What's happening?"></textarea>
+
+<input id="postFile" type="file" accept="image/*,video/*">
+
+<button class="btn blue" onclick="createPost()">Post</button>
+
+</div>
+
+<div id="feed"></div>
+
 </section>
 
 
 <!-- EXPLORE -->
+
 <section id="explore" class="page">
-  <h1 class="page-title">Explore</h1>
-  <p class="page-subtitle">Discover content, businesses, products and places.</p>
 
-  <div class="grid grid-3">
-    <div class="card quick-card" onclick="showPage('shorts')">
-      <h2>🎬 Shorts</h2>
-      <p class="muted">Watch short videos.</p>
-    </div>
+<div class="card">
 
-    <div class="card quick-card" onclick="showPage('videos')">
-      <h2>▶️ Videos</h2>
-      <p class="muted">Watch longer videos.</p>
-    </div>
+<h2>Explore</h2>
 
-    <div class="card quick-card" onclick="showPage('nearby')">
-      <h2>📍 Nearby</h2>
-      <p class="muted">Find things around you.</p>
-    </div>
-  </div>
+<input id="exploreSearch" placeholder="Search RockyX">
 
-  <div id="globalSearchResults"></div>
+<button class="btn blue" onclick="searchExplore()">Search</button>
+
+</div>
+
+<div id="searchResults"></div>
+
 </section>
 
 
 <!-- SHORTS -->
+
 <section id="shorts" class="page">
-  <h1 class="page-title">Shorts</h1>
-  <p class="page-subtitle">Short-form videos.</p>
 
-  <div class="grid grid-3">
-    <div class="video-card">
-      <div class="video-image">🎬</div>
-      <div class="video-body">
-        <h3>Demo Short</h3>
-        <p class="muted">RockyX Creator</p>
-        <br>
-        <button class="btn" onclick="downloadDemo('RockyX Short')">Download</button>
-      </div>
-    </div>
+<div class="card">
 
-    <div class="video-card">
-      <div class="video-image">🎵</div>
-      <div class="video-body">
-        <h3>Music Short</h3>
-        <p class="muted">Artist Creator</p>
-        <br>
-        <button class="btn" onclick="downloadDemo('Music Short')">Download</button>
-      </div>
-    </div>
+<h2>Shorts</h2>
 
-    <div class="video-card">
-      <div class="video-image">🛍️</div>
-      <div class="video-body">
-        <h3>Product Short</h3>
-        <p class="muted">Seller</p>
-        <br>
-        <button class="btn" onclick="downloadDemo('Product Short')">Download</button>
-      </div>
-    </div>
-  </div>
+<input id="shortVideo" type="file" accept="video/*">
+
+<label class="check">
+<input id="shortDownloads" type="checkbox" checked>
+Allow viewers to download
+</label>
+
+<label class="check">
+<input id="shortWatermark" type="checkbox" checked>
+Allow RockyX watermark
+</label>
+
+<button class="btn blue" onclick="publishVideo(true)">
+Publish Short
+</button>
+
+</div>
+
+<div id="shortsList"></div>
+
 </section>
 
 
 <!-- VIDEOS -->
-<section id="videos" class="page">
-  <h1 class="page-title">Videos</h1>
-  <p class="page-subtitle">Long-form video content.</p>
 
-  <div class="grid grid-3">
-    <div class="video-card">
-      <div class="video-image">▶️</div>
-      <div class="video-body">
-        <h3>Welcome to RockyX</h3>
-        <p class="muted">RockyX Creator</p>
-        <br>
-        <button class="btn" onclick="downloadDemo('RockyX Video')">Download</button>
-      </div>
-    </div>
-  </div>
+<section id="videos" class="page">
+
+<div class="card">
+
+<h2>Long Videos</h2>
+
+<input id="longVideo" type="file" accept="video/*">
+
+<label class="check">
+<input id="longDownloads" type="checkbox" checked>
+Allow viewers to download
+</label>
+
+<label class="check">
+<input id="longWatermark" type="checkbox" checked>
+Allow RockyX watermark
+</label>
+
+<button class="btn blue" onclick="publishVideo(false)">
+Publish Video
+</button>
+
+</div>
+
+<div id="videosList"></div>
+
 </section>
 
 
 <!-- LIVE -->
+
 <section id="live" class="page">
-  <h1 class="page-title">Live</h1>
-  <p class="page-subtitle">Live streaming area.</p>
 
-  <div class="card">
-    <h2>🔴 Start a Live Stream</h2>
-    <p class="muted">
-      Live streaming will connect to the production streaming system during backend integration.
-    </p>
-    <br>
-    <button class="btn" onclick="notify('Live feature prepared for backend integration.')">
-      Start Live
-    </button>
-  </div>
-</section>
+<div class="card">
 
+<h2>Live Streaming</h2>
 
-<!-- CAMERA -->
-<section id="camera" class="page">
-  <h1 class="page-title">Camera</h1>
-  <p class="page-subtitle">Use your device camera and media.</p>
+<p>Live streaming interface prepared for the backend stage.</p>
 
-  <div class="card">
-    <video id="cameraPreview" autoplay playsinline
-      style="width:100%;max-height:450px;background:#111;border-radius:12px;">
-    </video>
+<button class="btn red" onclick="demoNotify('Live','Your live session interface is ready.')">
+🔴 Start Live
+</button>
 
-    <br><br>
+</div>
 
-    <div class="flex">
-      <button class="btn" onclick="startCamera()">Start Camera</button>
-      <button class="btn secondary" onclick="stopCamera()">Stop Camera</button>
-      <button class="btn" onclick="takePhoto()">Take Photo</button>
-    </div>
-
-    <canvas id="photoCanvas" class="hidden"></canvas>
-  </div>
-</section>
-
-
-<!-- MEDIA -->
-<section id="media" class="page">
-  <h1 class="page-title">Media</h1>
-  <p class="page-subtitle">Choose photos and videos from your device.</p>
-
-  <div class="card">
-    <input id="mediaInput" type="file" accept="image/*,video/*" multiple>
-    <br><br>
-    <div id="mediaPreview"></div>
-  </div>
-</section>
-
-
-<!-- CREATOR -->
-<section id="creator" class="page">
-  <h1 class="page-title">Creator Studio</h1>
-  <p class="page-subtitle">Create and manage your content.</p>
-
-  <div class="grid grid-3">
-    <div class="card">
-      <h3>✂️ Quick Edit</h3>
-      <p class="muted">Edit your content.</p>
-    </div>
-
-    <div class="card">
-      <h3>🎨 Photo Editor</h3>
-      <p class="muted">Edit photos.</p>
-    </div>
-
-    <div class="card">
-      <h3>🎬 Video Editor</h3>
-      <p class="muted">Edit videos.</p>
-    </div>
-
-    <div class="card">
-      <h3>✨ AI Studio</h3>
-      <p class="muted">AI-powered creative tools.</p>
-    </div>
-
-    <div class="card">
-      <h3>📐 Templates</h3>
-      <p class="muted">Create reusable templates.</p>
-    </div>
-
-    <div class="card">
-      <h3>📊 Analytics</h3>
-      <p class="muted">Track performance.</p>
-    </div>
-  </div>
-</section>
-
-
-<!-- PHOTO EDITOR -->
-<section id="photo" class="page">
-  <h1 class="page-title">Photo Editor</h1>
-
-  <div class="card">
-    <input id="photoEditorInput" type="file" accept="image/*">
-
-    <br><br>
-
-    <img id="photoEditorPreview"
-      style="max-width:100%;max-height:500px;border-radius:12px;">
-
-    <br><br>
-
-    <div class="flex">
-      <button class="btn" onclick="applyPhotoFilter('none')">Original</button>
-      <button class="btn secondary" onclick="applyPhotoFilter('grayscale(1)')">Black & White</button>
-      <button class="btn secondary" onclick="applyPhotoFilter('contrast(1.3)')">Contrast</button>
-      <button class="btn secondary" onclick="applyPhotoFilter('brightness(1.2)')">Bright</button>
-    </div>
-  </div>
-</section>
-
-
-<!-- VIDEO EDITOR -->
-<section id="videoedit" class="page">
-  <h1 class="page-title">Video Editor</h1>
-
-  <div class="card">
-    <input id="editorVideoInput" type="file" accept="video/*">
-
-    <br><br>
-
-    <video id="editorPreview"
-      controls
-      style="width:100%;max-height:500px;background:#111;border-radius:12px;">
-    </video>
-
-    <br><br>
-
-    <div class="flex">
-      <button class="btn" onclick="notify('Text tool ready.')">Add Text</button>
-      <button class="btn" onclick="notify('Sound tool ready.')">Add Sound</button>
-      <button class="btn" onclick="notify('Trim tool ready.')">Trim</button>
-      <button class="btn" onclick="notify('Draft saved on this device.')">Save Draft</button>
-    </div>
-  </div>
-</section>
-
-
-<!-- AI -->
-<section id="ai" class="page">
-  <h1 class="page-title">AI Studio</h1>
-
-  <div class="grid grid-3">
-    <div class="card"><h3>✨ AI Captions</h3><p class="muted">Automatic captions.</p></div>
-    <div class="card"><h3>🪄 Background Removal</h3><p class="muted">Remove backgrounds.</p></div>
-    <div class="card"><h3>✨ Enhancement</h3><p class="muted">Improve media quality.</p></div>
-    <div class="card"><h3>🎵 Beat Editing</h3><p class="muted">Edit around music beats.</p></div>
-    <div class="card"><h3>📝 Text Generation</h3><p class="muted">Generate creative text.</p></div>
-    <div class="card"><h3>🎨 AI Effects</h3><p class="muted">Creative effects.</p></div>
-  </div>
 </section>
 
 
 <!-- MUSIC -->
+
 <section id="music" class="page">
-  <h1 class="page-title">Music</h1>
 
-  <div class="card">
-    <input class="input" placeholder="Search songs, artists and albums..."
-      oninput="searchMusic(this.value)">
-  </div>
+<div class="card">
 
-  <div id="musicResults" class="grid grid-3"></div>
+<h2>Music</h2>
+
+<input placeholder="Search songs, artists or albums">
+
+<div class="grid">
+
+<div class="card">
+<h3>Sample Artist</h3>
+<p>Sample Song</p>
+<button class="btn">▶ Play</button>
+</div>
+
+<div class="card">
+<h3>Sample Artist</h3>
+<p>Another Song</p>
+<button class="btn">▶ Play</button>
+</div>
+
+</div>
+
+</div>
+
 </section>
 
 
 <!-- SOUNDS -->
+
 <section id="sounds" class="page">
-  <h1 class="page-title">Sounds</h1>
 
-  <div class="grid grid-3">
-    <div class="card">
-      <h3>Original Sound</h3>
-      <p class="muted">RockyX Creator</p>
-      <br>
-      <button class="btn" onclick="saveSound('Original Sound')">Save Sound</button>
-    </div>
+<div class="card">
 
-    <div class="card">
-      <h3>Trending Beat</h3>
-      <p class="muted">Artist</p>
-      <br>
-      <button class="btn" onclick="saveSound('Trending Beat')">Save Sound</button>
-    </div>
-  </div>
+<h2>Sounds</h2>
 
-  <br>
+<div id="soundList"></div>
 
-  <div class="card">
-    <h3>Saved Sounds</h3>
-    <div id="savedSounds"></div>
-  </div>
+</div>
+
+<div class="card">
+
+<h3>Saved Sounds</h3>
+
+<div id="savedSounds"></div>
+
+</div>
+
+</section>
+
+
+<!-- CAMERA -->
+
+<section id="camera" class="page">
+
+<div class="card">
+
+<h2>Camera</h2>
+
+<video
+id="cameraPreview"
+autoplay
+playsinline
+style="width:100%;background:#111">
+</video>
+
+<button class="btn blue" onclick="startCamera()">
+Start Camera
+</button>
+
+<button class="btn" onclick="takePhoto()">
+Take Photo
+</button>
+
+<button class="btn red" onclick="stopCamera()">
+Stop Camera
+</button>
+
+<div id="cameraOutput"></div>
+
+</div>
+
+</section>
+
+
+<!-- CREATOR -->
+
+<section id="creator" class="page">
+
+<div class="card">
+
+<h2>Creator Studio</h2>
+
+<div class="grid">
+
+<button class="btn" onclick="showPage('shorts')">
+Create Short
+</button>
+
+<button class="btn" onclick="showPage('videos')">
+Create Video
+</button>
+
+<button class="btn" onclick="showPage('templates')">
+Templates
+</button>
+
+<button class="btn" onclick="showPage('sounds')">
+Add Sound
+</button>
+
+<button class="btn" onclick="showPage('verification')">
+Verification
+</button>
+
+<button class="btn" onclick="showPage('creatorEarnings')">
+Earnings
+</button>
+
+</div>
+
+</div>
+
 </section>
 
 
 <!-- TEMPLATES -->
+
 <section id="templates" class="page">
-  <h1 class="page-title">Templates</h1>
 
-  <div class="grid grid-3">
-    <div class="card">
-      <h3>🎬 Video Template</h3>
-      <p class="muted">Demo template</p>
-      <br>
-      <button class="btn">Use Template</button>
-    </div>
+<div class="card">
 
-    <div class="card">
-      <h3>📸 Photo Template</h3>
-      <p class="muted">Demo template</p>
-      <br>
-      <button class="btn">Use Template</button>
-    </div>
+<h2>Template Marketplace</h2>
 
-    <div class="card">
-      <h3>⭐ Premium Template</h3>
-      <p class="muted">Eligibility can be configured later.</p>
-      <br>
-      <button class="btn">View</button>
-    </div>
-  </div>
+<input placeholder="Search templates">
+
+<div class="grid">
+
+<div class="template">
+<h3>Modern Business</h3>
+<button class="btn blue">Use Template</button>
+</div>
+
+<div class="template">
+<h3>Short Intro</h3>
+<button class="btn blue">Use Template</button>
+</div>
+
+<div class="template">
+<h3>Music Promo</h3>
+<button class="btn blue">Use Template</button>
+</div>
+
+<div class="template">
+<h3>Photo Story</h3>
+<button class="btn blue">Use Template</button>
+</div>
+
+</div>
+
+</div>
+
 </section>
 
 
-<!-- MARKET -->
-<section id="market" class="page">
-  <h1 class="page-title">Marketplace</h1>
-  <p class="page-subtitle">Discover products and sellers.</p>
+<!-- CREATOR PROGRAM -->
 
-  <div class="card">
-    <input id="marketSearch"
-      class="input"
-      placeholder="Search products..."
-      oninput="renderProducts(this.value)">
-  </div>
+<section id="creatorProgram" class="page">
 
-  <div id="productList" class="grid grid-3"></div>
+<div class="card">
+
+<h2>Creator Program</h2>
+
+<div class="stats">
+
+<div class="stat">
+<b>1</b>
+Creator
+</div>
+
+<div class="stat">
+<b>2</b>
+Rising Creator
+</div>
+
+<div class="stat">
+<b>3</b>
+Premium Creator
+</div>
+
+<div class="stat">
+<b>4</b>
+RockyX Partner
+</div>
+
+</div>
+
+<p>
+Creator levels can later use configurable performance,
+originality, copyright, community and account-standing requirements.
+</p>
+
+</div>
+
+</section>
+
+
+<!-- CREATOR EARNINGS -->
+
+<section id="creatorEarnings" class="page">
+
+<div class="card">
+
+<h2>Creator Earnings</h2>
+
+<div class="stats">
+
+<div class="stat">
+<b>GHS 0</b>
+Available
+</div>
+
+<div class="stat">
+<b>GHS 0</b>
+Pending
+</div>
+
+<div class="stat">
+<b>GHS 0</b>
+Lifetime
+</div>
+
+<div class="stat">
+<b>0</b>
+Payouts
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- MARKETPLACE -->
+
+<section id="marketplace" class="page">
+
+<div class="card">
+
+<h2>Marketplace</h2>
+
+<input id="productSearch" placeholder="Search products">
+
+<div id="productList" class="grid"></div>
+
+</div>
+
 </section>
 
 
 <!-- CART -->
+
 <section id="cart" class="page">
-  <h1 class="page-title">Cart</h1>
 
-  <div id="cartList"></div>
+<div class="card">
 
-  <div class="card">
-    <div class="space-between">
-      <strong>Total</strong>
-      <strong id="cartTotal">GHS 0.00</strong>
-    </div>
-    <br>
-    <button class="btn" onclick="showPage('checkout')">Checkout</button>
-  </div>
-</section>
+<h2>Shopping Cart</h2>
 
+<div id="cartList"></div>
 
-<!-- CHECKOUT -->
-<section id="checkout" class="page">
-  <h1 class="page-title">Checkout</h1>
+<h3 id="cartTotal">GHS 0.00</h3>
 
-  <div class="card">
-    <div class="form-group">
-      <label>Full name</label>
-      <input id="checkoutName" class="input">
-    </div>
+<button class="btn blue" onclick="checkout()">
+Checkout
+</button>
 
-    <div class="form-group">
-      <label>Phone</label>
-      <input id="checkoutPhone" class="input">
-    </div>
+</div>
 
-    <div class="form-group">
-      <label>Delivery address</label>
-      <textarea id="checkoutAddress"></textarea>
-    </div>
-
-    <button class="btn" onclick="placeOrder()">Place Order</button>
-  </div>
-</section>
-
-
-<!-- PAYMENT -->
-<section id="payment" class="page">
-  <h1 class="page-title">Payment</h1>
-
-  <div class="card">
-    <h2>Payment</h2>
-    <p class="muted">
-      Payment gateway connection will be completed during backend integration.
-    </p>
-    <br>
-    <button class="btn" onclick="notify('Payment system prepared for backend integration.')">
-      Continue
-    </button>
-  </div>
 </section>
 
 
 <!-- ORDERS -->
+
 <section id="orders" class="page">
-  <h1 class="page-title">Orders</h1>
 
-  <div id="ordersList"></div>
-</section>
+<div class="card">
 
+<h2>Orders</h2>
 
-<!-- TRANSACTIONS -->
-<section id="transactions" class="page">
-  <h1 class="page-title">Transactions</h1>
+<div id="ordersList"></div>
 
-  <div class="card">
-    <p class="muted">Transaction records will be connected to the backend later.</p>
-  </div>
+</div>
+
 </section>
 
 
 <!-- SELLER -->
+
 <section id="seller" class="page">
-  <h1 class="page-title">Seller Center</h1>
 
-  <div class="grid grid-3">
-    <div class="stat">
-      <div class="muted">Products</div>
-      <div class="stat-number">12</div>
-    </div>
+<div class="card">
 
-    <div class="stat">
-      <div class="muted">Orders</div>
-      <div class="stat-number">8</div>
-    </div>
+<h2>Seller Tools</h2>
 
-    <div class="stat">
-      <div class="muted">Revenue</div>
-      <div class="stat-number">GHS 2,450</div>
-    </div>
-  </div>
+<input id="sellerProductName" placeholder="Product name">
 
-  <br>
+<input id="sellerProductPrice"
+type="number"
+placeholder="Price">
 
-  <div class="card">
-    <button class="btn" onclick="notify('Product creation prepared.')">
-      Add Product
-    </button>
-  </div>
+<textarea
+id="sellerProductDescription"
+placeholder="Description">
+</textarea>
+
+<button class="btn blue" onclick="addProduct()">
+Add Product
+</button>
+
+</div>
+
+</section>
+
+
+<!-- PAYOUTS -->
+
+<section id="payouts" class="page">
+
+<div class="card">
+
+<h2>Payouts</h2>
+
+<p class="money">GHS 0.00</p>
+
+<button class="btn blue"
+onclick="demoNotify('Payout','Demo payout request created.')">
+Request Payout
+</button>
+
+</div>
+
 </section>
 
 
 <!-- BUSINESSES -->
+
 <section id="businesses" class="page">
-  <h1 class="page-title">Businesses</h1>
-  <p class="page-subtitle">Discover businesses and their locations.</p>
 
-  <div class="grid grid-2" id="businessList"></div>
-</section>
+<div class="card">
 
+<h2>Businesses</h2>
 
-<!-- BUSINESS PROFILE -->
-<section id="businessProfile" class="page">
-  <h1 class="page-title">Business Profile</h1>
+<div class="grid">
 
-  <div id="businessProfileContent"></div>
-</section>
+<div class="card">
+<h3>Rocky Fashion Shop</h3>
+<p>Fashion</p>
+<button class="btn blue">View Business</button>
+</div>
 
+<div class="card">
+<h3>Golden Taste Restaurant</h3>
+<p>Restaurant</p>
+<button class="btn blue">View Business</button>
+</div>
 
-<!-- CREATE BUSINESS -->
-<section id="createBusiness" class="page">
-  <h1 class="page-title">Create Business</h1>
+</div>
 
-  <div class="card">
-    <div class="form-group">
-      <label>Business name</label>
-      <input id="businessName" class="input">
-    </div>
+</div>
 
-    <div class="form-group">
-      <label>Category</label>
-      <select id="businessCategory">
-        <option>Shop</option>
-        <option>Restaurant</option>
-        <option>Hotel</option>
-        <option>Beauty</option>
-        <option>Technology</option>
-        <option>Other</option>
-      </select>
-    </div>
-
-    <div class="form-group">
-      <label>Business description</label>
-      <textarea id="businessDescription"></textarea>
-    </div>
-
-    <button class="btn" onclick="createBusiness()">Create Business</button>
-  </div>
-</section>
-
-
-<!-- BUSINESS TOOLS -->
-<section id="businessTools" class="page">
-  <h1 class="page-title">Business Tools</h1>
-
-  <div class="grid grid-3">
-    <div class="card"><h3>📦 Products</h3></div>
-    <div class="card"><h3>🛠️ Services</h3></div>
-    <div class="card"><h3>📊 Analytics</h3></div>
-    <div class="card"><h3>💰 Earnings</h3></div>
-    <div class="card"><h3>📅 Bookings</h3></div>
-    <div class="card"><h3>⭐ Reviews</h3></div>
-  </div>
 </section>
 
 
 <!-- SERVICES -->
+
 <section id="services" class="page">
-  <h1 class="page-title">Services</h1>
 
-  <div class="card">
-    <input id="serviceSearch"
-      class="input"
-      placeholder="Search services..."
-      oninput="renderServices(this.value)">
-  </div>
+<div class="card">
 
-  <div id="serviceList" class="grid grid-3"></div>
-</section>
+<h2>Services</h2>
 
+<div class="grid">
 
-<!-- CREATE SERVICE -->
-<section id="createService" class="page">
-  <h1 class="page-title">Create Service</h1>
+<div class="card">
+<h3>QuickFix Services</h3>
+<p>Repairs and maintenance</p>
+<button class="btn blue">Book</button>
+</div>
 
-  <div class="card">
-    <div class="form-group">
-      <label>Service name</label>
-      <input id="serviceName" class="input">
-    </div>
+<div class="card">
+<h3>Clean Home</h3>
+<p>Cleaning services</p>
+<button class="btn blue">Book</button>
+</div>
 
-    <div class="form-group">
-      <label>Category</label>
-      <input id="serviceCategory" class="input">
-    </div>
+</div>
 
-    <div class="form-group">
-      <label>Price</label>
-      <input id="servicePrice" class="input" type="number">
-    </div>
+</div>
 
-    <button class="btn" onclick="createService()">Publish Service</button>
-  </div>
-</section>
-
-
-<!-- PROVIDER TOOLS -->
-<section id="providerTools" class="page">
-  <h1 class="page-title">Provider Tools</h1>
-
-  <div class="grid grid-3">
-    <div class="card"><h3>🛠️ My Services</h3></div>
-    <div class="card"><h3>📅 Bookings</h3></div>
-    <div class="card"><h3>💰 Earnings</h3></div>
-    <div class="card"><h3>⭐ Reviews</h3></div>
-    <div class="card"><h3>📊 Analytics</h3></div>
-  </div>
-</section>
-
-
-<!-- BOOKINGS -->
-<section id="bookings" class="page">
-  <h1 class="page-title">Bookings</h1>
-
-  <div id="bookingList"></div>
-</section>
-
-
-<!-- PROVIDER BOOKINGS -->
-<section id="providerBookings" class="page">
-  <h1 class="page-title">Provider Bookings</h1>
-
-  <div class="card">
-    <p class="muted">Your incoming service bookings will appear here.</p>
-  </div>
-</section>
-
-
-<!-- BUSINESS BOOKINGS -->
-<section id="businessBookings" class="page">
-  <h1 class="page-title">Business Bookings</h1>
-
-  <div class="card">
-    <p class="muted">Business bookings will appear here.</p>
-  </div>
-</section>
-
-
-<!-- PROVIDER EARNINGS -->
-<section id="providerEarnings" class="page">
-  <h1 class="page-title">Provider Earnings</h1>
-
-  <div class="grid grid-3">
-    <div class="stat">
-      <div class="muted">Available</div>
-      <div class="stat-number">GHS 850</div>
-    </div>
-
-    <div class="stat">
-      <div class="muted">Pending</div>
-      <div class="stat-number">GHS 230</div>
-    </div>
-
-    <div class="stat">
-      <div class="muted">Total</div>
-      <div class="stat-number">GHS 1,080</div>
-    </div>
-  </div>
-</section>
-
-
-<!-- BUSINESS EARNINGS -->
-<section id="businessEarnings" class="page">
-  <h1 class="page-title">Business Earnings</h1>
-
-  <div class="grid grid-3">
-    <div class="stat">
-      <div class="muted">Sales</div>
-      <div class="stat-number">GHS 4,500</div>
-    </div>
-
-    <div class="stat">
-      <div class="muted">Commission</div>
-      <div class="stat-number">GHS 225</div>
-    </div>
-
-    <div class="stat">
-      <div class="muted">Net</div>
-      <div class="stat-number">GHS 4,275</div>
-    </div>
-  </div>
-</section>
-
-
-<!-- BUSINESS ANALYTICS -->
-<section id="businessAnalytics" class="page">
-  <h1 class="page-title">Business Analytics</h1>
-
-  <div class="card">
-    <h3>Performance Overview</h3>
-    <p class="muted">Analytics will become connected to real business data after backend integration.</p>
-  </div>
-</section>
-
-
-<!-- PROVIDER REVIEWS -->
-<section id="providerReviews" class="page">
-  <h1 class="page-title">Provider Reviews</h1>
-
-  <div class="card">
-    ⭐⭐⭐⭐⭐
-    <p>Customer reviews will appear here.</p>
-  </div>
 </section>
 
 
 <!-- TRANSPORT -->
+
 <section id="transport" class="page">
-  <h1 class="page-title">Transport</h1>
-  <p class="page-subtitle">Find transport services and locations.</p>
 
-  <div class="category-bar">
-    <button class="category-chip" onclick="filterTransport('Taxi')">🚕 Taxi</button>
-    <button class="category-chip" onclick="filterTransport('Ride-hailing')">🚗 Ride-hailing</button>
-    <button class="category-chip" onclick="filterTransport('Bus')">🚌 Bus</button>
-    <button class="category-chip" onclick="filterTransport('Minibus')">🚐 Minibus</button>
-    <button class="category-chip" onclick="filterTransport('Motorbike')">🏍️ Motorbike</button>
-    <button class="category-chip" onclick="filterTransport('Delivery')">📦 Delivery</button>
-    <button class="category-chip" onclick="filterTransport('Trucking')">🚛 Trucking</button>
-    <button class="category-chip" onclick="filterTransport('Car Rental')">🚘 Car Rental</button>
-    <button class="category-chip" onclick="filterTransport('Airport Transfer')">✈️ Airport</button>
-  </div>
+<div class="card">
 
-  <div class="card">
-    <div class="flex">
-      <button class="btn" onclick="useMyLocation('transport')">
-        📍 Use My Location
-      </button>
+<h2>Transport</h2>
 
-      <button class="btn secondary" onclick="showPage('nearby')">
-        Open Nearby
-      </button>
-    </div>
-  </div>
+<select>
+<option>Taxi</option>
+<option>Ride-hailing</option>
+<option>Bus</option>
+<option>Minibus</option>
+<option>Motorbike</option>
+<option>Delivery</option>
+<option>Trucking</option>
+<option>Car Rental</option>
+<option>Airport Transfer</option>
+</select>
 
-  <div class="map-wrapper">
-    <div id="transportMap" class="map"></div>
-  </div>
+<button class="btn blue"
+onclick="demoNotify('Transport','Transport request created in demo mode.')">
+Request Transport
+</button>
 
-  <br>
+<div id="transportMap" class="mapbox"></div>
 
-  <div id="transportList" class="grid grid-2"></div>
+</div>
+
 </section>
 
 
 <!-- NEARBY -->
+
 <section id="nearby" class="page">
 
-  <h1 class="page-title">Nearby</h1>
-  <p class="page-subtitle">
-    Discover businesses, sellers, services, transport and useful places.
-  </p>
+<div class="card">
 
-  <div class="card">
+<h2>Nearby</h2>
 
-    <div class="category-bar">
+<p>
+Discover nearby businesses, sellers, services and useful places.
+</p>
 
-      <button class="category-chip active"
-        onclick="setNearbyCategory('all',this)">
-        🌎 All
-      </button>
+<div id="nearbyMap" class="mapbox"></div>
 
-      <button class="category-chip"
-        onclick="setNearbyCategory('business',this)">
-        🏢 Businesses
-      </button>
+<button class="btn blue" onclick="useLocation()">
+Use My Location
+</button>
 
-      <button class="category-chip"
-        onclick="setNearbyCategory('product',this)">
-        🛍️ Sellers
-      </button>
+<button class="btn gray" onclick="clearLocation()">
+Clear Location
+</button>
 
-      <button class="category-chip"
-        onclick="setNearbyCategory('restaurant',this)">
-        🍽️ Restaurants
-      </button>
+<div id="nearbyPlaces"></div>
 
-      <button class="category-chip"
-        onclick="setNearbyCategory('hotel',this)">
-        🏨 Hotels
-      </button>
-
-      <button class="category-chip"
-        onclick="setNearbyCategory('service',this)">
-        🛠️ Services
-      </button>
-
-      <button class="category-chip"
-        onclick="setNearbyCategory('transport',this)">
-        🚕 Transport
-      </button>
-
-      <button class="category-chip"
-        onclick="setNearbyCategory('fuel',this)">
-        ⛽ Fuel
-      </button>
-
-      <button class="category-chip"
-        onclick="setNearbyCategory('useful',this)">
-        📌 Useful
-      </button>
-
-    </div>
-
-    <div class="map-wrapper">
-
-      <div class="map-toolbar">
-
-        <div class="map-control map-search">
-          <input
-            id="locationSearch"
-            placeholder="Search a place or location..."
-            onkeydown="if(event.key==='Enter') searchLocation()"
-          >
-        </div>
-
-        <button class="map-control"
-          onclick="searchLocation()">
-          🔎 Search
-        </button>
-
-        <button class="map-control"
-          onclick="useMyLocation('main')">
-          📍 My Location
-        </button>
-
-        <button class="map-control"
-          onclick="clearMyLocation()">
-          Clear Location
-        </button>
-
-      </div>
-
-      <div id="map" class="map"></div>
-
-    </div>
-
-    <div id="routePanel" class="route-panel hidden"></div>
-
-  </div>
-
-
-  <div class="grid grid-2">
-
-    <div>
-      <div class="card">
-        <div class="space-between">
-          <h2>Nearby Places</h2>
-          <span id="nearbyCount" class="muted"></span>
-        </div>
-
-        <br>
-
-        <div id="nearbyList" class="location-list"></div>
-      </div>
-    </div>
-
-    <div>
-
-      <div class="card">
-
-        <h2>Location Privacy</h2>
-
-        <br>
-
-        <div class="privacy-box">
-
-          <div class="switch">
-            <input
-              id="locationSharing"
-              type="checkbox"
-              onchange="toggleLocationPrivacy()"
-            >
-
-            <label for="locationSharing">
-              Allow RockyX to use my location on this device
-            </label>
-          </div>
-
-          <br>
-
-          <p class="small muted">
-            Your browser will ask for permission before your exact location
-            is accessed. You can clear your location at any time.
-          </p>
-
-        </div>
-
-      </div>
-
-      <div class="card">
-
-        <h2>How Nearby Works</h2>
-
-        <br>
-
-        <p class="muted">
-          Choose a category, search for a place, select a marker,
-          or use your location to explore nearby places.
-        </p>
-
-        <br>
-
-        <button class="btn" onclick="showPage('navigation')">
-          🧭 Open Navigation
-        </button>
-
-      </div>
-
-    </div>
-
-  </div>
+</div>
 
 </section>
 
 
 <!-- NAVIGATION -->
+
 <section id="navigation" class="page">
 
-  <h1 class="page-title">Navigation</h1>
-  <p class="page-subtitle">Choose an origin and destination.</p>
+<div class="card">
 
-  <div class="card">
+<h2>Navigation</h2>
 
-    <div class="form-group">
-      <label>Starting point</label>
-      <input
-        id="originInput"
-        class="input"
-        placeholder="Use My Location or enter a place"
-      >
-    </div>
+<input
+id="destination"
+placeholder="Enter destination">
 
-    <div class="form-group">
-      <label>Destination</label>
-      <input
-        id="destinationInput"
-        class="input"
-        placeholder="Enter destination"
-      >
-    </div>
+<button class="btn blue" onclick="findDestination()">
+Find Destination
+</button>
 
-    <div class="flex">
-      <button class="btn"
-        onclick="useNavigationLocation()">
-        📍 Use My Location
-      </button>
+<div id="navigationMap" class="mapbox"></div>
 
-      <button class="btn"
-        onclick="calculateNavigation()">
-        🧭 Get Directions
-      </button>
-    </div>
+<div id="routeInfo"></div>
 
-  </div>
+<p class="small">
+This frontend demo uses public OpenStreetMap services.
+Production routing will be connected later.
+</p>
 
-  <div id="navigationResult"></div>
-
-  <div class="card">
-    <p class="muted">
-      For full road navigation and turn-by-turn routing, the production
-      RockyX backend will connect to a dedicated routing/maps service.
-      This frontend provides the interactive map and route preview.
-    </p>
-  </div>
+</div>
 
 </section>
 
 
 <!-- MESSAGES -->
-<section id="messages" class="page">
-  <h1 class="page-title">Messages</h1>
 
-  <div class="card">
-    <p class="muted">
-      Your conversations will appear here after backend messaging is connected.
-    </p>
-  </div>
+<section id="messages" class="page">
+
+<div class="card">
+
+<h2>Messages</h2>
+
+<div class="post">
+<b>Alex</b>
+<p>Hello 👋</p>
+</div>
+
+<div class="post">
+<b>Mary</b>
+<p>How are you?</p>
+</div>
+
+</div>
+
 </section>
 
 
 <!-- NOTIFICATIONS -->
+
 <section id="notifications" class="page">
-  <h1 class="page-title">Notifications</h1>
 
-  <div class="card">
-    <div class="space-between">
-      <h2>Your Notifications</h2>
+<div class="card">
 
-      <div class="flex">
-        <button class="btn secondary" onclick="markNotificationsRead()">
-          Mark read
-        </button>
+<h2>Notifications</h2>
 
-        <button class="btn danger" onclick="clearNotifications()">
-          Clear
-        </button>
-      </div>
-    </div>
-  </div>
+<button class="btn blue" onclick="markAllRead()">
+Mark All Read
+</button>
 
-  <div id="notificationsList"></div>
+<button class="btn red" onclick="clearNotifications()">
+Clear All
+</button>
+
+</div>
+
+<div id="notificationList"></div>
+
 </section>
 
 
 <!-- PROFILE -->
-<section id="profile" class="page">
-  <h1 class="page-title">Profile</h1>
 
-  <div class="card">
-    <h2>Your Profile</h2>
-    <br>
-    <p><strong>Name:</strong> RockyX User</p>
-    <p><strong>Followers:</strong> 0</p>
-    <p><strong>Following:</strong> 0</p>
-  </div>
+<section id="profile" class="page">
+
+<div class="card">
+
+<h2>Your Profile</h2>
+
+<div class="stats">
+
+<div class="stat"><b>0</b>Posts</div>
+<div class="stat"><b>10,000</b>Followers</div>
+<div class="stat"><b>0</b>Following</div>
+<div class="stat"><b>0</b>Likes</div>
+
+</div>
+
+</div>
+
 </section>
 
 
 <!-- ACCOUNT -->
+
 <section id="account" class="page">
-  <h1 class="page-title">Account</h1>
 
-  <div class="card">
-    <h2>Account Settings</h2>
+<div class="card">
 
-    <br>
+<h2>Account</h2>
 
-    <div class="form-group">
-      <label>Name</label>
-      <input class="input" value="RockyX User">
-    </div>
+<button class="btn blue" onclick="createDemoAccount()">
+Create Account
+</button>
 
-    <div class="form-group">
-      <label>Country</label>
-      <select>
-        <option>Ghana</option>
-        <option>Nigeria</option>
-        <option>United Kingdom</option>
-        <option>United States</option>
-        <option>Other</option>
-      </select>
-    </div>
+<button class="btn gray" onclick="signInDemo()">
+Sign In
+</button>
 
-    <button class="btn">Save Changes</button>
-  </div>
+<p id="accountStatus">
+Not signed in
+</p>
+
+</div>
+
 </section>
 
 
-<!-- SETTINGS -->
-<section id="settings" class="page">
-  <h1 class="page-title">Settings</h1>
+<!-- STAGE 9: VERIFICATION -->
 
-  <div class="card">
-    <h3>Privacy</h3>
-    <br>
-    <p class="muted">
-      Manage location, profile and content privacy.
-    </p>
-    <br>
-    <button class="btn" onclick="showPage('nearby')">
-      Location Privacy
-    </button>
-  </div>
+<section id="verification" class="page">
 
-  <div class="card">
-    <h3>Security</h3>
-    <br>
-    <p class="muted">
-      Account security and authentication controls will be connected later.
-    </p>
-  </div>
+<div class="card">
 
-  <div class="card">
-    <h3>Legal</h3>
-    <br>
-    <div class="flex">
-      <button class="btn secondary">Privacy Policy</button>
-      <button class="btn secondary">Terms</button>
-      <button class="btn secondary">Cookie Policy</button>
-      <button class="btn secondary">Community Guidelines</button>
-    </div>
-  </div>
+<h2>✅ Verification Center</h2>
+
+<p>
+Verification is designed to help establish trust for eligible
+creators, businesses and service providers.
+</p>
+
+<div class="stats">
+
+<div class="stat">
+<b id="verificationFollowers">10,000</b>
+Followers
+</div>
+
+<div class="stat">
+<b id="creatorEligibility"
+class="trust-warn">
+Checking
+</b>
+Creator
+</div>
+
+<div class="stat">
+<b>Active</b>
+Account
+</div>
+
+<div class="stat">
+<b>Secure</b>
+Security
+</div>
+
+</div>
+
+<hr>
+
+<h3>Creator Verification</h3>
+
+<p>
+The automatic eligibility framework uses the configured
+10,000-follower threshold together with account activity,
+authenticity, completeness, security and Community Guidelines
+compliance.
+</p>
+
+<button class="btn blue"
+onclick="checkVerification()">
+Check Eligibility
+</button>
+
+<button class="btn"
+onclick="requestVerification('Creator')">
+Request Creator Review
+</button>
+
+<h3>Business Verification</h3>
+
+<button class="btn"
+onclick="requestVerification('Business')">
+Request Business Verification
+</button>
+
+<h3>Service Provider Verification</h3>
+
+<button class="btn"
+onclick="requestVerification('Provider')">
+Request Provider Verification
+</button>
+
+<div class="card">
+
+<h3>Verification Status</h3>
+
+<div id="verificationStatus">
+Not submitted
+</div>
+
+</div>
+
+</div>
+
 </section>
 
-</main>
+
+<!-- IDENTITY -->
+
+<section id="identity" class="page">
+
+<div class="card">
+
+<h2>🪪 Identity Verification</h2>
+
+<p>
+Normal RockyX signup does not require a government ID.
+Identity verification may be required for payouts,
+monetization, business/provider verification, higher-trust
+features or legal/payment requirements.
+</p>
+
+<div class="card">
+
+<h3>Demo Identity Check</h3>
+
+<p class="small">
+Do not enter real government ID numbers into this frontend demo.
+Actual identity documents will be handled securely by the
+backend later.
+</p>
+
+<input
+id="identityDocumentType"
+placeholder="Document type, e.g. Passport">
+
+<button class="btn blue"
+onclick="startIdentityCheck()">
+Start Identity Check
+</button>
+
+<button class="btn gray"
+onclick="clearIdentity()">
+Clear Demo Status
+</button>
+
+<p id="identityStatus"
+class="trust-warn">
+Not submitted
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- SAFETY -->
+
+<section id="safety" class="page">
+
+<div class="card">
+
+<h2>🛡️ Safety Center</h2>
+
+<p>
+Manage your privacy, security and safety tools.
+</p>
+
+<div class="grid">
+
+<button class="btn"
+onclick="showPage('privacy')">
+🔒 Privacy
+</button>
+
+<button class="btn"
+onclick="showPage('security')">
+🔐 Security
+</button>
+
+<button class="btn"
+onclick="showPage('reports')">
+🚩 Report
+</button>
+
+<button class="btn"
+onclick="showPage('blocked')">
+⛔ Blocked Users
+</button>
+
+</div>
+
+<h3>Safety reminders</h3>
+
+<ul>
+<li>Never share passwords or payment PINs.</li>
+<li>Check payment details before sending money.</li>
+<li>Report scams and impersonation.</li>
+<li>Report harassment and unsafe content.</li>
+<li>Only share your location when you are comfortable.</li>
+<li>Do not upload sensitive identity documents into this demo.</li>
+</ul>
+
+</div>
+
+</section>
+
+
+<!-- REPORTS -->
+
+<section id="reports" class="page">
+
+<div class="card">
+
+<h2>🚩 Report & Moderation</h2>
+
+<p>
+Report a user, post, video, business, service, message,
+copyright issue, scam or safety problem.
+</p>
+
+<select id="reportType">
+<option>User</option>
+<option>Post</option>
+<option>Video</option>
+<option>Business</option>
+<option>Service</option>
+<option>Message</option>
+<option>Copyright</option>
+<option>Scam / Fraud</option>
+<option>Safety</option>
+</select>
+
+<input
+id="reportTarget"
+placeholder="What are you reporting?">
+
+<textarea
+id="reportReason"
+placeholder="Explain the problem">
+</textarea>
+
+<button class="btn red"
+onclick="submitReport()">
+Submit Report
+</button>
+
+</div>
+
+<div class="card">
+
+<h3>My Reports</h3>
+
+<div id="reportList"></div>
+
+</div>
+
+</section>
+
+
+<!-- BLOCKED -->
+
+<section id="blocked" class="page">
+
+<div class="card">
+
+<h2>⛔ Blocked Users</h2>
+
+<input
+id="blockedUser"
+placeholder="User name">
+
+<button class="btn red"
+onclick="blockUser()">
+Block User
+</button>
+
+<div id="blockedList"></div>
+
+</div>
+
+</section>
+
+
+<!-- PRIVACY -->
+
+<section id="privacy" class="page">
+
+<div class="card">
+
+<h2>🔒 Privacy Controls</h2>
+
+<p class="small">
+These settings are saved locally for this frontend demo.
+Actual enforcement will be handled by the backend.
+</p>
+
+<div class="security-row">
+
+<span>
+<b>Profile visibility</b>
+</span>
+
+<select id="profileVisibility"
+onchange="savePrivacy()">
+
+<option value="public">Public</option>
+<option value="followers">Followers Only</option>
+<option value="private">Private</option>
+
+</select>
+
 </div>
 
 
-<!-- MOBILE NAV -->
-<nav class="mobile-nav">
-  <button onclick="showPage('home')">
-    <strong>🏠</strong>Home
-  </button>
+<div class="security-row">
 
-  <button onclick="showPage('explore')">
-    <strong>🔎</strong>Explore
-  </button>
+<span>
+<b>Location sharing</b>
+</span>
 
-  <button onclick="showPage('nearby')">
-    <strong>📍</strong>Nearby
-  </button>
+<select id="locationSharing"
+onchange="savePrivacy()">
 
-  <button onclick="showPage('market')">
-    <strong>🛍️</strong>Market
-  </button>
+<option value="ask">Ask Every Time</option>
+<option value="on">On</option>
+<option value="off">Off</option>
 
-  <button onclick="showPage('account')">
-    <strong>👤</strong>Account
-  </button>
+</select>
+
+</div>
+
+
+<div class="security-row">
+
+<span>
+<b>Who can message you</b>
+</span>
+
+<select id="messagePrivacy"
+onchange="savePrivacy()">
+
+<option value="everyone">Everyone</option>
+<option value="followers">Followers</option>
+<option value="nobody">Nobody</option>
+
+</select>
+
+</div>
+
+
+<div class="security-row">
+
+<span>
+<b>Allow video downloads</b>
+</span>
+
+<select id="downloadPrivacy"
+onchange="savePrivacy()">
+
+<option value="on">On</option>
+<option value="off">Off</option>
+
+</select>
+
+</div>
+
+
+<div class="security-row">
+
+<span>
+<b>Activity status</b>
+</span>
+
+<select id="activityPrivacy"
+onchange="savePrivacy()">
+
+<option value="on">Show</option>
+<option value="off">Hide</option>
+
+</select>
+
+</div>
+
+<button class="btn gray"
+onclick="resetPrivacy()">
+Reset Privacy
+</button>
+
+</div>
+
+</section>
+
+
+<!-- SECURITY -->
+
+<section id="security" class="page">
+
+<div class="card">
+
+<h2>🔐 Security Center</h2>
+
+
+<div class="security-row">
+
+<div>
+<b>Password</b>
+<br>
+<small>
+Use a strong unique password.
+</small>
+</div>
+
+<button class="btn"
+onclick="securityAction('Password change requested')">
+Change Password
+</button>
+
+</div>
+
+
+<div class="security-row">
+
+<div>
+<b>Two-Step Verification</b>
+<br>
+<small>
+Demo control for now.
+</small>
+</div>
+
+<label class="check">
+<input
+id="twoFactor"
+type="checkbox"
+onchange="toggleSecurity('Two-step verification')">
+Enabled
+</label>
+
+</div>
+
+
+<div class="security-row">
+
+<div>
+<b>Login Alerts</b>
+<br>
+<small>
+Alerts for unusual sign-ins.
+</small>
+</div>
+
+<label class="check">
+<input
+id="loginAlerts"
+type="checkbox"
+checked
+onchange="toggleSecurity('Login alerts')">
+Enabled
+</label>
+
+</div>
+
+
+<div class="security-row">
+
+<div>
+<b>Active Sessions</b>
+<br>
+<small>
+Current browser session.
+</small>
+</div>
+
+<button class="btn red"
+onclick="securityAction('Other sessions sign-out requested')">
+Sign Out Other Sessions
+</button>
+
+</div>
+
+
+<div class="card">
+
+<h3>Security Activity</h3>
+
+<div id="securityActivity"></div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- LEGAL -->
+
+<section id="legal" class="page">
+
+<div class="card legal">
+
+<h2>📄 Legal & Policies</h2>
+
+<p class="small">
+These are starter frontend policy pages. Final legal policies
+should be reviewed before RockyX launches publicly.
+</p>
+
+<h3>Privacy Policy</h3>
+
+<p>
+RockyX should explain what information is collected, why it is
+used, how it is protected, retention periods, user choices,
+location handling, payments, cookies and third-party services.
+</p>
+
+<h3>Terms of Service</h3>
+
+<p>
+Users must follow applicable laws, protect their accounts,
+provide accurate information and follow RockyX rules.
+Marketplace, service, creator and payment features may have
+additional terms.
+</p>
+
+<h3>Cookie Policy</h3>
+
+<p>
+RockyX may use necessary technologies for authentication,
+security, preferences and platform operation. Optional
+analytics or advertising technologies should be disclosed.
+</p>
+
+<h3>Community Guidelines</h3>
+
+<p>
+RockyX should not be used for threats, harassment, fraud,
+impersonation, exploitation, illegal activity, scams,
+non-consensual intimate content or intellectual-property
+violations.
+</p>
+
+<h3>Payments & Refunds</h3>
+
+<p>
+Payment, cancellation, refund, seller payout and service
+booking rules should be clearly displayed before transactions.
+Final payment rules will be connected during the backend phase.
+</p>
+
+<button class="btn blue"
+onclick="demoNotify('Policies','You viewed the RockyX policy center.')">
+Acknowledge
+</button>
+
+</div>
+
+</section>
+
+
+</main>
+
+
+<nav class="mobile">
+
+<button onclick="showPage('home')">
+🏠<br>Home
+</button>
+
+<button onclick="showPage('shorts')">
+🎬<br>Shorts
+</button>
+
+<button onclick="showPage('marketplace')">
+🛍️<br>Shop
+</button>
+
+<button onclick="showPage('messages')">
+💬<br>Chat
+</button>
+
+<button onclick="showPage('account')">
+👤<br>Account
+</button>
+
 </nav>
 
 
-<!-- MODAL -->
-<div id="modal" class="modal">
-  <div class="modal-box">
-    <div class="space-between">
-      <h2 id="modalTitle">Details</h2>
-      <button class="icon-btn" onclick="closeModal()">✕</button>
-    </div>
-
-    <br>
-
-    <div id="modalContent"></div>
-  </div>
-</div>
-
-
-<!-- LEAFLET -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <script>
 
-/* =========================================================
-   ROCKYX STAGE 8
-   FRONTEND ONLY
-   ========================================================= */
+/* =========================
+   BASIC HELPERS
+========================= */
+
+const $ = id => document.getElementById(id);
+
+function escapeHTML(value){
+  return String(value)
+  .replace(/[&<>"']/g,m=>({
+    '&':'&amp;',
+    '<':'&lt;',
+    '>':'&gt;',
+    '"':'&quot;',
+    "'":'&#039;'
+  }[m]));
+}
 
 
-/* -----------------------------
-   APP DATA
------------------------------ */
-
-let currentPage = "home";
-
-let notifications = [];
-
-let cart = [];
-
-let orders = [];
-
-let savedSounds = [];
-
-let bookings = [];
-
-let businesses = [
-  {
-    id:1,
-    name:"Rocky Fashion Shop",
-    category:"Shop",
-    type:"business",
-    description:"Fashion and clothing.",
-    lat:5.6037,
-    lng:-0.1870
-  },
-  {
-    id:2,
-    name:"Golden Taste Restaurant",
-    category:"Restaurant",
-    type:"restaurant",
-    description:"Local and international food.",
-    lat:5.5600,
-    lng:-0.2050
-  },
-  {
-    id:3,
-    name:"City View Hotel",
-    category:"Hotel",
-    type:"hotel",
-    description:"Comfortable accommodation.",
-    lat:5.5800,
-    lng:-0.1700
-  }
-];
-
-
-let products = [
-  {
-    id:1,
-    name:"Fashion Shirt",
-    price:120,
-    seller:"Rocky Fashion Shop",
-    category:"Fashion"
-  },
-  {
-    id:2,
-    name:"Sneakers",
-    price:250,
-    seller:"Rocky Fashion Shop",
-    category:"Fashion"
-  },
-  {
-    id:3,
-    name:"Phone Accessories",
-    price:80,
-    seller:"Tech Seller",
-    category:"Electronics"
-  }
-];
-
-
-let services = [
-  {
-    id:1,
-    name:"QuickFix Services",
-    category:"Repairs",
-    price:100,
-    provider:"QuickFix",
-    lat:5.5900,
-    lng:-0.1900
-  },
-  {
-    id:2,
-    name:"Clean Home",
-    category:"Cleaning",
-    price:150,
-    provider:"Clean Home",
-    lat:5.5700,
-    lng:-0.1800
-  },
-  {
-    id:3,
-    name:"Beauty Point",
-    category:"Beauty",
-    price:120,
-    provider:"Beauty Point",
-    lat:5.6100,
-    lng:-0.2000
-  }
-];
-
-
-let transportPlaces = [
-  {
-    id:1,
-    name:"City Taxi",
-    category:"Taxi",
-    lat:5.6000,
-    lng:-0.1900
-  },
-  {
-    id:2,
-    name:"Rocky Ride",
-    category:"Ride-hailing",
-    lat:5.5750,
-    lng:-0.1950
-  },
-  {
-    id:3,
-    name:"Airport Transfer",
-    category:"Airport Transfer",
-    lat:5.6050,
-    lng:-0.1700
-  },
-  {
-    id:4,
-    name:"Delivery Rider",
-    category:"Delivery",
-    lat:5.5850,
-    lng:-0.2100
-  }
-];
-
-
-let usefulPlaces = [
-  {
-    id:1,
-    name:"Fuel Station",
-    category:"fuel",
-    type:"fuel",
-    lat:5.5950,
-    lng:-0.1750
-  },
-  {
-    id:2,
-    name:"Hospital",
-    category:"useful",
-    type:"useful",
-    lat:5.5700,
-    lng:-0.1600
-  },
-  {
-    id:3,
-    name:"Police Station",
-    category:"useful",
-    type:"useful",
-    lat:5.6150,
-    lng:-0.1850
-  }
-];
-
-
-/* -----------------------------
-   MAP VARIABLES
------------------------------ */
-
-let mainMap = null;
-
-let transportMap = null;
-
-let mainMarkers = [];
-
-let transportMarkers = [];
-
-let userMarker = null;
-
-let userCircle = null;
-
-let userCoordinates = null;
-
-let selectedDestination = null;
-
-let nearbyCategory = "all";
-
-let routeLine = null;
-
-
-/* -----------------------------
+/* =========================
    PAGE NAVIGATION
------------------------------ */
+========================= */
 
-function showPage(page){
+function showPage(id){
 
-  currentPage = page;
+  document.querySelectorAll('.page')
+  .forEach(page=>page.classList.remove('active'));
 
-  document.querySelectorAll(".page").forEach(p=>{
-    p.classList.remove("active");
-  });
+  const page=$(id);
 
-  const target = document.getElementById(page);
-
-  if(target){
-    target.classList.add("active");
+  if(page){
+    page.classList.add('active');
   }
 
-  document.querySelectorAll(".nav-btn").forEach(btn=>{
-    btn.classList.remove("active");
+  window.scrollTo(0,0);
 
-    if(btn.dataset.page === page){
-      btn.classList.add("active");
-    }
-  });
+  if(id==='marketplace') renderProducts();
+  if(id==='cart') renderCart();
+  if(id==='orders') renderOrders();
+  if(id==='notifications') renderNotifications();
+  if(id==='reports') renderReports();
+  if(id==='blocked') renderBlocked();
+  if(id==='privacy') loadPrivacy();
+  if(id==='security') renderSecurityActivity();
 
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
-
-
-  if(page === "nearby"){
-    setTimeout(()=>{
-      initMainMap();
-      renderNearby();
-    },100);
+  if(id==='nearby'){
+    setTimeout(initNearbyMap,100);
   }
 
-
-  if(page === "navigation"){
-    setTimeout(()=>{
-      initMainMap();
-    },100);
+  if(id==='navigation'){
+    setTimeout(initNavigationMap,100);
   }
 
-
-  if(page === "transport"){
-    setTimeout(()=>{
-      initTransportMap();
-    },100);
-  }
-
-
-  if(page === "businesses"){
-    renderBusinesses();
-  }
-
-
-  if(page === "services"){
-    renderServices();
-  }
-
-
-  if(page === "market"){
-    renderProducts();
-  }
-
-
-  if(page === "cart"){
-    renderCart();
-  }
-
-
-  if(page === "orders"){
-    renderOrders();
-  }
-
-
-  if(page === "notifications"){
-    renderNotifications();
-  }
-
-
-  if(page === "sounds"){
-    renderSavedSounds();
-  }
-
-
-  if(page === "music"){
-    renderMusic();
+  if(id==='transport'){
+    setTimeout(initTransportMap,100);
   }
 }
 
 
-/* -----------------------------
+/* =========================
    NOTIFICATIONS
------------------------------ */
+========================= */
 
-function notify(message){
+let notifications = JSON.parse(
+  localStorage.getItem('rockyx_notifications') || '[]'
+);
+
+if(!notifications.length){
+
+  notifications=[
+    {
+      id:Date.now(),
+      title:'Welcome',
+      message:'Your RockyX notification center is ready.',
+      read:false,
+      time:new Date().toLocaleString()
+    }
+  ];
+
+}
+
+function saveNotifications(){
+
+  localStorage.setItem(
+    'rockyx_notifications',
+    JSON.stringify(notifications)
+  );
+
+}
+
+function addNotification(title,message){
 
   notifications.unshift({
-    id:Date.now(),
+    id:Date.now()+Math.random(),
+    title:title,
     message:message,
     read:false,
-    time:new Date().toLocaleTimeString()
+    time:new Date().toLocaleString()
   });
 
-  updateNotificationBadge();
-
+  saveNotifications();
   renderNotifications();
+
 }
 
+function demoNotify(title,message){
+
+  addNotification(title,message);
+
+  alert(message);
+
+}
 
 function renderNotifications(){
 
-  const box = document.getElementById("notificationsList");
+  const box=$('notificationList');
 
-  if(!box) return;
+  if(!box)return;
 
-  if(notifications.length === 0){
+  if(!notifications.length){
 
-    box.innerHTML = `
-      <div class="card">
-        <p class="muted">No notifications yet.</p>
-      </div>
-    `;
+    box.innerHTML=
+    '<div class="card">No notifications.</div>';
 
-    return;
-  }
+  }else{
 
+    box.innerHTML=notifications.map(n=>`
 
-  box.innerHTML = notifications.map(n=>`
+      <div class="notify ${n.read?'':'unread'}">
 
-    <div class="card" style="${n.read ? "" : "border-left:4px solid #2563eb;"}">
+        <h3>
+          ${n.read?'':'<span class="dot"></span>'}
+          ${escapeHTML(n.title)}
+        </h3>
 
-      <div class="space-between">
+        <p>${escapeHTML(n.message)}</p>
 
-        <div>
-          <strong>${escapeHTML(n.message)}</strong>
-          <div class="small muted">${n.time}</div>
-        </div>
+        <small>${escapeHTML(n.time)}</small>
 
         ${
           n.read
-          ? `<span class="tag">Read</span>`
-          : `<span class="tag">New</span>`
+          ?''
+          :`
+          <br>
+          <button
+            class="btn gray"
+            onclick="markNotificationRead(${n.id})">
+            Mark Read
+          </button>
+          `
         }
+
+      </div>
+
+    `).join('');
+
+  }
+
+  updateNotificationBadge();
+
+}
+
+function markNotificationRead(id){
+
+  const n=notifications.find(x=>x.id===id);
+
+  if(n)n.read=true;
+
+  saveNotifications();
+  renderNotifications();
+
+}
+
+function markAllRead(){
+
+  notifications.forEach(n=>n.read=true);
+
+  saveNotifications();
+  renderNotifications();
+
+}
+
+function clearNotifications(){
+
+  notifications=[];
+
+  saveNotifications();
+  renderNotifications();
+
+}
+
+function updateNotificationBadge(){
+
+  const unread=notifications.filter(n=>!n.read).length;
+
+  const badge=$('notificationBadge');
+
+  badge.textContent=unread;
+
+  badge.classList.toggle('show',unread>0);
+
+}
+
+
+/* =========================
+   POSTS
+========================= */
+
+function createPost(){
+
+  const text=$('postText').value.trim();
+  const file=$('postFile').files[0];
+
+  if(!text&&!file){
+
+    alert('Write something or choose media.');
+    return;
+
+  }
+
+  let media='';
+
+  if(file){
+
+    const url=URL.createObjectURL(file);
+
+    if(file.type.startsWith('image')){
+
+      media=
+      `<img src="${url}" style="max-width:100%">`;
+
+    }else{
+
+      media=
+      `<video src="${url}" controls style="width:100%"></video>`;
+
+    }
+
+  }
+
+  $('feed').insertAdjacentHTML(
+    'afterbegin',
+    `
+    <div class="post">
+
+      <b>You</b>
+
+      <p>${escapeHTML(text)}</p>
+
+      ${media}
+
+      <div>
+
+        <button class="btn gray">❤️ Like</button>
+        <button class="btn gray">💬 Comment</button>
+        <button class="btn gray">↗ Share</button>
+        <button class="btn gray">🔖 Save</button>
+
+      </div>
+
+    </div>
+    `
+  );
+
+  $('postText').value='';
+  $('postFile').value='';
+
+}
+
+
+/* =========================
+   SEARCH
+========================= */
+
+function globalSearch(){
+
+  const q=$('globalSearch').value.trim();
+
+  showPage('explore');
+
+  $('exploreSearch').value=q;
+
+  searchExplore();
+
+}
+
+function searchExplore(){
+
+  const q=$('exploreSearch').value.trim();
+
+  $('searchResults').innerHTML=`
+
+    <div class="card">
+
+      <h2>Search Results</h2>
+
+      <p>
+      Demo search results for:
+      <b>${escapeHTML(q||'everything')}</b>
+      </p>
+
+      <div class="grid">
+
+        <div class="card">
+          🛍️ Products
+          <p>Marketplace results</p>
+        </div>
+
+        <div class="card">
+          🎬 Videos
+          <p>Shorts and long videos</p>
+        </div>
+
+        <div class="card">
+          👤 People
+          <p>Creator and user results</p>
+        </div>
+
+        <div class="card">
+          🏢 Businesses
+          <p>Business results</p>
+        </div>
 
       </div>
 
     </div>
 
-  `).join("");
-}
-
-
-function markNotificationsRead(){
-
-  notifications.forEach(n=>{
-    n.read = true;
-  });
-
-  updateNotificationBadge();
-
-  renderNotifications();
-}
-
-
-function clearNotifications(){
-
-  notifications = [];
-
-  updateNotificationBadge();
-
-  renderNotifications();
-}
-
-
-function updateNotificationBadge(){
-
-  const badge = document.getElementById("notificationBadge");
-
-  if(!badge) return;
-
-  const unread = notifications.filter(n=>!n.read).length;
-
-  badge.textContent = unread;
-
-  badge.style.display = unread ? "flex" : "none";
-}
-
-
-/* -----------------------------
-   MAP INITIALIZATION
------------------------------ */
-
-function initMainMap(){
-
-  const mapElement = document.getElementById("map");
-
-  if(!mapElement) return;
-
-
-  if(mainMap){
-
-    setTimeout(()=>{
-      mainMap.invalidateSize();
-    },200);
-
-    return;
-  }
-
-
-  mainMap = L.map("map").setView(
-    [5.6037,-0.1870],
-    12
-  );
-
-
-  L.tileLayer(
-    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-    {
-      maxZoom:19,
-      attribution:"© OpenStreetMap contributors"
-    }
-  ).addTo(mainMap);
-
-
-  mainMap.on("click",function(e){
-
-    selectedDestination = {
-      lat:e.latlng.lat,
-      lng:e.latlng.lng,
-      name:"Selected map location"
-    };
-
-    showDestinationMarker(
-      e.latlng.lat,
-      e.latlng.lng,
-      "Selected location"
-    );
-
-  });
-
-
-  renderNearbyMarkers();
-
-  setTimeout(()=>{
-    mainMap.invalidateSize();
-  },200);
-}
-
-
-/* -----------------------------
-   TRANSPORT MAP
------------------------------ */
-
-function initTransportMap(){
-
-  const mapElement = document.getElementById("transportMap");
-
-  if(!mapElement) return;
-
-
-  if(transportMap){
-
-    setTimeout(()=>{
-      transportMap.invalidateSize();
-    },200);
-
-    return;
-  }
-
-
-  transportMap = L.map("transportMap").setView(
-    [5.6037,-0.1870],
-    12
-  );
-
-
-  L.tileLayer(
-    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-    {
-      maxZoom:19,
-      attribution:"© OpenStreetMap contributors"
-    }
-  ).addTo(transportMap);
-
-
-  renderTransportMarkers();
-
-  renderTransportList();
-
-  setTimeout(()=>{
-    transportMap.invalidateSize();
-  },200);
-}
-
-
-/* -----------------------------
-   MARKER ICON
------------------------------ */
-
-function getIcon(category){
-
-  let emoji = "📍";
-
-  if(category === "business") emoji="🏢";
-  if(category === "restaurant") emoji="🍽️";
-  if(category === "hotel") emoji="🏨";
-  if(category === "product") emoji="🛍️";
-  if(category === "service") emoji="🛠️";
-  if(category === "transport") emoji="🚕";
-  if(category === "fuel") emoji="⛽";
-  if(category === "useful") emoji="📌";
-
-  return L.divIcon({
-
-    className:"custom-map-icon",
-
-    html:`
-      <div style="
-        width:38px;
-        height:38px;
-        background:#fff;
-        border:2px solid #2563eb;
-        border-radius:50%;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        font-size:19px;
-        box-shadow:0 2px 8px rgba(0,0,0,.25);
-      ">
-        ${emoji}
-      </div>
-    `,
-
-    iconSize:[38,38],
-
-    iconAnchor:[19,19]
-
-  });
-}
-
-
-/* -----------------------------
-   NEARBY DATA
------------------------------ */
-
-function getNearbyItems(){
-
-  const items = [];
-
-
-  businesses.forEach(b=>{
-
-    items.push({
-
-      id:"business-"+b.id,
-
-      name:b.name,
-
-      category:b.category === "Restaurant"
-        ? "restaurant"
-        : b.category === "Hotel"
-        ? "hotel"
-        : "business",
-
-      type:b.type,
-
-      description:b.description,
-
-      lat:b.lat,
-
-      lng:b.lng
-
-    });
-
-  });
-
-
-  products.forEach(p=>{
-
-    const sellerBusiness =
-      businesses.find(
-        b=>b.name === p.seller
-      );
-
-    items.push({
-
-      id:"product-"+p.id,
-
-      name:p.name,
-
-      category:"product",
-
-      type:"product",
-
-      description:`Seller: ${p.seller}`,
-
-      lat:sellerBusiness
-        ? sellerBusiness.lat + 0.002
-        : 5.6037,
-
-      lng:sellerBusiness
-        ? sellerBusiness.lng + 0.002
-        : -0.1870
-
-    });
-
-  });
-
-
-  services.forEach(s=>{
-
-    items.push({
-
-      id:"service-"+s.id,
-
-      name:s.name,
-
-      category:"service",
-
-      type:"service",
-
-      description:`${s.category} service`,
-
-      lat:s.lat,
-
-      lng:s.lng
-
-    });
-
-  });
-
-
-  transportPlaces.forEach(t=>{
-
-    items.push({
-
-      id:"transport-"+t.id,
-
-      name:t.name,
-
-      category:"transport",
-
-      type:"transport",
-
-      description:t.category,
-
-      lat:t.lat,
-
-      lng:t.lng
-
-    });
-
-  });
-
-
-  usefulPlaces.forEach(p=>{
-
-    items.push({
-
-      id:p.category+"-"+p.id,
-
-      name:p.name,
-
-      category:p.category,
-
-      type:p.type,
-
-      description:p.category === "fuel"
-        ? "Fuel station"
-        : "Useful place",
-
-      lat:p.lat,
-
-      lng:p.lng
-
-    });
-
-  });
-
-
-  return items;
-}
-
-
-/* -----------------------------
-   RENDER NEARBY MARKERS
------------------------------ */
-
-function renderNearbyMarkers(){
-
-  if(!mainMap) return;
-
-
-  mainMarkers.forEach(marker=>{
-    mainMap.removeLayer(marker);
-  });
-
-  mainMarkers = [];
-
-
-  const items = getNearbyItems();
-
-
-  const filtered =
-    nearbyCategory === "all"
-    ? items
-    : items.filter(
-      item=>item.category === nearbyCategory
-    );
-
-
-  filtered.forEach(item=>{
-
-    const marker = L.marker(
-      [item.lat,item.lng],
-      {
-        icon:getIcon(item.category)
-      }
-    ).addTo(mainMap);
-
-
-    marker.bindPopup(`
-
-      <div style="min-width:190px">
-
-        <h3>${escapeHTML(item.name)}</h3>
-
-        <p>${escapeHTML(item.description || "")}</p>
-
-        <br>
-
-        <button
-          onclick="selectNearbyPlace('${item.id}')"
-          style="
-            background:#2563eb;
-            color:#fff;
-            border:0;
-            padding:8px 12px;
-            border-radius:7px;
-            cursor:pointer;
-          "
-        >
-          Directions
-        </button>
-
-      </div>
-
-    `);
-
-
-    marker.on("click",()=>{
-
-      selectedDestination = {
-
-        lat:item.lat,
-
-        lng:item.lng,
-
-        name:item.name
-
-      };
-
-    });
-
-
-    mainMarkers.push(marker);
-
-  });
-}
-
-
-/* -----------------------------
-   RENDER NEARBY LIST
------------------------------ */
-
-function renderNearby(){
-
-  renderNearbyMarkers();
-
-  const list =
-    document.getElementById("nearbyList");
-
-  const count =
-    document.getElementById("nearbyCount");
-
-
-  if(!list) return;
-
-
-  const items = getNearbyItems();
-
-
-  const filtered =
-    nearbyCategory === "all"
-    ? items
-    : items.filter(
-      item=>item.category === nearbyCategory
-    );
-
-
-  count.textContent =
-    filtered.length + " places";
-
-
-  if(filtered.length === 0){
-
-    list.innerHTML = `
-      <p class="muted">
-        No places found in this category.
-      </p>
-    `;
-
-    return;
-  }
-
-
-  list.innerHTML = filtered.map(item=>{
-
-    const distance =
-      userCoordinates
-      ? calculateDistance(
-          userCoordinates.lat,
-          userCoordinates.lng,
-          item.lat,
-          item.lng
-        )
-      : null;
-
-
-    return `
-
-      <div class="location-card">
-
-        <div class="flex">
-
-          <div class="location-icon">
-            ${getCategoryEmoji(item.category)}
-          </div>
-
-          <div style="flex:1">
-
-            <h3>${escapeHTML(item.name)}</h3>
-
-            <p class="muted small">
-              ${escapeHTML(item.description || "")}
-            </p>
-
-            ${
-              distance !== null
-              ? `<div class="distance">${formatDistance(distance)}</div>`
-              : ""
-            }
-
-          </div>
-
-        </div>
-
-        <br>
-
-        <div class="flex">
-
-          <button
-            class="btn"
-            onclick="selectNearbyPlace('${item.id}')"
-          >
-            🧭 Directions
-          </button>
-
-          <button
-            class="btn secondary"
-            onclick="focusPlace(${item.lat},${item.lng})"
-          >
-            📍 View
-          </button>
-
-        </div>
-
-      </div>
-
-    `;
-
-  }).join("");
-}
-
-
-/* -----------------------------
-   CATEGORY
------------------------------ */
-
-function setNearbyCategory(category,button){
-
-  nearbyCategory = category;
-
-  document.querySelectorAll(
-    "#nearby .category-chip"
-  ).forEach(btn=>{
-    btn.classList.remove("active");
-  });
-
-  if(button){
-    button.classList.add("active");
-  }
-
-  renderNearby();
-}
-
-
-/* -----------------------------
-   CATEGORY EMOJI
------------------------------ */
-
-function getCategoryEmoji(category){
-
-  if(category==="business") return "🏢";
-  if(category==="restaurant") return "🍽️";
-  if(category==="hotel") return "🏨";
-  if(category==="product") return "🛍️";
-  if(category==="service") return "🛠️";
-  if(category==="transport") return "🚕";
-  if(category==="fuel") return "⛽";
-  if(category==="useful") return "📌";
-
-  return "📍";
-}
-
-
-/* -----------------------------
-   SELECT PLACE
------------------------------ */
-
-function selectNearbyPlace(id){
-
-  const items = getNearbyItems();
-
-  const item =
-    items.find(x=>x.id===id);
-
-  if(!item) return;
-
-
-  selectedDestination = {
-
-    lat:item.lat,
-
-    lng:item.lng,
-
-    name:item.name
-
-  };
-
-
-  if(mainMap){
-
-    mainMap.setView(
-      [item.lat,item.lng],
-      15
-    );
-
-    showDestinationMarker(
-      item.lat,
-      item.lng,
-      item.name
-    );
-
-  }
-
-
-  calculateRouteTo(
-    item.lat,
-    item.lng,
-    item.name
-  );
-}
-
-
-/* -----------------------------
-   FOCUS PLACE
------------------------------ */
-
-function focusPlace(lat,lng){
-
-  if(!mainMap) return;
-
-  mainMap.setView(
-    [lat,lng],
-    16
-  );
-
-}
-
-
-/* -----------------------------
-   DESTINATION MARKER
------------------------------ */
-
-let destinationMarker = null;
-
-function showDestinationMarker(lat,lng,name){
-
-  if(!mainMap) return;
-
-
-  if(destinationMarker){
-
-    mainMap.removeLayer(destinationMarker);
-
-  }
-
-
-  destinationMarker =
-    L.marker(
-      [lat,lng]
-    ).addTo(mainMap);
-
-
-  destinationMarker.bindPopup(
-    `<strong>${escapeHTML(name)}</strong>`
-  ).openPopup();
-
-}
-
-
-/* -----------------------------
-   GEOLOCATION
------------------------------ */
-
-function useMyLocation(source){
-
-  if(!navigator.geolocation){
-
-    alert("Your browser does not support location.");
-
-    return;
-
-  }
-
-
-  navigator.geolocation.getCurrentPosition(
-
-    function(position){
-
-      const lat =
-        position.coords.latitude;
-
-      const lng =
-        position.coords.longitude;
-
-
-      userCoordinates = {
-        lat:lat,
-        lng:lng
-      };
-
-
-      if(source === "transport"){
-
-        initTransportMap();
-
-        setTimeout(()=>{
-
-          if(transportMap){
-
-            transportMap.setView(
-              [lat,lng],
-              15
-            );
-
-            showTransportUserLocation(
-              lat,lng
-            );
-
-          }
-
-        },100);
-
-      }else{
-
-        initMainMap();
-
-        setTimeout(()=>{
-
-          if(mainMap){
-
-            mainMap.setView(
-              [lat,lng],
-              15
-            );
-
-            showUserLocation(
-              lat,lng
-            );
-
-            renderNearby();
-
-          }
-
-        },100);
-
-      }
-
-
-      notify("Your location was used on this device.");
-
-    },
-
-    function(error){
-
-      let message =
-        "Location permission was not granted.";
-
-      if(error.code === 1){
-        message =
-          "Location permission was denied. You can enable it in your browser settings.";
-      }
-
-      if(error.code === 2){
-        message =
-          "Your location could not be determined.";
-      }
-
-      if(error.code === 3){
-        message =
-          "Location request timed out.";
-      }
-
-      alert(message);
-
-    },
-
-    {
-      enableHighAccuracy:true,
-      timeout:10000,
-      maximumAge:60000
-    }
-
-  );
-}
-
-
-/* -----------------------------
-   USER LOCATION
------------------------------ */
-
-function showUserLocation(lat,lng){
-
-  if(!mainMap) return;
-
-
-  if(userMarker){
-
-    mainMap.removeLayer(userMarker);
-
-  }
-
-
-  if(userCircle){
-
-    mainMap.removeLayer(userCircle);
-
-  }
-
-
-  userMarker =
-    L.marker(
-      [lat,lng],
-      {
-        icon:L.divIcon({
-
-          className:"user-location-icon",
-
-          html:`
-            <div style="
-              width:20px;
-              height:20px;
-              border-radius:50%;
-              background:#2563eb;
-              border:4px solid white;
-              box-shadow:0 0 0 4px rgba(37,99,235,.25);
-            "></div>
-          `,
-
-          iconSize:[20,20],
-
-          iconAnchor:[10,10]
-
-        })
-      }
-    ).addTo(mainMap);
-
-
-  userMarker.bindPopup(
-    "Your location"
-  );
-
-
-  userCircle =
-    L.circle(
-      [lat,lng],
-      {
-        radius:100,
-        color:"#2563eb",
-        fillOpacity:.08
-      }
-    ).addTo(mainMap);
-
-}
-
-
-/* -----------------------------
-   TRANSPORT USER LOCATION
------------------------------ */
-
-function showTransportUserLocation(lat,lng){
-
-  if(!transportMap) return;
-
-
-  L.marker(
-    [lat,lng],
-    {
-      icon:L.divIcon({
-
-        className:"transport-user",
-
-        html:`
-          <div style="
-            width:20px;
-            height:20px;
-            border-radius:50%;
-            background:#16a34a;
-            border:4px solid white;
-          "></div>
-        `,
-
-        iconSize:[20,20],
-
-        iconAnchor:[10,10]
-
-      })
-    }
-  )
-  .addTo(transportMap)
-  .bindPopup("Your location")
-  .openPopup();
-
-}
-
-
-/* -----------------------------
-   CLEAR LOCATION
------------------------------ */
-
-function clearMyLocation(){
-
-  userCoordinates = null;
-
-
-  if(mainMap){
-
-    if(userMarker){
-      mainMap.removeLayer(userMarker);
-      userMarker=null;
-    }
-
-    if(userCircle){
-      mainMap.removeLayer(userCircle);
-      userCircle=null;
-    }
-
-  }
-
-
-  renderNearby();
-
-  notify("Your location was cleared from the map.");
-
-}
-
-
-/* -----------------------------
-   PRIVACY
------------------------------ */
-
-function toggleLocationPrivacy(){
-
-  const checkbox =
-    document.getElementById(
-      "locationSharing"
-    );
-
-  if(!checkbox) return;
-
-
-  if(checkbox.checked){
-
-    localStorage.setItem(
-      "rockyx_location_permission",
-      "enabled"
-    );
-
-    notify(
-      "Location access is enabled for this device."
-    );
-
-  }else{
-
-    localStorage.removeItem(
-      "rockyx_location_permission"
-    );
-
-    clearMyLocation();
-
-    notify(
-      "Location access was disabled."
-    );
-
-  }
-
-}
-
-
-/* -----------------------------
-   DISTANCE
------------------------------ */
-
-function calculateDistance(
-  lat1,
-  lon1,
-  lat2,
-  lon2
-){
-
-  const R = 6371;
-
-  const dLat =
-    (lat2-lat1)*Math.PI/180;
-
-  const dLon =
-    (lon2-lon1)*Math.PI/180;
-
-
-  const a =
-    Math.sin(dLat/2) *
-    Math.sin(dLat/2) +
-
-    Math.cos(lat1*Math.PI/180) *
-    Math.cos(lat2*Math.PI/180) *
-
-    Math.sin(dLon/2) *
-    Math.sin(dLon/2);
-
-
-  const c =
-    2 *
-    Math.atan2(
-      Math.sqrt(a),
-      Math.sqrt(1-a)
-    );
-
-
-  return R*c;
-}
-
-
-function formatDistance(km){
-
-  if(km < 1){
-
-    return Math.round(km*1000)+" m away";
-
-  }
-
-  return km.toFixed(1)+" km away";
-}
-
-
-/* -----------------------------
-   ROUTE
------------------------------ */
-
-async function calculateRouteTo(
-  lat,
-  lng,
-  name
-){
-
-  if(!userCoordinates){
-
-    alert(
-      "Use My Location first so RockyX can calculate the route."
-    );
-
-    return;
-
-  }
-
-
-  selectedDestination = {
-    lat:lat,
-    lng:lng,
-    name:name
-  };
-
-
-  const panel =
-    document.getElementById(
-      "routePanel"
-    );
-
-
-  panel.classList.remove("hidden");
-
-  panel.innerHTML = `
-    <strong>🧭 Route to ${escapeHTML(name)}</strong>
-    <br><br>
-    Calculating route...
   `;
 
-
-  try{
-
-    /*
-      OSRM demo routing service.
-
-      Production RockyX will use a dedicated
-      routing service/backend.
-    */
-
-    const url =
-      `https://router.project-osrm.org/route/v1/driving/`+
-      `${userCoordinates.lng},${userCoordinates.lat};`+
-      `${lng},${lat}`+
-      `?overview=full&geometries=geojson`;
-
-
-    const response =
-      await fetch(url);
-
-
-    if(!response.ok){
-
-      throw new Error(
-        "Routing service unavailable"
-      );
-
-    }
-
-
-    const data =
-      await response.json();
-
-
-    if(
-      !data.routes ||
-      !data.routes.length
-    ){
-
-      throw new Error(
-        "No route found"
-      );
-
-    }
-
-
-    const route =
-      data.routes[0];
-
-
-    const distance =
-      route.distance / 1000;
-
-
-    const duration =
-      route.duration / 60;
-
-
-    if(routeLine){
-
-      mainMap.removeLayer(
-        routeLine
-      );
-
-    }
-
-
-    routeLine =
-      L.geoJSON(
-        route.geometry,
-        {
-          style:{
-            weight:5,
-            opacity:.8
-          }
-        }
-      ).addTo(mainMap);
-
-
-    mainMap.fitBounds(
-      routeLine.getBounds(),
-      {
-        padding:[40,40]
-      }
-    );
-
-
-    panel.innerHTML = `
-
-      <strong>
-        🧭 Route to ${escapeHTML(name)}
-      </strong>
-
-      <br><br>
-
-      <div class="grid grid-2">
-
-        <div>
-          <strong>Distance</strong>
-          <br>
-          ${distance.toFixed(1)} km
-        </div>
-
-        <div>
-          <strong>Estimated driving time</strong>
-          <br>
-          ${Math.round(duration)} minutes
-        </div>
-
-      </div>
-
-      <br>
-
-      <div class="flex">
-
-        <button
-          class="btn"
-          onclick="openExternalDirections()"
-        >
-          Open Navigation
-        </button>
-
-        <button
-          class="btn secondary"
-          onclick="clearRoute()"
-        >
-          Clear Route
-        </button>
-
-      </div>
-
-    `;
-
-
-  }catch(error){
-
-    console.log(error);
-
-
-    const distance =
-      calculateDistance(
-        userCoordinates.lat,
-        userCoordinates.lng,
-        lat,
-        lng
-      );
-
-
-    panel.innerHTML = `
-
-      <strong>
-        📍 ${escapeHTML(name)}
-      </strong>
-
-      <br><br>
-
-      Approximate straight-line distance:
-      <strong>
-        ${formatDistance(distance)}
-      </strong>
-
-      <br><br>
-
-      <p class="small muted">
-        Road routing is temporarily unavailable.
-        You can still open external navigation.
-      </p>
-
-      <br>
-
-      <button
-        class="btn"
-        onclick="openExternalDirections()"
-      >
-        Open Navigation
-      </button>
-
-    `;
-
-  }
-
 }
 
 
-/* -----------------------------
-   CLEAR ROUTE
------------------------------ */
+/* =========================
+   VIDEOS
+========================= */
 
-function clearRoute(){
+let shorts=[];
+let longVideos=[];
 
-  if(routeLine && mainMap){
+function publishVideo(isShort){
 
-    mainMap.removeLayer(routeLine);
+  const input=$(isShort?'shortVideo':'longVideo');
 
-    routeLine=null;
+  const file=input.files[0];
 
-  }
+  if(!file){
 
-
-  const panel =
-    document.getElementById(
-      "routePanel"
-    );
-
-
-  panel.classList.add("hidden");
-
-}
-
-
-/* -----------------------------
-   EXTERNAL NAVIGATION
------------------------------ */
-
-function openExternalDirections(){
-
-  if(
-    !selectedDestination
-  ){
-
-    alert(
-      "Select a destination first."
-    );
-
+    alert('Choose a video first.');
     return;
 
   }
 
+  const allow=$(isShort?'shortDownloads':'longDownloads').checked;
 
-  const destination =
-    `${selectedDestination.lat},${selectedDestination.lng}`;
+  const watermark=$(isShort?'shortWatermark':'longWatermark').checked;
 
+  const video={
 
-  let url;
+    id:Date.now(),
+    name:file.name,
+    url:URL.createObjectURL(file),
+    allowDownload:allow,
+    watermark:watermark
 
+  };
 
-  if(userCoordinates){
+  if(isShort){
 
-    url =
-      `https://www.google.com/maps/dir/?api=1`+
-      `&origin=${userCoordinates.lat},${userCoordinates.lng}`+
-      `&destination=${destination}`;
+    shorts.unshift(video);
 
   }else{
 
-    url =
-      `https://www.google.com/maps/search/?api=1`+
-      `&query=${destination}`;
+    longVideos.unshift(video);
 
   }
 
+  renderVideos();
 
-  window.open(
-    url,
-    "_blank"
+  alert(
+    isShort
+    ?'Short published.'
+    :'Long video published.'
   );
 
 }
 
+function renderVideos(){
 
-/* -----------------------------
-   SEARCH LOCATION
------------------------------ */
+  const makeCard=v=>`
 
-async function searchLocation(){
+    <div class="video">
 
-  const input =
-    document.getElementById(
-      "locationSearch"
-    );
+      <video
+        src="${v.url}"
+        controls
+        playsinline>
+      </video>
+
+      <h3>${escapeHTML(v.name)}</h3>
+
+      <button class="btn gray">❤️ Like</button>
+      <button class="btn gray">💬 Comment</button>
+      <button class="btn gray">🔖 Save</button>
+
+      ${
+        v.allowDownload
+        ?
+        `
+        <a
+          class="btn blue"
+          href="${v.url}"
+          download="${escapeHTML(v.name)}">
+          ⬇ Download
+        </a>
+        `
+        :''
+      }
+
+      <p class="small">
+
+      ${
+        v.allowDownload
+        ?'Downloads allowed'
+        :'Downloads disabled'
+      }
+
+      ${
+        v.watermark
+        ?' • Watermark may apply'
+        :''
+      }
+
+      </p>
+
+    </div>
+
+  `;
+
+  $('shortsList').innerHTML=
+    shorts.map(makeCard).join('')||
+    '<div class="card">No Shorts yet.</div>';
+
+  $('videosList').innerHTML=
+    longVideos.map(makeCard).join('')||
+    '<div class="card">No long videos yet.</div>';
+
+}
 
 
-  const query =
-    input.value.trim();
+/* =========================
+   CAMERA
+========================= */
 
+let cameraStream=null;
 
-  if(!query){
-
-    alert(
-      "Enter a location to search."
-    );
-
-    return;
-
-  }
-
+async function startCamera(){
 
   try{
 
-    const url =
-      `https://nominatim.openstreetmap.org/search`+
-      `?format=json&limit=5&q=`+
-      encodeURIComponent(query);
+    cameraStream=
+      await navigator.mediaDevices.getUserMedia({
+        video:true,
+        audio:true
+      });
 
-
-    const response =
-      await fetch(url);
-
-
-    const results =
-      await response.json();
-
-
-    if(!results.length){
-
-      alert(
-        "Location not found."
-      );
-
-      return;
-
-    }
-
-
-    const result =
-      results[0];
-
-
-    const lat =
-      parseFloat(result.lat);
-
-    const lng =
-      parseFloat(result.lon);
-
-
-    initMainMap();
-
-
-    mainMap.setView(
-      [lat,lng],
-      15
-    );
-
-
-    showDestinationMarker(
-      lat,
-      lng,
-      result.display_name
-    );
-
-
-    selectedDestination = {
-
-      lat:lat,
-
-      lng:lng,
-
-      name:result.display_name
-
-    };
-
+    $('cameraPreview').srcObject=cameraStream;
 
   }catch(error){
 
-    alert(
-      "Location search is temporarily unavailable."
-    );
+    alert('Camera permission was not granted.');
 
   }
 
 }
 
+function stopCamera(){
 
-/* -----------------------------
-   NAVIGATION
------------------------------ */
+  if(cameraStream){
 
-function useNavigationLocation(){
+    cameraStream.getTracks()
+    .forEach(track=>track.stop());
 
-  if(!navigator.geolocation){
+    cameraStream=null;
 
-    alert(
-      "Location is not supported."
-    );
+    $('cameraPreview').srcObject=null;
 
+  }
+
+}
+
+function takePhoto(){
+
+  if(!cameraStream){
+
+    alert('Start the camera first.');
     return;
 
   }
 
+  const video=$('cameraPreview');
 
-  navigator.geolocation.getCurrentPosition(
+  const canvas=document.createElement('canvas');
 
-    position=>{
+  canvas.width=video.videoWidth;
+  canvas.height=video.videoHeight;
 
-      const lat =
-        position.coords.latitude;
+  canvas
+  .getContext('2d')
+  .drawImage(video,0,0);
 
-      const lng =
-        position.coords.longitude;
+  canvas.toBlob(blob=>{
+
+    const url=URL.createObjectURL(blob);
+
+    $('cameraOutput').insertAdjacentHTML(
+      'beforeend',
+      `
+      <div class="card">
+
+        <img
+          src="${url}"
+          style="width:100%">
+
+        <a
+          class="btn blue"
+          href="${url}"
+          download="RockyX-photo.jpg">
+          Download Photo
+        </a>
+
+      </div>
+      `
+    );
+
+  },'image/jpeg');
+
+}
 
 
-      userCoordinates = {
-        lat:lat,
-        lng:lng
-      };
+/* =========================
+   SOUNDS
+========================= */
+
+let savedSounds=
+JSON.parse(localStorage.getItem('rockyx_saved_sounds')||'[]');
+
+function renderSounds(){
+
+  const sounds=[
+    'Original Sound',
+    'Trending Beat',
+    'Afrobeat Sample',
+    'Creator Sound'
+  ];
+
+  $('soundList').innerHTML=sounds.map(sound=>`
+
+    <div class="card">
+
+      <b>🔊 ${sound}</b>
+
+      <button
+        class="btn gray"
+        onclick="saveSound('${sound}')">
+        Save Sound
+      </button>
+
+    </div>
+
+  `).join('');
+
+  $('savedSounds').innerHTML=
+    savedSounds.length
+    ?savedSounds.map(x=>`<p>🔊 ${escapeHTML(x)}</p>`).join('')
+    :'No saved sounds yet.';
+
+}
+
+function saveSound(sound){
+
+  if(!savedSounds.includes(sound)){
+
+    savedSounds.push(sound);
+
+    localStorage.setItem(
+      'rockyx_saved_sounds',
+      JSON.stringify(savedSounds)
+    );
+
+  }
+
+  renderSounds();
+
+}
 
 
-      document.getElementById(
-        "originInput"
-      ).value =
-        `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+/* =========================
+   MARKETPLACE
+========================= */
 
+let products=[
+  {
+    id:1,
+    name:'Wireless Headphones',
+    description:'Wireless headphones',
+    price:250
+  },
+  {
+    id:2,
+    name:'Classic T-Shirt',
+    description:'Comfortable shirt',
+    price:100
+  },
+  {
+    id:3,
+    name:'Bluetooth Speaker',
+    description:'Portable speaker',
+    price:350
+  }
+];
 
-      notify(
-        "Your current location was selected."
-      );
+let cart=[];
+let orders=[];
 
-    },
+function renderProducts(){
 
-    ()=>{
-      alert(
-        "Location permission was not granted."
-      );
-    }
+  const q=($('productSearch').value||'').toLowerCase();
 
+  const filtered=products.filter(
+    p=>p.name.toLowerCase().includes(q)
   );
 
-}
+  $('productList').innerHTML=
+  filtered.map(p=>`
 
+    <div class="product">
 
-async function calculateNavigation(){
+      <div
+        style="
+        height:130px;
+        background:#eee;
+        display:flex;
+        align-items:center;
+        justify-content:center">
+        Product
+      </div>
 
-  const destination =
-    document.getElementById(
-      "destinationInput"
-    ).value.trim();
+      <h3>${escapeHTML(p.name)}</h3>
 
+      <p>${escapeHTML(p.description)}</p>
 
-  if(!destination){
-
-    alert(
-      "Enter a destination."
-    );
-
-    return;
-
-  }
-
-
-  if(!userCoordinates){
-
-    alert(
-      "Use My Location first."
-    );
-
-    return;
-
-  }
-
-
-  try{
-
-    const url =
-      `https://nominatim.openstreetmap.org/search`+
-      `?format=json&limit=1&q=`+
-      encodeURIComponent(destination);
-
-
-    const response =
-      await fetch(url);
-
-
-    const results =
-      await response.json();
-
-
-    if(!results.length){
-
-      alert(
-        "Destination could not be found."
-      );
-
-      return;
-
-    }
-
-
-    const result =
-      results[0];
-
-
-    const lat =
-      parseFloat(result.lat);
-
-    const lng =
-      parseFloat(result.lon);
-
-
-    selectedDestination = {
-
-      lat:lat,
-
-      lng:lng,
-
-      name:result.display_name
-
-    };
-
-
-    showPage("nearby");
-
-
-    setTimeout(()=>{
-
-      initMainMap();
-
-
-      mainMap.setView(
-        [lat,lng],
-        15
-      );
-
-
-      showDestinationMarker(
-        lat,
-        lng,
-        result.display_name
-      );
-
-
-      calculateRouteTo(
-        lat,
-        lng,
-        result.display_name
-      );
-
-    },200);
-
-
-  }catch(error){
-
-    alert(
-      "Navigation search is temporarily unavailable."
-    );
-
-  }
-
-}
-
-
-/* -----------------------------
-   TRANSPORT MARKERS
------------------------------ */
-
-function renderTransportMarkers(){
-
-  if(!transportMap) return;
-
-
-  transportMarkers.forEach(marker=>{
-
-    transportMap.removeLayer(marker);
-
-  });
-
-
-  transportMarkers=[];
-
-
-  transportPlaces.forEach(item=>{
-
-    const marker =
-      L.marker(
-        [item.lat,item.lng],
-        {
-          icon:getIcon("transport")
-        }
-      )
-      .addTo(transportMap);
-
-
-    marker.bindPopup(`
-
-      <strong>
-        ${escapeHTML(item.name)}
-      </strong>
+      <b>GHS ${p.price.toFixed(2)}</b>
 
       <br>
 
-      ${escapeHTML(item.category)}
-
-      <br><br>
-
       <button
-        onclick="requestTransport('${item.name}')"
-        style="
-          background:#2563eb;
-          color:#fff;
-          border:0;
-          padding:8px 12px;
-          border-radius:7px;
-        "
-      >
-        Request
+        class="btn blue"
+        onclick="addToCart(${p.id})">
+        Add to Cart
       </button>
 
-    `);
+    </div>
 
-
-    transportMarkers.push(marker);
-
-  });
+  `).join('');
 
 }
 
-
-/* -----------------------------
-   TRANSPORT LIST
------------------------------ */
-
-function renderTransportList(
-  category=""
-){
-
-  const box =
-    document.getElementById(
-      "transportList"
-    );
-
-
-  if(!box) return;
-
-
-  const data =
-    category
-    ? transportPlaces.filter(
-        x=>x.category===category
-      )
-    : transportPlaces;
-
-
-  box.innerHTML =
-    data.map(item=>`
-
-      <div class="location-card">
-
-        <div class="flex">
-
-          <div class="location-icon">
-            🚕
-          </div>
-
-          <div>
-
-            <h3>
-              ${escapeHTML(item.name)}
-            </h3>
-
-            <p class="muted">
-              ${escapeHTML(item.category)}
-            </p>
-
-          </div>
-
-        </div>
-
-        <br>
-
-        <button
-          class="btn"
-          onclick="requestTransport('${item.name}')"
-        >
-          Request
-        </button>
-
-      </div>
-
-    `).join("");
-
-}
-
-
-/* -----------------------------
-   TRANSPORT FILTER
------------------------------ */
-
-function filterTransport(category){
-
-  renderTransportList(
-    category
-  );
-
-
-  if(transportMap){
-
-    const item =
-      transportPlaces.find(
-        x=>x.category===category
-      );
-
-
-    if(item){
-
-      transportMap.setView(
-        [item.lat,item.lng],
-        14
-      );
-
-    }
-
-  }
-
-}
-
-
-/* -----------------------------
-   TRANSPORT REQUEST
------------------------------ */
-
-function requestTransport(name){
-
-  notify(
-    `Transport request started with ${name}.`
-  );
-
-
-  alert(
-    `Transport request started with ${name}.`
-  );
-
-}
-
-
-/* -----------------------------
-   PRODUCTS
------------------------------ */
-
-function renderProducts(search=""){
-
-  const box =
-    document.getElementById(
-      "productList"
-    );
-
-
-  if(!box) return;
-
-
-  const term =
-    search.toLowerCase();
-
-
-  const data =
-    products.filter(p=>
-      !term ||
-      p.name.toLowerCase().includes(term) ||
-      p.category.toLowerCase().includes(term) ||
-      p.seller.toLowerCase().includes(term)
-    );
-
-
-  box.innerHTML =
-    data.map(p=>`
-
-      <div class="product-card">
-
-        <div class="product-image">
-          🛍️
-        </div>
-
-        <div class="product-body">
-
-          <h3>${escapeHTML(p.name)}</h3>
-
-          <p class="muted">
-            ${escapeHTML(p.seller)}
-          </p>
-
-          <br>
-
-          <div class="space-between">
-
-            <span class="price">
-              GHS ${p.price.toFixed(2)}
-            </span>
-
-            <button
-              class="btn"
-              onclick="addToCart(${p.id})"
-            >
-              Add
-            </button>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    `).join("");
-
-}
-
-
-/* -----------------------------
-   CART
------------------------------ */
+$('productSearch').addEventListener(
+  'input',
+  renderProducts
+);
 
 function addToCart(id){
 
-  const product =
-    products.find(
-      p=>p.id===id
-    );
+  const product=products.find(p=>p.id===id);
 
-
-  if(!product) return;
-
+  if(!product)return;
 
   cart.push(product);
 
-  notify(
+  renderCart();
+
+  addNotification(
+    'Cart Updated',
     `${product.name} was added to your cart.`
   );
 
-  alert(
-    `${product.name} added to cart.`
-  );
-
 }
-
 
 function renderCart(){
 
-  const box =
-    document.getElementById(
-      "cartList"
-    );
+  const total=cart.reduce(
+    (sum,p)=>sum+p.price,
+    0
+  );
 
+  $('cartList').innerHTML=
+  cart.length
+  ?
+  cart.map((p,i)=>`
 
-  const totalBox =
-    document.getElementById(
-      "cartTotal"
-    );
+    <div class="card">
 
+      <b>${escapeHTML(p.name)}</b>
 
-  if(!box) return;
+      <p>GHS ${p.price.toFixed(2)}</p>
 
+      <button
+        class="btn red"
+        onclick="removeFromCart(${i})">
+        Remove
+      </button>
 
-  if(cart.length===0){
+    </div>
 
-    box.innerHTML=`
-      <div class="card">
-        <p class="muted">Your cart is empty.</p>
-      </div>
-    `;
+  `).join('')
+  :
+  '<p>Cart is empty.</p>';
 
-    if(totalBox){
-      totalBox.textContent="GHS 0.00";
-    }
-
-    return;
-
-  }
-
-
-  let total=0;
-
-
-  box.innerHTML =
-    cart.map((p,index)=>{
-
-      total+=p.price;
-
-      return `
-
-        <div class="card">
-
-          <div class="space-between">
-
-            <div>
-              <strong>
-                ${escapeHTML(p.name)}
-              </strong>
-
-              <div class="muted">
-                ${escapeHTML(p.seller)}
-              </div>
-            </div>
-
-            <div>
-
-              <strong>
-                GHS ${p.price.toFixed(2)}
-              </strong>
-
-              <button
-                class="btn danger"
-                onclick="removeFromCart(${index})"
-              >
-                Remove
-              </button>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      `;
-
-    }).join("");
-
-
-  if(totalBox){
-
-    totalBox.textContent =
-      `GHS ${total.toFixed(2)}`;
-
-  }
+  $('cartTotal').textContent=
+    'GHS '+total.toFixed(2);
 
 }
-
 
 function removeFromCart(index){
 
@@ -4162,1421 +2392,1090 @@ function removeFromCart(index){
 
 }
 
+function checkout(){
 
-/* -----------------------------
-   ORDERS
------------------------------ */
+  if(!cart.length){
 
-function placeOrder(){
-
-  if(cart.length===0){
-
-    alert(
-      "Your cart is empty."
-    );
-
+    alert('Your cart is empty.');
     return;
 
   }
 
+  const total=cart.reduce(
+    (sum,p)=>sum+p.price,
+    0
+  );
 
-  const name =
-    document.getElementById(
-      "checkoutName"
-    ).value.trim();
+  const order={
 
-
-  const phone =
-    document.getElementById(
-      "checkoutPhone"
-    ).value.trim();
-
-
-  const address =
-    document.getElementById(
-      "checkoutAddress"
-    ).value.trim();
-
-
-  if(!name || !phone || !address){
-
-    alert(
-      "Please complete the checkout information."
-    );
-
-    return;
-
-  }
-
-
-  const total =
-    cart.reduce(
-      (sum,p)=>sum+p.price,
-      0
-    );
-
-
-  const order = {
-
-    id:"RX-"+Date.now(),
-
-    name:name,
-
-    phone:phone,
-
-    address:address,
-
+    id:'RX'+Date.now(),
     total:total,
-
-    status:"Pending",
-
-    createdAt:new Date().toLocaleString()
+    status:'Processing',
+    date:new Date().toLocaleString()
 
   };
-
 
   orders.unshift(order);
 
   cart=[];
 
+  renderCart();
+  renderOrders();
 
-  notify(
-    `Order ${order.id} was created successfully.`
+  addNotification(
+    'Payment Successful',
+    `Your demo payment of GHS ${total.toFixed(2)} was successful.`
   );
 
-
-  alert(
-    `Order created successfully.\nOrder ID: ${order.id}`
+  addNotification(
+    'New Order',
+    `Order ${order.id} has been created.`
   );
 
-
-  showPage("orders");
+  showPage('orders');
 
 }
-
 
 function renderOrders(){
 
-  const box =
-    document.getElementById(
-      "ordersList"
-    );
-
-
-  if(!box) return;
-
-
-  if(orders.length===0){
-
-    box.innerHTML=`
-      <div class="card">
-        <p class="muted">
-          No orders yet.
-        </p>
-      </div>
-    `;
-
-    return;
-
-  }
-
-
-  box.innerHTML =
-    orders.map(order=>`
-
-      <div class="card">
-
-        <div class="space-between">
-
-          <div>
-
-            <h3>
-              ${escapeHTML(order.id)}
-            </h3>
-
-            <p class="muted">
-              ${escapeHTML(order.createdAt)}
-            </p>
-
-          </div>
-
-          <span class="tag">
-            ${escapeHTML(order.status)}
-          </span>
-
-        </div>
-
-        <br>
-
-        <strong>
-          GHS ${order.total.toFixed(2)}
-        </strong>
-
-        <br><br>
-
-        <p>
-          ${escapeHTML(order.address)}
-        </p>
-
-      </div>
-
-    `).join("");
-
-}
-
-
-/* -----------------------------
-   BUSINESSES
------------------------------ */
-
-function renderBusinesses(){
-
-  const box =
-    document.getElementById(
-      "businessList"
-    );
-
-
-  if(!box) return;
-
-
-  box.innerHTML =
-    businesses.map(b=>`
-
-      <div class="business-card">
-
-        <div class="business-body">
-
-          <h2>${escapeHTML(b.name)}</h2>
-
-          <span class="tag">
-            ${escapeHTML(b.category)}
-          </span>
-
-          <br><br>
-
-          <p class="muted">
-            ${escapeHTML(b.description)}
-          </p>
-
-          <br>
-
-          <div class="flex">
-
-            <button
-              class="btn"
-              onclick="openBusiness(${b.id})"
-            >
-              View Business
-            </button>
-
-            <button
-              class="btn secondary"
-              onclick="focusBusiness(${b.lat},${b.lng})"
-            >
-              📍 Map
-            </button>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    `).join("");
-
-}
-
-
-function openBusiness(id){
-
-  const business =
-    businesses.find(
-      b=>b.id===id
-    );
-
-
-  if(!business) return;
-
-
-  document.getElementById(
-    "businessProfileContent"
-  ).innerHTML=`
+  $('ordersList').innerHTML=
+  orders.length
+  ?
+  orders.map(o=>`
 
     <div class="card">
 
-      <h2>
-        ${escapeHTML(business.name)}
-      </h2>
-
-      <br>
-
-      <span class="tag">
-        ${escapeHTML(business.category)}
-      </span>
+      <h3>Order ${o.id}</h3>
 
       <p>
-        ${escapeHTML(business.description)}
+      Total: GHS ${o.total.toFixed(2)}
       </p>
 
-      <br>
+      <p>Status: ${o.status}</p>
 
       <button
-        class="btn"
-        onclick="openBusinessLocation(
-          ${business.lat},
-          ${business.lng},
-          '${escapeJS(business.name)}'
-        )"
-      >
-        📍 View Location
+        class="btn gray"
+        onclick="updateOrder('${o.id}','Shipped')">
+        Mark Shipped
+      </button>
+
+      <button
+        class="btn gray"
+        onclick="updateOrder('${o.id}','Delivered')">
+        Mark Delivered
       </button>
 
     </div>
 
+  `).join('')
+  :
+  '<p>No orders yet.</p>';
+
+}
+
+function updateOrder(id,status){
+
+  const order=orders.find(o=>o.id===id);
+
+  if(order){
+
+    order.status=status;
+
+    renderOrders();
+
+    addNotification(
+      'Order Updated',
+      `Order ${id} is now ${status}.`
+    );
+
+  }
+
+}
+
+function addProduct(){
+
+  const name=$('sellerProductName').value.trim();
+  const price=Number($('sellerProductPrice').value);
+  const description=$('sellerProductDescription').value.trim();
+
+  if(!name||!price){
+
+    alert('Complete the product details.');
+    return;
+
+  }
+
+  products.unshift({
+    id:Date.now(),
+    name:name,
+    description:description,
+    price:price
+  });
+
+  $('sellerProductName').value='';
+  $('sellerProductPrice').value='';
+  $('sellerProductDescription').value='';
+
+  renderProducts();
+
+  addNotification(
+    'Product Added',
+    `${name} was added to your marketplace products.`
+  );
+
+  alert('Product added.');
+
+}
+
+
+/* =========================
+   ACCOUNT
+========================= */
+
+function createDemoAccount(){
+
+  const name=prompt('Enter your name');
+
+  if(!name)return;
+
+  $('accountStatus').textContent=
+    'Signed in as '+name;
+
+  addNotification(
+    'Account Created',
+    'Your demo RockyX account was created.'
+  );
+
+  alert('Demo account created.');
+
+}
+
+function signInDemo(){
+
+  const email=prompt('Enter your email');
+
+  if(!email)return;
+
+  $('accountStatus').textContent=
+    'Signed in as '+email;
+
+  addNotification(
+    'Signed In',
+    'You successfully signed in to the demo.'
+  );
+
+}
+
+
+/* =========================
+   STAGE 9
+   VERIFICATION
+========================= */
+
+let verification=
+JSON.parse(
+  localStorage.getItem('rockyx_verification')||'null'
+)
+||
+{
+  followers:10000,
+  creator:'Not submitted',
+  business:'Not submitted',
+  provider:'Not submitted'
+};
+
+function saveVerification(){
+
+  localStorage.setItem(
+    'rockyx_verification',
+    JSON.stringify(verification)
+  );
+
+}
+
+function checkVerification(){
+
+  const eligible=
+    Number(verification.followers)>=10000;
+
+  $('creatorEligibility').textContent=
+    eligible
+    ?'Eligible'
+    :'Not Yet';
+
+  $('creatorEligibility').className=
+    eligible
+    ?'trust-ok'
+    :'trust-warn';
+
+  if(eligible){
+
+    verification.creator=
+      'Eligible for automatic verification review';
+
+    addNotification(
+      'Verification Eligibility',
+      'Your demo creator account meets the 10,000-follower threshold. Keep the account active, authentic, complete, secure and compliant with Community Guidelines.'
+    );
+
+  }else{
+
+    addNotification(
+      'Verification Eligibility',
+      'Your demo account has not reached the configured 10,000-follower threshold.'
+    );
+
+  }
+
+  saveVerification();
+
+  $('verificationStatus').textContent=
+    verification.creator;
+
+}
+
+function requestVerification(type){
+
+  if(type==='Creator'){
+    verification.creator='Submitted for review';
+  }
+
+  if(type==='Business'){
+    verification.business='Submitted for review';
+  }
+
+  if(type==='Provider'){
+    verification.provider='Submitted for review';
+  }
+
+  saveVerification();
+
+  $('verificationStatus').innerHTML=`
+
+    <p>
+    <b>Creator:</b>
+    ${escapeHTML(verification.creator)}
+    </p>
+
+    <p>
+    <b>Business:</b>
+    ${escapeHTML(verification.business)}
+    </p>
+
+    <p>
+    <b>Provider:</b>
+    ${escapeHTML(verification.provider)}
+    </p>
+
   `;
 
+  addNotification(
+    'Verification Request',
+    `${type} verification request submitted in demo mode.`
+  );
 
-  showPage("businessProfile");
-
-}
-
-
-function focusBusiness(lat,lng){
-
-  showPage("nearby");
-
-  setTimeout(()=>{
-
-    initMainMap();
-
-    mainMap.setView(
-      [lat,lng],
-      16
-    );
-
-  },150);
+  alert(
+    'Verification request submitted in demo mode. Real verification will be connected to the backend.'
+  );
 
 }
 
 
-function openBusinessLocation(
-  lat,
-  lng,
-  name
-){
+/* =========================
+   IDENTITY
+========================= */
 
-  showPage("nearby");
+function startIdentityCheck(){
 
-  setTimeout(()=>{
+  const type=
+    $('identityDocumentType').value.trim();
 
-    initMainMap();
+  if(!type){
 
-    mainMap.setView(
-      [lat,lng],
-      16
-    );
+    alert('Enter a demo document type.');
+    return;
 
-    selectedDestination={
-      lat:lat,
-      lng:lng,
-      name:name
-    };
+  }
 
-    showDestinationMarker(
-      lat,
-      lng,
-      name
-    );
+  $('identityStatus').textContent=
+    'Submitted in demo mode';
 
-  },150);
+  $('identityStatus').className=
+    'trust-warn';
+
+  localStorage.setItem(
+    'rockyx_identity_demo',
+    'Submitted in demo mode'
+  );
+
+  addNotification(
+    'Identity Check',
+    'A demo identity verification request was created. No real ID was stored.'
+  );
+
+  alert(
+    'Demo identity check created. Do not enter real document numbers here.'
+  );
+
+}
+
+function clearIdentity(){
+
+  localStorage.removeItem(
+    'rockyx_identity_demo'
+  );
+
+  $('identityStatus').textContent=
+    'Not submitted';
+
+  $('identityStatus').className=
+    'trust-warn';
 
 }
 
 
-/* -----------------------------
-   CREATE BUSINESS
------------------------------ */
+/* =========================
+   REPORTING
+========================= */
 
-function createBusiness(){
+let reports=
+JSON.parse(
+  localStorage.getItem('rockyx_reports')||'[]'
+);
 
-  const name =
-    document.getElementById(
-      "businessName"
-    ).value.trim();
+function submitReport(){
+
+  const type=$('reportType').value;
+  const target=$('reportTarget').value.trim();
+  const reason=$('reportReason').value.trim();
+
+  if(!target||!reason){
+
+    alert('Complete the report details.');
+    return;
+
+  }
+
+  const report={
+
+    id:'RPT'+Date.now(),
+    type:type,
+    target:target,
+    reason:reason,
+    status:'Received',
+    date:new Date().toLocaleString()
+
+  };
+
+  reports.unshift(report);
+
+  localStorage.setItem(
+    'rockyx_reports',
+    JSON.stringify(reports)
+  );
+
+  $('reportTarget').value='';
+  $('reportReason').value='';
+
+  renderReports();
+
+  addNotification(
+    'Report Received',
+    `Your ${type} report ${report.id} was received.`
+  );
+
+  alert(
+    'Report submitted in demo mode.'
+  );
+
+}
+
+function renderReports(){
+
+  if(!reports.length){
+
+    $('reportList').innerHTML=
+      '<p>No reports yet.</p>';
+
+    return;
+
+  }
+
+  $('reportList').innerHTML=
+  reports.map(r=>`
+
+    <div class="notify">
+
+      <b>${escapeHTML(r.id)}</b>
+
+      <span class="pill">
+      ${escapeHTML(r.type)}
+      </span>
+
+      <p>${escapeHTML(r.target)}</p>
+
+      <small>
+      ${escapeHTML(r.reason)}
+      <br>
+      ${escapeHTML(r.date)}
+      <br>
+      Status:
+      ${escapeHTML(r.status)}
+      </small>
+
+    </div>
+
+  `).join('');
+
+}
 
 
-  const category =
-    document.getElementById(
-      "businessCategory"
-    ).value;
+/* =========================
+   BLOCK USERS
+========================= */
 
+let blocked=
+JSON.parse(
+  localStorage.getItem('rockyx_blocked')||'[]'
+);
 
-  const description =
-    document.getElementById(
-      "businessDescription"
-    ).value.trim();
+function blockUser(){
 
+  const name=$('blockedUser').value.trim();
 
   if(!name){
 
-    alert(
-      "Enter a business name."
-    );
-
+    alert('Enter a user name.');
     return;
 
   }
 
+  if(!blocked.includes(name)){
 
-  const business={
+    blocked.push(name);
 
-    id:Date.now(),
+  }
 
-    name:name,
+  localStorage.setItem(
+    'rockyx_blocked',
+    JSON.stringify(blocked)
+  );
 
-    category:category,
+  $('blockedUser').value='';
 
-    type:"business",
+  renderBlocked();
 
-    description:
-      description ||
-      "New RockyX business.",
+  addNotification(
+    'User Blocked',
+    `${name} was added to your blocked users list.`
+  );
 
-    /*
-      Demo coordinates.
+}
 
-      Production business creation will allow
-      the owner to select the exact location.
-    */
+function unblockUser(name){
 
-    lat:5.6037,
+  blocked=
+    blocked.filter(x=>x!==name);
 
-    lng:-0.1870
+  localStorage.setItem(
+    'rockyx_blocked',
+    JSON.stringify(blocked)
+  );
+
+  renderBlocked();
+
+  addNotification(
+    'User Unblocked',
+    `${name} was removed from your blocked list.`
+  );
+
+}
+
+function renderBlocked(){
+
+  $('blockedList').innerHTML=
+  blocked.length
+  ?
+  blocked.map(name=>`
+
+    <div class="security-row">
+
+      <b>${escapeHTML(name)}</b>
+
+      <button
+        class="btn gray"
+        onclick="unblockUser('${escapeHTML(name)}')">
+        Unblock
+      </button>
+
+    </div>
+
+  `).join('')
+  :
+  '<p>No blocked users.</p>';
+
+}
+
+
+/* =========================
+   PRIVACY
+========================= */
+
+let privacy=
+JSON.parse(
+  localStorage.getItem('rockyx_privacy')||'null'
+)
+||
+{
+  profile:'public',
+  location:'ask',
+  messages:'everyone',
+  downloads:'on',
+  activity:'on'
+};
+
+function savePrivacy(){
+
+  privacy={
+
+    profile:$('profileVisibility').value,
+    location:$('locationSharing').value,
+    messages:$('messagePrivacy').value,
+    downloads:$('downloadPrivacy').value,
+    activity:$('activityPrivacy').value
 
   };
 
-
-  businesses.push(business);
-
-
-  notify(
-    `Business "${name}" was created.`
+  localStorage.setItem(
+    'rockyx_privacy',
+    JSON.stringify(privacy)
   );
 
-
-  alert(
-    "Business created successfully."
+  addNotification(
+    'Privacy Updated',
+    'Your demo privacy settings were saved.'
   );
 
+}
 
-  document.getElementById(
-    "businessName"
-  ).value="";
+function loadPrivacy(){
 
+  $('profileVisibility').value=
+    privacy.profile;
 
-  document.getElementById(
-    "businessDescription"
-  ).value="";
+  $('locationSharing').value=
+    privacy.location;
 
+  $('messagePrivacy').value=
+    privacy.messages;
 
-  renderBusinesses();
+  $('downloadPrivacy').value=
+    privacy.downloads;
 
-  showPage("businesses");
+  $('activityPrivacy').value=
+    privacy.activity;
+
+}
+
+function resetPrivacy(){
+
+  privacy={
+    profile:'public',
+    location:'ask',
+    messages:'everyone',
+    downloads:'on',
+    activity:'on'
+  };
+
+  localStorage.setItem(
+    'rockyx_privacy',
+    JSON.stringify(privacy)
+  );
+
+  loadPrivacy();
+
+  addNotification(
+    'Privacy Reset',
+    'Demo privacy settings were reset.'
+  );
 
 }
 
 
-/* -----------------------------
-   SERVICES
------------------------------ */
+/* =========================
+   SECURITY
+========================= */
 
-function renderServices(search=""){
+let securityActivity=
+JSON.parse(
+  localStorage.getItem('rockyx_security_activity')||'[]'
+);
 
-  const box =
-    document.getElementById(
-      "serviceList"
-    );
+function securityAction(message){
 
+  securityActivity.unshift({
 
-  if(!box) return;
-
-
-  const term =
-    search.toLowerCase();
-
-
-  const data =
-    services.filter(s=>
-      !term ||
-      s.name.toLowerCase().includes(term) ||
-      s.category.toLowerCase().includes(term) ||
-      s.provider.toLowerCase().includes(term)
-    );
-
-
-  box.innerHTML =
-    data.map(s=>`
-
-      <div class="service-card">
-
-        <div class="service-body">
-
-          <h3>
-            ${escapeHTML(s.name)}
-          </h3>
-
-          <span class="tag">
-            ${escapeHTML(s.category)}
-          </span>
-
-          <p class="muted">
-            Provider:
-            ${escapeHTML(s.provider)}
-          </p>
-
-          <br>
-
-          <strong class="price">
-            GHS ${s.price.toFixed(2)}
-          </strong>
-
-          <br><br>
-
-          <div class="flex">
-
-            <button
-              class="btn"
-              onclick="bookService(${s.id})"
-            >
-              Book
-            </button>
-
-            <button
-              class="btn secondary"
-              onclick="focusPlace(${s.lat},${s.lng})"
-            >
-              📍 Location
-            </button>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    `).join("");
-
-}
-
-
-/* -----------------------------
-   CREATE SERVICE
------------------------------ */
-
-function createService(){
-
-  const name =
-    document.getElementById(
-      "serviceName"
-    ).value.trim();
-
-
-  const category =
-    document.getElementById(
-      "serviceCategory"
-    ).value.trim();
-
-
-  const price =
-    Number(
-      document.getElementById(
-        "servicePrice"
-      ).value
-    );
-
-
-  if(!name || !category || !price){
-
-    alert(
-      "Complete all service fields."
-    );
-
-    return;
-
-  }
-
-
-  services.push({
-
-    id:Date.now(),
-
-    name:name,
-
-    category:category,
-
-    price:price,
-
-    provider:"New Provider",
-
-    lat:5.6037,
-
-    lng:-0.1870
+    message:message,
+    date:new Date().toLocaleString()
 
   });
 
+  securityActivity=
+    securityActivity.slice(0,20);
 
-  notify(
-    `Service "${name}" was published.`
+  localStorage.setItem(
+    'rockyx_security_activity',
+    JSON.stringify(securityActivity)
   );
 
+  renderSecurityActivity();
+
+  addNotification(
+    'Security Activity',
+    message
+  );
 
   alert(
-    "Service published successfully."
+    message+
+    '. Real account security will be connected to backend authentication.'
   );
-
-
-  showPage("services");
 
 }
 
+function toggleSecurity(name){
 
-/* -----------------------------
-   SERVICE BOOKING
------------------------------ */
+  const enabled=
+    name==='Two-step verification'
+    ?$('twoFactor').checked
+    :$('loginAlerts').checked;
 
-function bookService(id){
-
-  const service =
-    services.find(
-      s=>s.id===id
-    );
-
-
-  if(!service) return;
-
-
-  const booking={
-
-    id:"BK-"+Date.now(),
-
-    service:service.name,
-
-    provider:service.provider,
-
-    price:service.price,
-
-    status:"Pending",
-
-    createdAt:new Date().toLocaleString()
-
-  };
-
-
-  bookings.unshift(booking);
-
-
-  notify(
-    `Booking created for ${service.name}.`
+  securityAction(
+    `${name} demo ${enabled?'enabled':'disabled'}`
   );
-
-
-  alert(
-    `Booking created.\nBooking ID: ${booking.id}`
-  );
-
-
-  renderBookings();
 
 }
 
+function renderSecurityActivity(){
 
-function renderBookings(){
+  if(!securityActivity.length){
 
-  const box =
-    document.getElementById(
-      "bookingList"
-    );
-
-
-  if(!box) return;
-
-
-  if(bookings.length===0){
-
-    box.innerHTML=`
-      <div class="card">
-        <p class="muted">
-          No bookings yet.
-        </p>
-      </div>
-    `;
+    $('securityActivity').innerHTML=
+      '<p>No security activity yet.</p>';
 
     return;
 
   }
 
+  $('securityActivity').innerHTML=
+  securityActivity.map(item=>`
 
-  box.innerHTML =
-    bookings.map(b=>`
+    <div class="notify">
 
-      <div class="card">
+      ${escapeHTML(item.message)}
 
-        <div class="space-between">
+      <br>
 
-          <div>
+      <small>
+      ${escapeHTML(item.date)}
+      </small>
 
-            <h3>
-              ${escapeHTML(b.service)}
-            </h3>
+    </div>
 
-            <p class="muted">
-              ${escapeHTML(b.provider)}
-            </p>
-
-          </div>
-
-          <span class="tag">
-            ${escapeHTML(b.status)}
-          </span>
-
-        </div>
-
-        <br>
-
-        <p>
-          Booking:
-          ${escapeHTML(b.id)}
-        </p>
-
-        <strong>
-          GHS ${b.price.toFixed(2)}
-        </strong>
-
-      </div>
-
-    `).join("");
+  `).join('');
 
 }
 
 
-/* -----------------------------
-   MUSIC
------------------------------ */
+/* =========================
+   MAPS / NEARBY
+========================= */
 
-const musicData=[
+let nearbyMap=null;
+let navigationMap=null;
+let transportMap=null;
+let userMarker=null;
+let userCircle=null;
+
+const nearbyPlaces=[
 
   {
-    title:"RockyX Sound",
-    artist:"RockyX Artist",
-    album:"Single"
+    name:'Rocky Fashion Shop',
+    lat:5.6037,
+    lng:-0.1870,
+    type:'Business'
   },
 
   {
-    title:"Ghana Vibes",
-    artist:"Demo Artist",
-    album:"Ghana Vibes"
+    name:'Golden Taste Restaurant',
+    lat:5.6100,
+    lng:-0.1800,
+    type:'Restaurant'
   },
 
   {
-    title:"Future",
-    artist:"Demo Artist",
-    album:"Future"
+    name:'QuickFix Services',
+    lat:5.5960,
+    lng:-0.1900,
+    type:'Service'
+  },
+
+  {
+    name:'City Taxi',
+    lat:5.6070,
+    lng:-0.1950,
+    type:'Transport'
+  },
+
+  {
+    name:'Fuel Station',
+    lat:5.6000,
+    lng:-0.1750,
+    type:'Fuel'
   }
 
 ];
 
+function initNearbyMap(){
 
-function renderMusic(search=""){
+  if(nearbyMap)return;
 
-  const box =
-    document.getElementById(
-      "musicResults"
+  nearbyMap=L.map('nearbyMap')
+  .setView([5.6037,-0.1870],12);
+
+  L.tileLayer(
+    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    {
+      maxZoom:19,
+      attribution:'© OpenStreetMap contributors'
+    }
+  ).addTo(nearbyMap);
+
+  nearbyPlaces.forEach(place=>{
+
+    L.marker([
+      place.lat,
+      place.lng
+    ])
+    .addTo(nearbyMap)
+    .bindPopup(
+      '<b>'+
+      escapeHTML(place.name)+
+      '</b><br>'+
+      escapeHTML(place.type)
     );
 
+  });
 
-  if(!box) return;
+  $('nearbyPlaces').innerHTML=
+  nearbyPlaces.map(place=>`
 
+    <div class="notify">
 
-  const term =
-    search.toLowerCase();
+      <b>${escapeHTML(place.name)}</b>
 
+      <br>
 
-  const data =
-    musicData.filter(m=>
-      !term ||
-      m.title.toLowerCase().includes(term) ||
-      m.artist.toLowerCase().includes(term) ||
-      m.album.toLowerCase().includes(term)
-    );
+      <span class="pill">
+      ${escapeHTML(place.type)}
+      </span>
 
+    </div>
 
-  box.innerHTML =
-    data.map(m=>`
+  `).join('');
 
-      <div class="card">
-
-        <h3>
-          🎵 ${escapeHTML(m.title)}
-        </h3>
-
-        <p class="muted">
-          ${escapeHTML(m.artist)}
-        </p>
-
-        <p class="small">
-          Album: ${escapeHTML(m.album)}
-        </p>
-
-        <br>
-
-        <button
-          class="btn"
-          onclick="notify('Music playback selected.')"
-        >
-          ▶ Play
-        </button>
-
-      </div>
-
-    `).join("");
+  setTimeout(
+    ()=>nearbyMap.invalidateSize(),
+    200
+  );
 
 }
 
+function useLocation(){
 
-function searchMusic(value){
+  if(!navigator.geolocation){
 
-  renderMusic(value);
-
-}
-
-
-/* -----------------------------
-   SOUNDS
------------------------------ */
-
-function saveSound(sound){
-
-  if(!savedSounds.includes(sound)){
-
-    savedSounds.push(sound);
-
-    notify(
-      `${sound} was saved.`
-    );
-
-  }
-
-  renderSavedSounds();
-
-}
-
-
-function renderSavedSounds(){
-
-  const box =
-    document.getElementById(
-      "savedSounds"
-    );
-
-
-  if(!box) return;
-
-
-  if(savedSounds.length===0){
-
-    box.innerHTML =
-      `<p class="muted">No saved sounds.</p>`;
-
+    alert('Geolocation is not supported.');
     return;
 
   }
 
+  navigator.geolocation.getCurrentPosition(
 
-  box.innerHTML =
-    savedSounds.map(sound=>`
+    position=>{
 
-      <div class="tag">
-        🔊 ${escapeHTML(sound)}
-      </div>
+      const lat=position.coords.latitude;
+      const lng=position.coords.longitude;
 
-    `).join("");
+      if(userMarker)
+        nearbyMap.removeLayer(userMarker);
+
+      if(userCircle)
+        nearbyMap.removeLayer(userCircle);
+
+      userMarker=
+        L.marker([lat,lng])
+        .addTo(nearbyMap)
+        .bindPopup('Your current location')
+        .openPopup();
+
+      userCircle=
+        L.circle(
+          [lat,lng],
+          {radius:300}
+        ).addTo(nearbyMap);
+
+      nearbyMap.setView(
+        [lat,lng],
+        14
+      );
+
+      addNotification(
+        'Location Used',
+        'Your location was used in this browser demo.'
+      );
+
+    },
+
+    ()=>{
+      alert(
+        'Location permission was not granted.'
+      );
+    }
+
+  );
+
+}
+
+function clearLocation(){
+
+  if(userMarker){
+
+    nearbyMap.removeLayer(
+      userMarker
+    );
+
+    userMarker=null;
+
+  }
+
+  if(userCircle){
+
+    nearbyMap.removeLayer(
+      userCircle
+    );
+
+    userCircle=null;
+
+  }
+
+  addNotification(
+    'Location Cleared',
+    'Your demo location marker was cleared.'
+  );
 
 }
 
 
-/* -----------------------------
-   CAMERA
------------------------------ */
+/* =========================
+   NAVIGATION
+========================= */
 
-let cameraStream=null;
+function initNavigationMap(){
 
+  if(navigationMap)return;
 
-async function startCamera(){
+  navigationMap=
+    L.map('navigationMap')
+    .setView([5.6037,-0.1870],12);
+
+  L.tileLayer(
+    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    {
+      maxZoom:19,
+      attribution:'© OpenStreetMap contributors'
+    }
+  ).addTo(navigationMap);
+
+  setTimeout(
+    ()=>navigationMap.invalidateSize(),
+    200
+  );
+
+}
+
+async function findDestination(){
+
+  const destination=
+    $('destination').value.trim();
+
+  if(!destination){
+
+    alert('Enter a destination.');
+    return;
+
+  }
+
+  initNavigationMap();
 
   try{
 
-    cameraStream =
-      await navigator.mediaDevices.getUserMedia({
-        video:true,
-        audio:true
-      });
-
-
-    document.getElementById(
-      "cameraPreview"
-    ).srcObject =
-      cameraStream;
-
-
-  }catch(error){
-
-    alert(
-      "Camera permission was not granted."
-    );
-
-  }
-
-}
-
-
-function stopCamera(){
-
-  if(!cameraStream) return;
-
-
-  cameraStream
-    .getTracks()
-    .forEach(track=>track.stop());
-
-
-  cameraStream=null;
-
-}
-
-
-function takePhoto(){
-
-  const video =
-    document.getElementById(
-      "cameraPreview"
-    );
-
-
-  const canvas =
-    document.getElementById(
-      "photoCanvas"
-    );
-
-
-  if(
-    !video.videoWidth ||
-    !video.videoHeight
-  ){
-
-    alert(
-      "Start the camera first."
-    );
-
-    return;
-
-  }
-
-
-  canvas.width =
-    video.videoWidth;
-
-  canvas.height =
-    video.videoHeight;
-
-
-  const ctx =
-    canvas.getContext("2d");
-
-
-  ctx.drawImage(
-    video,
-    0,
-    0
-  );
-
-
-  const image =
-    canvas.toDataURL(
-      "image/png"
-    );
-
-
-  const link =
-    document.createElement("a");
-
-
-  link.href=image;
-
-  link.download=
-    "rockyx-photo.png";
-
-  link.click();
-
-
-  notify(
-    "Photo saved to your device."
-  );
-
-}
-
-
-/* -----------------------------
-   MEDIA
------------------------------ */
-
-document.getElementById(
-  "mediaInput"
-)?.addEventListener(
-  "change",
-  function(){
-
-    const box =
-      document.getElementById(
-        "mediaPreview"
+    const response=
+      await fetch(
+        'https://nominatim.openstreetmap.org/search?format=json&limit=1&q='+
+        encodeURIComponent(destination)
       );
 
+    const data=
+      await response.json();
 
-    box.innerHTML="";
+    if(!data.length){
 
-
-    Array.from(this.files)
-      .forEach(file=>{
-
-        const url =
-          URL.createObjectURL(
-            file
-          );
-
-
-        if(
-          file.type.startsWith(
-            "image/"
-          )
-        ){
-
-          box.innerHTML += `
-            <img
-              src="${url}"
-              style="
-                width:180px;
-                height:180px;
-                object-fit:cover;
-                border-radius:10px;
-                margin:5px;
-              "
-            >
-          `;
-
-        }else{
-
-          box.innerHTML += `
-            <video
-              src="${url}"
-              controls
-              style="
-                width:250px;
-                max-height:220px;
-                margin:5px;
-                border-radius:10px;
-              "
-            ></video>
-          `;
-
-        }
-
-      });
-
-  }
-);
-
-
-/* -----------------------------
-   PHOTO EDITOR
------------------------------ */
-
-document.getElementById(
-  "photoEditorInput"
-)?.addEventListener(
-  "change",
-  function(){
-
-    const file =
-      this.files[0];
-
-
-    if(!file) return;
-
-
-    const url =
-      URL.createObjectURL(
-        file
-      );
-
-
-    document.getElementById(
-      "photoEditorPreview"
-    ).src=url;
-
-  }
-);
-
-
-function applyPhotoFilter(filter){
-
-  document.getElementById(
-    "photoEditorPreview"
-  ).style.filter =
-    filter;
-
-}
-
-
-/* -----------------------------
-   VIDEO EDITOR
------------------------------ */
-
-document.getElementById(
-  "editorVideoInput"
-)?.addEventListener(
-  "change",
-  function(){
-
-    const file =
-      this.files[0];
-
-
-    if(!file) return;
-
-
-    document.getElementById(
-      "editorPreview"
-    ).src =
-      URL.createObjectURL(
-        file
-      );
-
-  }
-);
-
-
-/* -----------------------------
-   DOWNLOAD DEMO
------------------------------ */
-
-function downloadDemo(name){
-
-  notify(
-    `${name} download requested.`
-  );
-
-
-  alert(
-    "The browser/device controls whether a media file can be downloaded. Production downloads will use the creator's download permission and watermark settings."
-  );
-
-}
-
-
-/* -----------------------------
-   GLOBAL SEARCH
------------------------------ */
-
-function performGlobalSearch(){
-
-  const input =
-    document.getElementById(
-      "globalSearch"
-    );
-
-
-  const query =
-    input.value.trim();
-
-
-  if(!query) return;
-
-
-  const results =
-    [];
-
-
-  products.forEach(p=>{
-
-    if(
-      p.name.toLowerCase().includes(
-        query.toLowerCase()
-      )
-    ){
-
-      results.push({
-        type:"Product",
-        name:p.name,
-        action:()=>showPage("market")
-      });
+      alert('Destination not found.');
+      return;
 
     }
 
-  });
+    const lat=
+      Number(data[0].lat);
 
+    const lng=
+      Number(data[0].lon);
 
-  businesses.forEach(b=>{
-
-    if(
-      b.name.toLowerCase().includes(
-        query.toLowerCase()
-      )
-    ){
-
-      results.push({
-        type:"Business",
-        name:b.name,
-        action:()=>openBusiness(b.id)
-      });
-
-    }
-
-  });
-
-
-  services.forEach(s=>{
-
-    if(
-      s.name.toLowerCase().includes(
-        query.toLowerCase()
-      )
-    ){
-
-      results.push({
-        type:"Service",
-        name:s.name,
-        action:()=>showPage("services")
-      });
-
-    }
-
-  });
-
-
-  showPage("explore");
-
-
-  const box =
-    document.getElementById(
-      "globalSearchResults"
+    navigationMap.setView(
+      [lat,lng],
+      14
     );
 
+    L.marker([lat,lng])
+      .addTo(navigationMap)
+      .bindPopup(data[0].display_name)
+      .openPopup();
 
-  if(results.length===0){
-
-    box.innerHTML=`
+    $('routeInfo').innerHTML=`
 
       <div class="card">
-        <h3>No results found</h3>
-        <p class="muted">
-          Try another search.
+
+        <b>Destination found</b>
+
+        <p>
+        ${escapeHTML(data[0].display_name)}
         </p>
+
+        <p>
+        Road routing will be connected to the
+        production navigation system later.
+        </p>
+
       </div>
 
     `;
 
-    return;
+  }catch(error){
 
-  }
-
-
-  box.innerHTML=`
-
-    <div class="card">
-
-      <h2>Search Results</h2>
-
-      <br>
-
-      ${results.map((r,index)=>`
-
-        <div class="location-card">
-
-          <strong>
-            ${escapeHTML(r.name)}
-          </strong>
-
-          <span class="tag">
-            ${escapeHTML(r.type)}
-          </span>
-
-          <br><br>
-
-          <button
-            class="btn"
-            onclick="globalSearchOpen(${index})"
-          >
-            Open
-          </button>
-
-        </div>
-
-      `).join("")}
-
-    </div>
-
-  `;
-
-
-  window.globalResults =
-    results;
-
-}
-
-
-function globalSearchOpen(index){
-
-  if(
-    window.globalResults &&
-    window.globalResults[index]
-  ){
-
-    window.globalResults[index]
-      .action();
+    alert(
+      'Location search is temporarily unavailable.'
+    );
 
   }
 
 }
 
 
-/* -----------------------------
-   SECURITY HELPERS
------------------------------ */
+/* =========================
+   TRANSPORT MAP
+========================= */
 
-function escapeHTML(value){
+function initTransportMap(){
 
-  return String(value)
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
+  if(transportMap)return;
 
-}
+  transportMap=
+    L.map('transportMap')
+    .setView([5.6037,-0.1870],12);
 
+  L.tileLayer(
+    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    {
+      maxZoom:19,
+      attribution:'© OpenStreetMap contributors'
+    }
+  ).addTo(transportMap);
 
-function escapeJS(value){
-
-  return String(value)
-    .replace(/\\/g,"\\\\")
-    .replace(/'/g,"\\'")
-    .replace(/"/g,'\\"')
-    .replace(/\n/g,"\\n")
-    .replace(/\r/g,"\\r");
-
-}
-
-
-/* -----------------------------
-   MODAL
------------------------------ */
-
-function openModal(title,content){
-
-  document.getElementById(
-    "modalTitle"
-  ).textContent=title;
-
-
-  document.getElementById(
-    "modalContent"
-  ).innerHTML=content;
-
-
-  document.getElementById(
-    "modal"
-  ).classList.add("show");
+  setTimeout(
+    ()=>transportMap.invalidateSize(),
+    200
+  );
 
 }
 
 
-function closeModal(){
-
-  document.getElementById(
-    "modal"
-  ).classList.remove("show");
-
-}
-
-
-/* -----------------------------
+/* =========================
    INITIALIZATION
------------------------------ */
+========================= */
 
-document.addEventListener(
-  "DOMContentLoaded",
-  function(){
+$('feed').innerHTML=`
 
-    updateNotificationBadge();
+<div class="post">
 
-    renderProducts();
+<b>RockyX Creator</b>
 
-    renderBusinesses();
+<p>
+Welcome to the RockyX social feed.
+</p>
 
-    renderServices();
+<button class="btn gray">❤️ Like</button>
+<button class="btn gray">💬 Comment</button>
+<button class="btn gray">↗ Share</button>
 
-    renderTransportList();
+</div>
 
-    renderMusic();
+`;
 
-    renderSavedSounds();
+renderProducts();
+renderCart();
+renderOrders();
+renderNotifications();
+renderSounds();
+renderReports();
+renderBlocked();
+loadPrivacy();
+renderSecurityActivity();
 
-    renderBookings();
+$('verificationFollowers').textContent=
+  verification.followers.toLocaleString();
 
-    renderNotifications();
+$('verificationStatus').innerHTML=`
 
+<p>
+<b>Creator:</b>
+${escapeHTML(verification.creator)}
+</p>
 
-    const savedPermission =
-      localStorage.getItem(
-        "rockyx_location_permission"
-      );
+<p>
+<b>Business:</b>
+${escapeHTML(verification.business)}
+</p>
 
+<p>
+<b>Provider:</b>
+${escapeHTML(verification.provider)}
+</p>
 
-    const checkbox =
-      document.getElementById(
-        "locationSharing"
-      );
+`;
 
-
-    if(checkbox){
-
-      checkbox.checked =
-        savedPermission === "enabled";
-
-    }
-
-  }
+const savedIdentity=
+localStorage.getItem(
+  'rockyx_identity_demo'
 );
 
+if(savedIdentity){
 
-/* -----------------------------
-   CLOSE MODAL ON BACKGROUND
------------------------------ */
+  $('identityStatus').textContent=
+    savedIdentity;
 
-document.getElementById(
-  "modal"
-)?.addEventListener(
-  "click",
-  function(event){
+}
 
-    if(event.target === this){
-
-      closeModal();
-
-    }
-
-  }
-);
+updateNotificationBadge();
 
 </script>
 
