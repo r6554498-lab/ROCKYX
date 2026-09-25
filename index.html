@@ -1,373 +1,243 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>RockyX</title>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{
-font-family:Arial,Helvetica,sans-serif;
-background:#f5f6f8;
-color:#171717
-}
-button,input,textarea,select{font:inherit}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f5f6f8;color:#151515}
+button,input,select,textarea{font:inherit}
 button{cursor:pointer}
-a{text-decoration:none;color:inherit}
 
 .header{
-height:64px;
-background:#fff;
-border-bottom:1px solid #ddd;
-display:flex;
-align-items:center;
-gap:12px;
-padding:0 18px;
-position:sticky;
-top:0;
-z-index:1000
+height:62px;background:#fff;border-bottom:1px solid #ddd;
+display:flex;align-items:center;gap:10px;padding:0 14px;
+position:sticky;top:0;z-index:10
 }
-.logo{font-size:22px;font-weight:800;min-width:65px}
-.search{flex:1;max-width:650px;margin:auto}
+
+.logo{font-weight:800;font-size:21px}
+.search{flex:1}
 .search input{
-width:100%;
-padding:12px 18px;
-border:1px solid #ddd;
-border-radius:25px;
-outline:none;
-background:#f5f5f5
-}
-.header-actions{display:flex;gap:8px}
-.icon-btn{
-border:0;
-background:#f1f2f4;
-border-radius:50%;
-width:40px;
-height:40px
+width:100%;padding:10px 15px;border:1px solid #ddd;
+border-radius:25px;background:#f5f5f5
 }
 
-.layout{display:flex;min-height:calc(100vh - 64px)}
-.sidebar{
-width:230px;
-background:#fff;
-border-right:1px solid #ddd;
-padding:15px 10px;
-position:fixed;
-top:64px;
-bottom:0;
-overflow-y:auto
-}
-.nav-btn{
-width:100%;
-padding:12px;
-margin:2px 0;
-border:0;
-background:transparent;
-text-align:left;
-border-radius:9px
-}
-.nav-btn:hover,.nav-btn.active{
-background:#eef0f3;
-font-weight:bold
+.actions{display:flex;gap:5px}
+.icon{
+border:0;background:#f1f2f4;border-radius:50%;
+width:40px;height:40px
 }
 
-.main{
-margin-left:230px;
-width:calc(100% - 230px);
-padding:22px
+.bell{position:relative}
+.badge{
+display:none;position:absolute;right:-2px;top:-3px;
+background:#d71920;color:#fff;border-radius:20px;
+padding:2px 6px;font-size:11px
 }
-.page{display:none}
+.badge.show{display:block}
+
+.side{
+position:fixed;top:62px;bottom:0;width:235px;
+background:#fff;border-right:1px solid #ddd;
+padding:9px;overflow:auto
+}
+
+.nav{
+width:100%;border:0;background:transparent;
+text-align:left;padding:10px;border-radius:8px;margin:1px 0
+}
+.nav:hover{background:#eef0f3}
+
+.main{margin-left:235px;padding:18px}
+
+.page{display:none;max-width:1100px;margin:auto}
 .page.active{display:block}
-.container{max-width:1100px;margin:auto}
 
-.card{
-background:#fff;
-border:1px solid #e1e1e1;
-border-radius:14px;
-padding:18px;
-margin-bottom:18px
+.card,.post,.notify{
+background:#fff;border:1px solid #ddd;
+border-radius:13px;padding:15px;margin-bottom:14px
 }
-
-h1{margin-bottom:8px}
-h2{margin-bottom:12px}
-h3{margin-bottom:8px}
-
-.btn{
-border:0;
-padding:10px 15px;
-border-radius:9px;
-background:#111;
-color:white;
-margin:3px
-}
-.btn.secondary{background:#eceef1;color:#111}
-.btn.success{background:#16833b}
-.btn.danger{background:#c62828}
-.btn.blue{background:#246bdb}
-.btn.gold{background:#b58100}
-
-input,textarea,select{
-width:100%;
-padding:11px;
-border:1px solid #ccc;
-border-radius:8px;
-margin:5px 0 10px
-}
-textarea{min-height:100px;resize:vertical}
 
 .grid{
 display:grid;
-grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
-gap:15px
+grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+gap:14px
 }
 
-.product-card,.video-card,.template-card,.music-card{
-background:#fff;
-border:1px solid #ddd;
-border-radius:12px;
-overflow:hidden
+.btn{
+border:0;border-radius:8px;padding:9px 13px;
+background:#111;color:#fff;margin:3px
 }
-.product-card img,.video-card video,.template-card img{
-width:100%;
-display:block
-}
-.product-content,.video-content,.template-content{
-padding:13px
-}
-.video-card video{
-max-height:350px;
-background:#000
-}
-.video-actions{
-display:flex;
-flex-wrap:wrap;
-gap:4px;
-padding-top:8px
-}
+.blue{background:#246bdb}
+.red{background:#c62828}
+.gray{background:#e8eaed;color:#111}
+.green{background:#18863b}
 
-.story-row{
-display:flex;
-gap:12px;
-overflow-x:auto;
-padding:5px 0 15px
-}
-.story{
-min-width:75px;
-text-align:center
-}
-.story-circle{
-width:62px;
-height:62px;
-border-radius:50%;
-background:#ddd;
-margin:auto auto 5px;
-display:flex;
-align-items:center;
-justify-content:center;
-font-weight:bold
-}
-
-.post{
-background:#fff;
-border:1px solid #ddd;
-border-radius:14px;
-padding:15px;
-margin-bottom:15px
-}
-.post-actions{
-display:flex;
-gap:6px;
-margin-top:10px;
-flex-wrap:wrap
-}
-.post img,.post video{
-max-width:100%;
-margin-top:12px;
-border-radius:10px
-}
+.money{font-size:27px;font-weight:800}
 
 .stats{
 display:grid;
 grid-template-columns:repeat(4,1fr);
 gap:10px
 }
+
 .stat{
-background:#f3f4f6;
-padding:15px;
+background:#f0f1f3;
+padding:13px;
 border-radius:10px;
 text-align:center
 }
-.stat strong{
+
+.stat b{
 display:block;
-font-size:22px
+font-size:20px;
+margin-bottom:4px
 }
 
-.profile-head{
+.storyrow{
 display:flex;
-align-items:center;
-gap:18px
+gap:13px;
+overflow:auto
 }
-.avatar{
-width:85px;
-height:85px;
+
+.story{
+text-align:center;
+min-width:65px
+}
+
+.circle{
+width:58px;
+height:58px;
 border-radius:50%;
 background:#ddd;
 display:flex;
 align-items:center;
 justify-content:center;
-font-size:30px;
-font-weight:bold
+margin:auto
 }
+
+.post img,.post video{
+max-width:100%;
+margin-top:8px
+}
+
+.video,.product,.template{
+background:#fff;
+border:1px solid #ddd;
+border-radius:12px;
+overflow:hidden
+}
+
+.video video{
+width:100%;
+display:block;
+background:#111
+}
+
+.inside{padding:12px}
+
+.video-actions{
+display:flex;
+flex-wrap:wrap;
+gap:3px
+}
+
+.check{
+display:flex;
+gap:7px;
+align-items:center;
+margin:7px 0
+}
+
+.check input{width:auto}
+
+.map{
+height:300px;
+border-radius:12px;
+background:#dfe7d9;
+display:flex;
+align-items:center;
+justify-content:center
+}
+
+.notify{margin:9px 0}
+.notify.unread{background:#eef5ff}
+
+.dot{
+display:inline-block;
+width:8px;
+height:8px;
+background:#246bdb;
+border-radius:50%;
+margin-right:5px
+}
+
+.mobile{display:none}
+
+input,textarea,select{
+width:100%;
+padding:10px;
+border:1px solid #ccc;
+border-radius:8px;
+margin:5px 0 10px
+}
+
+textarea{min-height:90px}
 
 .modal{
 display:none;
 position:fixed;
 inset:0;
-background:rgba(0,0,0,.55);
-z-index:2000;
+background:#0008;
 align-items:center;
 justify-content:center;
-padding:20px
+z-index:30
 }
+
 .modal.show{display:flex}
-.modal-box{
+
+.box{
 background:#fff;
-width:min(500px,100%);
-max-height:90vh;
-overflow-y:auto;
-border-radius:15px;
-padding:22px
+border-radius:14px;
+padding:20px;
+width:min(500px,94%)
 }
-.close{
-float:right;
-border:0;
-background:#eee;
-border-radius:50%;
-width:32px;
-height:32px
-}
-
-.mobile-nav{
-display:none
-}
-
-.notice{
-background:#eef5ff;
-border:1px solid #c9ddff;
-padding:12px;
-border-radius:10px;
-margin-bottom:15px
-}
-
-.success-box{
-background:#e9f8ef;
-border:1px solid #b9e5c7;
-padding:15px;
-border-radius:10px;
-margin-bottom:15px
-}
-
-.warning-box{
-background:#fff7df;
-border:1px solid #f0d78c;
-padding:15px;
-border-radius:10px;
-margin-bottom:15px
-}
-
-.danger-box{
-background:#fff0f0;
-border:1px solid #edb4b4;
-padding:15px;
-border-radius:10px;
-margin-bottom:15px
-}
-
-.check-row{
-display:flex;
-align-items:center;
-gap:8px;
-margin:8px 0
-}
-.check-row input{
-width:auto;
-margin:0
-}
-
-.map-box{
-height:350px;
-background:#dfe7d9;
-border-radius:12px;
-display:flex;
-align-items:center;
-justify-content:center;
-color:#555
-}
-
-.editor-preview{
-width:100%;
-max-height:450px;
-background:#111;
-border-radius:10px;
-margin:10px 0
-}
-
-.money{
-font-size:28px;
-font-weight:bold;
-margin:8px 0
-}
-
-.transaction{
-border:1px solid #ddd;
-border-radius:10px;
-padding:13px;
-margin:8px 0;
-background:#fff
-}
-
-.status{
-display:inline-block;
-padding:5px 9px;
-border-radius:20px;
-font-size:12px;
-font-weight:bold;
-background:#eee
-}
-.status.pending{background:#fff0bd}
-.status.paid{background:#c9f2d5}
-.status.refunded{background:#ffd0d0}
 
 @media(max-width:800px){
-.sidebar{display:none}
+.side{display:none}
+
 .main{
-margin-left:0;
-width:100%;
-padding:12px;
-padding-bottom:75px
+margin:0;
+padding:12px 12px 70px
 }
-.header{padding:0 10px}
-.header .logo{min-width:auto}
-.header-actions .icon-btn:nth-child(1){display:none}
-.mobile-nav{
+
+.mobile{
 display:flex;
 position:fixed;
 bottom:0;
 left:0;
 right:0;
-height:62px;
+height:58px;
 background:#fff;
 border-top:1px solid #ddd;
-z-index:1500;
+z-index:20;
 justify-content:space-around
 }
-.mobile-nav button{
+
+.mobile button{
 border:0;
 background:none;
 font-size:11px
 }
-.stats{grid-template-columns:repeat(2,1fr)}
+
+.stats{
+grid-template-columns:repeat(2,1fr)
+}
+
+.logo{font-size:18px}
+.header{padding:0 8px}
 }
 </style>
 </head>
@@ -380,333 +250,240 @@ font-size:11px
 
 <div class="search">
 <input
-id="globalSearch"
+id="search"
 placeholder="Search products, businesses, services, people, videos, songs and sounds..."
-onkeydown="if(event.key==='Enter')performSearch()">
+onkeydown="if(event.key==='Enter')searchAll()">
 </div>
 
-<div class="header-actions">
-<button class="icon-btn" onclick="showPage('notifications')">🔔</button>
-<button class="icon-btn" onclick="showPage('messages')">💬</button>
-<button class="icon-btn" onclick="showPage('account')">👤</button>
+<div class="actions">
+
+<span class="bell">
+<button class="icon" onclick="show('notifications')">🔔</button>
+<span id="badge" class="badge">0</span>
+</span>
+
+<button class="icon" onclick="show('messages')">💬</button>
+
+<button class="icon" onclick="show('account')">👤</button>
+
 </div>
 
 </header>
 
-<div class="layout">
-
-<aside class="sidebar">
-
-<button class="nav-btn active" onclick="showPage('home',this)">🏠 Home</button>
-<button class="nav-btn" onclick="showPage('explore',this)">🔎 Explore</button>
-<button class="nav-btn" onclick="showPage('shorts',this)">🎬 Shorts</button>
-<button class="nav-btn" onclick="showPage('videos',this)">▶️ Videos</button>
-<button class="nav-btn" onclick="showPage('live',this)">🔴 Live</button>
-<button class="nav-btn" onclick="showPage('music',this)">🎵 Music</button>
-<button class="nav-btn" onclick="showPage('sounds',this)">🔊 Sounds</button>
-
-<button class="nav-btn" onclick="showPage('camera',this)">📷 Camera</button>
-<button class="nav-btn" onclick="showPage('media',this)">🖼️ Media</button>
-
-<button class="nav-btn" onclick="showPage('creator',this)">⭐ Creator Studio</button>
-<button class="nav-btn" onclick="showPage('photoEditor',this)">🖌️ Photo Editor</button>
-<button class="nav-btn" onclick="showPage('videoEditor',this)">🎞️ Video Editor</button>
-<button class="nav-btn" onclick="showPage('aiStudio',this)">✨ AI Studio</button>
-
-<button class="nav-btn" onclick="showPage('templates',this)">🧩 Templates</button>
-<button class="nav-btn" onclick="showPage('templateCreator',this)">➕ Create Template</button>
-<button class="nav-btn" onclick="showPage('myTemplates',this)">📁 My Templates</button>
-<button class="nav-btn" onclick="showPage('creatorProgram',this)">🏆 Creator Program</button>
-<button class="nav-btn" onclick="showPage('templateAnalytics',this)">📊 Template Analytics</button>
-<button class="nav-btn" onclick="showPage('creatorEarnings',this)">💰 Creator Earnings</button>
-
-<button class="nav-btn" onclick="showPage('marketplace',this)">🛍️ Marketplace</button>
-<button class="nav-btn" onclick="showPage('cart',this)">🛒 Cart</button>
-<button class="nav-btn" onclick="showPage('checkout',this)">💳 Checkout</button>
-<button class="nav-btn" onclick="showPage('orders',this)">📦 Orders</button>
-<button class="nav-btn" onclick="showPage('transactions',this)">🧾 Transactions</button>
-<button class="nav-btn" onclick="showPage('sellerTools',this)">🏪 Seller Tools</button>
-<button class="nav-btn" onclick="showPage('sellerEarnings',this)">💵 Seller Earnings</button>
-<button class="nav-btn" onclick="showPage('payouts',this)">💸 Payouts</button>
-
-<button class="nav-btn" onclick="showPage('nearby',this)">📍 Nearby</button>
-<button class="nav-btn" onclick="showPage('transport',this)">🚕 Transport</button>
-<button class="nav-btn" onclick="showPage('businesses',this)">🏢 Businesses</button>
-<button class="nav-btn" onclick="showPage('services',this)">🛠️ Services</button>
-
-<button class="nav-btn" onclick="showPage('messages',this)">💬 Messages</button>
-<button class="nav-btn" onclick="showPage('notifications',this)">🔔 Notifications</button>
-<button class="nav-btn" onclick="showPage('profile',this)">👤 Profile</button>
-<button class="nav-btn" onclick="showPage('account',this)">⚙️ Account</button>
-<button class="nav-btn" onclick="showPage('settings',this)">🔐 Settings</button>
-
-</aside>
+<aside class="side" id="sidebar"></aside>
 
 <main class="main">
 
 <!-- HOME -->
 
 <section id="home" class="page active">
-<div class="container">
 
 <div class="card">
 <h1>Welcome</h1>
-<p>Your marketplace, social, entertainment and services platform.</p>
+<p>Marketplace, social, entertainment and services in one place.</p>
 </div>
 
 <div class="card">
+
 <h3>Stories</h3>
 
-<div class="story-row">
+<div class="storyrow">
 
 <div class="story">
-<div class="story-circle">+</div>
+<div class="circle">+</div>
 Add
 </div>
 
 <div class="story">
-<div class="story-circle">A</div>
+<div class="circle">A</div>
 Alex
 </div>
 
 <div class="story">
-<div class="story-circle">M</div>
+<div class="circle">M</div>
 Mary
 </div>
 
 <div class="story">
-<div class="story-circle">K</div>
+<div class="circle">K</div>
 Kevin
 </div>
 
-<div class="story">
-<div class="story-circle">J</div>
-John
 </div>
 
-</div>
 </div>
 
 <div class="card">
 
-<h3>Create a post</h3>
+<h3>Create post</h3>
 
-<textarea id="postText" placeholder="What's happening?"></textarea>
+<textarea
+id="postText"
+placeholder="What's happening?"></textarea>
 
-<input type="file" id="postMedia" accept="image/*,video/*">
+<input
+id="postFile"
+type="file"
+accept="image/*,video/*">
 
-<button class="btn blue" onclick="createPost()">Post</button>
+<button class="btn blue" onclick="post()">Post</button>
 
 </div>
 
 <div id="feed"></div>
 
-</div>
 </section>
 
 
 <!-- EXPLORE -->
 
 <section id="explore" class="page">
-<div class="container">
 
 <div class="card">
 
 <h2>Explore</h2>
 
-<input id="exploreSearch" placeholder="Search RockyX">
-
-<button class="btn" onclick="performSearch()">Search</button>
-
-</div>
-
-<div id="searchResults"></div>
-
-</div>
-</section>
-
-
-<!-- CAMERA -->
-
-<section id="camera" class="page">
-<div class="container">
-
-<div class="card">
-
-<h2>Camera</h2>
-
-<video
-id="cameraVideo"
-autoplay
-playsinline
-class="editor-preview">
-</video>
-
-<canvas id="cameraCanvas" style="display:none"></canvas>
-
-<button class="btn" onclick="startCamera()">Start Camera</button>
-
-<button class="btn secondary" onclick="takePhoto()">
-Take Photo
-</button>
-
-<button class="btn" onclick="startRecording()">
-Start Recording
-</button>
-
-<button class="btn danger" onclick="stopRecording()">
-Stop Recording
-</button>
-
-<button class="btn secondary" onclick="stopCamera()">
-Stop Camera
-</button>
-
-<select id="cameraFilter" onchange="applyFilter()">
-
-<option value="normal">Normal</option>
-<option value="grayscale">Grayscale</option>
-<option value="sepia">Sepia</option>
-<option value="brightness">Bright</option>
-<option value="contrast">Contrast</option>
-<option value="saturate">Saturated</option>
-<option value="cool">Cool</option>
-<option value="warm">Warm</option>
-
-</select>
-
-<div id="cameraDownloads"></div>
-
-</div>
-</div>
-</section>
-
-
-<!-- MEDIA -->
-
-<section id="media" class="page">
-<div class="container">
-
-<div class="card">
-
-<h2>Media</h2>
-
 <input
-type="file"
-id="mediaInput"
-accept="image/*,video/*"
-multiple
-onchange="loadMedia()">
+id="explore"
+placeholder="Search">
 
-<div id="mediaGrid" class="grid"></div>
+<button
+class="btn blue"
+onclick="searchAll()">
+Search
+</button>
 
 </div>
 
-</div>
+<div id="results"></div>
+
 </section>
 
 
 <!-- SHORTS -->
 
 <section id="shorts" class="page">
-<div class="container">
 
 <div class="card">
 
 <h2>Shorts</h2>
 
-<p>
-Upload a Short and decide whether viewers can download it.
-</p>
+<input
+id="shortIn"
+type="file"
+accept="video/*">
 
-<input type="file" id="shortInput" accept="video/*">
+<label class="check">
 
-<div class="check-row">
+<input
+id="shortDL"
+type="checkbox"
+checked>
 
-<input type="checkbox" id="shortAllowDownload" checked>
+Allow viewers to download
 
-<label>
-Allow viewers to download this video
 </label>
 
-</div>
+<label class="check">
 
-<div class="check-row">
+<input
+id="shortWM"
+type="checkbox"
+checked>
 
-<input type="checkbox" id="shortWatermark" checked>
-
-<label>
 Allow RockyX watermark on downloads
+
 </label>
 
-</div>
-
-<button class="btn blue" onclick="addShort()">
+<button
+class="btn blue"
+onclick="addVideo(true)">
 Publish Short
 </button>
 
 </div>
 
-<div id="shortsList" class="grid"></div>
+<div id="shortList" class="grid"></div>
 
-</div>
 </section>
 
 
 <!-- LONG VIDEOS -->
 
 <section id="videos" class="page">
-<div class="container">
 
 <div class="card">
 
 <h2>Long Videos</h2>
 
-<p>
-Upload longer videos and control viewer downloads.
-</p>
-
 <input
+id="longIn"
 type="file"
-id="longVideoInput"
 accept="video/*">
 
-<div class="check-row">
+<label class="check">
 
-<input type="checkbox" id="longAllowDownload" checked>
+<input
+id="longDL"
+type="checkbox"
+checked>
 
-<label>
-Allow viewers to download this video
+Allow viewers to download
+
 </label>
 
-</div>
+<label class="check">
 
-<div class="check-row">
+<input
+id="longWM"
+type="checkbox"
+checked>
 
-<input type="checkbox" id="longWatermark" checked>
-
-<label>
 Allow RockyX watermark on downloads
+
 </label>
 
-</div>
-
-<button class="btn blue" onclick="addLongVideo()">
+<button
+class="btn blue"
+onclick="addVideo(false)">
 Publish Video
 </button>
 
 </div>
 
-<div id="videoResults" class="grid"></div>
+<div id="longList" class="grid"></div>
+
+</section>
+
+
+<!-- LIVE -->
+
+<section id="live" class="page">
+
+<div class="card">
+
+<h2>Live</h2>
+
+<p>
+Live streaming interface prepared for the backend stage.
+</p>
+
+<button
+class="btn red"
+onclick="alert('Live streaming will be connected during the backend stage.')">
+
+🔴 Start Live
+
+</button>
 
 </div>
+
 </section>
 
 
 <!-- MUSIC -->
 
 <section id="music" class="page">
-<div class="container">
 
 <div class="card">
 
@@ -714,51 +491,48 @@ Publish Video
 
 <input placeholder="Search songs, artists or albums">
 
-</div>
-
 <div class="grid">
 
-<div class="music-card">
-<div class="product-content">
+<div class="card">
 
 <h3>Sample Artist</h3>
 <p>Sample Song</p>
 
-<button class="btn">▶ Play</button>
+<button class="btn">
+▶ Play
+</button>
 
 </div>
-</div>
 
-<div class="music-card">
-<div class="product-content">
+<div class="card">
 
 <h3>Sample Artist</h3>
 <p>Another Song</p>
 
-<button class="btn">▶ Play</button>
+<button class="btn">
+▶ Play
+</button>
 
 </div>
+
 </div>
 
 </div>
-</div>
+
 </section>
 
 
 <!-- SOUNDS -->
 
 <section id="sounds" class="page">
-<div class="container">
 
 <div class="card">
 
 <h2>Sounds</h2>
 
-<input id="soundSearch" placeholder="Search sounds">
+<div id="soundList"></div>
 
 </div>
-
-<div id="soundsList"></div>
 
 <div class="card">
 
@@ -768,169 +542,277 @@ Publish Video
 
 </div>
 
+</section>
+
+
+<!-- CAMERA -->
+
+<section id="camera" class="page">
+
+<div class="card">
+
+<h2>Camera</h2>
+
+<video
+id="cam"
+autoplay
+playsinline
+style="width:100%;max-height:450px;background:#111">
+</video>
+
+<canvas id="canvas" hidden></canvas>
+
+<button
+class="btn blue"
+onclick="startCam()">
+Start Camera
+</button>
+
+<button
+class="btn"
+onclick="takePhoto()">
+Take Photo
+</button>
+
+<button
+class="btn"
+onclick="record()">
+Start Recording
+</button>
+
+<button
+class="btn red"
+onclick="stopRecord()">
+Stop Recording
+</button>
+
+<button
+class="btn gray"
+onclick="stopCam()">
+Stop Camera
+</button>
+
+<select
+id="camFilter"
+onchange="camFilter()">
+
+<option>normal</option>
+<option>grayscale</option>
+<option>sepia</option>
+<option>brightness</option>
+<option>contrast</option>
+
+</select>
+
+<div id="cameraOut"></div>
+
 </div>
+
+</section>
+
+
+<!-- MEDIA -->
+
+<section id="media" class="page">
+
+<div class="card">
+
+<h2>Media</h2>
+
+<input
+id="mediaIn"
+type="file"
+multiple
+accept="image/*,video/*"
+onchange="media()">
+
+<div
+id="mediaOut"
+class="grid">
+</div>
+
+</div>
+
 </section>
 
 
 <!-- CREATOR STUDIO -->
 
 <section id="creator" class="page">
-<div class="container">
 
 <div class="card">
 
 <h2>Creator Studio</h2>
 
-<p>Create, edit and manage your content.</p>
-
 <div class="grid">
 
-<button class="btn" onclick="showPage('photoEditor')">
-🖌️ Edit Photo
+<button
+class="btn"
+onclick="show('camera')">
+Camera
 </button>
 
-<button class="btn" onclick="showPage('videoEditor')">
-🎞️ Edit Video
+<button
+class="btn"
+onclick="show('photo')">
+Photo Editor
 </button>
 
-<button class="btn" onclick="showPage('aiStudio')">
-✨ AI Studio
+<button
+class="btn"
+onclick="show('videoedit')">
+Video Editor
 </button>
 
-<button class="btn" onclick="showPage('templateCreator')">
-🧩 Create Template
+<button
+class="btn"
+onclick="show('ai')">
+AI Studio
 </button>
 
-<button class="btn" onclick="showPage('sounds')">
-🔊 Add Sound
+<button
+class="btn"
+onclick="show('createTemplate')">
+Create Template
 </button>
 
-<button class="btn" onclick="showPage('shorts')">
-🎬 Create Short
+<button
+class="btn"
+onclick="show('sounds')">
+Add Sound
 </button>
 
 </div>
 
 </div>
-</div>
+
 </section>
 
 
 <!-- PHOTO EDITOR -->
 
-<section id="photoEditor" class="page">
-<div class="container">
+<section id="photo" class="page">
 
 <div class="card">
 
 <h2>Photo Editor</h2>
 
 <input
+id="photoIn"
 type="file"
-id="photoInput"
 accept="image/*"
 onchange="previewPhoto()">
 
 <img
-id="photoPreview"
-class="editor-preview"
-style="display:none">
+id="photoPrev"
+style="max-width:100%;display:none">
 
-<div class="grid">
+<div>
 
-<button class="btn" onclick="photoFilter('none')">
+<button
+class="btn"
+onclick="photoFilter('none')">
 Normal
 </button>
 
-<button class="btn" onclick="photoFilter('grayscale')">
+<button
+class="btn"
+onclick="photoFilter('grayscale')">
 Grayscale
 </button>
 
-<button class="btn" onclick="photoFilter('sepia')">
+<button
+class="btn"
+onclick="photoFilter('sepia')">
 Sepia
 </button>
 
-<button class="btn" onclick="photoFilter('brightness')">
+<button
+class="btn"
+onclick="photoFilter('brightness')">
 Bright
 </button>
 
 </div>
 
 </div>
-</div>
+
 </section>
 
 
 <!-- VIDEO EDITOR -->
 
-<section id="videoEditor" class="page">
-<div class="container">
+<section id="videoedit" class="page">
 
 <div class="card">
 
 <h2>Video Editor</h2>
 
 <input
+id="editIn"
 type="file"
-id="editorVideoInput"
 accept="video/*"
-onchange="loadEditorVideo()">
+onchange="editPreview()">
 
 <video
-id="editorPreview"
+id="editPrev"
 controls
-class="editor-preview">
+style="width:100%;background:#111">
 </video>
 
 <div class="grid">
 
 <button class="btn">✂️ Trim</button>
-<button class="btn">➕ Add Text</button>
-<button class="btn">🔊 Add Sound</button>
+<button class="btn">➕ Text</button>
+<button class="btn">🔊 Sound</button>
 <button class="btn">✨ Effects</button>
 <button class="btn">🎨 Filters</button>
 <button class="btn">📝 Captions</button>
 
 </div>
 
-<div class="check-row">
+<label class="check">
 
-<input type="checkbox" id="editorAllowDownload" checked>
+<input
+id="editDL"
+type="checkbox"
+checked>
 
-<label>
-Allow viewers to download published video
+Allow downloads
+
 </label>
 
-</div>
-
-<button class="btn secondary">
+<button class="btn gray">
 Save Draft
 </button>
 
-<button class="btn blue" onclick="publishEditedVideo()">
+<button
+class="btn blue"
+onclick="publishEdited(false)">
 Publish Video
 </button>
 
-<button class="btn blue" onclick="publishEditedVideo(true)">
-Publish as Short
+<button
+class="btn blue"
+onclick="publishEdited(true)">
+Publish Short
 </button>
 
 </div>
-</div>
+
 </section>
 
 
-<!-- AI STUDIO -->
+<!-- AI -->
 
-<section id="aiStudio" class="page">
-<div class="container">
+<section id="ai" class="page">
 
 <div class="card">
 
 <h2>AI Studio</h2>
 
 <p>
-Frontend tools prepared for future AI integration.
+Frontend controls ready for future AI services.
 </p>
 
 <div class="grid">
@@ -947,52 +829,44 @@ Frontend tools prepared for future AI integration.
 </div>
 
 </div>
-</div>
+
 </section>
 
 
 <!-- TEMPLATES -->
 
 <section id="templates" class="page">
-<div class="container">
 
 <div class="card">
 
 <h2>Template Marketplace</h2>
 
-<input id="templateSearch" placeholder="Search templates">
-
-<select id="templateCategory">
-
-<option>All</option>
-<option>Social</option>
-<option>Business</option>
-<option>Music</option>
-<option>Video</option>
-<option>Photo</option>
-
-</select>
+<input
+placeholder="Search templates">
 
 </div>
 
-<div id="templateList" class="grid"></div>
-
+<div
+id="templateList"
+class="grid">
 </div>
+
 </section>
 
 
-<!-- TEMPLATE CREATOR -->
+<!-- CREATE TEMPLATE -->
 
-<section id="templateCreator" class="page">
-<div class="container">
+<section id="createTemplate" class="page">
 
 <div class="card">
 
 <h2>Create Template</h2>
 
-<input id="templateName" placeholder="Template name">
+<input
+id="tplName"
+placeholder="Template name">
 
-<select id="templateType">
+<select id="tplType">
 
 <option>Video</option>
 <option>Photo</option>
@@ -1002,50 +876,51 @@ Frontend tools prepared for future AI integration.
 </select>
 
 <textarea
-id="templateDescription"
-placeholder="Describe your template">
+id="tplDesc"
+placeholder="Description">
 </textarea>
 
-<div class="check-row">
+<label class="check">
 
-<input type="checkbox" id="templatePremium">
+<input
+id="tplPremium"
+type="checkbox">
 
-<label>
 Request premium review
+
 </label>
 
-</div>
+<button
+class="btn blue"
+onclick="createTpl()">
 
-<button class="btn blue" onclick="createTemplate()">
 Save Template
+
 </button>
 
 </div>
-</div>
+
 </section>
 
 
 <!-- MY TEMPLATES -->
 
 <section id="myTemplates" class="page">
-<div class="container">
 
 <div class="card">
 
 <h2>My Templates</h2>
 
-<div id="myTemplateList" class="grid"></div>
+<div id="myTpl"></div>
 
 </div>
 
-</div>
 </section>
 
 
 <!-- CREATOR PROGRAM -->
 
-<section id="creatorProgram" class="page">
-<div class="container">
+<section id="program" class="page">
 
 <div class="card">
 
@@ -1054,44 +929,40 @@ Save Template
 <div class="stats">
 
 <div class="stat">
-<strong>1</strong>
+<b>1</b>
 Creator
 </div>
 
 <div class="stat">
-<strong>2</strong>
+<b>2</b>
 Rising Creator
 </div>
 
 <div class="stat">
-<strong>3</strong>
+<b>3</b>
 Premium Creator
 </div>
 
 <div class="stat">
-<strong>4</strong>
+<b>4</b>
 RockyX Partner
 </div>
 
 </div>
 
-<p style="margin-top:15px">
-
-Creator levels will later use performance,
-originality, community compliance and
-other configurable requirements.
-
+<p>
+Eligibility will later use configurable performance,
+originality, copyright and community requirements.
 </p>
 
 </div>
-</div>
+
 </section>
 
 
-<!-- TEMPLATE ANALYTICS -->
+<!-- ANALYTICS -->
 
-<section id="templateAnalytics" class="page">
-<div class="container">
+<section id="analytics" class="page">
 
 <div class="card">
 
@@ -1100,36 +971,35 @@ other configurable requirements.
 <div class="stats">
 
 <div class="stat">
-<strong>0</strong>
+<b>0</b>
 Uses
 </div>
 
 <div class="stat">
-<strong>0</strong>
+<b>0</b>
 Saves
 </div>
 
 <div class="stat">
-<strong>0</strong>
+<b>0</b>
 Shares
 </div>
 
 <div class="stat">
-<strong>GHS 0</strong>
+<b>GHS 0</b>
 Earnings
 </div>
 
 </div>
 
 </div>
-</div>
+
 </section>
 
 
 <!-- CREATOR EARNINGS -->
 
 <section id="creatorEarnings" class="page">
-<div class="container">
 
 <div class="card">
 
@@ -1138,48 +1008,47 @@ Earnings
 <div class="stats">
 
 <div class="stat">
-<strong>GHS 0.00</strong>
+<b>GHS 0</b>
 Available
 </div>
 
 <div class="stat">
-<strong>GHS 0.00</strong>
+<b>GHS 0</b>
 Pending
 </div>
 
 <div class="stat">
-<strong>GHS 0.00</strong>
+<b>GHS 0</b>
 Lifetime
 </div>
 
 <div class="stat">
-<strong>0</strong>
+<b>0</b>
 Payouts
 </div>
 
 </div>
 
 </div>
-</div>
+
 </section>
 
 
 <!-- MARKETPLACE -->
 
-<section id="marketplace" class="page">
-<div class="container">
+<section id="market" class="page">
 
 <div class="card">
 
 <h2>Marketplace</h2>
 
 <input
-id="productSearch"
+id="prodSearch"
 placeholder="Search products"
 oninput="renderProducts()">
 
 <select
-id="productCategory"
+id="prodCat"
 onchange="renderProducts()">
 
 <option>All</option>
@@ -1193,22 +1062,23 @@ onchange="renderProducts()">
 
 </div>
 
-<div id="productList" class="grid"></div>
-
+<div
+id="products"
+class="grid">
 </div>
+
 </section>
 
 
 <!-- CART -->
 
 <section id="cart" class="page">
-<div class="container">
 
 <div class="card">
 
-<h2>Shopping Cart</h2>
+<h2>Cart</h2>
 
-<div id="cartList"></div>
+<div id="cartOut"></div>
 
 <h3 id="cartTotal">
 Total: GHS 0.00
@@ -1216,58 +1086,42 @@ Total: GHS 0.00
 
 <button
 class="btn blue"
-onclick="showPage('checkout')">
+onclick="show('checkout')">
 Checkout
 </button>
 
 </div>
-</div>
+
 </section>
 
 
 <!-- CHECKOUT -->
 
 <section id="checkout" class="page">
-<div class="container">
 
 <div class="card">
 
 <h2>Checkout</h2>
 
-<div class="notice">
+<select id="country">
 
-<strong>Demo payment mode</strong>
-
-<p>
-This frontend currently prepares the payment,
-commission and order system. Real card,
-mobile-money and bank payments will be
-connected during the backend stage.
-</p>
-
-</div>
-
-<label>Country</label>
-
-<select id="checkoutCountry" onchange="updateCurrencyDisplay()">
-
-<option value="Ghana">Ghana — GHS</option>
-<option value="Nigeria">Nigeria — NGN</option>
-<option value="United Kingdom">United Kingdom — GBP</option>
-<option value="United States">United States — USD</option>
+<option>Ghana</option>
+<option>Nigeria</option>
+<option>United Kingdom</option>
+<option>United States</option>
 
 </select>
 
 <input
-id="checkoutName"
+id="buyerName"
 placeholder="Full name">
 
 <input
-id="checkoutPhone"
+id="buyerPhone"
 placeholder="Phone number">
 
 <textarea
-id="checkoutAddress"
+id="address"
 placeholder="Delivery address">
 </textarea>
 
@@ -1275,155 +1129,128 @@ placeholder="Delivery address">
 
 <button
 class="btn blue"
-onclick="createDemoPayment()">
+onclick="preparePayment()">
+
 Proceed to Payment
+
 </button>
 
 </div>
-</div>
+
 </section>
 
 
 <!-- PAYMENT -->
 
 <section id="payment" class="page">
-<div class="container">
 
 <div class="card">
 
 <h2>Payment</h2>
 
-<div id="paymentSummary"></div>
+<div id="paymentOut"></div>
 
-<h3>Payment method</h3>
-
-<select id="paymentMethod">
+<select id="method">
 
 <option>Mobile Money</option>
 <option>Bank Card</option>
 <option>Bank Transfer</option>
+
 </select>
 
-<div class="warning-box">
+<div class="card">
 
-Real payment processing is not connected yet.
-This button creates a demo payment record only.
+Demo payment only.
+Real payment providers will be connected during the backend stage.
 
 </div>
 
 <button
 class="btn blue"
-onclick="completeDemoPayment()">
+onclick="pay()">
+
 Complete Demo Payment
+
 </button>
 
 </div>
-</div>
+
 </section>
 
 
 <!-- ORDERS -->
 
 <section id="orders" class="page">
-<div class="container">
 
 <div class="card">
 
 <h2>Orders</h2>
 
-<div id="ordersList"></div>
+<div id="ordersOut"></div>
 
 </div>
 
-</div>
 </section>
 
 
 <!-- TRANSACTIONS -->
 
 <section id="transactions" class="page">
-<div class="container">
 
 <div class="card">
 
-<h2>Transaction History</h2>
+<h2>Transactions</h2>
 
-<div id="transactionsList"></div>
-
-</div>
+<div id="txOut"></div>
 
 </div>
+
 </section>
 
 
-<!-- SELLER TOOLS -->
+<!-- SELLER -->
 
-<section id="sellerTools" class="page">
-<div class="container">
+<section id="seller" class="page">
 
 <div class="card">
 
 <h2>Seller Tools</h2>
 
 <input
-id="sellerProductName"
+id="newName"
 placeholder="Product name">
 
 <textarea
-id="sellerProductDescription"
+id="newDesc"
 placeholder="Description">
 </textarea>
 
 <input
-id="sellerProductPrice"
+id="newPrice"
 type="number"
 placeholder="Price">
 
 <input
-id="sellerProductImage"
+id="newImage"
 type="file"
 accept="image/*">
 
 <button
 class="btn blue"
-onclick="addSellerProduct()">
+onclick="sellerProduct()">
+
 Add Product
+
 </button>
 
 </div>
 
-<div class="stats">
-
-<div class="stat">
-<strong id="sellerSalesCount">0</strong>
-Sales
-</div>
-
-<div class="stat">
-<strong id="sellerOrdersCount">0</strong>
-Orders
-</div>
-
-<div class="stat">
-<strong>5%</strong>
-Demo Commission
-</div>
-
-<div class="stat">
-<strong id="sellerEarnedDisplay">GHS 0</strong>
-Seller Earnings
-</div>
-
-</div>
-
-</div>
 </section>
 
 
 <!-- SELLER EARNINGS -->
 
 <section id="sellerEarnings" class="page">
-<div class="container">
 
 <div class="card">
 
@@ -1432,122 +1259,88 @@ Seller Earnings
 <div class="stats">
 
 <div class="stat">
-<strong id="sellerGross">GHS 0.00</strong>
-Gross Sales
+<b id="gross">GHS 0</b>
+Gross
 </div>
 
 <div class="stat">
-<strong id="sellerCommission">GHS 0.00</strong>
-RockyX Commission
+<b id="comm">GHS 0</b>
+Commission
 </div>
 
 <div class="stat">
-<strong id="sellerNet">GHS 0.00</strong>
+<b id="net">GHS 0</b>
 Seller Balance
 </div>
 
 <div class="stat">
-<strong id="sellerPending">GHS 0.00</strong>
-Pending
+<b>5%</b>
+Demo Rate
 </div>
 
 </div>
 
 </div>
 
-<div class="card">
-
-<h3>How the demo commission works</h3>
-
-<p>
-Current frontend demonstration:
-</p>
-
-<p style="margin-top:8px">
-Customer payment → RockyX commission → Seller balance
-</p>
-
-<p style="margin-top:8px">
-Demo platform commission: <strong>5%</strong>
-</p>
-
-</div>
-
-</div>
 </section>
 
 
 <!-- PAYOUTS -->
 
 <section id="payouts" class="page">
-<div class="container">
 
 <div class="card">
 
 <h2>Payouts</h2>
 
-<div class="notice">
-
-Payouts will later require the appropriate
-account, payment provider and verification
-requirements.
-
+<div
+class="money"
+id="balance">
+GHS 0
 </div>
-
-<div class="money" id="payoutBalance">
-GHS 0.00
-</div>
-
-<p>Available payout balance</p>
 
 <button
 class="btn blue"
-onclick="requestDemoPayout()">
+onclick="payout()">
+
 Request Demo Payout
+
 </button>
 
 </div>
 
-<div class="card">
-
-<h3>Payout History</h3>
-
-<div id="payoutHistory"></div>
-
+<div
+class="card"
+id="payoutOut">
 </div>
 
-</div>
 </section>
 
 
 <!-- NEARBY -->
 
 <section id="nearby" class="page">
-<div class="container">
 
 <div class="card">
 
 <h2>Nearby</h2>
 
 <p>
-Businesses, sellers, restaurants,
-hotels, services and useful places.
+Nearby discovery and maps will be connected in Stage 8.
 </p>
 
-<div class="map-box">
-Map / nearby discovery will be connected in Stage 8.
+<div class="map">
+Map area
 </div>
 
 </div>
 
-</div>
 </section>
 
 
 <!-- TRANSPORT -->
 
 <section id="transport" class="page">
-<div class="container">
 
 <div class="card">
 
@@ -1567,54 +1360,50 @@ Map / nearby discovery will be connected in Stage 8.
 
 </select>
 
-<div class="map-box">
-Transport map will be connected in Stage 8.
+<div class="map">
+Transport map area
 </div>
 
 </div>
 
-</div>
 </section>
 
 
 <!-- BUSINESSES -->
 
 <section id="businesses" class="page">
-<div class="container">
 
 <div class="card">
 
 <h2>Businesses</h2>
 
-<input placeholder="Search businesses">
+<input
+placeholder="Search businesses">
 
 </div>
 
-</div>
 </section>
 
 
 <!-- SERVICES -->
 
 <section id="services" class="page">
-<div class="container">
 
 <div class="card">
 
 <h2>Services</h2>
 
-<input placeholder="Search services">
+<input
+placeholder="Search services">
 
 </div>
 
-</div>
 </section>
 
 
 <!-- MESSAGES -->
 
 <section id="messages" class="page">
-<div class="container">
 
 <div class="card">
 
@@ -1630,95 +1419,76 @@ Mary — How are you?
 
 </div>
 
-</div>
 </section>
 
 
 <!-- NOTIFICATIONS -->
 
 <section id="notifications" class="page">
-<div class="container">
 
 <div class="card">
 
 <h2>Notifications</h2>
 
-<div class="post">
-Someone liked your post.
+<button
+class="btn blue"
+onclick="readAll()">
+Mark All Read
+</button>
+
+<button
+class="btn red"
+onclick="clearNotices()">
+Clear All
+</button>
+
 </div>
 
-<div class="post">
-You have a new follower.
-</div>
+<div id="notices"></div>
 
-</div>
-
-</div>
 </section>
 
 
 <!-- PROFILE -->
 
 <section id="profile" class="page">
-<div class="container">
 
 <div class="card">
 
-<div class="profile-head">
-
-<div class="avatar">R</div>
-
-<div>
-
 <h2>Your Profile</h2>
-<p>@creator</p>
 
-</div>
-
-</div>
-
-<div class="stats" style="margin-top:20px">
+<div class="stats">
 
 <div class="stat">
-<strong>0</strong>
+<b>0</b>
 Posts
 </div>
 
 <div class="stat">
-<strong>0</strong>
+<b>0</b>
 Followers
 </div>
 
 <div class="stat">
-<strong>0</strong>
+<b>0</b>
 Following
 </div>
 
 <div class="stat">
-<strong>0</strong>
+<b>0</b>
 Likes
 </div>
 
 </div>
 
-<button class="btn">
-Edit Profile
-</button>
-
-<button class="btn secondary">
-Follow
-</button>
-
 </div>
 
-</div>
 </section>
 
 
 <!-- ACCOUNT -->
 
 <section id="account" class="page">
-<div class="container">
 
 <div class="card">
 
@@ -1726,1353 +1496,1030 @@ Follow
 
 <button
 class="btn blue"
-onclick="openSignup()">
+onclick="signup()">
 Create Account
 </button>
 
 <button
-class="btn secondary"
-onclick="openSignin()">
+class="btn gray"
+onclick="signin()">
 Sign In
 </button>
 
-<p
-id="accountStatus"
-style="margin-top:15px">
+<p id="accountStatus">
 Not signed in
 </p>
 
 </div>
 
-</div>
 </section>
 
 
 <!-- SETTINGS -->
 
 <section id="settings" class="page">
-<div class="container">
 
 <div class="card">
 
 <h2>Settings</h2>
 
-<label>Username</label>
-<input placeholder="Username">
-
-<label>Email</label>
-<input type="email" placeholder="Email">
-
-<div class="check-row">
+<label class="check">
 <input type="checkbox">
-<label>Private account</label>
-</div>
+Private account
+</label>
 
-<div class="check-row">
-<input type="checkbox">
-<label>Allow messages</label>
-</div>
-
-<div class="check-row">
+<label class="check">
 <input type="checkbox" checked>
-<label>Allow video downloads by default</label>
-</div>
+Allow messages
+</label>
 
-<button class="btn blue">
+<label class="check">
+<input type="checkbox" checked>
+Allow downloads by default
+</label>
+
+<button
+class="btn blue"
+onclick="alert('Settings saved in this demo.')">
+
 Save Settings
+
 </button>
 
 </div>
 
-</div>
-</section>
-
-
-<!-- LIVE -->
-
-<section id="live" class="page">
-<div class="container">
-
-<div class="card">
-
-<h2>Live</h2>
-
-<p>
-Live streaming interface prepared for the future backend/live system.
-</p>
-
-<button class="btn danger">
-🔴 Start Live
-</button>
-
-</div>
-
-</div>
 </section>
 
 </main>
-</div>
 
 
-<!-- MOBILE NAV -->
+<!-- MOBILE NAVIGATION -->
 
-<nav class="mobile-nav">
+<nav class="mobile">
 
-<button onclick="showPage('home')">
+<button onclick="show('home')">
 🏠<br>Home
 </button>
 
-<button onclick="showPage('shorts')">
+<button onclick="show('shorts')">
 🎬<br>Shorts
 </button>
 
-<button onclick="showPage('marketplace')">
+<button onclick="show('market')">
 🛍️<br>Shop
 </button>
 
-<button onclick="showPage('messages')">
+<button onclick="show('messages')">
 💬<br>Chat
 </button>
 
-<button onclick="showPage('account')">
+<button onclick="show('account')">
 👤<br>Account
 </button>
 
 </nav>
 
 
-<!-- SIGNUP MODAL -->
-
-<div id="signupModal" class="modal">
-
-<div class="modal-box">
-
-<button class="close" onclick="closeModals()">×</button>
-
-<h2>Create Account</h2>
-
-<input id="signupName" placeholder="Full name">
-
-<input
-id="signupEmail"
-type="email"
-placeholder="Email address">
-
-<input
-id="signupPhone"
-type="tel"
-placeholder="Phone number">
-
-<select id="signupCountry">
-
-<option value="">Select country</option>
-<option>Ghana</option>
-<option>Nigeria</option>
-<option>United Kingdom</option>
-<option>United States</option>
-<option>Other</option>
-
-</select>
-
-<input
-id="signupPassword"
-type="password"
-placeholder="Password">
-
-<input
-id="signupConfirm"
-type="password"
-placeholder="Confirm password">
-
-<button
-class="btn blue"
-onclick="createAccount()">
-Create Account
-</button>
-
-<button
-class="btn secondary"
-onclick="switchToSignin()">
-Already have an account?
-</button>
-
-</div>
-</div>
-
-
-<!-- SIGNIN MODAL -->
-
-<div id="signinModal" class="modal">
-
-<div class="modal-box">
-
-<button class="close" onclick="closeModals()">×</button>
-
-<h2>Sign In</h2>
-
-<input
-id="signinEmail"
-type="email"
-placeholder="Email address">
-
-<input
-id="signinPassword"
-type="password"
-placeholder="Password">
-
-<button
-class="btn blue"
-onclick="signIn()">
-Sign In
-</button>
-
-<button
-class="btn secondary"
-onclick="switchToSignup()">
-Create account
-</button>
-
-</div>
-</div>
-
-
-<!-- PRODUCT MODAL -->
-
-<div id="productModal" class="modal">
-
-<div class="modal-box">
-
-<button
-class="close"
-onclick="closeProductModal()">
-×
-</button>
-
-<div id="productModalContent"></div>
-
-</div>
-</div>
-
-
 <script>
 
-/* =========================================
-GLOBAL STATE
-========================================= */
+const $=id=>document.getElementById(id);
 
-let cameraStream=null;
-let mediaRecorder=null;
-let recordedChunks=[];
+const esc=x=>String(x).replace(
+/[&<>"']/g,
+m=>({
+'&':'&amp;',
+'<':'&lt;',
+'>':'&gt;',
+'"':'&quot;',
+"'":'&#039;'
+}[m])
+);
 
-let shorts=[];
-let longVideos=[];
 
-let products=[
-{
-id:1,
-name:"Wireless Headphones",
-description:"Wireless headphones",
-price:250,
-category:"Electronics",
-image:""
-},
-{
-id:2,
-name:"Classic T-Shirt",
-description:"Comfortable T-shirt",
-price:100,
-category:"Fashion",
-image:""
-},
-{
-id:3,
-name:"Home Speaker",
-description:"Bluetooth speaker",
-price:350,
-category:"Electronics",
-image:""
-}
+const nav=[
+['home','🏠 Home'],
+['explore','🔎 Explore'],
+['shorts','🎬 Shorts'],
+['videos','▶️ Videos'],
+['live','🔴 Live'],
+['music','🎵 Music'],
+['sounds','🔊 Sounds'],
+['camera','📷 Camera'],
+['media','🖼️ Media'],
+['creator','⭐ Creator Studio'],
+['photo','🖌️ Photo Editor'],
+['videoedit','🎞️ Video Editor'],
+['ai','✨ AI Studio'],
+['templates','🧩 Templates'],
+['createTemplate','➕ Create Template'],
+['myTemplates','📁 My Templates'],
+['program','🏆 Creator Program'],
+['analytics','📊 Template Analytics'],
+['creatorEarnings','💰 Creator Earnings'],
+['market','🛍️ Marketplace'],
+['cart','🛒 Cart'],
+['checkout','💳 Checkout'],
+['orders','📦 Orders'],
+['transactions','🧾 Transactions'],
+['seller','🏪 Seller Tools'],
+['sellerEarnings','💵 Seller Earnings'],
+['payouts','💸 Payouts'],
+['nearby','📍 Nearby'],
+['transport','🚕 Transport'],
+['businesses','🏢 Businesses'],
+['services','🛠️ Services'],
+['messages','💬 Messages'],
+['notifications','🔔 Notifications'],
+['profile','👤 Profile'],
+['account','⚙️ Account'],
+['settings','🔐 Settings']
 ];
 
+
+$('sidebar').innerHTML=nav.map(n=>
+`<button class="nav" onclick="show('${n[0]}')">${n[1]}</button>`
+).join('');
+
+
+let camStream=null;
+let rec=null;
+let chunks=[];
+
+let shorts=[];
+let longs=[];
 let cart=[];
 let orders=[];
-let transactions=[];
+let tx=[];
 let payouts=[];
-let myTemplates=[];
-let savedSoundList=[];
-
-const COMMISSION_RATE=0.05;
-
+let templates=[];
+let savedSounds=[];
 let currentPayment=null;
 
 
-/* =========================================
-PAGE NAVIGATION
-========================================= */
+let products=[
 
-function showPage(id,button){
+{
+id:1,
+name:'Wireless Headphones',
+description:'Wireless headphones',
+price:250,
+cat:'Electronics'
+},
 
-document.querySelectorAll(".page").forEach(p=>{
-p.classList.remove("active");
+{
+id:2,
+name:'Classic T-Shirt',
+description:'Comfortable shirt',
+price:100,
+cat:'Fashion'
+},
+
+{
+id:3,
+name:'Bluetooth Speaker',
+description:'Portable speaker',
+price:350,
+cat:'Electronics'
+}
+
+];
+
+
+let notices=[
+
+{
+id:1,
+title:'Welcome',
+message:'Your RockyX notification center is ready.',
+read:false,
+time:new Date().toLocaleString()
+}
+
+];
+
+
+function show(id){
+
+document
+.querySelectorAll('.page')
+.forEach(p=>p.classList.remove('active'));
+
+if($(id))
+$(id).classList.add('active');
+
+window.scrollTo(0,0);
+
+if(id==='market')
+renderProducts();
+
+if(id==='cart')
+renderCart();
+
+if(id==='checkout')
+renderCheckout();
+
+if(id==='orders')
+renderOrders();
+
+if(id==='transactions')
+renderTx();
+
+if(id==='sellerEarnings')
+renderSeller();
+
+if(id==='payouts')
+renderPayouts();
+
+if(id==='notifications')
+renderNotices();
+
+if(id==='templates'||id==='myTemplates')
+renderTemplates();
+
+if(id==='sounds')
+renderSounds();
+
+}
+
+
+function notify(title,message){
+
+notices.unshift({
+
+id:Date.now()+Math.random(),
+title:title,
+message:message,
+read:false,
+time:new Date().toLocaleString()
+
 });
 
-const page=document.getElementById(id);
-
-if(page){
-page.classList.add("active");
-window.scrollTo({top:0,behavior:"smooth"});
-}
-
-if(button){
-
-document.querySelectorAll(".nav-btn")
-.forEach(b=>b.classList.remove("active"));
-
-button.classList.add("active");
-
-}
-
-if(id==="marketplace")renderProducts();
-if(id==="cart")renderCart();
-if(id==="checkout")renderCheckout();
-if(id==="orders")renderOrders();
-if(id==="transactions")renderTransactions();
-if(id==="sellerEarnings")renderSellerEarnings();
-if(id==="payouts")renderPayouts();
-if(id==="templates")renderTemplates();
-if(id==="myTemplates")renderMyTemplates();
-if(id==="sounds")renderSounds();
+renderNotices();
 
 }
 
 
-/* =========================================
-POSTS
-========================================= */
+function renderNotices(){
 
-function createPost(){
+let n=$('notices');
 
-const text=document
-.getElementById("postText")
-.value.trim();
-
-const file=document
-.getElementById("postMedia")
-.files[0];
-
-if(!text && !file){
-
-alert("Write something or choose media.");
+if(!n)
 return;
 
-}
+n.innerHTML=notices.length?
 
-const post=document.createElement("div");
+notices.map(x=>
 
-post.className="post";
+`<div class="notify ${x.read?'':'unread'}">
 
-let media="";
+<h3>
+${x.read?'':'<span class="dot"></span>'}
+${esc(x.title)}
+</h3>
 
-if(file){
-
-const url=URL.createObjectURL(file);
-
-if(file.type.startsWith("image")){
-
-media=`<img src="${url}">`;
-
-}else{
-
-media=`<video src="${url}" controls></video>`;
-
-}
-
-}
-
-post.innerHTML=`
-
-<strong>You</strong>
-
-<p style="margin-top:8px">
-${escapeHTML(text)}
+<p>
+${esc(x.message)}
 </p>
+
+<small>
+${esc(x.time)}
+</small>
+
+${x.read?'':`
+
+<br>
+
+<button
+class="btn gray"
+onclick="readNotice(${x.id})">
+
+Mark Read
+
+</button>
+
+`}
+
+</div>`
+
+).join('')
+
+:
+
+'<div class="card">No notifications.</div>';
+
+
+let u=notices.filter(x=>!x.read).length;
+
+$('badge').textContent=u;
+
+$('badge').classList.toggle(
+'show',
+u>0
+);
+
+}
+
+
+function readNotice(id){
+
+let n=notices.find(x=>x.id===id);
+
+if(n)
+n.read=true;
+
+renderNotices();
+
+}
+
+
+function readAll(){
+
+notices.forEach(n=>n.read=true);
+
+renderNotices();
+
+}
+
+
+function clearNotices(){
+
+if(confirm('Clear all notifications?')){
+
+notices=[];
+
+renderNotices();
+
+}
+
+}
+
+
+function post(){
+
+let t=$('postText').value.trim();
+
+let f=$('postFile').files[0];
+
+if(!t&&!f)
+return alert('Write something or choose media.');
+
+let media='';
+
+if(f){
+
+let u=URL.createObjectURL(f);
+
+media=f.type.startsWith('image')
+
+?`<img src="${u}">`
+
+:`<video src="${u}" controls></video>`;
+
+}
+
+$('feed').insertAdjacentHTML(
+
+'afterbegin',
+
+`<div class="post">
+
+<b>You</b>
+
+<p>${esc(t)}</p>
 
 ${media}
 
-<div class="post-actions">
+<div>
 
-<button class="btn secondary">
-❤️ Like
-</button>
+<button class="btn gray">❤️ Like</button>
 
-<button class="btn secondary">
-💬 Comment
-</button>
+<button class="btn gray">💬 Comment</button>
 
-<button class="btn secondary">
-↗ Share
-</button>
+<button class="btn gray">↗ Share</button>
 
-<button class="btn secondary">
-🔖 Save
-</button>
+<button class="btn gray">🔖 Save</button>
 
 </div>
-`;
 
-document
-.getElementById("feed")
-.prepend(post);
+</div>`
 
-document.getElementById("postText").value="";
-document.getElementById("postMedia").value="";
+);
 
-alert("Post created.");
+$('postText').value='';
+
+$('postFile').value='';
 
 }
 
 
-/* =========================================
-SEARCH
-========================================= */
+function searchAll(){
 
-function performSearch(){
+let q=(
+$('search').value||
+$('explore').value||
+''
+).trim();
 
-const query=
-document.getElementById("globalSearch")
-.value.trim()
-||
-document.getElementById("exploreSearch")?.value.trim();
+show('explore');
 
-if(!query){
+$('results').innerHTML=
 
-alert("Enter something to search.");
-return;
+`<div class="card">
 
-}
-
-showPage("explore");
-
-document.getElementById("searchResults").innerHTML=`
-
-<div class="card">
-
-<h2>Search results</h2>
+<h2>Search Results</h2>
 
 <p>
-Showing demo results for:
-<strong>${escapeHTML(query)}</strong>
+Demo results for
+<b>${esc(q||'everything')}</b>.
 </p>
 
-</div>
-
-<div class="grid">
-
-<div class="card">
-<h3>Products</h3>
-<p>Product results will appear here.</p>
-</div>
-
-<div class="card">
-<h3>People</h3>
-<p>People results will appear here.</p>
-</div>
-
-<div class="card">
-<h3>Videos</h3>
-<p>Video results will appear here.</p>
-</div>
-
-<div class="card">
-<h3>Music</h3>
-<p>Music results will appear here.</p>
-</div>
-
-</div>
-`;
+</div>`;
 
 }
 
 
-/* =========================================
-CAMERA
-========================================= */
-
-async function startCamera(){
+async function startCam(){
 
 try{
 
-cameraStream=
+camStream=
 await navigator.mediaDevices.getUserMedia({
 video:true,
 audio:true
 });
 
-document.getElementById("cameraVideo")
-.srcObject=cameraStream;
+$('cam').srcObject=camStream;
 
-}catch(error){
+}catch(e){
 
-alert("Camera access was not allowed or is unavailable.");
-
-}
+alert('Camera permission was not granted.');
 
 }
 
-function stopCamera(){
+}
 
-if(cameraStream){
 
-cameraStream
+function stopCam(){
+
+if(camStream){
+
+camStream
 .getTracks()
-.forEach(track=>track.stop());
+.forEach(t=>t.stop());
 
-cameraStream=null;
+camStream=null;
 
-document.getElementById("cameraVideo")
-.srcObject=null;
+$('cam').srcObject=null;
+
+}
 
 }
 
+
+function camFilter(){
+
+let v=$('camFilter').value;
+
+$('cam').style.filter=
+
+v==='grayscale'
+?'grayscale(100%)'
+
+:v==='sepia'
+?'sepia(100%)'
+
+:v==='brightness'
+?'brightness(140%)'
+
+:v==='contrast'
+?'contrast(150%)'
+
+:'none';
+
 }
+
 
 function takePhoto(){
 
-const video=document.getElementById("cameraVideo");
+let v=$('cam');
 
-const canvas=document.getElementById("cameraCanvas");
+let c=$('canvas');
 
-if(!video.videoWidth){
+if(!v.videoWidth)
+return alert('Start the camera first.');
 
-alert("Start the camera first.");
-return;
+c.width=v.videoWidth;
 
-}
+c.height=v.videoHeight;
 
-canvas.width=video.videoWidth;
-canvas.height=video.videoHeight;
-
-const ctx=canvas.getContext("2d");
-
-ctx.filter=getCanvasFilter();
-
-ctx.drawImage(
-video,
+c.getContext('2d').drawImage(
+v,
 0,
-0,
-canvas.width,
-canvas.height
+0
 );
 
-canvas.toBlob(blob=>{
+c.toBlob(
 
-const url=URL.createObjectURL(blob);
+b=>{
 
-document.getElementById("cameraDownloads")
-.innerHTML+=`
+let u=URL.createObjectURL(b);
 
-<div class="card">
+$('cameraOut').insertAdjacentHTML(
+
+'beforeend',
+
+`<div class="card">
 
 <img
-src="${url}"
+src="${u}"
 style="max-width:100%">
 
 <br>
 
 <a
 class="btn blue"
-href="${url}"
-download="rockyx-photo.jpg">
+href="${u}"
+download="RockyX-photo.jpg">
 
 Download Photo
 
 </a>
 
-</div>
-`;
+</div>`
 
-},"image/jpeg",.95);
+);
 
-}
+},
 
-function startRecording(){
+'image/jpeg'
 
-if(!cameraStream){
-
-alert("Start the camera first.");
-return;
+);
 
 }
 
-recordedChunks=[];
 
-mediaRecorder=
-new MediaRecorder(cameraStream);
+function record(){
 
-mediaRecorder.ondataavailable=e=>{
+if(!camStream)
+return alert('Start the camera first.');
 
-if(e.data.size>0)
-recordedChunks.push(e.data);
+chunks=[];
 
-};
+rec=new MediaRecorder(camStream);
 
-mediaRecorder.onstop=()=>{
+rec.ondataavailable=e=>
+chunks.push(e.data);
 
-const blob=
-new Blob(recordedChunks,{
-type:"video/webm"
-});
+rec.onstop=()=>{
 
-const url=
-URL.createObjectURL(blob);
+let u=URL.createObjectURL(
 
-document.getElementById("cameraDownloads")
-.innerHTML+=`
+new Blob(
+chunks,
+{type:'video/webm'}
+)
 
-<div class="card">
+);
+
+$('cameraOut').insertAdjacentHTML(
+
+'beforeend',
+
+`<div class="card">
 
 <video
-src="${url}"
+src="${u}"
 controls
-style="max-width:100%">
+style="width:100%">
 </video>
-
-<br>
 
 <a
 class="btn blue"
-href="${url}"
-download="rockyx-camera-video.webm">
+href="${u}"
+download="RockyX-camera.webm">
 
 Download Video
 
 </a>
 
-</div>
-`;
+</div>`
+
+);
 
 };
 
-mediaRecorder.start();
+rec.start();
 
-alert("Recording started.");
+alert('Recording started.');
 
 }
 
-function stopRecording(){
+
+function stopRecord(){
 
 if(
-mediaRecorder &&
-mediaRecorder.state!=="inactive"
+rec &&
+rec.state!=='inactive'
 ){
 
-mediaRecorder.stop();
+rec.stop();
 
-alert("Recording stopped.");
-
-}
+alert('Recording stopped.');
 
 }
-
-function applyFilter(){
-
-document
-.getElementById("cameraVideo")
-.style.filter=
-getCanvasFilter();
-
-}
-
-function getCanvasFilter(){
-
-const value=
-document.getElementById("cameraFilter")
-.value;
-
-if(value==="grayscale")
-return"grayscale(100%)";
-
-if(value==="sepia")
-return"sepia(100%)";
-
-if(value==="brightness")
-return"brightness(140%)";
-
-if(value==="contrast")
-return"contrast(150%)";
-
-if(value==="saturate")
-return"saturate(180%)";
-
-if(value==="cool")
-return"brightness(105%) saturate(120%)";
-
-if(value==="warm")
-return"sepia(20%) saturate(130%)";
-
-return"none";
 
 }
 
 
-/* =========================================
-MEDIA
-========================================= */
+function media(){
 
-function loadMedia(){
+[...$('mediaIn').files]
+.forEach(f=>{
 
-const files=[
-...document.getElementById("mediaInput").files
-];
+let u=URL.createObjectURL(f);
 
-const grid=
-document.getElementById("mediaGrid");
+$('mediaOut').insertAdjacentHTML(
 
-files.forEach(file=>{
+'beforeend',
 
-const url=URL.createObjectURL(file);
+`<div class="card">
 
-const box=document.createElement("div");
+${
+f.type.startsWith('image')
 
-box.className="card";
+?`<img src="${u}" style="width:100%">`
 
-if(file.type.startsWith("image")){
-
-box.innerHTML=
-`<img src="${url}" style="width:100%">`;
-
-}else{
-
-box.innerHTML=
-`<video src="${url}" controls style="width:100%"></video>`;
+:`<video src="${u}" controls style="width:100%"></video>`
 
 }
 
-grid.appendChild(box);
+</div>`
+
+);
 
 });
 
 }
 
 
-/* =========================================
-SHORTS
-========================================= */
+function addVideo(short){
 
-function addShort(){
+let f=$(short?'shortIn':'longIn').files[0];
 
-const file=
-document.getElementById("shortInput")
-.files[0];
+if(!f)
+return alert('Choose a video first.');
 
-if(!file){
+let allow=
+$(short?'shortDL':'longDL').checked;
 
-alert("Choose a short video first.");
-return;
+let wm=
+$(short?'shortWM':'longWM').checked;
 
-}
-
-const allow=
-document.getElementById("shortAllowDownload")
-.checked;
-
-const watermark=
-document.getElementById("shortWatermark")
-.checked;
-
-const url=
-URL.createObjectURL(file);
-
-shorts.unshift({
+let obj={
 
 id:Date.now(),
-name:file.name,
-url,
-allowDownloads:allow,
-watermark
 
-});
+name:f.name,
 
-renderShorts();
+url:URL.createObjectURL(f),
 
-alert("Short published.");
+allow:allow,
+
+wm:wm
+
+};
+
+(short?shorts:longs)
+.unshift(obj);
+
+renderVideos();
+
+alert(
+short
+?'Short published.'
+:'Video published.'
+);
 
 }
 
-function renderShorts(){
 
-const container=
-document.getElementById("shortsList");
+function renderVideos(){
 
-container.innerHTML="";
+let card=v=>
 
-shorts.forEach(video=>{
-
-const downloadButton=
-video.allowDownloads
-?
-`
-<a
-class="btn blue"
-href="${video.url}"
-download="${downloadFilename(video.name,'short')}"
-onclick="showDownloadNotice()">
-
-⬇️ Download
-
-</a>
-`
-:"";
-
-container.innerHTML+=`
-
-<div class="video-card">
+`<div class="video">
 
 <video
-src="${video.url}"
+src="${v.url}"
 controls
 playsinline>
 </video>
 
-<div class="video-content">
+<div class="inside">
 
-<h3>
-${escapeHTML(video.name)}
-</h3>
+<b>
+${esc(v.name)}
+</b>
 
 <div class="video-actions">
 
-<button
-class="btn secondary"
-onclick="likeVideo(this)">
+<button class="btn gray">
 ❤️ Like
 </button>
 
-<button class="btn secondary">
+<button class="btn gray">
 💬 Comment
 </button>
 
-<button
-class="btn secondary"
-onclick="saveVideo(${video.id})">
+<button class="btn gray">
 🔖 Save
 </button>
 
-${downloadButton}
-
-</div>
-
-<p style="margin-top:8px">
-
 ${
-video.allowDownloads
-?"Downloads allowed"
-:"Downloads disabled by creator"
-}
+v.allow
 
-</p>
+?`
 
-${
-video.watermark
-?
-"<small>Download may include RockyX watermark.</small>"
-:""
-}
-
-</div>
-
-</div>
-`;
-
-});
-
-}
-
-
-/* =========================================
-LONG VIDEOS
-========================================= */
-
-function addLongVideo(){
-
-const file=
-document.getElementById("longVideoInput")
-.files[0];
-
-if(!file){
-
-alert("Choose a video first.");
-return;
-
-}
-
-const allow=
-document.getElementById("longAllowDownload")
-.checked;
-
-const watermark=
-document.getElementById("longWatermark")
-.checked;
-
-const url=
-URL.createObjectURL(file);
-
-longVideos.unshift({
-
-id:Date.now(),
-name:file.name,
-url,
-allowDownloads:allow,
-watermark
-
-});
-
-renderLongVideos();
-
-alert("Video published.");
-
-}
-
-function renderLongVideos(){
-
-const container=
-document.getElementById("videoResults");
-
-container.innerHTML="";
-
-longVideos.forEach(video=>{
-
-const downloadButton=
-video.allowDownloads
-?
-`
 <a
 class="btn blue"
-href="${video.url}"
-download="${downloadFilename(video.name,'video')}"
-onclick="showDownloadNotice()">
+href="${v.url}"
+download="RockyX-${esc(v.name)}">
 
-⬇️ Download
+⬇ Download
 
 </a>
+
 `
-:"";
 
-container.innerHTML+=`
+:''
 
-<div class="video-card">
-
-<video
-src="${video.url}"
-controls
-playsinline>
-</video>
-
-<div class="video-content">
-
-<h3>
-${escapeHTML(video.name)}
-</h3>
-
-<div class="video-actions">
-
-<button class="btn secondary">
-❤️ Like
-</button>
-
-<button class="btn secondary">
-💬 Comment
-</button>
-
-<button class="btn secondary">
-↗ Share
-</button>
-
-<button
-class="btn secondary"
-onclick="saveLongVideo(${video.id})">
-
-🔖 Save
-
-</button>
-
-${downloadButton}
+}
 
 </div>
 
-<p style="margin-top:8px">
+<small>
 
 ${
-video.allowDownloads
-?"Downloads allowed"
-:"Downloads disabled by creator"
+v.allow
+?'Downloads allowed'
+:'Downloads disabled'
 }
 
-</p>
+${v.wm?' • watermark may apply':''}
 
-${
-video.watermark
-?
-"<small>Download may include RockyX watermark.</small>"
-:""
-}
+</small>
 
 </div>
 
-</div>
-`;
+</div>`;
 
-});
+$('shortList').innerHTML=
+
+shorts.map(card).join('')||
+
+'<div class="card">No Shorts yet.</div>';
+
+$('longList').innerHTML=
+
+longs.map(card).join('')||
+
+'<div class="card">No long videos yet.</div>';
+
+}
+
+
+function editPreview(){
+
+let f=$('editIn').files[0];
+
+if(f)
+$('editPrev').src=
+URL.createObjectURL(f);
 
 }
 
 
-/* =========================================
-DOWNLOADS
-========================================= */
+function publishEdited(short){
 
-function downloadFilename(original,type){
+let f=$('editIn').files[0];
 
-let name=
-original
-.replace(/\.[^/.]+$/,"")
-.replace(/[^a-z0-9-_ ]/gi,"")
-.trim();
+if(!f)
+return alert('Choose a video first.');
 
-if(!name)name="video";
+let o={
 
-return`
-RockyX-${type}-${name}.webm
-`;
+id:Date.now(),
 
-}
+name:f.name,
 
-function showDownloadNotice(){
+url:URL.createObjectURL(f),
 
-setTimeout(()=>{
+allow:$('editDL').checked,
+
+wm:true
+
+};
+
+(short?shorts:longs)
+.unshift(o);
+
+renderVideos();
 
 alert(
-"Your video download has started. " +
-"Depending on your device and browser, " +
-"you may need to choose where to save it."
-);
-
-},100);
-
-}
-
-function saveVideo(id){
-
-const video=
-shorts.find(v=>v.id===id);
-
-if(video){
-
-alert(
-"Short saved to your RockyX saved content."
-);
-
-}
-
-}
-
-function saveLongVideo(id){
-
-const video=
-longVideos.find(v=>v.id===id);
-
-if(video){
-
-alert(
-"Video saved to your RockyX saved content."
+short
+?'Published as Short.'
+:'Published video.'
 );
 
 }
 
+
+function previewPhoto(){
+
+let f=$('photoIn').files[0];
+
+if(f){
+
+$('photoPrev').src=
+URL.createObjectURL(f);
+
+$('photoPrev').style.display=
+'block';
+
 }
 
-function likeVideo(button){
-
-button.textContent="❤️ Liked";
-
 }
 
 
-/* =========================================
-SOUNDS
-========================================= */
+function photoFilter(v){
+
+$('photoPrev').style.filter=
+
+v==='grayscale'
+?'grayscale(100%)'
+
+:v==='sepia'
+?'sepia(100%)'
+
+:v==='brightness'
+?'brightness(140%)'
+
+:'none';
+
+}
+
 
 function renderSounds(){
 
-const sounds=[
-"Original Sound",
-"Trending Beat",
-"Afrobeat Sample",
-"Creator Sound"
+let a=[
+
+'Original Sound',
+'Trending Beat',
+'Afrobeat Sample',
+'Creator Sound'
+
 ];
 
-document.getElementById("soundsList")
-.innerHTML=
-sounds.map(sound=>`
+$('soundList').innerHTML=
 
-<div class="card">
+a.map(s=>
 
-<strong>${sound}</strong>
+`<div class="card">
+
+<b>${s}</b>
 
 <button
-class="btn secondary"
-onclick="saveSound('${sound}')">
+class="btn gray"
+onclick="saveSound('${s}')">
 
 Save Sound
 
 </button>
 
-</div>
+</div>`
 
-`).join("");
+).join('');
 
-renderSavedSounds();
 
-}
+$('savedSounds').innerHTML=
 
-function saveSound(sound){
+savedSounds.map(x=>
+`<p>🔊 ${esc(x)}</p>`
+).join('')
 
-if(!savedSoundList.includes(sound)){
+||
 
-savedSoundList.push(sound);
-
-}
-
-renderSavedSounds();
-
-}
-
-function renderSavedSounds(){
-
-document.getElementById("savedSounds")
-.innerHTML=
-savedSoundList.length
-?
-savedSoundList
-.map(s=>`<p>🔊 ${escapeHTML(s)}</p>`)
-.join("")
-:
-"No saved sounds yet.";
+'No saved sounds.';
 
 }
 
 
-/* =========================================
-VIDEO EDITOR
-========================================= */
+function saveSound(s){
 
-function loadEditorVideo(){
+if(!savedSounds.includes(s))
+savedSounds.push(s);
 
-const file=
-document.getElementById("editorVideoInput")
-.files[0];
-
-if(!file)return;
-
-document.getElementById("editorPreview")
-.src=
-URL.createObjectURL(file);
+renderSounds();
 
 }
 
-function publishEditedVideo(asShort=false){
 
-const input=
-document.getElementById("editorVideoInput");
+function createTpl(){
 
-if(!input.files[0]){
+let n=$('tplName').value.trim();
 
-alert("Choose a video first.");
-return;
+if(!n)
+return alert('Enter a template name.');
 
-}
-
-const file=input.files[0];
-
-const url=
-URL.createObjectURL(file);
-
-const allow=
-document.getElementById("editorAllowDownload")
-.checked;
-
-if(asShort){
-
-shorts.unshift({
+templates.push({
 
 id:Date.now(),
-name:file.name,
-url,
-allowDownloads:allow,
-watermark:true
+
+name:n,
+
+type:$('tplType').value,
+
+desc:$('tplDesc').value,
+
+premium:$('tplPremium').checked,
+
+status:'Draft'
 
 });
 
-renderShorts();
+renderTemplates();
 
-alert(
-"Edited video published as a Short."
+notify(
+'Template saved',
+`Your template ${n} was saved as a draft.`
 );
 
-}else{
-
-longVideos.unshift({
-
-id:Date.now(),
-name:file.name,
-url,
-allowDownloads:allow,
-watermark:true
-
-});
-
-renderLongVideos();
-
-alert(
-"Edited video published."
-);
+alert('Template saved.');
 
 }
 
-}
-
-
-/* =========================================
-PHOTO EDITOR
-========================================= */
-
-function previewPhoto(){
-
-const file=
-document.getElementById("photoInput")
-.files[0];
-
-if(!file)return;
-
-const image=
-document.getElementById("photoPreview");
-
-image.src=
-URL.createObjectURL(file);
-
-image.style.display="block";
-
-}
-
-function photoFilter(filter){
-
-const image=
-document.getElementById("photoPreview");
-
-if(filter==="grayscale")
-image.style.filter="grayscale(100%)";
-
-else if(filter==="sepia")
-image.style.filter="sepia(100%)";
-
-else if(filter==="brightness")
-image.style.filter="brightness(140%)";
-
-else
-image.style.filter="none";
-
-}
-
-
-/* =========================================
-TEMPLATES
-========================================= */
-
-function createTemplate(){
-
-const name=
-document.getElementById("templateName")
-.value.trim();
-
-if(!name){
-
-alert("Enter a template name.");
-return;
-
-}
-
-const template={
-
-id:Date.now(),
-
-name,
-
-type:
-document.getElementById("templateType")
-.value,
-
-description:
-document.getElementById("templateDescription")
-.value,
-
-premium:
-document.getElementById("templatePremium")
-.checked,
-
-status:"Draft"
-
-};
-
-myTemplates.push(template);
-
-renderMyTemplates();
-
-document.getElementById("templateName").value="";
-document.getElementById("templateDescription").value="";
-
-alert("Template saved.");
-
-}
 
 function renderTemplates(){
 
-const list=
-document.getElementById("templateList");
+let my=$('myTpl');
 
-const templates=[
+if(my)
 
-{
-name:"Modern Business",
-type:"Business"
-},
+my.innerHTML=
 
-{
-name:"Short Video Intro",
-type:"Video"
-},
+templates.length
 
-{
-name:"Music Promo",
-type:"Music"
-},
+?
 
-{
-name:"Photo Story",
-type:"Photo"
-}
+templates.map(t=>
 
-];
+`<div class="card">
 
-list.innerHTML=
-templates.map(t=>`
+<h3>
+${esc(t.name)}
+</h3>
 
-<div class="template-card">
+<p>
+${esc(t.type)} • ${t.status}
+</p>
 
-<div class="template-content">
+<button
+class="btn blue"
+onclick="publishTpl(${t.id})">
 
-<h3>${t.name}</h3>
+Publish
 
-<p>${t.type}</p>
+</button>
+
+</div>`
+
+).join('')
+
+:
+
+'No templates yet.';
+
+
+let l=$('templateList');
+
+if(l)
+
+l.innerHTML=
+
+[
+
+'Modern Business',
+'Short Intro',
+'Music Promo',
+'Photo Story'
+
+].map(n=>
+
+`<div class="template">
+
+<div class="inside">
+
+<h3>${n}</h3>
 
 <button class="btn blue">
 Use Template
@@ -3080,150 +2527,59 @@ Use Template
 
 </div>
 
-</div>
+</div>`
 
-`).join("");
-
-}
-
-function renderMyTemplates(){
-
-const list=
-document.getElementById("myTemplateList");
-
-if(!myTemplates.length){
-
-list.innerHTML=
-"<div class='card'>No templates created yet.</div>";
-
-return;
+).join('');
 
 }
 
-list.innerHTML=
-myTemplates.map(t=>`
 
-<div class="template-card">
+function publishTpl(id){
 
-<div class="template-content">
+let t=templates.find(x=>x.id===id);
 
-<h3>
-${escapeHTML(t.name)}
-</h3>
+if(t){
 
-<p>
-${escapeHTML(t.type)}
-</p>
+t.status='Published';
 
-<p>
-${escapeHTML(t.status)}
-</p>
+renderTemplates();
 
-${
-t.premium
-?
-"<small>Premium review requested</small>"
-:
-""
-}
-
-<br>
-
-<button
-class="btn secondary"
-onclick="publishTemplate(${t.id})">
-
-Publish
-
-</button>
-
-<button
-class="btn danger"
-onclick="deleteTemplate(${t.id})">
-
-Delete
-
-</button>
-
-</div>
-
-</div>
-
-`).join("");
-
-}
-
-function publishTemplate(id){
-
-const template=
-myTemplates.find(t=>t.id===id);
-
-if(template){
-
-template.status="Published";
-
-renderMyTemplates();
+notify(
+'Template published',
+`Your template ${t.name} is published.`
+);
 
 }
 
 }
 
-function deleteTemplate(id){
-
-myTemplates=
-myTemplates.filter(t=>t.id!==id);
-
-renderMyTemplates();
-
-}
-
-
-/* =========================================
-MARKETPLACE
-========================================= */
 
 function renderProducts(){
 
-const list=
-document.getElementById("productList");
+let q=(
+$('prodSearch').value||''
+).toLowerCase();
 
-const query=
-document.getElementById("productSearch")
-.value
-.toLowerCase();
+let c=$('prodCat').value;
 
-const category=
-document.getElementById("productCategory")
-.value;
+let a=products.filter(
 
-const filtered=
-products.filter(p=>{
+p=>
 
-const matchesSearch=
-p.name.toLowerCase().includes(query);
+p.name.toLowerCase().includes(q)&&
+(c==='All'||p.cat===c)
 
-const matchesCategory=
-category==="All"
-||
-p.category===category;
+);
 
-return matchesSearch && matchesCategory;
+$('products').innerHTML=
 
-});
+a.map(p=>
 
-list.innerHTML=
-filtered.map(p=>`
+`<div class="product">
 
-<div class="product-card">
-
-${
-p.image
-?
-`<img src="${p.image}">`
-:
-`
-<div style="
-height:160px;
+<div
+style="
+height:140px;
 background:#eee;
 display:flex;
 align-items:center;
@@ -3232,36 +2588,26 @@ justify-content:center">
 Product
 
 </div>
-`
-}
 
-<div class="product-content">
+<div class="inside">
 
 <h3>
-${escapeHTML(p.name)}
+${esc(p.name)}
 </h3>
 
 <p>
-${escapeHTML(p.description)}
+${esc(p.description)}
 </p>
 
-<strong>
-GHS ${Number(p.price).toFixed(2)}
-</strong>
+<b>
+GHS ${p.price.toFixed(2)}
+</b>
 
 <br>
 
 <button
 class="btn blue"
-onclick="openProduct(${p.id})">
-
-View
-
-</button>
-
-<button
-class="btn"
-onclick="addToCart(${p.id})">
+onclick="addCart(${p.id})">
 
 Add to Cart
 
@@ -3269,174 +2615,114 @@ Add to Cart
 
 </div>
 
-</div>
+</div>`
 
-`).join("");
+).join('')
 
-}
+||
 
-function openProduct(id){
-
-const p=
-products.find(x=>x.id===id);
-
-if(!p)return;
-
-document.getElementById("productModalContent")
-.innerHTML=`
-
-<h2>
-${escapeHTML(p.name)}
-</h2>
-
-<p>
-${escapeHTML(p.description)}
-</p>
-
-<h3>
-GHS ${Number(p.price).toFixed(2)}
-</h3>
-
-<button
-class="btn blue"
-onclick="addToCart(${p.id});closeProductModal()">
-
-Add to Cart
-
-</button>
-
-`;
-
-document
-.getElementById("productModal")
-.classList.add("show");
+'<div class="card">No products found.</div>';
 
 }
 
-function closeProductModal(){
 
-document
-.getElementById("productModal")
-.classList.remove("show");
+function addCart(id){
 
-}
+let p=products.find(x=>x.id===id);
 
-function addToCart(id){
+let e=cart.find(x=>x.id===id);
 
-const existing=
-cart.find(item=>item.id===id);
+if(e)
+e.qty++;
 
-if(existing){
-
-existing.quantity++;
-
-}else{
-
-const p=
-products.find(x=>x.id===id);
-
-cart.push({
-...p,
-quantity:1
-});
-
-}
+else
+cart.push({...p,qty:1});
 
 renderCart();
 
-alert("Added to cart.");
+notify(
+'Cart updated',
+`${p.name} was added to your cart.`
+);
 
 }
+
 
 function renderCart(){
 
-const list=
-document.getElementById("cartList");
+let total=
+cart.reduce(
+(s,x)=>s+x.price*x.qty,
+0
+);
 
-if(!cart.length){
+$('cartOut').innerHTML=
 
-list.innerHTML=
-"<p>Your cart is empty.</p>";
+cart.length
 
-document.getElementById("cartTotal")
-.textContent=
-"Total: GHS 0.00";
+?
 
-return;
+cart.map(x=>
 
-}
+`<div class="card">
 
-let total=0;
-
-list.innerHTML=
-cart.map(item=>{
-
-total+=
-item.price*item.quantity;
-
-return`
-
-<div class="card">
-
-<h3>
-${escapeHTML(item.name)}
-</h3>
+<b>
+${esc(x.name)}
+</b>
 
 <p>
-GHS ${item.price.toFixed(2)}
+GHS ${x.price.toFixed(2)} × ${x.qty}
 </p>
 
 <button
-class="btn secondary"
-onclick="changeQuantity(${item.id},-1)">
+class="btn gray"
+onclick="qty(${x.id},-1)">
 −
 </button>
 
-${item.quantity}
-
 <button
-class="btn secondary"
-onclick="changeQuantity(${item.id},1)">
+class="btn gray"
+onclick="qty(${x.id},1)">
 +
 </button>
 
 <button
-class="btn danger"
-onclick="removeCart(${item.id})">
+class="btn red"
+onclick="removeCart(${x.id})">
 Remove
 </button>
 
-</div>
+</div>`
 
-`;
+).join('')
 
-}).join("");
+:
 
-document.getElementById("cartTotal")
-.textContent=
-`Total: GHS ${total.toFixed(2)}`;
+'Cart is empty.';
+
+$('cartTotal').textContent=
+'Total: GHS '+total.toFixed(2);
 
 }
 
-function changeQuantity(id,change){
 
-const item=
-cart.find(x=>x.id===id);
+function qty(id,n){
 
-if(!item)return;
+let x=cart.find(a=>a.id===id);
 
-item.quantity+=change;
+if(x){
 
-if(item.quantity<=0){
+x.qty+=n;
 
-cart=
-cart.filter(x=>x.id!==id);
+if(x.qty<1)
+cart=cart.filter(a=>a.id!==id);
 
 }
 
 renderCart();
 
 }
+
 
 function removeCart(id){
 
@@ -3448,937 +2734,476 @@ renderCart();
 }
 
 
-/* =========================================
-CURRENCY
-========================================= */
+function renderCheckout(){
 
-function getCurrency(country){
+$('checkoutSummary').innerHTML=
 
-if(country==="Nigeria")return"NGN";
-if(country==="United Kingdom")return"GBP";
-if(country==="United States")return"USD";
+`<div class="card">
 
-return"GHS";
+Demo total:
 
+<b>
+
+GHS ${
+cart
+.reduce((s,x)=>s+x.price*x.qty,0)
+.toFixed(2)
 }
 
-function currencySymbol(currency){
+</b>
 
-if(currency==="NGN")return"₦";
-if(currency==="GBP")return"£";
-if(currency==="USD")return"$";
-
-return"GHS";
-
-}
-
-function updateCurrencyDisplay(){
-
-renderCheckout();
+</div>`;
 
 }
 
 
-/* =========================================
-CHECKOUT
-========================================= */
+function preparePayment(){
 
-function getCartTotal(){
+if(!cart.length)
+return alert('Cart is empty.');
 
-return cart.reduce(
-(sum,item)=>
-sum+(item.price*item.quantity),
+if(
+!$('buyerName').value||
+!$('buyerPhone').value||
+!$('address').value
+)
+return alert('Complete delivery details.');
+
+let total=
+cart.reduce(
+(s,x)=>s+x.price*x.qty,
 0
 );
 
-}
-
-function renderCheckout(){
-
-const total=
-getCartTotal();
-
-const country=
-document.getElementById("checkoutCountry")
-.value;
-
-const currency=
-getCurrency(country);
-
-document.getElementById("checkoutSummary")
-.innerHTML=`
-
-<div class="card">
-
-<h3>Order Summary</h3>
-
-<p>
-Items:
-<strong>${cart.length}</strong>
-</p>
-
-<p>
-Current demo total:
-<strong>
-GHS ${total.toFixed(2)}
-</strong>
-</p>
-
-<p>
-Account country:
-<strong>${country}</strong>
-</p>
-
-<p>
-Payment currency:
-<strong>${currency}</strong>
-</p>
-
-</div>
-
-`;
-
-}
-
-function createDemoPayment(){
-
-if(!cart.length){
-
-alert("Your cart is empty.");
-return;
-
-}
-
-const name=
-document.getElementById("checkoutName")
-.value.trim();
-
-const phone=
-document.getElementById("checkoutPhone")
-.value.trim();
-
-const address=
-document.getElementById("checkoutAddress")
-.value.trim();
-
-if(!name || !phone || !address){
-
-alert("Complete your delivery details.");
-return;
-
-}
-
-const country=
-document.getElementById("checkoutCountry")
-.value;
-
-const currency=
-getCurrency(country);
-
-const total=
-getCartTotal();
-
 currentPayment={
 
-id:"PAY"+Date.now(),
+id:'PAY'+Date.now(),
 
-name,
+total:total,
 
-phone,
+currency:'GHS',
 
-address,
+name:$('buyerName').value,
 
-country,
+phone:$('buyerPhone').value,
 
-currency,
+address:$('address').value,
 
-total,
-
-method:"Not selected",
-
-status:"Pending",
-
-createdAt:new Date().toLocaleString(),
-
-items:
-JSON.parse(JSON.stringify(cart))
+items:JSON.parse(
+JSON.stringify(cart)
+)
 
 };
 
-renderPayment();
+$('paymentOut').innerHTML=
 
-showPage("payment");
-
-}
-
-function renderPayment(){
-
-if(!currentPayment)return;
-
-const p=
-currentPayment;
-
-document.getElementById("paymentSummary")
-.innerHTML=`
-
-<div class="success-box">
-
-<h3>
-Payment Reference
-</h3>
+`<div class="card">
 
 <p>
-<strong>${p.id}</strong>
+Reference:
+<b>${currentPayment.id}</b>
 </p>
 
-<p style="margin-top:8px">
+<p>
 Amount:
-<strong>
-${p.currency}
-${p.total.toFixed(2)}
-</strong>
+<b>
+GHS ${total.toFixed(2)}
+</b>
 </p>
 
-<p>
-Country:
-${p.country}
-</p>
+</div>`;
 
-</div>
-
-`;
+show('payment');
 
 }
 
 
-/* =========================================
-DEMO PAYMENT
-========================================= */
+function pay(){
 
-function completeDemoPayment(){
-
-if(!currentPayment){
-
-alert("No payment is waiting.");
+if(!currentPayment)
 return;
 
-}
+let p=currentPayment;
 
-currentPayment.method=
-document.getElementById("paymentMethod")
-.value;
+let c=p.total*.05;
 
-currentPayment.status="Paid";
+let o={
 
-const commission=
-currentPayment.total*
-COMMISSION_RATE;
+id:'RX'+Date.now(),
 
-const sellerAmount=
-currentPayment.total-
-commission;
+paymentId:p.id,
 
-const order={
+date:new Date().toLocaleString(),
 
-id:"RX"+Date.now(),
+total:p.total,
 
-paymentId:
-currentPayment.id,
+currency:'GHS',
 
-date:
-new Date().toLocaleString(),
+commission:c,
 
-name:
-currentPayment.name,
+sellerAmount:p.total-c,
 
-phone:
-currentPayment.phone,
+status:'Processing',
 
-address:
-currentPayment.address,
+paymentStatus:'Paid',
 
-country:
-currentPayment.country,
-
-currency:
-currentPayment.currency,
-
-total:
-currentPayment.total,
-
-commission,
-
-sellerAmount,
-
-status:"Processing",
-
-paymentStatus:"Paid",
-
-paymentMethod:
-currentPayment.method
+method:$('method').value
 
 };
 
-orders.unshift(order);
+orders.unshift(o);
 
-transactions.unshift({
-
-id:currentPayment.id,
-
-type:"Marketplace Payment",
-
-amount:currentPayment.total,
-
-currency:currentPayment.currency,
-
-commission,
-
-sellerAmount,
-
-status:"Paid",
-
-date:new Date().toLocaleString()
-
-});
+tx.unshift(o);
 
 cart=[];
 
-renderCart();
-renderOrders();
-renderTransactions();
-renderSellerEarnings();
 
-alert(
-"Demo payment completed successfully."
+notify(
+'Payment successful',
+`Your payment of GHS ${p.total.toFixed(2)} was successful. Order ${o.id} is processing.`
 );
+
+
+notify(
+'New order received',
+`A paid order ${o.id} was created. Seller amount: GHS ${o.sellerAmount.toFixed(2)}.`
+);
+
 
 currentPayment=null;
 
-showPage("orders");
+renderCart();
+
+renderOrders();
+
+renderTx();
+
+renderSeller();
+
+show('orders');
+
+alert(
+'Demo payment completed successfully.'
+);
 
 }
 
-
-/* =========================================
-ORDERS
-========================================= */
 
 function renderOrders(){
 
-const list=
-document.getElementById("ordersList");
+$('ordersOut').innerHTML=
 
-if(!orders.length){
+orders.map(o=>
 
-list.innerHTML=
-"<p>No orders yet.</p>";
-
-return;
-
-}
-
-list.innerHTML=
-orders.map(o=>`
-
-<div class="card">
+`<div class="card">
 
 <h3>
 Order ${o.id}
 </h3>
 
 <p>
-Date: ${o.date}
+${o.date}
 </p>
 
 <p>
 Total:
-<strong>
-${o.currency} ${o.total.toFixed(2)}
-</strong>
+GHS ${o.total.toFixed(2)}
 </p>
 
 <p>
-RockyX demo commission:
-${o.currency} ${o.commission.toFixed(2)}
+Commission:
+GHS ${o.commission.toFixed(2)}
 </p>
 
 <p>
-Seller amount:
-${o.currency} ${o.sellerAmount.toFixed(2)}
-</p>
-
-<p>
-Payment:
-<span class="status paid">
-${o.paymentStatus}
-</span>
-</p>
-
-<p>
-Order status:
-<span class="status pending">
-${o.status}
-</span>
-</p>
-
-</div>
-
-`).join("");
-
-}
-
-
-/* =========================================
-TRANSACTIONS
-========================================= */
-
-function renderTransactions(){
-
-const list=
-document.getElementById("transactionsList");
-
-if(!transactions.length){
-
-list.innerHTML=
-"<p>No transactions yet.</p>";
-
-return;
-
-}
-
-list.innerHTML=
-transactions.map(t=>`
-
-<div class="transaction">
-
-<h3>
-${escapeHTML(t.type)}
-</h3>
-
-<p>
-Reference:
-<strong>${t.id}</strong>
-</p>
-
-<p>
-Amount:
-<strong>
-${t.currency} ${t.amount.toFixed(2)}
-</strong>
-</p>
-
-<p>
-RockyX commission:
-${t.currency} ${t.commission.toFixed(2)}
-</p>
-
-<p>
-Seller amount:
-${t.currency} ${t.sellerAmount.toFixed(2)}
+Seller:
+GHS ${o.sellerAmount.toFixed(2)}
 </p>
 
 <p>
 Status:
-<span class="status paid">
-${t.status}
-</span>
+${o.status}
+</p>
+
+<button
+class="btn gray"
+onclick="statusOrder('${o.id}','Shipped')">
+
+Mark Shipped
+
+</button>
+
+<button
+class="btn gray"
+onclick="statusOrder('${o.id}','Delivered')">
+
+Mark Delivered
+
+</button>
+
+</div>`
+
+).join('')
+
+||
+
+'No orders yet.';
+
+}
+
+
+function statusOrder(id,s){
+
+let o=orders.find(x=>x.id===id);
+
+if(o){
+
+o.status=s;
+
+renderOrders();
+
+notify(
+'Order updated',
+`Order ${o.id} is now ${s}.`
+);
+
+}
+
+}
+
+
+function renderTx(){
+
+$('txOut').innerHTML=
+
+tx.map(o=>
+
+`<div class="card">
+
+<b>
+${o.paymentId}
+</b>
+
+<p>
+GHS ${o.total.toFixed(2)} • Paid
 </p>
 
 <p>
-${t.date}
+Commission:
+GHS ${o.commission.toFixed(2)}
 </p>
 
-</div>
+</div>`
 
-`).join("");
+).join('')
 
-}
+||
 
-
-/* =========================================
-SELLER PRODUCT
-========================================= */
-
-function addSellerProduct(){
-
-const name=
-document.getElementById("sellerProductName")
-.value.trim();
-
-const description=
-document.getElementById("sellerProductDescription")
-.value.trim();
-
-const price=
-Number(
-document.getElementById("sellerProductPrice")
-.value
-);
-
-const file=
-document.getElementById("sellerProductImage")
-.files[0];
-
-if(!name || !description || !price){
-
-alert("Complete the product details.");
-return;
+'No transactions yet.';
 
 }
 
-let image="";
 
-if(file){
+function sellerProduct(){
 
-image=
-URL.createObjectURL(file);
+let n=$('newName').value.trim();
 
-}
+let d=$('newDesc').value.trim();
+
+let p=Number($('newPrice').value);
+
+if(!n||!d||!p)
+return alert('Complete product details.');
 
 products.unshift({
 
 id:Date.now(),
 
-name,
+name:n,
 
-description,
+description:d,
 
-price,
+price:p,
 
-category:"Other",
-
-image
+cat:'Other'
 
 });
-
-document.getElementById("sellerProductName")
-.value="";
-
-document.getElementById("sellerProductDescription")
-.value="";
-
-document.getElementById("sellerProductPrice")
-.value="";
-
-document.getElementById("sellerProductImage")
-.value="";
 
 renderProducts();
 
-alert("Product added.");
+notify(
+'Product added',
+`${n} is now in the demo marketplace.`
+);
+
+alert('Product added.');
 
 }
 
 
-/* =========================================
-SELLER EARNINGS
-========================================= */
+function renderSeller(){
 
-function renderSellerEarnings(){
-
-let gross=0;
-let commission=0;
-let net=0;
-
-orders.forEach(order=>{
-
-gross+=order.total;
-commission+=order.commission;
-net+=order.sellerAmount;
-
-});
-
-document.getElementById("sellerGross")
-.textContent=
-"GHS "+gross.toFixed(2);
-
-document.getElementById("sellerCommission")
-.textContent=
-"GHS "+commission.toFixed(2);
-
-document.getElementById("sellerNet")
-.textContent=
-"GHS "+net.toFixed(2);
-
-document.getElementById("sellerPending")
-.textContent=
-"GHS "+net.toFixed(2);
-
-document.getElementById("sellerSalesCount")
-.textContent=
-orders.length;
-
-document.getElementById("sellerOrdersCount")
-.textContent=
-orders.length;
-
-document.getElementById("sellerEarnedDisplay")
-.textContent=
-"GHS "+net.toFixed(2);
-
-}
-
-
-/* =========================================
-PAYOUTS
-========================================= */
-
-function getSellerBalance(){
-
-return orders.reduce(
-(sum,order)=>
-sum+order.sellerAmount,
+let g=
+orders.reduce(
+(s,o)=>s+o.total,
 0
 );
 
+let c=
+orders.reduce(
+(s,o)=>s+o.commission,
+0
+);
+
+$('gross').textContent=
+'GHS '+g.toFixed(2);
+
+$('comm').textContent=
+'GHS '+c.toFixed(2);
+
+$('net').textContent=
+'GHS '+(g-c).toFixed(2);
+
 }
+
 
 function renderPayouts(){
 
-const balance=
-getSellerBalance();
-
-document.getElementById("payoutBalance")
-.textContent=
-"GHS "+balance.toFixed(2);
-
-const list=
-document.getElementById("payoutHistory");
-
-if(!payouts.length){
-
-list.innerHTML=
-"<p>No payouts yet.</p>";
-
-return;
-
-}
-
-list.innerHTML=
-payouts.map(p=>`
-
-<div class="transaction">
-
-<h3>
-Payout ${p.id}
-</h3>
-
-<p>
-Amount:
-<strong>
-GHS ${p.amount.toFixed(2)}
-</strong>
-</p>
-
-<p>
-Status:
-<span class="status ${p.status==="Paid"?"paid":"pending"}">
-${p.status}
-</span>
-</p>
-
-<p>${p.date}</p>
-
-</div>
-
-`).join("");
-
-}
-
-function requestDemoPayout(){
-
-const balance=
-getSellerBalance();
-
-if(balance<=0){
-
-alert(
-"There is no available demo payout balance."
+let b=
+orders.reduce(
+(s,o)=>s+o.sellerAmount,
+0
 );
 
-return;
+$('balance').textContent=
+'GHS '+b.toFixed(2);
+
+$('payoutOut').innerHTML=
+
+payouts.map(p=>
+
+`<div class="card">
+
+${p.id}
+—
+GHS ${p.amount.toFixed(2)}
+—
+${p.status}
+
+</div>`
+
+).join('')
+
+||
+
+'No payouts yet.';
 
 }
 
-const payout={
 
-id:"PO"+Date.now(),
+function payout(){
 
-amount:balance,
+let b=
+orders.reduce(
+(s,o)=>s+o.sellerAmount,
+0
+);
 
-status:"Pending",
+if(!b)
+return alert('No payout balance.');
 
-date:new Date().toLocaleString()
+let p={
+
+id:'PO'+Date.now(),
+
+amount:b,
+
+status:'Pending'
 
 };
 
-payouts.unshift(payout);
+payouts.unshift(p);
 
 renderPayouts();
 
+notify(
+'Payout requested',
+`Your payout request for GHS ${b.toFixed(2)} is pending.`
+);
+
 alert(
-"Demo payout request created."
+'Demo payout request created.'
 );
 
 }
 
 
-/* =========================================
-AUTH
-========================================= */
+function signup(){
 
-function openSignup(){
+let n=prompt('Full name');
 
-closeModals();
-
-document
-.getElementById("signupModal")
-.classList.add("show");
-
-}
-
-function openSignin(){
-
-closeModals();
-
-document
-.getElementById("signinModal")
-.classList.add("show");
-
-}
-
-function closeModals(){
-
-document
-.getElementById("signupModal")
-.classList.remove("show");
-
-document
-.getElementById("signinModal")
-.classList.remove("show");
-
-}
-
-function switchToSignin(){
-
-openSignin();
-
-}
-
-function switchToSignup(){
-
-openSignup();
-
-}
-
-function createAccount(){
-
-const name=
-document.getElementById("signupName")
-.value.trim();
-
-const email=
-document.getElementById("signupEmail")
-.value.trim();
-
-const phone=
-document.getElementById("signupPhone")
-.value.trim();
-
-const country=
-document.getElementById("signupCountry")
-.value;
-
-const password=
-document.getElementById("signupPassword")
-.value;
-
-const confirm=
-document.getElementById("signupConfirm")
-.value;
-
-if(
-!name||
-!email||
-!phone||
-!country||
-!password||
-!confirm
-){
-
-alert("Please complete all fields.");
+if(!n)
 return;
 
-}
+let e=prompt('Email');
 
-if(password!==confirm){
-
-alert("Passwords do not match.");
+if(!e)
 return;
 
-}
+$('accountStatus').textContent=
+'Signed in as '+n;
 
-if(password.length<6){
+notify(
+'Account created',
+'Your demo account was created successfully.'
+);
 
 alert(
-"Password must be at least 6 characters."
+'Demo account created.'
 );
-
-return;
 
 }
 
-localStorage.setItem(
-"rockyxDemoUser",
-JSON.stringify({
-name,
-email,
-phone,
-country
-})
+
+function signin(){
+
+let e=prompt('Email');
+
+if(e){
+
+$('accountStatus').textContent=
+'Signed in as '+e;
+
+notify(
+'Signed in',
+'You successfully signed in.'
 );
-
-document
-.getElementById("accountStatus")
-.textContent=
-`Signed in as ${name}`;
-
-closeModals();
 
 alert(
-"Demo account created successfully."
+'Demo sign in successful.'
 );
 
 }
 
-function signIn(){
-
-const email=
-document.getElementById("signinEmail")
-.value.trim();
-
-const password=
-document.getElementById("signinPassword")
-.value;
-
-if(!email || !password){
-
-alert(
-"Enter your email and password."
-);
-
-return;
-
-}
-
-document
-.getElementById("accountStatus")
-.textContent=
-`Signed in as ${email}`;
-
-closeModals();
-
-alert(
-"Demo sign in successful."
-);
-
 }
 
 
-/* =========================================
-HELPERS
-========================================= */
+$('feed').innerHTML=
 
-function escapeHTML(value){
+'<div class="post">'+
 
-return String(value)
-.replace(/&/g,"&amp;")
-.replace(/</g,"&lt;")
-.replace(/>/g,"&gt;")
-.replace(/"/g,"&quot;")
-.replace(/'/g,"&#039;");
+'<b>RockyX Creator</b>'+
 
-}
+'<p>Welcome to the social feed.</p>'+
 
+'<button class="btn gray">❤️ Like</button>'+
 
-/* =========================================
-DEMO FEED
-========================================= */
+'<button class="btn gray">💬 Comment</button>'+
 
-function loadDemoFeed(){
+'<button class="btn gray">↗ Share</button>'+
 
-const feed=
-document.getElementById("feed");
+'</div>';
 
-feed.innerHTML=`
-
-<div class="post">
-
-<strong>RockyX Creator</strong>
-
-<p style="margin-top:8px">
-Welcome to the social feed.
-</p>
-
-<div class="post-actions">
-
-<button class="btn secondary">
-❤️ Like
-</button>
-
-<button class="btn secondary">
-💬 Comment
-</button>
-
-<button class="btn secondary">
-↗ Share
-</button>
-
-<button class="btn secondary">
-🔖 Save
-</button>
-
-</div>
-
-</div>
-
-
-<div class="post">
-
-<strong>Marketplace Seller</strong>
-
-<p style="margin-top:8px">
-New products are available in the marketplace.
-</p>
-
-<div class="post-actions">
-
-<button class="btn secondary">
-❤️ Like
-</button>
-
-<button class="btn secondary">
-💬 Comment
-</button>
-
-<button class="btn secondary">
-↗ Share
-</button>
-
-</div>
-
-</div>
-
-`;
-
-}
-
-
-/* =========================================
-START
-========================================= */
-
-loadDemoFeed();
 
 renderProducts();
 
@@ -4386,19 +3211,21 @@ renderCart();
 
 renderCheckout();
 
-renderOrders();
+renderVideos();
 
-renderTransactions();
-
-renderSellerEarnings();
-
-renderPayouts();
+renderSounds();
 
 renderTemplates();
 
-renderMyTemplates();
+renderOrders();
 
-renderSounds();
+renderTx();
+
+renderSeller();
+
+renderPayouts();
+
+renderNotices();
 
 </script>
 
