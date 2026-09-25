@@ -7,6 +7,7 @@
   <title>Home</title>
 
   <style>
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -14,13 +15,14 @@
     }
 
     body {
-      font-family: Arial, sans-serif;
+      font-family: Arial, Helvetica, sans-serif;
       background: #f5f5f5;
       color: #222;
     }
 
     button,
-    input {
+    input,
+    select {
       font: inherit;
     }
 
@@ -28,7 +30,11 @@
       cursor: pointer;
     }
 
-    /* HEADER */
+
+    /* =========================
+       HEADER
+    ========================= */
+
     header {
       position: sticky;
       top: 0;
@@ -36,31 +42,33 @@
       height: 64px;
       background: white;
       border-bottom: 1px solid #ddd;
+
       display: flex;
       align-items: center;
       gap: 15px;
-      padding: 0 20px;
-    }
 
-    .logo {
-      font-size: 25px;
-      font-weight: bold;
-      display: none;
+      padding: 0 20px;
     }
 
     .search-box {
       flex: 1;
-      max-width: 600px;
+      max-width: 650px;
       margin: auto;
     }
 
     .search-box input {
       width: 100%;
       padding: 12px 18px;
+
       border: 1px solid #ddd;
       border-radius: 25px;
+
       outline: none;
       background: #f5f5f5;
+    }
+
+    .search-box input:focus {
+      border-color: #999;
     }
 
     .header-actions {
@@ -69,39 +77,62 @@
     }
 
     .header-actions button {
-      border: none;
-      background: #f1f1f1;
       width: 42px;
       height: 42px;
+
+      border: none;
       border-radius: 50%;
+
+      background: #f1f1f1;
     }
 
-    /* LAYOUT */
+    .header-actions button:hover {
+      background: #e5e5e5;
+    }
+
+
+    /* =========================
+       LAYOUT
+    ========================= */
+
     .layout {
       display: flex;
       min-height: calc(100vh - 64px);
     }
 
-    /* SIDEBAR */
+
+    /* =========================
+       SIDEBAR
+    ========================= */
+
     .sidebar {
       width: 230px;
+
       background: white;
       border-right: 1px solid #ddd;
+
       padding: 15px 10px;
+
       position: fixed;
       top: 64px;
       bottom: 0;
+
       overflow-y: auto;
     }
 
     .nav-button {
       width: 100%;
+
       padding: 13px 15px;
       margin-bottom: 4px;
+
       border: none;
-      background: transparent;
-      text-align: left;
       border-radius: 10px;
+
+      background: transparent;
+
+      text-align: left;
+
       font-size: 15px;
     }
 
@@ -113,20 +144,30 @@
     .sidebar-title {
       font-size: 12px;
       color: #888;
+
       margin: 18px 15px 8px;
+
       text-transform: uppercase;
     }
 
-    /* MAIN */
+
+    /* =========================
+       MAIN
+    ========================= */
+
     main {
       margin-left: 230px;
+
       width: calc(100% - 230px);
+
       padding: 25px;
     }
 
     .page {
       display: none;
+
       max-width: 1100px;
+
       margin: auto;
     }
 
@@ -147,18 +188,28 @@
       color: #777;
     }
 
-    /* CARDS */
+
+    /* =========================
+       CARDS
+    ========================= */
+
     .card-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+
+      grid-template-columns:
+        repeat(auto-fit, minmax(220px, 1fr));
+
       gap: 18px;
     }
 
     .card {
       background: white;
+
       border: 1px solid #ddd;
       border-radius: 14px;
+
       padding: 20px;
+
       min-height: 120px;
     }
 
@@ -171,40 +222,157 @@
       line-height: 1.5;
     }
 
-    /* HOME */
+
+    /* =========================
+       HOME
+    ========================= */
+
     .welcome-card {
       background: white;
+
       border-radius: 18px;
+
       padding: 30px;
+
       margin-bottom: 25px;
+
       border: 1px solid #ddd;
     }
 
     .welcome-card h1 {
       margin-bottom: 10px;
+
       font-size: 32px;
     }
 
     .welcome-card p {
       color: #777;
+
       line-height: 1.6;
     }
 
     .post-button {
       margin-top: 20px;
+
       padding: 12px 20px;
+
       border: none;
       border-radius: 25px;
+
       background: #222;
       color: white;
     }
 
-    /* MOBILE NAV */
+    .post-button:hover {
+      background: #000;
+    }
+
+
+    /* =========================
+       AUTHENTICATION
+    ========================= */
+
+    .auth-card {
+      max-width: 500px;
+
+      margin: 30px auto;
+    }
+
+    .auth-card input,
+    .auth-card select {
+      width: 100%;
+
+      padding: 13px;
+
+      margin-bottom: 12px;
+
+      border: 1px solid #ddd;
+
+      border-radius: 10px;
+
+      outline: none;
+
+      background: white;
+    }
+
+    .auth-card input:focus,
+    .auth-card select:focus {
+      border-color: #888;
+    }
+
+    .auth-card .post-button {
+      width: 100%;
+    }
+
+    .auth-switch {
+      margin-top: 18px;
+
+      color: #777;
+
+      text-align: center;
+    }
+
+    .auth-switch button {
+      border: none;
+
+      background: none;
+
+      font-weight: bold;
+
+      color: #222;
+    }
+
+    .auth-switch button:hover {
+      text-decoration: underline;
+    }
+
+
+    /* =========================
+       ACCOUNT
+    ========================= */
+
+    .account-card {
+      max-width: 700px;
+
+      margin: auto;
+    }
+
+    .account-option {
+      width: 100%;
+
+      padding: 15px;
+
+      margin-bottom: 10px;
+
+      border: 1px solid #ddd;
+
+      border-radius: 10px;
+
+      background: white;
+
+      text-align: left;
+    }
+
+    .account-option:hover {
+      background: #f3f3f3;
+    }
+
+
+    /* =========================
+       MOBILE NAVIGATION
+    ========================= */
+
     .mobile-nav {
       display: none;
     }
 
+
+    /* =========================
+       MOBILE
+    ========================= */
+
     @media (max-width: 800px) {
+
       header {
         padding: 0 10px;
       }
@@ -215,9 +383,12 @@
 
       main {
         margin-left: 0;
+
         width: 100%;
+
         padding: 15px;
-        padding-bottom: 80px;
+
+        padding-bottom: 85px;
       }
 
       .header-actions button {
@@ -227,426 +398,1215 @@
 
       .mobile-nav {
         position: fixed;
+
         display: flex;
+
         bottom: 0;
         left: 0;
         right: 0;
-        height: 62px;
+
+        height: 65px;
+
         background: white;
+
         border-top: 1px solid #ddd;
+
         z-index: 2000;
+
         justify-content: space-around;
       }
 
       .mobile-nav button {
         border: none;
+
         background: transparent;
+
         font-size: 12px;
+
         padding: 5px;
       }
 
       .mobile-nav button span {
         display: block;
+
         font-size: 20px;
+
         margin-bottom: 2px;
       }
 
-      .welcome-card h1 {
-        font-size: 26px;
+      .welcome-card {
+        padding: 22px;
       }
+
+      .welcome-card h1 {
+        font-size: 27px;
+      }
+
     }
+
   </style>
 </head>
 
+
 <body>
 
-  <!-- HEADER -->
+
+  <!-- =========================
+       HEADER
+  ========================= -->
+
   <header>
 
-    <div class="logo"></div>
-
     <div class="search-box">
+
       <input
         type="search"
         id="globalSearch"
         placeholder="Search..."
         onkeydown="handleSearch(event)"
       >
+
     </div>
 
+
     <div class="header-actions">
-      <button onclick="openMessages()" title="Messages">💬</button>
-      <button onclick="openNotifications()" title="Notifications">🔔</button>
-      <button onclick="openAccount()" title="Account">👤</button>
+
+      <button
+        onclick="openMessages()"
+        title="Messages"
+      >
+        💬
+      </button>
+
+
+      <button
+        onclick="openNotifications()"
+        title="Notifications"
+      >
+        🔔
+      </button>
+
+
+      <button
+        onclick="openAccount()"
+        title="Account"
+      >
+        👤
+      </button>
+
     </div>
 
   </header>
 
 
+
   <div class="layout">
 
-    <!-- SIDEBAR -->
+
+    <!-- =========================
+         SIDEBAR
+    ========================= -->
+
     <aside class="sidebar">
 
-      <button class="nav-button active" data-page="home" onclick="showPage('home')">
+
+      <button
+        class="nav-button active"
+        data-page="home"
+        onclick="showPage('home')"
+      >
         🏠 Home
       </button>
 
-      <button class="nav-button" data-page="explore" onclick="showPage('explore')">
+
+      <button
+        class="nav-button"
+        data-page="explore"
+        onclick="showPage('explore')"
+      >
         🔎 Explore
       </button>
 
-      <button class="nav-button" data-page="shorts" onclick="showPage('shorts')">
+
+      <button
+        class="nav-button"
+        data-page="shorts"
+        onclick="showPage('shorts')"
+      >
         🎬 Shorts
       </button>
 
-      <button class="nav-button" data-page="videos" onclick="showPage('videos')">
+
+      <button
+        class="nav-button"
+        data-page="videos"
+        onclick="showPage('videos')"
+      >
         ▶️ Videos
       </button>
 
-      <button class="nav-button" data-page="music" onclick="showPage('music')">
+
+      <button
+        class="nav-button"
+        data-page="music"
+        onclick="showPage('music')"
+      >
         🎵 Music
       </button>
 
-      <button class="nav-button" data-page="templates" onclick="showPage('templates')">
+
+      <button
+        class="nav-button"
+        data-page="templates"
+        onclick="showPage('templates')"
+      >
         ✨ Templates
       </button>
 
 
-      <div class="sidebar-title">Shopping</div>
 
-      <button class="nav-button" data-page="marketplace" onclick="showPage('marketplace')">
+      <div class="sidebar-title">
+        Shopping
+      </div>
+
+
+      <button
+        class="nav-button"
+        data-page="marketplace"
+        onclick="showPage('marketplace')"
+      >
         🛍️ Marketplace
       </button>
 
-      <button class="nav-button" data-page="nearby" onclick="showPage('nearby')">
+
+      <button
+        class="nav-button"
+        data-page="nearby"
+        onclick="showPage('nearby')"
+      >
         📍 Nearby
       </button>
 
 
-      <div class="sidebar-title">Services</div>
 
-      <button class="nav-button" data-page="transport" onclick="showPage('transport')">
+      <div class="sidebar-title">
+        Services
+      </div>
+
+
+      <button
+        class="nav-button"
+        data-page="transport"
+        onclick="showPage('transport')"
+      >
         🚗 Transport
       </button>
 
-      <button class="nav-button" data-page="businesses" onclick="showPage('businesses')">
+
+      <button
+        class="nav-button"
+        data-page="businesses"
+        onclick="showPage('businesses')"
+      >
         🏢 Businesses
       </button>
 
-      <button class="nav-button" data-page="services" onclick="showPage('services')">
+
+      <button
+        class="nav-button"
+        data-page="services"
+        onclick="showPage('services')"
+      >
         🛠️ Services
       </button>
 
 
-      <div class="sidebar-title">Account</div>
 
-      <button class="nav-button" data-page="messages" onclick="showPage('messages')">
+      <div class="sidebar-title">
+        Account
+      </div>
+
+
+      <button
+        class="nav-button"
+        data-page="messages"
+        onclick="showPage('messages')"
+      >
         💬 Messages
       </button>
 
-      <button class="nav-button" data-page="notifications" onclick="showPage('notifications')">
+
+      <button
+        class="nav-button"
+        data-page="notifications"
+        onclick="showPage('notifications')"
+      >
         🔔 Notifications
       </button>
 
-      <button class="nav-button" data-page="account" onclick="showPage('account')">
+
+      <button
+        class="nav-button"
+        data-page="account"
+        onclick="showPage('account')"
+      >
         👤 Account
       </button>
 
-      <button class="nav-button" data-page="settings" onclick="showPage('settings')">
+
+      <button
+        class="nav-button"
+        data-page="settings"
+        onclick="showPage('settings')"
+      >
         ⚙️ Settings
       </button>
 
     </aside>
 
 
-    <!-- MAIN CONTENT -->
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================= -->
+
     <main>
 
+
       <!-- HOME -->
-      <section id="home" class="page active">
+
+      <section
+        id="home"
+        class="page active"
+      >
 
         <div class="welcome-card">
+
           <h1>Welcome</h1>
 
           <p>
-            Your place to connect, discover, create, shop,
+            Connect, discover, create, shop,
             find services and explore new opportunities.
           </p>
 
-          <button class="post-button" onclick="openPost()">
+
+          <button
+            class="post-button"
+            onclick="openPost()"
+          >
             Create a Post
           </button>
+
         </div>
+
 
         <div class="card-grid">
 
+
           <div class="card">
+
             <h3>Stories</h3>
-            <p>Share moments and see what people are posting.</p>
+
+            <p>
+              Share moments and see what people are posting.
+            </p>
+
           </div>
 
+
           <div class="card">
+
             <h3>Short Videos</h3>
-            <p>Watch and discover short-form videos.</p>
+
+            <p>
+              Watch and discover short-form videos.
+            </p>
+
           </div>
 
+
           <div class="card">
+
             <h3>Marketplace</h3>
-            <p>Discover products and businesses.</p>
+
+            <p>
+              Discover products and businesses.
+            </p>
+
           </div>
 
+
           <div class="card">
+
             <h3>Nearby</h3>
-            <p>Discover useful places, services and businesses nearby.</p>
+
+            <p>
+              Discover useful places, services and businesses nearby.
+            </p>
+
           </div>
 
         </div>
 
       </section>
+
 
 
       <!-- EXPLORE -->
-      <section id="explore" class="page">
+
+      <section
+        id="explore"
+        class="page"
+      >
+
         <div class="page-header">
+
           <h1>Explore</h1>
-          <p>Discover people, content, products and services.</p>
+
+          <p>
+            Discover people, content, products and services.
+          </p>
+
         </div>
+
       </section>
+
 
 
       <!-- SHORTS -->
-      <section id="shorts" class="page">
+
+      <section
+        id="shorts"
+        class="page"
+      >
+
         <div class="page-header">
+
           <h1>Shorts</h1>
-          <p>Short-form videos will be built here.</p>
+
+          <p>
+            Short-form videos will be built here.
+          </p>
+
         </div>
+
       </section>
+
 
 
       <!-- VIDEOS -->
-      <section id="videos" class="page">
+
+      <section
+        id="videos"
+        class="page"
+      >
+
         <div class="page-header">
+
           <h1>Videos</h1>
-          <p>Long-form video content will be built here.</p>
+
+          <p>
+            Long-form video content will be built here.
+          </p>
+
         </div>
+
       </section>
+
 
 
       <!-- MUSIC -->
-      <section id="music" class="page">
+
+      <section
+        id="music"
+        class="page"
+      >
+
         <div class="page-header">
+
           <h1>Music</h1>
-          <p>Music, artists, albums and sounds will be built here.</p>
+
+          <p>
+            Music, artists, albums and sounds will be built here.
+          </p>
+
         </div>
+
       </section>
+
 
 
       <!-- TEMPLATES -->
-      <section id="templates" class="page">
+
+      <section
+        id="templates"
+        class="page"
+      >
+
         <div class="page-header">
+
           <h1>Templates</h1>
-          <p>Creator templates and template discovery will be built here.</p>
+
+          <p>
+            Creator templates and discovery will be built here.
+          </p>
+
         </div>
+
       </section>
+
 
 
       <!-- MARKETPLACE -->
-      <section id="marketplace" class="page">
+
+      <section
+        id="marketplace"
+        class="page"
+      >
+
         <div class="page-header">
+
           <h1>Marketplace</h1>
-          <p>Products, sellers, shopping and orders will be built here.</p>
+
+          <p>
+            Products, sellers, shopping and orders will be built here.
+          </p>
+
         </div>
+
       </section>
+
 
 
       <!-- NEARBY -->
-      <section id="nearby" class="page">
+
+      <section
+        id="nearby"
+        class="page"
+      >
+
         <div class="page-header">
+
           <h1>Nearby</h1>
-          <p>Nearby places, businesses, products and services will be built here.</p>
+
+          <p>
+            Nearby places, businesses, products and services will be built here.
+          </p>
+
         </div>
+
       </section>
+
 
 
       <!-- TRANSPORT -->
-      <section id="transport" class="page">
+
+      <section
+        id="transport"
+        class="page"
+      >
+
         <div class="page-header">
+
           <h1>Transport</h1>
-          <p>Transport providers and navigation will be built here.</p>
+
+          <p>
+            Transport providers and navigation will be built here.
+          </p>
+
         </div>
+
       </section>
+
 
 
       <!-- BUSINESSES -->
-      <section id="businesses" class="page">
+
+      <section
+        id="businesses"
+        class="page"
+      >
+
         <div class="page-header">
+
           <h1>Businesses</h1>
-          <p>Business profiles and discovery will be built here.</p>
+
+          <p>
+            Business profiles and discovery will be built here.
+          </p>
+
         </div>
+
       </section>
+
 
 
       <!-- SERVICES -->
-      <section id="services" class="page">
+
+      <section
+        id="services"
+        class="page"
+      >
+
         <div class="page-header">
+
           <h1>Services</h1>
-          <p>Service providers and bookings will be built here.</p>
+
+          <p>
+            Service providers and bookings will be built here.
+          </p>
+
         </div>
+
       </section>
+
 
 
       <!-- MESSAGES -->
-      <section id="messages" class="page">
+
+      <section
+        id="messages"
+        class="page"
+      >
+
         <div class="page-header">
+
           <h1>Messages</h1>
-          <p>Your conversations will appear here.</p>
+
+          <p>
+            Your conversations will appear here.
+          </p>
+
         </div>
+
       </section>
+
 
 
       <!-- NOTIFICATIONS -->
-      <section id="notifications" class="page">
+
+      <section
+        id="notifications"
+        class="page"
+      >
+
         <div class="page-header">
+
           <h1>Notifications</h1>
-          <p>Your notifications will appear here.</p>
+
+          <p>
+            Your notifications will appear here.
+          </p>
+
         </div>
+
       </section>
+
 
 
       <!-- ACCOUNT -->
-      <section id="account" class="page">
+
+      <section
+        id="account"
+        class="page"
+      >
+
         <div class="page-header">
+
           <h1>Account</h1>
-          <p>Your profile and account tools will appear here.</p>
+
+          <p>
+            Manage your account.
+          </p>
+
         </div>
+
+
+        <div class="card account-card">
+
+          <button
+            class="account-option"
+            onclick="showPage('signin')"
+          >
+            🔐 Sign In
+          </button>
+
+
+          <button
+            class="account-option"
+            onclick="showPage('signup')"
+          >
+            👤 Create Account
+          </button>
+
+
+          <button
+            class="account-option"
+            onclick="showPage('settings')"
+          >
+            ⚙️ Account Settings
+          </button>
+
+        </div>
+
       </section>
+
+
+
+      <!-- SIGN IN -->
+
+      <section
+        id="signin"
+        class="page"
+      >
+
+        <div class="page-header">
+
+          <h1>Sign In</h1>
+
+          <p>
+            Sign in to continue.
+          </p>
+
+        </div>
+
+
+        <div class="card auth-card">
+
+
+          <input
+            id="signinEmail"
+            type="email"
+            placeholder="Email address"
+          >
+
+
+          <input
+            id="signinPassword"
+            type="password"
+            placeholder="Password"
+          >
+
+
+          <button
+            class="post-button"
+            onclick="signIn()"
+          >
+            Sign In
+          </button>
+
+
+          <p class="auth-switch">
+
+            Don't have an account?
+
+            <button
+              onclick="showPage('signup')"
+            >
+              Create account
+            </button>
+
+          </p>
+
+        </div>
+
+      </section>
+
+
+
+      <!-- SIGN UP -->
+
+      <section
+        id="signup"
+        class="page"
+      >
+
+        <div class="page-header">
+
+          <h1>Create Account</h1>
+
+          <p>
+            Create your account to get started.
+          </p>
+
+        </div>
+
+
+        <div class="card auth-card">
+
+
+          <input
+            id="signupName"
+            type="text"
+            placeholder="Full name"
+          >
+
+
+          <input
+            id="signupEmail"
+            type="email"
+            placeholder="Email address"
+          >
+
+
+          <input
+            id="signupPhone"
+            type="tel"
+            placeholder="Phone number"
+          >
+
+
+          <select id="signupCountry">
+
+            <option value="">
+              Select country
+            </option>
+
+            <option value="Ghana">
+              Ghana
+            </option>
+
+            <option value="Nigeria">
+              Nigeria
+            </option>
+
+            <option value="United States">
+              United States
+            </option>
+
+            <option value="United Kingdom">
+              United Kingdom
+            </option>
+
+            <option value="Other">
+              Other
+            </option>
+
+          </select>
+
+
+          <input
+            id="signupPassword"
+            type="password"
+            placeholder="Create password"
+          >
+
+
+          <input
+            id="signupConfirmPassword"
+            type="password"
+            placeholder="Confirm password"
+          >
+
+
+          <button
+            class="post-button"
+            onclick="createAccount()"
+          >
+            Create Account
+          </button>
+
+
+          <p class="auth-switch">
+
+            Already have an account?
+
+            <button
+              onclick="showPage('signin')"
+            >
+              Sign in
+            </button>
+
+          </p>
+
+        </div>
+
+      </section>
+
 
 
       <!-- SETTINGS -->
-      <section id="settings" class="page">
+
+      <section
+        id="settings"
+        class="page"
+      >
+
         <div class="page-header">
+
           <h1>Settings</h1>
-          <p>Privacy, security and account settings will be built here.</p>
+
+          <p>
+            Privacy, security and account settings will be built here.
+          </p>
+
         </div>
+
       </section>
+
 
     </main>
 
   </div>
 
 
-  <!-- MOBILE NAVIGATION -->
+
+  <!-- =========================
+       MOBILE NAVIGATION
+  ========================= -->
+
   <nav class="mobile-nav">
 
-    <button onclick="showPage('home')">
+
+    <button
+      onclick="showPage('home')"
+    >
+
       <span>🏠</span>
+
       Home
+
     </button>
 
-    <button onclick="showPage('explore')">
+
+    <button
+      onclick="showPage('explore')"
+    >
+
       <span>🔎</span>
+
       Explore
+
     </button>
 
-    <button onclick="openPost()">
+
+    <button
+      onclick="openPost()"
+    >
+
       <span>➕</span>
+
       Post
+
     </button>
 
-    <button onclick="showPage('shorts')">
+
+    <button
+      onclick="showPage('shorts')"
+    >
+
       <span>🎬</span>
+
       Shorts
+
     </button>
 
-    <button onclick="showPage('account')">
+
+    <button
+      onclick="openAccount()"
+    >
+
       <span>👤</span>
+
       Account
+
     </button>
 
   </nav>
 
 
+
+  <!-- =========================
+       JAVASCRIPT
+  ========================= -->
+
   <script>
 
-    /* PAGE NAVIGATION */
+
+    /* =========================
+       PAGE NAVIGATION
+    ========================= */
 
     function showPage(pageId) {
 
-      const pages = document.querySelectorAll(".page");
+      const pages =
+        document.querySelectorAll(".page");
+
 
       pages.forEach(function(page) {
+
         page.classList.remove("active");
+
       });
 
-      const selectedPage = document.getElementById(pageId);
+
+      const selectedPage =
+        document.getElementById(pageId);
+
 
       if (selectedPage) {
+
         selectedPage.classList.add("active");
+
       }
 
-      const navButtons = document.querySelectorAll(".nav-button");
+
+      const navButtons =
+        document.querySelectorAll(".nav-button");
+
 
       navButtons.forEach(function(button) {
+
         button.classList.remove("active");
 
+
         if (button.dataset.page === pageId) {
+
           button.classList.add("active");
+
         }
+
       });
+
 
       window.scrollTo({
         top: 0,
         behavior: "smooth"
       });
+
     }
 
 
-    /* CREATE POST */
+
+    /* =========================
+       POST
+    ========================= */
 
     function openPost() {
-      alert("The Post and Camera system will be added in Stage 3.");
+
+      alert(
+        "The Post and Camera system will be added in Stage 3."
+      );
+
     }
 
 
-    /* HEADER BUTTONS */
+
+    /* =========================
+       HEADER BUTTONS
+    ========================= */
 
     function openMessages() {
+
       showPage("messages");
+
     }
+
 
     function openNotifications() {
+
       showPage("notifications");
+
     }
+
 
     function openAccount() {
+
       showPage("account");
+
     }
 
 
-    /* SEARCH */
+
+    /* =========================
+       SEARCH
+    ========================= */
 
     function handleSearch(event) {
 
       if (event.key === "Enter") {
 
         const searchText =
-          document.getElementById("globalSearch").value.trim();
+          document
+            .getElementById("globalSearch")
+            .value
+            .trim();
+
 
         if (searchText === "") {
+
           return;
+
         }
 
-        alert("Search system will be added in a later stage.");
+
+        alert(
+          "The full search system will be added in a later stage."
+        );
+
       }
+
     }
 
 
-    /* START PAGE */
 
-    document.addEventListener("DOMContentLoaded", function() {
-      showPage("home");
-    });
+    /* =========================
+       CREATE ACCOUNT
+    ========================= */
+
+    function createAccount() {
+
+      const name =
+        document
+          .getElementById("signupName")
+          .value
+          .trim();
+
+
+      const email =
+        document
+          .getElementById("signupEmail")
+          .value
+          .trim();
+
+
+      const phone =
+        document
+          .getElementById("signupPhone")
+          .value
+          .trim();
+
+
+      const country =
+        document
+          .getElementById("signupCountry")
+          .value;
+
+
+      const password =
+        document
+          .getElementById("signupPassword")
+          .value;
+
+
+      const confirmPassword =
+        document
+          .getElementById("signupConfirmPassword")
+          .value;
+
+
+
+      /* CHECK EMPTY FIELDS */
+
+      if (
+        !name ||
+        !email ||
+        !phone ||
+        !country ||
+        !password ||
+        !confirmPassword
+      ) {
+
+        alert(
+          "Please complete all fields."
+        );
+
+        return;
+
+      }
+
+
+
+      /* CHECK PASSWORD */
+
+      if (password.length < 6) {
+
+        alert(
+          "Your password must contain at least 6 characters."
+        );
+
+        return;
+
+      }
+
+
+
+      /* CHECK PASSWORD MATCH */
+
+      if (password !== confirmPassword) {
+
+        alert(
+          "Passwords do not match."
+        );
+
+        return;
+
+      }
+
+
+
+      /* TEMPORARY SUCCESS */
+
+      alert(
+        "Your account information is valid. The secure database connection will be added next."
+      );
+
+    }
+
+
+
+    /* =========================
+       SIGN IN
+    ========================= */
+
+    function signIn() {
+
+      const email =
+        document
+          .getElementById("signinEmail")
+          .value
+          .trim();
+
+
+      const password =
+        document
+          .getElementById("signinPassword")
+          .value;
+
+
+
+      if (!email || !password) {
+
+        alert(
+          "Please enter your email and password."
+        );
+
+        return;
+
+      }
+
+
+
+      alert(
+        "The sign-in form is working. The secure database connection will be added next."
+      );
+
+    }
+
+
+
+    /* =========================
+       START PAGE
+    ========================= */
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      function() {
+
+        showPage("home");
+
+      }
+    );
 
   </script>
 
