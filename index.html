@@ -7,1970 +7,1094 @@
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Arial,Helvetica,sans-serif;background:#f5f6f8;color:#171717}
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f5f6f8;
+  color:#17202a;
+}
 button,input,textarea,select{font:inherit}
 button{cursor:pointer}
+a{text-decoration:none;color:inherit}
 
-header{
-height:64px;background:#fff;border-bottom:1px solid #ddd;
-display:flex;align-items:center;gap:15px;padding:0 20px;
-position:fixed;top:0;left:0;right:0;z-index:1000
+.header{
+  position:fixed;
+  top:0;left:0;right:0;
+  height:64px;
+  background:#fff;
+  border-bottom:1px solid #ddd;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:0 18px;
+  z-index:1000;
 }
-.logo{font-size:24px;font-weight:800;min-width:50px}
-.search{flex:1;max-width:650px}
+.logo{
+  width:40px;height:40px;
+  border-radius:12px;
+  background:#111;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
+  font-size:20px;
+}
+.header-title{
+  font-size:20px;
+  font-weight:700;
+}
+.search{
+  flex:1;
+  max-width:620px;
+  margin:auto;
+}
 .search input{
-width:100%;padding:12px 16px;border:1px solid #ddd;
-border-radius:25px;outline:none;background:#f5f6f8
+  width:100%;
+  padding:12px 16px;
+  border:1px solid #ddd;
+  border-radius:25px;
+  outline:none;
 }
-.header-buttons{display:flex;gap:8px;margin-left:auto}
-.header-buttons button{border:0;background:#f1f2f4;padding:10px 13px;border-radius:20px}
+.header-actions{
+  display:flex;
+  gap:7px;
+}
+.icon-btn{
+  width:40px;height:40px;
+  border:0;
+  background:#f1f2f4;
+  border-radius:50%;
+}
 
 .sidebar{
-position:fixed;top:64px;bottom:0;left:0;width:230px;
-background:#fff;border-right:1px solid #ddd;padding:15px 10px;overflow-y:auto
+  position:fixed;
+  top:64px;
+  left:0;
+  bottom:0;
+  width:230px;
+  background:#fff;
+  border-right:1px solid #ddd;
+  padding:14px 10px;
+  overflow-y:auto;
 }
-.nav-button{
-width:100%;border:0;background:transparent;text-align:left;
-padding:12px 15px;margin-bottom:4px;border-radius:10px
+.nav-btn{
+  width:100%;
+  border:0;
+  background:transparent;
+  padding:11px 13px;
+  margin:2px 0;
+  text-align:left;
+  border-radius:10px;
 }
-.nav-button:hover,.nav-button.active{background:#e9eaed;font-weight:bold}
+.nav-btn:hover,.nav-btn.active{
+  background:#eef1f5;
+  font-weight:bold;
+}
 
-main{margin-left:230px;padding:90px 25px 40px;max-width:1300px}
-.page{display:none}.page.active{display:block}
+.main{
+  margin-left:230px;
+  padding:84px 20px 90px;
+  max-width:1500px;
+}
+.page{display:none}
+.page.active{display:block}
 
 .card{
-background:#fff;border:1px solid #ddd;border-radius:16px;
-padding:22px;margin-bottom:20px
+  background:#fff;
+  border:1px solid #e1e4e8;
+  border-radius:15px;
+  padding:18px;
+  margin-bottom:18px;
 }
-.section-title{font-size:24px;margin-bottom:15px}
-.hero{padding:40px;text-align:center}
-.hero h1{font-size:36px;margin-bottom:12px}
-.hero p{color:#666;line-height:1.6}
+.card h2,.card h3{margin-bottom:10px}
 
-.primary-btn,.secondary-btn,.danger-btn{
-border:0;padding:11px 18px;border-radius:9px
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+  gap:16px;
 }
-.primary-btn{background:#111;color:#fff}
-.secondary-btn{background:#eee}
-.danger-btn{background:#eee;color:#b00020}
-.button-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:15px}
+.product-card{
+  background:#fff;
+  border:1px solid #ddd;
+  border-radius:15px;
+  overflow:hidden;
+}
+.product-image{
+  width:100%;
+  height:190px;
+  background:#e8ebef;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
+.product-image img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+.product-image span{font-size:50px}
+.product-info{padding:14px}
+.product-info h3{margin-bottom:7px}
+.price{
+  font-weight:bold;
+  font-size:18px;
+  margin:8px 0;
+}
+.muted{color:#69727d;font-size:14px}
 
-.studio-grid{
-display:grid;grid-template-columns:repeat(3,1fr);gap:15px
+.btn{
+  border:0;
+  border-radius:9px;
+  padding:10px 14px;
+  background:#111;
+  color:#fff;
+  margin:4px 2px;
 }
-.studio-action{
-border:1px solid #ddd;background:#fff;border-radius:14px;
-padding:22px;text-align:left;min-height:130px
+.btn.secondary{
+  background:#eef0f2;
+  color:#17202a;
 }
-.studio-action:hover{background:#f3f3f3}
-.studio-action strong{display:block;font-size:18px;margin-bottom:8px}
-.studio-action span{color:#666;font-size:14px;line-height:1.4}
-
-.editor-layout{
-display:grid;grid-template-columns:1fr 320px;gap:20px
-}
-.editor-preview{
-background:#111;border-radius:16px;min-height:480px;
-display:flex;align-items:center;justify-content:center;
-overflow:hidden;position:relative
-}
-.editor-preview img,.editor-preview video{
-max-width:100%;max-height:600px;object-fit:contain
-}
-.editor-placeholder{color:#aaa;text-align:center;padding:40px}
-.editor-tools{
-background:#fff;border:1px solid #ddd;border-radius:16px;padding:18px
-}
-.tool-section{
-border-bottom:1px solid #eee;padding:15px 0
-}
-.tool-section:last-child{border-bottom:0}
-.tool-section h3{font-size:15px;margin-bottom:10px}
-.tool-buttons{display:flex;gap:7px;flex-wrap:wrap}
-.tool-buttons button{
-border:0;background:#eee;padding:8px 11px;border-radius:8px
-}
-.tool-buttons button.active{background:#111;color:#fff}
-.range-row{margin:12px 0}
-.range-row label{display:block;font-size:13px;margin-bottom:5px}
-.range-row input{width:100%}
-
-.timeline{
-background:#181818;border-radius:12px;padding:15px;
-margin-top:15px;color:#fff
-}
-.timeline-track{
-height:55px;background:#333;border-radius:8px;
-display:flex;align-items:center;padding:8px
-}
-.timeline-progress{height:39px;width:35%;background:#666;border-radius:6px}
-.timeline-label{font-size:12px;margin-top:8px;color:#aaa}
-
-.caption-overlay{
-position:absolute;bottom:40px;left:20px;right:20px;
-color:#fff;text-align:center;font-size:25px;font-weight:bold;
-text-shadow:2px 2px 4px #000;pointer-events:none
+.btn.success{background:#16834a}
+.btn.danger{background:#c62828}
+.btn.small{
+  padding:7px 10px;
+  font-size:13px;
 }
 
-.ai-grid{
-display:grid;grid-template-columns:repeat(2,1fr);gap:12px
+input,textarea,select{
+  width:100%;
+  border:1px solid #d8dce1;
+  border-radius:9px;
+  padding:11px;
+  margin:6px 0;
+  outline:none;
 }
-.ai-tool{
-border:1px solid #ddd;border-radius:12px;background:#fff;padding:18px
-}
-.ai-tool button{margin-top:12px}
+textarea{min-height:100px;resize:vertical}
 
-.stories{display:flex;gap:12px;overflow-x:auto}
+.row{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  align-items:center;
+}
+.space{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  align-items:center;
+}
+.badge{
+  display:inline-block;
+  padding:5px 9px;
+  background:#eef1f5;
+  border-radius:20px;
+  font-size:12px;
+}
+
+.hero{
+  background:#fff;
+  border:1px solid #ddd;
+  border-radius:18px;
+  padding:25px;
+  margin-bottom:18px;
+}
+.hero h1{font-size:30px;margin-bottom:8px}
+
+.story-row{
+  display:flex;
+  gap:12px;
+  overflow-x:auto;
+  padding-bottom:8px;
+}
 .story{
-min-width:90px;height:125px;border-radius:15px;background:#e9eaed;
-display:flex;flex-direction:column;justify-content:flex-end;
-align-items:center;padding:10px;font-size:13px;text-align:center
+  min-width:75px;
+  text-align:center;
 }
-.story-avatar{
-width:55px;height:55px;border-radius:50%;background:#ccc;
-display:flex;align-items:center;justify-content:center;
-font-size:24px;margin-bottom:8px
-}
-
-textarea{
-width:100%;min-height:100px;border:1px solid #ddd;
-border-radius:12px;padding:14px;resize:vertical;outline:none
+.story-circle{
+  width:58px;height:58px;
+  border-radius:50%;
+  background:#ddd;
+  margin:auto auto 5px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
 .post{
-background:#fff;border:1px solid #ddd;border-radius:16px;
-margin-bottom:20px;overflow:hidden
+  background:#fff;
+  border:1px solid #ddd;
+  border-radius:15px;
+  padding:16px;
+  margin-bottom:15px;
 }
-.post-header{display:flex;align-items:center;gap:12px;padding:16px}
-.avatar{
-width:45px;height:45px;border-radius:50%;background:#ddd;
-display:flex;align-items:center;justify-content:center;font-size:20px
-}
-.post-content{padding:0 16px 16px;line-height:1.6}
-.post-media{
-width:100%;max-height:500px;background:#111;
-display:flex;align-items:center;justify-content:center
-}
-.post-media img,.post-media video{max-width:100%;max-height:500px}
-.post-actions{display:flex;border-top:1px solid #eee}
-.post-actions button{flex:1;border:0;background:#fff;padding:13px 5px}
-.comment-box{display:none;padding:12px 16px;border-top:1px solid #eee}
-.comment-box input{
-width:100%;padding:10px;border:1px solid #ddd;border-radius:20px
+.post-actions{
+  display:flex;
+  gap:8px;
+  margin-top:10px;
 }
 
-.media-grid{
-display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:15px
-}
-.media-item{
-background:#111;border-radius:12px;overflow:hidden;
-min-height:150px;display:flex;align-items:center;justify-content:center
-}
-.media-item img,.media-item video{
-width:100%;max-height:250px;object-fit:cover
+.media-preview{
+  width:100%;
+  max-height:430px;
+  object-fit:contain;
+  background:#111;
+  border-radius:12px;
+  margin-top:10px;
 }
 
-.shorts-container{max-width:500px;margin:auto}
-.short-card{
-background:#000;color:#fff;border-radius:18px;
-overflow:hidden;margin-bottom:20px;position:relative
+.camera-box{
+  background:#111;
+  border-radius:15px;
+  overflow:hidden;
+  max-width:700px;
 }
-.short-card video,.short-card img{
-width:100%;height:650px;object-fit:cover;display:block
-}
-.short-info{
-position:absolute;bottom:0;left:0;right:0;padding:25px 15px 18px;
-background:linear-gradient(transparent,rgba(0,0,0,.85))
-}
-.short-actions{display:flex;gap:8px;margin-top:10px}
-.short-actions button{
-border:0;background:rgba(255,255,255,.15);
-color:#fff;padding:8px 12px;border-radius:20px
+.camera-box video{
+  width:100%;
+  display:block;
 }
 
-.video-library{
-display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:20px
+.stats{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:12px;
 }
-.video-card{
-background:#fff;border:1px solid #ddd;border-radius:14px;overflow:hidden
+.stat{
+  background:#f5f6f8;
+  border-radius:12px;
+  padding:15px;
 }
-.video-card video{
-width:100%;height:180px;object-fit:cover;background:#111
+.stat strong{
+  display:block;
+  font-size:23px;
+  margin-top:5px;
 }
-.video-card-info{padding:14px}
 
-.profile-cover{height:170px;background:#e3e4e6;border-radius:14px}
-.profile-info{
-display:flex;align-items:center;gap:18px;margin-top:-35px;padding:0 20px
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.55);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:3000;
+  padding:20px;
 }
-.profile-avatar{
-width:90px;height:90px;border-radius:50%;background:#ccc;
-border:5px solid #fff;display:flex;align-items:center;
-justify-content:center;font-size:40px
+.modal.show{display:flex}
+.modal-box{
+  width:100%;
+  max-width:600px;
+  max-height:90vh;
+  overflow-y:auto;
+  background:#fff;
+  border-radius:18px;
+  padding:22px;
 }
-.profile-stats{display:flex;gap:30px;margin-top:20px}
-.stat{text-align:center}.stat strong{display:block;font-size:20px}
 
-.message{display:flex;gap:12px;padding:15px 0;border-bottom:1px solid #eee}
-.notification{padding:15px;border-bottom:1px solid #eee}
-
-.form-box{max-width:500px;margin:auto}
-.form-group{margin-bottom:15px}
-.form-group label{display:block;margin-bottom:7px;font-weight:bold;font-size:14px}
-.form-group input,.form-group select{
-width:100%;padding:12px;border:1px solid #ccc;border-radius:9px;outline:none
+.cart-item{
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+  padding:14px 0;
+  border-bottom:1px solid #eee;
 }
-.form-link{margin-top:15px;text-align:center}
-.form-link button{border:0;background:none;font-weight:bold}
+.cart-total{
+  font-size:22px;
+  font-weight:bold;
+  margin-top:15px;
+}
 
-.placeholder{text-align:center;padding:60px 20px}
-.placeholder p{color:#666;margin-top:10px}
+.order{
+  border:1px solid #ddd;
+  border-radius:12px;
+  padding:15px;
+  margin-bottom:12px;
+}
+.status{
+  padding:5px 9px;
+  border-radius:15px;
+  background:#eef1f5;
+  font-size:12px;
+}
 
 .mobile-nav{
-display:none;position:fixed;bottom:0;left:0;right:0;height:65px;
-background:#fff;border-top:1px solid #ddd;z-index:1000;
-justify-content:space-around;align-items:center
+  display:none;
 }
 
-/* STAGE 5 */
-.template-grid{
-display:grid;
-grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
-gap:18px
+.editor-tools{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
+  gap:8px;
 }
+
 .template-card{
-background:#fff;border:1px solid #ddd;border-radius:15px;
-overflow:hidden
-}
-.template-preview{
-height:230px;background:#191919;color:#fff;
-display:flex;align-items:center;justify-content:center;
-font-size:55px;position:relative
-}
-.template-preview span{
-position:absolute;bottom:12px;left:12px;right:12px;
-font-size:15px;text-align:center
-}
-.template-info{padding:15px}
-.template-info h3{margin-bottom:7px}
-.template-info p{font-size:13px;color:#666;line-height:1.4}
-.template-actions{display:flex;gap:7px;margin-top:12px}
-.template-actions button{
-flex:1;border:0;background:#eee;padding:9px;border-radius:8px
+  border:1px solid #ddd;
+  border-radius:13px;
+  padding:12px;
+  background:#fff;
 }
 
-.category-row{
-display:flex;gap:8px;overflow-x:auto;padding-bottom:5px
+table{
+  width:100%;
+  border-collapse:collapse;
 }
-.category-row button{
-white-space:nowrap;border:1px solid #ddd;
-background:#fff;padding:9px 14px;border-radius:20px
-}
-.category-row button.active{background:#111;color:#fff}
-
-.creator-level{
-display:grid;
-grid-template-columns:repeat(5,1fr);
-gap:10px
-}
-.level-card{
-border:1px solid #ddd;border-radius:13px;
-padding:16px;background:#fff
-}
-.level-card.current{
-border:2px solid #111
-}
-.level-card h3{font-size:15px;margin-bottom:7px}
-.level-card p{font-size:12px;color:#666;line-height:1.4}
-
-.progress-box{
-height:14px;background:#eee;border-radius:20px;overflow:hidden;
-margin:10px 0
-}
-.progress-bar{
-height:100%;width:42%;background:#111;border-radius:20px
+th,td{
+  text-align:left;
+  padding:11px;
+  border-bottom:1px solid #eee;
 }
 
-.metric-grid{
-display:grid;grid-template-columns:repeat(4,1fr);gap:12px
-}
-.metric{
-background:#fff;border:1px solid #ddd;border-radius:12px;padding:18px
-}
-.metric strong{display:block;font-size:27px;margin-bottom:5px}
-.metric span{font-size:13px;color:#666}
-
-.eligibility-list{
-list-style:none
-}
-.eligibility-list li{
-padding:12px;border-bottom:1px solid #eee;
-display:flex;gap:10px;align-items:center
-}
-.check{font-size:20px}
-
-.earnings-box{
-display:grid;grid-template-columns:repeat(3,1fr);gap:12px
-}
-.earning{
-padding:20px;border:1px solid #ddd;border-radius:12px;background:#fff
-}
-.earning strong{font-size:25px;display:block;margin-bottom:5px}
-.earning span{font-size:13px;color:#666}
-
-.partner-box{
-background:#111;color:#fff;border-radius:15px;padding:25px
-}
-.partner-box p{color:#ccc;line-height:1.6;margin-top:8px}
-
-.creator-table{
-width:100%;border-collapse:collapse
-}
-.creator-table th,.creator-table td{
-padding:12px;text-align:left;border-bottom:1px solid #eee;font-size:14px
+@media(max-width:850px){
+  .header-title{display:none}
+  .sidebar{display:none}
+  .main{margin-left:0;padding:76px 12px 90px}
+  .header{padding:0 10px}
+  .search{max-width:none}
+  .header-actions .hide-mobile{display:none}
+  .mobile-nav{
+    display:flex;
+    position:fixed;
+    bottom:0;
+    left:0;right:0;
+    height:64px;
+    background:#fff;
+    border-top:1px solid #ddd;
+    z-index:2000;
+    justify-content:space-around;
+  }
+  .mobile-nav button{
+    border:0;
+    background:transparent;
+    font-size:11px;
+  }
 }
 
-.draft{
-display:flex;justify-content:space-between;
-align-items:center;padding:15px 0;border-bottom:1px solid #eee
-}
-
-@media(max-width:950px){
-.studio-grid{grid-template-columns:repeat(2,1fr)}
-.editor-layout{grid-template-columns:1fr}
-.creator-level{grid-template-columns:repeat(3,1fr)}
-.metric-grid{grid-template-columns:repeat(2,1fr)}
-}
-@media(max-width:800px){
-header{padding:0 10px}
-.logo{font-size:20px;min-width:auto}
-.header-buttons{display:none}
-.sidebar{display:none}
-main{margin-left:0;padding:80px 12px 85px}
-.mobile-nav{display:flex}
-.hero{padding:30px 15px}
-.hero h1{font-size:28px}
-.studio-grid{grid-template-columns:1fr}
-.ai-grid{grid-template-columns:1fr}
-.creator-level{grid-template-columns:1fr}
-.metric-grid{grid-template-columns:1fr 1fr}
-.earnings-box{grid-template-columns:1fr}
-.profile-info{padding:0 5px}
-.profile-stats{gap:15px}
-.short-card video,.short-card img{height:580px}
+.empty{
+  padding:35px;
+  text-align:center;
+  color:#777;
 }
 </style>
 </head>
 
 <body>
 
-<header>
-<div class="logo">X</div>
+<header class="header">
+  <div class="logo">X</div>
+  <div class="header-title">RockyX</div>
 
-<div class="search">
-<input
-id="searchInput"
-type="search"
-placeholder="Search people, posts, videos, music, templates..."
-onkeydown="handleSearch(event)"
->
-</div>
+  <div class="search">
+    <input id="globalSearch"
+      placeholder="Search products, people, videos, songs and services..."
+      onkeydown="if(event.key==='Enter')performGlobalSearch()">
+  </div>
 
-<div class="header-buttons">
-<button onclick="showPage('messages')">💬</button>
-<button onclick="showPage('notifications')">🔔</button>
-<button onclick="showPage('profile')">👤</button>
-</div>
+  <div class="header-actions">
+    <button class="icon-btn" onclick="showPage('notifications')">🔔</button>
+    <button class="icon-btn" onclick="showPage('messages')">💬</button>
+    <button class="icon-btn" onclick="showPage('cart')">🛒</button>
+    <button class="icon-btn hide-mobile" onclick="showPage('account')">👤</button>
+  </div>
 </header>
 
+<aside class="sidebar">
 
-<nav class="sidebar">
+<button class="nav-btn active" onclick="showPage('home',this)">🏠 Home</button>
+<button class="nav-btn" onclick="showPage('explore',this)">🔎 Explore</button>
+<button class="nav-btn" onclick="showPage('shorts',this)">🎬 Shorts</button>
+<button class="nav-btn" onclick="showPage('videos',this)">▶️ Videos</button>
+<button class="nav-btn" onclick="showPage('live',this)">🔴 Live</button>
+<button class="nav-btn" onclick="showPage('music',this)">🎵 Music</button>
+<button class="nav-btn" onclick="showPage('sounds',this)">🔊 Sounds</button>
 
-<button class="nav-button active" onclick="showPage('home',this)">🏠 Home</button>
-<button class="nav-button" onclick="showPage('explore',this)">🔎 Explore</button>
-<button class="nav-button" onclick="showPage('camera',this)">📷 Camera</button>
-<button class="nav-button" onclick="showPage('media',this)">🖼️ Media</button>
-<button class="nav-button" onclick="showPage('shorts',this)">🎬 Shorts</button>
-<button class="nav-button" onclick="showPage('videos',this)">▶️ Videos</button>
-<button class="nav-button" onclick="showPage('music',this)">🎵 Music</button>
-<button class="nav-button" onclick="showPage('sounds',this)">🔊 Sounds</button>
+<hr>
 
-<button class="nav-button" onclick="showPage('creatorStudio',this)">
-🎨 Creator Studio
-</button>
+<button class="nav-btn" onclick="showPage('camera',this)">📷 Camera</button>
+<button class="nav-btn" onclick="showPage('media',this)">🖼️ Media</button>
 
-<button class="nav-button" onclick="showPage('photoEditor',this)">
-🖼️ Photo Editor
-</button>
+<hr>
 
-<button class="nav-button" onclick="showPage('videoEditor',this)">
-🎬 Video Editor
-</button>
+<button class="nav-btn" onclick="showPage('marketplace',this)">🛍️ Marketplace</button>
+<button class="nav-btn" onclick="showPage('cart',this)">🛒 Cart</button>
+<button class="nav-btn" onclick="showPage('orders',this)">📦 Orders</button>
+<button class="nav-btn" onclick="showPage('seller',this)">🏪 Seller Tools</button>
 
-<button class="nav-button" onclick="showPage('aiStudio',this)">
-🤖 AI Studio
-</button>
+<hr>
 
-<button class="nav-button" onclick="showPage('templates',this)">
-✨ Templates
-</button>
+<button class="nav-btn" onclick="showPage('nearby',this)">📍 Nearby</button>
+<button class="nav-btn" onclick="showPage('transport',this)">🚕 Transport</button>
+<button class="nav-btn" onclick="showPage('businesses',this)">🏢 Businesses</button>
+<button class="nav-btn" onclick="showPage('services',this)">🛠️ Services</button>
 
-<button class="nav-button" onclick="showPage('myTemplates',this)">
-📁 My Templates
-</button>
+<hr>
 
-<button class="nav-button" onclick="showPage('creatorProgram',this)">
-🏆 Creator Program
-</button>
+<button class="nav-btn" onclick="showPage('creator',this)">⭐ Creator Studio</button>
+<button class="nav-btn" onclick="showPage('templates',this)">✨ Templates</button>
+<button class="nav-btn" onclick="showPage('myTemplates',this)">📁 My Templates</button>
+<button class="nav-btn" onclick="showPage('creatorProgram',this)">🏆 Creator Program</button>
+<button class="nav-btn" onclick="showPage('templateAnalytics',this)">📊 Template Analytics</button>
+<button class="nav-btn" onclick="showPage('earnings',this)">💰 Earnings</button>
 
-<button class="nav-button" onclick="showPage('templateAnalytics',this)">
-📊 Template Analytics
-</button>
+<hr>
 
-<button class="nav-button" onclick="showPage('creatorEarnings',this)">
-💰 Creator Earnings
-</button>
+<button class="nav-btn" onclick="showPage('messages',this)">💬 Messages</button>
+<button class="nav-btn" onclick="showPage('notifications',this)">🔔 Notifications</button>
+<button class="nav-btn" onclick="showPage('profile',this)">👤 Profile</button>
+<button class="nav-btn" onclick="showPage('account',this)">⚙️ Account</button>
+<button class="nav-btn" onclick="showPage('settings',this)">🔐 Settings</button>
 
-<button class="nav-button" onclick="showPage('marketplace',this)">🛍️ Marketplace</button>
-<button class="nav-button" onclick="showPage('nearby',this)">📍 Nearby</button>
-<button class="nav-button" onclick="showPage('transport',this)">🚗 Transport</button>
-<button class="nav-button" onclick="showPage('businesses',this)">🏢 Businesses</button>
-<button class="nav-button" onclick="showPage('services',this)">🛠️ Services</button>
-<button class="nav-button" onclick="showPage('messages',this)">💬 Messages</button>
-<button class="nav-button" onclick="showPage('notifications',this)">🔔 Notifications</button>
-<button class="nav-button" onclick="showPage('profile',this)">👤 Profile</button>
-<button class="nav-button" onclick="showPage('account',this)">⚙️ Account</button>
-<button class="nav-button" onclick="showPage('settings',this)">🔒 Settings</button>
+</aside>
 
-</nav>
-
-
-<main>
-
+<main class="main">
 
 <!-- HOME -->
-
 <section id="home" class="page active">
 
-<div class="card hero">
+<div class="hero">
 <h1>Welcome</h1>
-<p>Connect, create, edit, share, watch and discover.</p>
+<p>Marketplace, social network, entertainment and services — all in one place.</p>
 
-<div class="button-row" style="justify-content:center">
-
-<button class="primary-btn" onclick="showPage('creatorStudio')">
-🎨 Creator Studio
-</button>
-
-<button class="secondary-btn" onclick="showPage('templates')">
-✨ Templates
-</button>
-
+<div class="row" style="margin-top:15px">
+<button class="btn" onclick="showPage('marketplace')">Shop</button>
+<button class="btn secondary" onclick="showPage('shorts')">Watch Shorts</button>
+<button class="btn secondary" onclick="showPage('services')">Find Services</button>
 </div>
 </div>
-
 
 <div class="card">
-
-<h2 class="section-title">Stories</h2>
-
-<div class="stories">
-
-<div class="story" onclick="showPage('camera')">
-<div class="story-avatar">➕</div>
-Add Story
+<h3>Stories</h3>
+<div class="story-row">
+<div class="story"><div class="story-circle">➕</div><small>Your story</small></div>
+<div class="story"><div class="story-circle">👤</div><small>Ama</small></div>
+<div class="story"><div class="story-circle">🛍️</div><small>Shop</small></div>
+<div class="story"><div class="story-circle">🎵</div><small>Music</small></div>
 </div>
-
-<div class="story">
-<div class="story-avatar">👤</div>
-Friend
 </div>
-
-<div class="story">
-<div class="story-avatar">👩</div>
-Creator
-</div>
-
-<div class="story">
-<div class="story-avatar">🎵</div>
-Artist
-</div>
-
-</div>
-
-</div>
-
 
 <div class="card">
-
-<h2 class="section-title">Create Post</h2>
-
-<textarea id="postText" placeholder="What's on your mind?"></textarea>
-
-<div class="button-row">
-
-<button class="primary-btn" onclick="createPost()">Post</button>
-
-<button class="secondary-btn" onclick="showPage('camera')">
-📷 Camera
-</button>
-
-<button class="secondary-btn" onclick="uploadPostMedia()">
-🖼️ Upload
-</button>
-
+<h3>Create Post</h3>
+<textarea id="postText" placeholder="What's happening?"></textarea>
+<button class="btn" onclick="createPost()">Post</button>
 </div>
 
-</div>
-
-
-<div id="feed">
-
-<article class="post">
-
-<div class="post-header">
-<div class="avatar">👤</div>
-
-<div>
-<strong>RockyX Creator</strong>
-<div style="color:#777;font-size:13px">Just now</div>
-</div>
-</div>
-
-<div class="post-content">
-Welcome to the creator community.
-</div>
-
-<div class="post-media">
-<div style="font-size:55px;color:#fff">🌍</div>
-</div>
-
-<div class="post-actions">
-<button onclick="likePost(this)">❤️ Like</button>
-<button onclick="toggleComments(this)">💬 Comment</button>
-<button onclick="sharePost()">🔗 Share</button>
-<button onclick="savePost(this)">🔖 Save</button>
-</div>
-
-<div class="comment-box">
-<input
-type="text"
-placeholder="Write a comment..."
-onkeydown="submitComment(event)"
->
-</div>
-
-</article>
-
-</div>
+<div id="feed"></div>
 
 </section>
 
 
 <!-- EXPLORE -->
-
 <section id="explore" class="page">
-
-<div class="card">
-<h2 class="section-title">Explore</h2>
-<p>Discover creators, templates, posts, videos, sounds and music.</p>
-
-<div class="button-row">
-
-<button class="secondary-btn" onclick="showPage('templates')">
-✨ Templates
-</button>
-
-<button class="secondary-btn" onclick="showPage('shorts')">
-🎬 Shorts
-</button>
-
-<button class="secondary-btn" onclick="showPage('creatorProgram')">
-🏆 Creators
-</button>
-
-</div>
+<div class="hero">
+<h1>Explore</h1>
+<p>Discover products, creators, videos, music and services.</p>
 </div>
 
+<div class="grid">
+<div class="card"><h3>🛍️ Marketplace</h3><button class="btn" onclick="showPage('marketplace')">Explore</button></div>
+<div class="card"><h3>🎬 Shorts</h3><button class="btn" onclick="showPage('shorts')">Watch</button></div>
+<div class="card"><h3>🎵 Music</h3><button class="btn" onclick="showPage('music')">Listen</button></div>
+<div class="card"><h3>📍 Nearby</h3><button class="btn" onclick="showPage('nearby')">Discover</button></div>
+</div>
 </section>
 
 
 <!-- CAMERA -->
-
 <section id="camera" class="page">
+<div class="hero">
+<h1>Camera</h1>
+<p>Create photos and videos directly from your device.</p>
+</div>
 
 <div class="card">
-
-<h2 class="section-title">Camera</h2>
-
-<div class="button-row">
-
-<button class="primary-btn" onclick="startCamera()">
-📷 Start Camera
-</button>
-
-<button class="secondary-btn" onclick="takePhoto()">
-📸 Take Photo
-</button>
-
-<button class="secondary-btn" onclick="toggleRecording()">
-🔴 Record
-</button>
-
-<button class="secondary-btn" onclick="stopCamera()">
-⏹ Stop
-</button>
-
+<div class="camera-box">
+<video id="cameraVideo" autoplay playsinline></video>
 </div>
 
-<video
-id="cameraVideo"
-autoplay muted playsinline
-style="width:100%;max-height:500px;background:#111;border-radius:14px;margin-top:15px">
-</video>
+<div class="row" style="margin-top:12px">
+<button class="btn" onclick="startCamera()">Start Camera</button>
+<button class="btn" onclick="takePhoto()">Take Photo</button>
+<button class="btn" onclick="startRecording()">Start Recording</button>
+<button class="btn danger" onclick="stopRecording()">Stop Recording</button>
+<button class="btn secondary" onclick="stopCamera()">Stop Camera</button>
+</div>
 
 <canvas id="cameraCanvas" style="display:none"></canvas>
-
-<p id="cameraStatus"
-style="text-align:center;padding:10px;color:#666">
-Camera is not started.
-</p>
-
+<div id="cameraResult"></div>
 </div>
-
 </section>
 
 
 <!-- MEDIA -->
-
 <section id="media" class="page">
-
-<div class="card">
-
-<h2 class="section-title">My Media</h2>
-
-<input
-id="mediaInput"
-type="file"
-accept="image/*,video/*"
-multiple
-onchange="loadLocalMedia(event)"
->
-
+<div class="hero">
+<h1>Media</h1>
+<p>Choose photos and videos from your device.</p>
 </div>
 
 <div class="card">
-<div id="mediaGrid" class="media-grid"></div>
+<input type="file" id="mediaInput" accept="image/*,video/*" multiple onchange="previewMedia()">
+<div id="mediaPreview" class="grid"></div>
 </div>
-
 </section>
 
 
 <!-- SHORTS -->
-
 <section id="shorts" class="page">
+<div class="hero">
+<h1>Shorts</h1>
+<p>Watch and create short vertical videos.</p>
+</div>
 
 <div class="card">
-
-<h2 class="section-title">Shorts</h2>
-
-<div class="button-row">
-
-<button class="primary-btn" onclick="showPage('creatorStudio')">
-🎨 Create Short
-</button>
-
-<button class="secondary-btn" onclick="uploadShort()">
-📤 Upload Short
-</button>
-
+<input type="file" id="shortInput" accept="video/*">
+<button class="btn" onclick="addShort()">Add Short</button>
+<div id="shortList"></div>
 </div>
-
-</div>
-
-<div id="shortsFeed" class="shorts-container">
-
-<div class="short-card">
-
-<div style="
-height:650px;display:flex;align-items:center;
-justify-content:center;font-size:80px;color:white">
-🎬
-</div>
-
-<div class="short-info">
-
-<strong>Welcome to Shorts</strong>
-
-<p style="margin-top:7px">
-Create your first short from Creator Studio.
-</p>
-
-<div class="short-actions">
-<button>❤️</button>
-<button>💬</button>
-<button>↗️</button>
-<button>🔖</button>
-</div>
-
-</div>
-</div>
-
-</div>
-
 </section>
 
 
 <!-- VIDEOS -->
-
 <section id="videos" class="page">
+<div class="hero">
+<h1>Videos</h1>
+<p>Long-form video content.</p>
+</div>
 
 <div class="card">
-
-<h2 class="section-title">Videos</h2>
-
-<div class="button-row">
-
-<button class="primary-btn" onclick="uploadLongVideo()">
-📤 Upload Video
-</button>
-
-<button class="secondary-btn" onclick="showPage('videoEditor')">
-🎬 Edit Video
-</button>
-
+<input type="file" id="longVideoInput" accept="video/*">
+<button class="btn" onclick="addLongVideo()">Add Video</button>
+<div id="videoList"></div>
 </div>
+</section>
 
+
+<!-- LIVE -->
+<section id="live" class="page">
+<div class="hero">
+<h1>Live</h1>
+<p>Live streaming will be connected during the backend phase.</p>
 </div>
-
-<div id="videoLibrary" class="video-library"></div>
-
+<div class="card">
+<h3>Live Streaming</h3>
+<p class="muted">The frontend structure is ready for live streaming, viewers, comments and moderation.</p>
+<button class="btn" onclick="alert('Live streaming backend will be connected after Stage 10.')">Start Live</button>
+</div>
 </section>
 
 
 <!-- MUSIC -->
-
 <section id="music" class="page">
-
-<div class="card placeholder">
-<h2>Music</h2>
-<p>Music and artist features will be expanded later.</p>
+<div class="hero">
+<h1>Music</h1>
+<p>Discover songs, artists and albums.</p>
 </div>
 
+<div class="grid">
+<div class="card"><h3>🎵 New Song</h3><p class="muted">Example artist</p><button class="btn">▶ Play</button></div>
+<div class="card"><h3>🎵 My Song</h3><p class="muted">Example artist</p><button class="btn">▶ Play</button></div>
+<div class="card"><h3>💿 Album</h3><p class="muted">Example artist</p><button class="btn">View Album</button></div>
+</div>
 </section>
 
 
 <!-- SOUNDS -->
-
 <section id="sounds" class="page">
+<div class="hero">
+<h1>Sounds</h1>
+<p>Find sounds for your videos.</p>
+</div>
+
+<div class="grid">
+<div class="card">
+<h3>Original Sound</h3>
+<button class="btn" onclick="saveSound('Original Sound')">Save Sound</button>
+</div>
+<div class="card">
+<h3>Trending Beat</h3>
+<button class="btn" onclick="saveSound('Trending Beat')">Save Sound</button>
+</div>
+</div>
 
 <div class="card">
+<h3>Saved Sounds</h3>
+<div id="savedSounds"></div>
+</div>
+</section>
 
-<h2 class="section-title">Sounds</h2>
 
-<p style="color:#666">
-Sounds can be attached to creative projects.
-</p>
+<!-- MARKETPLACE -->
+<section id="marketplace" class="page">
 
-<div class="button-row">
-
-<button class="secondary-btn" onclick="saveSound()">
-🔊 Save Sample Sound
-</button>
-
-<button class="secondary-btn" onclick="showSavedSounds()">
-🔖 Saved Sounds
-</button>
-
+<div class="hero">
+<div class="space">
+<div>
+<h1>Marketplace</h1>
+<p>Discover products from sellers.</p>
+</div>
+<button class="btn" onclick="showPage('cart')">🛒 Cart <span id="cartCount">0</span></button>
+</div>
 </div>
 
-<div id="savedSoundsBox"
-style="display:none;margin-top:20px">
+<div class="card">
+<div class="row">
+<input id="productSearch"
+placeholder="Search products..."
+oninput="renderProducts()"
+style="flex:1;min-width:220px">
+
+<select id="productCategory" onchange="renderProducts()" style="max-width:220px">
+<option value="">All categories</option>
+<option>Electronics</option>
+<option>Fashion</option>
+<option>Beauty</option>
+<option>Food</option>
+<option>Home</option>
+<option>Services</option>
+</select>
+</div>
 </div>
 
+<div id="productList" class="grid"></div>
+
+</section>
+
+
+<!-- PRODUCT DETAILS -->
+<section id="productDetails" class="page">
+<div id="productDetailContent"></div>
+</section>
+
+
+<!-- CART -->
+<section id="cart" class="page">
+
+<div class="hero">
+<h1>Shopping Cart</h1>
+<p>Review your selected products.</p>
+</div>
+
+<div class="card">
+<div id="cartItems"></div>
+<div id="cartSummary"></div>
 </div>
 
 </section>
 
 
-<!-- CREATOR STUDIO -->
+<!-- CHECKOUT -->
+<section id="checkout" class="page">
 
-<section id="creatorStudio" class="page">
-
-<div class="card">
-
-<h2 class="section-title">Creator Studio</h2>
-
-<p style="color:#666">
-Your creative workspace for photos, videos, captions,
-sounds, effects, templates and AI tools.
-</p>
-
+<div class="hero">
+<h1>Checkout</h1>
+<p>Enter your delivery information.</p>
 </div>
 
-<div class="studio-grid">
+<div class="card">
+<h3>Delivery Details</h3>
 
-<button class="studio-action" onclick="showPage('photoEditor')">
-<strong>🖼️ Photo Editor</strong>
-<span>Crop, rotate, adjust, filter, add text and effects.</span>
-</button>
+<input id="checkoutName" placeholder="Full name">
+<input id="checkoutPhone" placeholder="Phone number">
+<textarea id="checkoutAddress" placeholder="Delivery address"></textarea>
 
-<button class="studio-action" onclick="showPage('videoEditor')">
-<strong>🎬 Video Editor</strong>
-<span>Trim, split, speed, captions, filters and sounds.</span>
-</button>
+<select id="checkoutCountry">
+<option value="Ghana">Ghana</option>
+<option value="Nigeria">Nigeria</option>
+<option value="Kenya">Kenya</option>
+<option value="South Africa">South Africa</option>
+<option value="United Kingdom">United Kingdom</option>
+<option value="United States">United States</option>
+</select>
 
-<button class="studio-action" onclick="showPage('aiStudio')">
-<strong>🤖 AI Studio</strong>
-<span>AI-assisted editing and smart media tools.</span>
-</button>
+<div id="checkoutTotal" class="cart-total"></div>
 
-<button class="studio-action" onclick="showPage('templates')">
-<strong>✨ Templates</strong>
-<span>Create and use reusable creative templates.</span>
-</button>
+<button class="btn success" onclick="placeDemoOrder()">Place Order</button>
+<button class="btn secondary" onclick="showPage('cart')">Back to Cart</button>
+</div>
 
-<button class="studio-action" onclick="showPage('sounds')">
-<strong>🎵 Add Sound</strong>
-<span>Choose sounds for your projects.</span>
-</button>
+</section>
 
-<button class="studio-action" onclick="showPage('creatorProgram')">
-<strong>🏆 Creator Program</strong>
-<span>View creator levels and program progress.</span>
-</button>
 
+<!-- ORDERS -->
+<section id="orders" class="page">
+
+<div class="hero">
+<h1>Orders</h1>
+<p>Track your marketplace purchases.</p>
+</div>
+
+<div id="ordersList"></div>
+
+</section>
+
+
+<!-- SELLER TOOLS -->
+<section id="seller" class="page">
+
+<div class="hero">
+<h1>Seller Tools</h1>
+<p>Manage products, sales and seller activity.</p>
+</div>
+
+<div class="stats">
+<div class="stat">Products<strong id="sellerProducts">0</strong></div>
+<div class="stat">Orders<strong id="sellerOrders">0</strong></div>
+<div class="stat">Sales<strong id="sellerSales">GHS 0.00</strong></div>
+<div class="stat">Commission<strong id="sellerCommission">GHS 0.00</strong></div>
+</div>
+
+<div class="card">
+<h3>Add Product</h3>
+
+<input id="newProductName" placeholder="Product name">
+<textarea id="newProductDescription" placeholder="Product description"></textarea>
+<input id="newProductPrice" type="number" placeholder="Price">
+<select id="newProductCategory">
+<option>Electronics</option>
+<option>Fashion</option>
+<option>Beauty</option>
+<option>Food</option>
+<option>Home</option>
+<option>Services</option>
+</select>
+<input id="newProductImage" type="file" accept="image/*">
+
+<button class="btn" onclick="addSellerProduct()">Create Product</button>
+</div>
+
+<div class="card">
+<h3>My Products</h3>
+<div id="sellerProductList"></div>
+</div>
+
+</section>
+
+
+<!-- NEARBY -->
+<section id="nearby" class="page">
+<div class="hero">
+<h1>Nearby</h1>
+<p>Discover businesses, products and services near you.</p>
+</div>
+<div class="card">
+<div style="height:320px;background:#e7eaee;border-radius:15px;display:flex;align-items:center;justify-content:center">
+📍 Map will be connected during the map/backend stage.
+</div>
+</div>
+</section>
+
+
+<!-- TRANSPORT -->
+<section id="transport" class="page">
+<div class="hero">
+<h1>Transport</h1>
+<p>Find transport providers.</p>
+</div>
+
+<div class="grid">
+<div class="card"><h3>🚕 Taxi</h3><button class="btn">Find</button></div>
+<div class="card"><h3>🚗 Ride-hailing</h3><button class="btn">Find</button></div>
+<div class="card"><h3>🚌 Bus</h3><button class="btn">Find</button></div>
+<div class="card"><h3>🏍️ Motorbike</h3><button class="btn">Find</button></div>
+<div class="card"><h3>📦 Delivery</h3><button class="btn">Find</button></div>
+<div class="card"><h3>🚚 Trucking</h3><button class="btn">Find</button></div>
+<div class="card"><h3>🚙 Car Rental</h3><button class="btn">Find</button></div>
+<div class="card"><h3>✈️ Airport Transfer</h3><button class="btn">Find</button></div>
+</div>
+</section>
+
+
+<!-- BUSINESSES -->
+<section id="businesses" class="page">
+<div class="hero">
+<h1>Businesses</h1>
+<p>Discover businesses and shops.</p>
+</div>
+
+<div class="grid">
+<div class="card"><h3>🏪 Shop</h3><p class="muted">Business profile</p></div>
+<div class="card"><h3>🍽️ Restaurant</h3><p class="muted">Business profile</p></div>
+<div class="card"><h3>🏨 Hotel</h3><p class="muted">Business profile</p></div>
+</div>
+</section>
+
+
+<!-- SERVICES -->
+<section id="services" class="page">
+<div class="hero">
+<h1>Services</h1>
+<p>Find service providers.</p>
+</div>
+
+<div class="grid">
+<div class="card"><h3>🔧 Repairs</h3><button class="btn">Find Provider</button></div>
+<div class="card"><h3>💻 Technology</h3><button class="btn">Find Provider</button></div>
+<div class="card"><h3>🚚 Delivery</h3><button class="btn">Find Provider</button></div>
+<div class="card"><h3>🏠 Home Services</h3><button class="btn">Find Provider</button></div>
+</div>
+</section>
+
+
+<!-- CREATOR STUDIO -->
+<section id="creator" class="page">
+
+<div class="hero">
+<h1>Creator Studio</h1>
+<p>Create and manage your content.</p>
+</div>
+
+<div class="editor-tools">
+<button class="btn" onclick="showPage('photoEditor')">🖼️ Edit Photo</button>
+<button class="btn" onclick="showPage('videoEditor')">🎬 Edit Video</button>
+<button class="btn" onclick="showPage('aiStudio')">🤖 AI Studio</button>
+<button class="btn" onclick="showPage('templates')">✨ Templates</button>
+<button class="btn" onclick="showPage('sounds')">🔊 Add Sound</button>
+<button class="btn" onclick="alert('Captions tool ready for backend integration.')">📝 Captions</button>
+<button class="btn" onclick="alert('Effects tool ready.')">✨ Effects</button>
+<button class="btn" onclick="alert('Filters tool ready.')">🎨 Filters</button>
 </div>
 
 </section>
 
 
 <!-- PHOTO EDITOR -->
-
 <section id="photoEditor" class="page">
+<div class="hero">
+<h1>Photo Editor</h1>
+<p>Edit photos on your device.</p>
+</div>
 
 <div class="card">
+<input type="file" id="photoEditorInput" accept="image/*" onchange="loadPhotoEditor()">
+<div id="photoEditorPreview"></div>
 
-<h2 class="section-title">Photo Editor</h2>
-
-<div class="button-row">
-
-<button class="primary-btn" onclick="loadPhotoEditor()">
-🖼️ Choose Photo
-</button>
-
-<button class="secondary-btn" onclick="resetPhotoEditor()">
-Reset
-</button>
-
-<button class="secondary-btn" onclick="savePhotoDraft()">
-💾 Save Draft
-</button>
-
-<button class="secondary-btn" onclick="downloadEditedPhoto()">
-📥 Save Photo
-</button>
-
+<div class="editor-tools" style="margin-top:15px">
+<button class="btn secondary" onclick="photoFilter('grayscale(1)')">Grayscale</button>
+<button class="btn secondary" onclick="photoFilter('sepia(1)')">Sepia</button>
+<button class="btn secondary" onclick="photoFilter('brightness(1.2)')">Brightness</button>
+<button class="btn secondary" onclick="photoFilter('contrast(1.3)')">Contrast</button>
+<button class="btn secondary" onclick="photoFilter('saturate(1.5)')">Saturation</button>
+<button class="btn secondary" onclick="photoFilter('none')">Reset</button>
 </div>
 
+<button class="btn" onclick="savePhotoEdit()">Save Photo</button>
 </div>
-
-<div class="editor-layout">
-
-<div class="card editor-preview">
-
-<div id="photoEditorPlaceholder" class="editor-placeholder">
-Choose a photo to begin editing.
-</div>
-
-<img id="photoEditorImage"
-style="display:none;max-width:100%;max-height:600px">
-
-</div>
-
-<div class="editor-tools">
-
-<div class="tool-section">
-<h3>Filters</h3>
-
-<div class="tool-buttons">
-
-<button onclick="photoFilter('none',this)">Normal</button>
-<button onclick="photoFilter('grayscale(1)',this)">B&W</button>
-<button onclick="photoFilter('sepia(1)',this)">Vintage</button>
-<button onclick="photoFilter('saturate(1.8)',this)">Color</button>
-<button onclick="photoFilter('contrast(1.5)',this)">Contrast</button>
-
-</div>
-</div>
-
-<div class="tool-section">
-
-<h3>Brightness</h3>
-
-<div class="range-row">
-<input id="photoBrightness"
-type="range" min="50" max="150" value="100"
-oninput="updatePhotoAdjustments()">
-</div>
-
-</div>
-
-<div class="tool-section">
-
-<h3>Contrast</h3>
-
-<div class="range-row">
-<input id="photoContrast"
-type="range" min="50" max="150" value="100"
-oninput="updatePhotoAdjustments()">
-</div>
-
-</div>
-
-<div class="tool-section">
-
-<h3>Saturation</h3>
-
-<div class="range-row">
-<input id="photoSaturation"
-type="range" min="0" max="200" value="100"
-oninput="updatePhotoAdjustments()">
-</div>
-
-</div>
-
-<div class="tool-section">
-
-<h3>Rotation</h3>
-
-<div class="tool-buttons">
-<button onclick="rotatePhoto(-90)">↶ Rotate</button>
-<button onclick="rotatePhoto(90)">↷ Rotate</button>
-</div>
-
-</div>
-
-<div class="tool-section">
-
-<h3>Text</h3>
-
-<input
-id="photoText"
-type="text"
-placeholder="Enter text"
-style="width:100%;padding:10px;border:1px solid #ddd;border-radius:8px"
-oninput="updatePhotoText()"
->
-
-</div>
-
-</div>
-</div>
-
 </section>
 
 
 <!-- VIDEO EDITOR -->
-
 <section id="videoEditor" class="page">
+<div class="hero">
+<h1>Video Editor</h1>
+<p>Create and edit videos locally.</p>
+</div>
 
 <div class="card">
+<input type="file" id="editorVideoInput" accept="video/*" onchange="loadEditorVideo()">
+<video id="editorPreview" class="media-preview" controls></video>
 
-<h2 class="section-title">Video Editor</h2>
-
-<div class="button-row">
-
-<button class="primary-btn" onclick="loadVideoEditor()">
-🎬 Choose Video
-</button>
-
-<button class="secondary-btn" onclick="resetVideoEditor()">
-Reset
-</button>
-
-<button class="secondary-btn" onclick="saveVideoDraft()">
-💾 Save Draft
-</button>
-
-<button class="secondary-btn" onclick="publishEditedVideo()">
-📤 Publish
-</button>
-
+<div class="editor-tools" style="margin-top:15px">
+<button class="btn secondary" onclick="alert('Trim controls will be expanded in the advanced editor.')">✂️ Trim</button>
+<button class="btn secondary" onclick="alert('Split tool ready.')">Split</button>
+<button class="btn secondary" onclick="alert('Speed control ready.')">Speed</button>
+<button class="btn secondary" onclick="alert('Text tool ready.')">Text</button>
+<button class="btn secondary" onclick="alert('Effects ready.')">Effects</button>
+<button class="btn secondary" onclick="alert('Music ready.')">Music</button>
 </div>
 
+<button class="btn" onclick="saveVideoDraft()">Save Draft</button>
+<button class="btn" onclick="alert('Publishing will connect to the backend later.')">Publish</button>
 </div>
-
-<div class="editor-layout">
-
-<div>
-
-<div class="card editor-preview">
-
-<div id="videoEditorPlaceholder" class="editor-placeholder">
-Choose a video to begin editing.
-</div>
-
-<video id="videoEditorVideo"
-controls playsinline
-style="display:none;max-width:100%;max-height:600px">
-</video>
-
-<div id="videoCaptionOverlay"
-class="caption-overlay"></div>
-
-</div>
-
-<div class="timeline">
-
-<div class="timeline-track">
-<div id="timelineProgress" class="timeline-progress"></div>
-</div>
-
-<div class="timeline-label">Timeline preview</div>
-
-</div>
-
-</div>
-
-<div class="editor-tools">
-
-<div class="tool-section">
-
-<h3>Trim</h3>
-
-<div class="range-row">
-<label>Start</label>
-<input id="trimStart"
-type="range" min="0" max="100" value="0"
-oninput="updateTrim()">
-</div>
-
-<div class="range-row">
-<label>End</label>
-<input id="trimEnd"
-type="range" min="0" max="100" value="100"
-oninput="updateTrim()">
-</div>
-
-</div>
-
-<div class="tool-section">
-
-<h3>Speed</h3>
-
-<div class="tool-buttons">
-<button onclick="setVideoSpeed(.5)">0.5×</button>
-<button onclick="setVideoSpeed(1)">1×</button>
-<button onclick="setVideoSpeed(1.5)">1.5×</button>
-<button onclick="setVideoSpeed(2)">2×</button>
-</div>
-
-</div>
-
-<div class="tool-section">
-
-<h3>Filters</h3>
-
-<div class="tool-buttons">
-
-<button onclick="videoFilter('none',this)">Normal</button>
-<button onclick="videoFilter('grayscale(1)',this)">B&W</button>
-<button onclick="videoFilter('sepia(1)',this)">Vintage</button>
-<button onclick="videoFilter('contrast(1.4)',this)">Contrast</button>
-<button onclick="videoFilter('saturate(1.7)',this)">Color</button>
-
-</div>
-
-</div>
-
-<div class="tool-section">
-
-<h3>Caption</h3>
-
-<input
-id="videoCaptionInput"
-type="text"
-placeholder="Type caption..."
-style="width:100%;padding:10px;border:1px solid #ddd;border-radius:8px"
-oninput="updateVideoCaption()"
->
-
-</div>
-
-<div class="tool-section">
-
-<h3>Aspect Ratio</h3>
-
-<div class="tool-buttons">
-<button onclick="setAspect('9 / 16')">9:16</button>
-<button onclick="setAspect('1 / 1')">1:1</button>
-<button onclick="setAspect('16 / 9')">16:9</button>
-</div>
-
-</div>
-
-<div class="tool-section">
-
-<h3>Sound</h3>
-
-<div class="tool-buttons">
-<button onclick="addEditorSound('Original')">Original</button>
-<button onclick="addEditorSound('Sample Sound')">Sample</button>
-</div>
-
-<p id="selectedSound"
-style="font-size:13px;color:#666;margin-top:8px">
-No sound selected
-</p>
-
-</div>
-
-</div>
-</div>
-
 </section>
 
 
 <!-- AI STUDIO -->
-
 <section id="aiStudio" class="page">
-
-<div class="card">
-
-<h2 class="section-title">AI Studio</h2>
-
-<p style="color:#666">
-AI processing will be connected to external AI services during the
-backend and service-integration stages.
-</p>
-
+<div class="hero">
+<h1>AI Studio</h1>
+<p>AI-powered creation tools.</p>
 </div>
 
-<div class="ai-grid">
-
-<div class="ai-tool">
-<h3>📝 AI Captions</h3>
-<p style="color:#666;margin-top:7px">Generate captions.</p>
-<button class="secondary-btn" onclick="aiAction('AI captions')">Generate</button>
+<div class="grid">
+<div class="card"><h3>🤖 Auto Captions</h3><button class="btn">Use Tool</button></div>
+<div class="card"><h3>🖼️ Background Removal</h3><button class="btn">Use Tool</button></div>
+<div class="card"><h3>✨ Image Enhancement</h3><button class="btn">Use Tool</button></div>
+<div class="card"><h3>📝 Text Generation</h3><button class="btn">Use Tool</button></div>
+<div class="card"><h3>🎬 Automatic Editing</h3><button class="btn">Use Tool</button></div>
+<div class="card"><h3>🎵 Beat Editing</h3><button class="btn">Use Tool</button></div>
 </div>
-
-<div class="ai-tool">
-<h3>✂️ Automatic Editing</h3>
-<p style="color:#666;margin-top:7px">Create an editing suggestion.</p>
-<button class="secondary-btn" onclick="aiAction('automatic editing')">Create</button>
-</div>
-
-<div class="ai-tool">
-<h3>🪄 Background Removal</h3>
-<p style="color:#666;margin-top:7px">Prepare an image for background removal.</p>
-<button class="secondary-btn" onclick="aiAction('background removal')">Start</button>
-</div>
-
-<div class="ai-tool">
-<h3>✨ Image Enhancement</h3>
-<p style="color:#666;margin-top:7px">Improve image quality.</p>
-<button class="secondary-btn" onclick="aiAction('image enhancement')">Enhance</button>
-</div>
-
-</div>
-
 </section>
 
 
 <!-- TEMPLATES -->
-
 <section id="templates" class="page">
 
-<div class="card">
-
-<h2 class="section-title">Template Marketplace</h2>
-
-<p style="color:#666">
-Discover templates created by the RockyX creator community.
-</p>
-
-<div class="button-row">
-
-<button class="primary-btn" onclick="showPage('templateCreator')">
-➕ Create Template
-</button>
-
-<button class="secondary-btn" onclick="showPage('myTemplates')">
-📁 My Templates
-</button>
-
+<div class="hero">
+<h1>Templates</h1>
+<p>Discover templates created by the community.</p>
 </div>
 
-</div>
-
-
-<div class="card">
-
-<h3 style="margin-bottom:12px">Categories</h3>
-
-<div class="category-row">
-
-<button class="active" onclick="filterTemplates('all',this)">
-All
-</button>
-
-<button onclick="filterTemplates('video',this)">
-Video
-</button>
-
-<button onclick="filterTemplates('photo',this)">
-Photo
-</button>
-
-<button onclick="filterTemplates('social',this)">
-Social
-</button>
-
-<button onclick="filterTemplates('business',this)">
-Business
-</button>
-
-<button onclick="filterTemplates('music',this)">
-Music
-</button>
-
-</div>
-
-</div>
-
-
-<div id="templateGrid" class="template-grid">
-
-<div class="template-card" data-category="video">
-
-<div class="template-preview">
-🎬
-<span>Fast Video Intro</span>
-</div>
-
-<div class="template-info">
-<h3>Fast Video Intro</h3>
-<p>Short intro template with text and transitions.</p>
-
-<div class="template-actions">
-<button onclick="useTemplate('Fast Video Intro')">Use</button>
-<button onclick="saveTemplate('Fast Video Intro')">Save</button>
-</div>
-</div>
-
-</div>
-
-
-<div class="template-card" data-category="photo">
-
-<div class="template-preview">
-📸
-<span>Photo Story</span>
-</div>
-
-<div class="template-info">
-<h3>Photo Story</h3>
-<p>Turn several photos into a simple story.</p>
-
-<div class="template-actions">
-<button onclick="useTemplate('Photo Story')">Use</button>
-<button onclick="saveTemplate('Photo Story')">Save</button>
-</div>
-</div>
-
-</div>
-
-
-<div class="template-card" data-category="social">
-
-<div class="template-preview">
-📱
-<span>Social Post</span>
-</div>
-
-<div class="template-info">
-<h3>Social Post</h3>
-<p>Reusable social content layout.</p>
-
-<div class="template-actions">
-<button onclick="useTemplate('Social Post')">Use</button>
-<button onclick="saveTemplate('Social Post')">Save</button>
-</div>
-</div>
-
-</div>
-
-
-<div class="template-card" data-category="business">
-
-<div class="template-preview">
-🏢
-<span>Business Promo</span>
-</div>
-
-<div class="template-info">
-<h3>Business Promo</h3>
-<p>Promotional layout for businesses and services.</p>
-
-<div class="template-actions">
-<button onclick="useTemplate('Business Promo')">Use</button>
-<button onclick="saveTemplate('Business Promo')">Save</button>
-</div>
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- TEMPLATE CREATOR -->
-
-<section id="templateCreator" class="page">
-
-<div class="card">
-
-<h2 class="section-title">Create Template</h2>
-
-<p style="color:#666">
-Build a reusable template from your creative project.
-</p>
-
-</div>
-
-<div class="card">
-
-<div class="form-group">
-<label>Template Name</label>
-<input id="templateName"
-type="text"
-placeholder="Enter template name">
-</div>
-
-<div class="form-group">
-<label>Category</label>
-
-<select id="templateCategory">
-<option value="video">Video</option>
-<option value="photo">Photo</option>
-<option value="social">Social</option>
-<option value="business">Business</option>
-<option value="music">Music</option>
-</select>
-
-</div>
-
-<div class="form-group">
-<label>Description</label>
-
-<textarea
-id="templateDescription"
-placeholder="Describe your template">
-</textarea>
-
-</div>
-
-<div class="form-group">
-<label>Template Elements</label>
-
-<div class="tool-buttons">
-
-<button onclick="toggleTemplateElement(this,'Photos')">📸 Photos</button>
-<button onclick="toggleTemplateElement(this,'Videos')">🎬 Videos</button>
-<button onclick="toggleTemplateElement(this,'Text')">📝 Text</button>
-<button onclick="toggleTemplateElement(this,'Sound')">🎵 Sound</button>
-<button onclick="toggleTemplateElement(this,'Effects')">✨ Effects</button>
-<button onclick="toggleTemplateElement(this,'Transitions')">🔄 Transitions</button>
-
-</div>
-
-</div>
-
-<div class="button-row">
-
-<button class="primary-btn" onclick="createTemplate()">
-Create Template
-</button>
-
-<button class="secondary-btn" onclick="saveTemplateDraft()">
-💾 Save Draft
-</button>
-
-</div>
-
-</div>
+<div class="grid" id="templateList"></div>
 
 </section>
 
 
 <!-- MY TEMPLATES -->
-
 <section id="myTemplates" class="page">
 
-<div class="card">
-
-<h2 class="section-title">My Templates</h2>
-
-<p style="color:#666">
-Manage your created and saved templates.
-</p>
-
+<div class="hero">
+<h1>My Templates</h1>
+<button class="btn" onclick="createTemplate()">Create Template</button>
 </div>
 
-<div id="myTemplateList"></div>
+<div id="myTemplateList" class="grid"></div>
 
 </section>
 
 
 <!-- CREATOR PROGRAM -->
-
 <section id="creatorProgram" class="page">
 
-<div class="card">
-
-<h2 class="section-title">Creator Program</h2>
-
-<p style="color:#666">
-Creator levels are designed to recognize activity, quality,
-originality, audience engagement and account standing.
-</p>
-
+<div class="hero">
+<h1>Creator Program</h1>
+<p>Your creator level can grow as your activity and performance develop.</p>
 </div>
-
 
 <div class="card">
-
-<h3 style="margin-bottom:15px">Your Current Level</h3>
-
-<div style="font-size:28px;font-weight:bold">
-Creator
+<h3>Creator Level</h3>
+<div class="stats">
+<div class="stat">Current<strong>Creator</strong></div>
+<div class="stat">Progress<strong>0%</strong></div>
+</div>
 </div>
 
-<div class="progress-box">
-<div id="creatorProgress" class="progress-bar"></div>
-</div>
-
-<p id="creatorProgressText"
-style="color:#666;font-size:14px">
-42% progress toward the next level
-</p>
-
-</div>
-
-
-<div class="card">
-
-<h3 style="margin-bottom:15px">Creator Levels</h3>
-
-<div class="creator-level">
-
-<div class="level-card current">
-<h3>Creator</h3>
-<p>Starting creator level.</p>
-</div>
-
-<div class="level-card">
-<h3>Rising Creator</h3>
-<p>Growing activity and audience.</p>
-</div>
-
-<div class="level-card">
-<h3>Premium Creator</h3>
-<p>Higher performance and quality.</p>
-</div>
-
-<div class="level-card">
-<h3>RockyX Partner</h3>
-<p>Eligible partner-level creator.</p>
-</div>
-
-<div class="level-card">
-<h3>Pro Partner</h3>
-<p>Advanced creator program level.</p>
-</div>
-
-</div>
-
-</div>
-
-
-<div class="card">
-
-<h3 style="margin-bottom:15px">
-Creator Program Requirements
-</h3>
-
-<ul class="eligibility-list">
-
-<li>
-<span class="check">✓</span>
-Consistent original content
-</li>
-
-<li>
-<span class="check">✓</span>
-Good account standing
-</li>
-
-<li>
-<span class="check">✓</span>
-Community Guidelines compliance
-</li>
-
-<li>
-<span class="check">✓</span>
-Copyright compliance
-</li>
-
-<li>
-<span class="check">✓</span>
-Audience engagement
-</li>
-
-<li>
-<span class="check">✓</span>
-Template quality and originality
-</li>
-
-</ul>
-
-</div>
-
-
-<div class="partner-box">
-
-<h2>RockyX Partner Program</h2>
-
-<p>
-Partner-level benefits can include advanced analytics,
-creator rewards, premium template opportunities,
-early-access tools and additional creator features.
-</p>
-
-<button
-class="secondary-btn"
-style="margin-top:15px"
-onclick="checkPartnerStatus()">
-Check Status
-</button>
-
+<div class="grid">
+<div class="card"><h3>Creator</h3><p>Starting creator level.</p></div>
+<div class="card"><h3>Rising Creator</h3><p>Performance-based level.</p></div>
+<div class="card"><h3>Premium Creator</h3><p>Advanced creator level.</p></div>
+<div class="card"><h3>RockyX Partner</h3><p>Partner program level.</p></div>
+<div class="card"><h3>Pro Partner</h3><p>Advanced partner level.</p></div>
 </div>
 
 </section>
 
 
 <!-- TEMPLATE ANALYTICS -->
-
 <section id="templateAnalytics" class="page">
 
-<div class="card">
-
-<h2 class="section-title">Template Analytics</h2>
-
-<p style="color:#666">
-Track how people interact with your templates.
-</p>
-
+<div class="hero">
+<h1>Template Analytics</h1>
+<p>Track template performance.</p>
 </div>
 
-
-<div class="metric-grid">
-
-<div class="metric">
-<strong id="templateViews">1,248</strong>
-<span>Template Views</span>
-</div>
-
-<div class="metric">
-<strong id="templateUses">284</strong>
-<span>Uses</span>
-</div>
-
-<div class="metric">
-<strong id="templateSaves">93</strong>
-<span>Saves</span>
-</div>
-
-<div class="metric">
-<strong id="templateShares">41</strong>
-<span>Shares</span>
-</div>
-
-</div>
-
-
-<div class="card" style="margin-top:20px">
-
-<h3 style="margin-bottom:15px">
-Premium Eligibility Progress
-</h3>
-
-<ul class="eligibility-list">
-
-<li>
-<span class="check">✓</span>
-Original content
-</li>
-
-<li>
-<span class="check">✓</span>
-Copyright compliance
-</li>
-
-<li>
-<span class="check">✓</span>
-Community Guidelines compliance
-</li>
-
-<li>
-<span class="check">✓</span>
-Creator account standing
-</li>
-
-<li>
-<span class="check">◐</span>
-Performance and engagement
-</li>
-
-<li>
-<span class="check">◐</span>
-Template usage and completion
-</li>
-
-</ul>
-
-<p style="color:#666;margin-top:15px;font-size:13px">
-Premium eligibility is a review process. The final criteria can be
-configured later through the private admin system.
-</p>
-
+<div class="stats">
+<div class="stat">Uses<strong>0</strong></div>
+<div class="stat">Saves<strong>0</strong></div>
+<div class="stat">Shares<strong>0</strong></div>
+<div class="stat">Engagement<strong>0</strong></div>
 </div>
 
 </section>
 
 
-<!-- CREATOR EARNINGS -->
+<!-- EARNINGS -->
+<section id="earnings" class="page">
 
-<section id="creatorEarnings" class="page">
+<div class="hero">
+<h1>Earnings</h1>
+<p>Creator and marketplace earnings dashboard.</p>
+</div>
+
+<div class="stats">
+<div class="stat">Available<strong id="availableBalance">GHS 0.00</strong></div>
+<div class="stat">Pending<strong id="pendingBalance">GHS 0.00</strong></div>
+<div class="stat">Marketplace<strong id="marketplaceRevenue">GHS 0.00</strong></div>
+<div class="stat">Creator<strong id="creatorRevenue">GHS 0.00</strong></div>
+</div>
 
 <div class="card">
-
-<h2 class="section-title">Creator Earnings</h2>
-
-<p style="color:#666">
-Your creator revenue dashboard.
+<h3>Payouts</h3>
+<p class="muted">
+Real payouts will be connected after the backend and payment stage.
 </p>
-
-</div>
-
-
-<div class="earnings-box">
-
-<div class="earning">
-<strong>GHS 0.00</strong>
-<span>Available Balance</span>
-</div>
-
-<div class="earning">
-<strong>GHS 0.00</strong>
-<span>Pending Balance</span>
-</div>
-
-<div class="earning">
-<strong>GHS 0.00</strong>
-<span>Total Earnings</span>
-</div>
-
-</div>
-
-
-<div class="card" style="margin-top:20px">
-
-<h3 style="margin-bottom:15px">
-Revenue Sources
-</h3>
-
-<ul class="eligibility-list">
-
-<li>
-✨ Premium Templates
-<span style="margin-left:auto">GHS 0.00</span>
-</li>
-
-<li>
-🏆 Creator Rewards
-<span style="margin-left:auto">GHS 0.00</span>
-</li>
-
-<li>
-🎬 Eligible Video Revenue
-<span style="margin-left:auto">GHS 0.00</span>
-</li>
-
-<li>
-🔴 Eligible Live Revenue
-<span style="margin-left:auto">GHS 0.00</span>
-</li>
-
-</ul>
-
-</div>
-
-
-<div class="card">
-
-<h3>Creator Revenue Sharing</h3>
-
-<p style="color:#666;margin-top:8px;line-height:1.5">
-Revenue-sharing rules will be configured later when payments,
-creator accounts and the backend earnings system are connected.
-</p>
-
-<button
-class="primary-btn"
-style="margin-top:15px"
-onclick="alert('Payout setup will be added during the backend stage.')">
-Payout Settings
+<button class="btn" onclick="alert('Payout system will be connected during backend development.')">
+Request Payout
 </button>
-
 </div>
 
-</section>
-
-
-<!-- MARKETPLACE -->
-
-<section id="marketplace" class="page">
-<div class="card placeholder">
-<h2>Marketplace</h2>
-<p>Marketplace features will be built in Stage 6.</p>
-</div>
-</section>
-
-
-<!-- NEARBY -->
-
-<section id="nearby" class="page">
-<div class="card placeholder">
-<h2>Nearby</h2>
-<p>Nearby and navigation will be built in Stage 8.</p>
-</div>
-</section>
-
-
-<!-- TRANSPORT -->
-
-<section id="transport" class="page">
-<div class="card placeholder">
-<h2>Transport</h2>
-<p>Transport features will be built in Stage 7.</p>
-</div>
-</section>
-
-
-<!-- BUSINESSES -->
-
-<section id="businesses" class="page">
-<div class="card placeholder">
-<h2>Businesses</h2>
-<p>Business features will be built in Stage 7.</p>
-</div>
-</section>
-
-
-<!-- SERVICES -->
-
-<section id="services" class="page">
-<div class="card placeholder">
-<h2>Services</h2>
-<p>Service features will be built in Stage 7.</p>
-</div>
 </section>
 
 
 <!-- MESSAGES -->
-
 <section id="messages" class="page">
+<div class="hero">
+<h1>Messages</h1>
+<p>Your conversations.</p>
+</div>
 
 <div class="card">
-
-<h2 class="section-title">Messages</h2>
-
-<div class="message">
-
-<div class="avatar">👤</div>
-
-<div>
-<strong>Friend</strong>
-<p>Welcome to your messages.</p>
+<p>💬 No messages yet.</p>
 </div>
-
-</div>
-
-</div>
-
 </section>
 
 
 <!-- NOTIFICATIONS -->
-
 <section id="notifications" class="page">
-
-<div class="card">
-
-<h2 class="section-title">Notifications</h2>
-
-<div class="notification">❤️ Someone liked your post.</div>
-<div class="notification">👤 Someone followed you.</div>
-<div class="notification">💬 You have a new comment.</div>
-<div class="notification">✨ Your template received a new use.</div>
-
+<div class="hero">
+<h1>Notifications</h1>
+<p>Stay updated.</p>
 </div>
 
+<div class="card">
+<p>🔔 No new notifications.</p>
+</div>
 </section>
 
 
 <!-- PROFILE -->
-
 <section id="profile" class="page">
 
+<div class="hero">
+<h1>Your Profile</h1>
+<p>Manage your profile and creator activity.</p>
+</div>
+
+<div class="stats">
+<div class="stat">Posts<strong>0</strong></div>
+<div class="stat">Followers<strong>0</strong></div>
+<div class="stat">Following<strong>0</strong></div>
+</div>
+
 <div class="card">
-
-<div class="profile-cover"></div>
-
-<div class="profile-info">
-
-<div class="profile-avatar">👤</div>
-
-<div>
-<h2>Your Profile</h2>
-<p style="color:#666">
-Your creator and social profile.
-</p>
-</div>
-
-</div>
-
-<div class="profile-stats">
-
-<div class="stat">
-<strong id="postCount">1</strong>
-Posts
-</div>
-
-<div class="stat">
-<strong>0</strong>
-Followers
-</div>
-
-<div class="stat">
-<strong>0</strong>
-Following
-</div>
-
-</div>
-
+<input id="profileName" placeholder="Your name">
+<textarea id="profileBio" placeholder="Your bio"></textarea>
+<button class="btn" onclick="saveProfile()">Save Profile</button>
 </div>
 
 </section>
 
 
 <!-- ACCOUNT -->
-
 <section id="account" class="page">
 
+<div class="hero">
+<h1>Account</h1>
+<p>Create an account or sign in.</p>
+</div>
+
 <div class="card">
-
-<h2 class="section-title">Account</h2>
-
-<p>Manage your account.</p>
-
-<div class="button-row">
-
-<button class="primary-btn" onclick="showPage('signin')">
-Sign In
-</button>
-
-<button class="secondary-btn" onclick="showPage('signup')">
-Create Account
-</button>
-
+<h3>Sign In</h3>
+<input id="signinEmail" type="email" placeholder="Email address">
+<input id="signinPassword" type="password" placeholder="Password">
+<button class="btn" onclick="signin()">Sign In</button>
 </div>
 
-</div>
+<div class="card">
+<h3>Create Account</h3>
+<input id="signupName" placeholder="Full name">
+<input id="signupEmail" type="email" placeholder="Email address">
+<input id="signupPhone" placeholder="Phone number">
 
-</section>
-
-
-<!-- SIGN IN -->
-
-<section id="signin" class="page">
-
-<div class="card form-box">
-
-<h2>Sign In</h2>
-
-<form onsubmit="signIn(event)">
-
-<div class="form-group">
-<label>Email</label>
-<input id="signinEmail" type="email" required>
-</div>
-
-<div class="form-group">
-<label>Password</label>
-<input id="signinPassword" type="password" required>
-</div>
-
-<button class="primary-btn" type="submit">
-Sign In
-</button>
-
-</form>
-
-<div class="form-link">
-Don't have an account?
-<button onclick="showPage('signup')">Create one</button>
-</div>
-
-</div>
-
-</section>
-
-
-<!-- SIGN UP -->
-
-<section id="signup" class="page">
-
-<div class="card form-box">
-
-<h2>Create Account</h2>
-
-<form onsubmit="createAccount(event)">
-
-<div class="form-group">
-<label>Full Name</label>
-<input id="signupName" type="text" required>
-</div>
-
-<div class="form-group">
-<label>Email</label>
-<input id="signupEmail" type="email" required>
-</div>
-
-<div class="form-group">
-<label>Phone</label>
-<input id="signupPhone" type="tel">
-</div>
-
-<div class="form-group">
-
-<label>Country</label>
-
-<select id="signupCountry" required>
-
+<select id="signupCountry">
 <option value="">Select country</option>
 <option>Ghana</option>
 <option>Nigeria</option>
@@ -1978,51 +1102,39 @@ Don't have an account?
 <option>South Africa</option>
 <option>United Kingdom</option>
 <option>United States</option>
-<option>Canada</option>
-<option>Other</option>
-
 </select>
 
+<input id="signupPassword" type="password" placeholder="Password">
+<input id="signupConfirm" type="password" placeholder="Confirm password">
+
+<button class="btn" onclick="signup()">Create Account</button>
 </div>
 
-<div class="form-group">
-<label>Password</label>
-<input id="signupPassword" type="password" minlength="6" required>
-</div>
-
-<div class="form-group">
-<label>Confirm Password</label>
-<input id="signupConfirmPassword" type="password" minlength="6" required>
-</div>
-
-<button class="primary-btn" type="submit">
-Create Account
-</button>
-
-</form>
-
-<div class="form-link">
-Already have an account?
-<button onclick="showPage('signin')">Sign in</button>
-</div>
-
+<div id="accountStatus" class="card">
+Not signed in.
 </div>
 
 </section>
 
 
 <!-- SETTINGS -->
-
 <section id="settings" class="page">
 
+<div class="hero">
+<h1>Settings</h1>
+<p>Manage your account preferences.</p>
+</div>
+
 <div class="card">
+<h3>Privacy</h3>
+<label><input type="checkbox"> Private account</label><br>
+<label><input type="checkbox"> Allow messages</label><br>
+<label><input type="checkbox"> Show nearby activity</label>
+</div>
 
-<h2 class="section-title">Settings</h2>
-
-<p>
-Privacy, security and account settings will be expanded later.
-</p>
-
+<div class="card">
+<h3>Security</h3>
+<button class="btn" onclick="alert('Security tools will be connected during the backend stage.')">Security Settings</button>
 </div>
 
 </section>
@@ -2030,1290 +1142,1404 @@ Privacy, security and account settings will be expanded later.
 </main>
 
 
+<!-- MOBILE NAV -->
 <nav class="mobile-nav">
-
 <button onclick="showPage('home')">🏠<br>Home</button>
 <button onclick="showPage('explore')">🔎<br>Explore</button>
-<button onclick="showPage('creatorStudio')">🎨<br>Studio</button>
-<button onclick="showPage('templates')">✨<br>Templates</button>
-<button onclick="showPage('profile')">👤<br>Profile</button>
-
+<button onclick="showPage('shorts')">🎬<br>Shorts</button>
+<button onclick="showPage('marketplace')">🛍️<br>Shop</button>
+<button onclick="showPage('account')">👤<br>Account</button>
 </nav>
 
 
+<!-- PRODUCT MODAL -->
+<div id="productModal" class="modal">
+<div class="modal-box">
+<div class="space">
+<h2 id="modalProductName"></h2>
+<button class="icon-btn" onclick="closeProductModal()">✕</button>
+</div>
+<div id="modalProductContent"></div>
+</div>
+</div>
+
+
 <script>
+
+/* =========================
+   STORAGE
+========================= */
+
+let products = JSON.parse(localStorage.getItem("rockyxProducts") || "null");
+
+if(!products){
+  products = [
+    {
+      id:1,
+      name:"Wireless Headphones",
+      description:"Wireless headphones for music and videos.",
+      price:250,
+      category:"Electronics",
+      seller:"Demo Seller",
+      image:""
+    },
+    {
+      id:2,
+      name:"Classic Sneakers",
+      description:"Comfortable everyday sneakers.",
+      price:350,
+      category:"Fashion",
+      seller:"Demo Seller",
+      image:""
+    },
+    {
+      id:3,
+      name:"Beauty Set",
+      description:"A sample beauty product set.",
+      price:180,
+      category:"Beauty",
+      seller:"Demo Seller",
+      image:""
+    },
+    {
+      id:4,
+      name:"Home Decoration",
+      description:"Modern home decoration item.",
+      price:120,
+      category:"Home",
+      seller:"Demo Seller",
+      image:""
+    }
+  ];
+
+  saveProducts();
+}
+
+let cart = JSON.parse(localStorage.getItem("rockyxCart") || "[]");
+let orders = JSON.parse(localStorage.getItem("rockyxOrders") || "[]");
+let sellerProducts = JSON.parse(localStorage.getItem("rockyxSellerProducts") || "[]");
+let savedSounds = JSON.parse(localStorage.getItem("rockyxSavedSounds") || "[]");
+let templates = JSON.parse(localStorage.getItem("rockyxTemplates") || "[]");
+
+
+function saveProducts(){
+  localStorage.setItem("rockyxProducts",JSON.stringify(products));
+}
+
+function saveCart(){
+  localStorage.setItem("rockyxCart",JSON.stringify(cart));
+}
+
+function saveOrders(){
+  localStorage.setItem("rockyxOrders",JSON.stringify(orders));
+}
+
+function saveSellerProducts(){
+  localStorage.setItem("rockyxSellerProducts",JSON.stringify(sellerProducts));
+}
+
+
+/* =========================
+   PAGE NAVIGATION
+========================= */
+
+function showPage(page,button){
+
+  document.querySelectorAll(".page").forEach(p=>{
+    p.classList.remove("active");
+  });
+
+  const target=document.getElementById(page);
+
+  if(target){
+    target.classList.add("active");
+  }
+
+  document.querySelectorAll(".nav-btn").forEach(b=>{
+    b.classList.remove("active");
+  });
+
+  if(button){
+    button.classList.add("active");
+  }
+
+  window.scrollTo(0,0);
+
+  if(page==="marketplace") renderProducts();
+  if(page==="cart") renderCart();
+  if(page==="orders") renderOrders();
+  if(page==="seller") renderSeller();
+  if(page==="templates") renderTemplates();
+  if(page==="myTemplates") renderMyTemplates();
+  if(page==="sounds") renderSavedSounds();
+}
+
+
+/* =========================
+   GLOBAL SEARCH
+========================= */
+
+function performGlobalSearch(){
+
+  const query=document.getElementById("globalSearch").value.trim().toLowerCase();
+
+  if(!query)return;
+
+  const found=products.filter(p =>
+    p.name.toLowerCase().includes(query) ||
+    p.category.toLowerCase().includes(query) ||
+    p.description.toLowerCase().includes(query)
+  );
+
+  showPage("marketplace");
+
+  document.getElementById("productSearch").value=query;
+
+  renderProducts();
+
+  if(!found.length){
+    alert("No marketplace products matched your search. Other search categories will be connected later.");
+  }
+}
+
+
+/* =========================
+   FEED
+========================= */
+
+let posts=[
+  {
+    name:"Demo Creator",
+    text:"Welcome to the new platform.",
+    likes:0
+  },
+  {
+    name:"Demo Seller",
+    text:"New products are available in the marketplace.",
+    likes:0
+  }
+];
+
+function renderFeed(){
+
+  const feed=document.getElementById("feed");
+
+  feed.innerHTML=posts.map((p,i)=>`
+    <div class="post">
+      <div class="space">
+        <strong>${escapeHTML(p.name)}</strong>
+        <span class="muted">Now</span>
+      </div>
+      <p style="margin-top:10px">${escapeHTML(p.text)}</p>
+      <div class="post-actions">
+        <button class="btn small secondary" onclick="likePost(${i})">❤️ ${p.likes}</button>
+        <button class="btn small secondary">💬 Comment</button>
+        <button class="btn small secondary">↗ Share</button>
+        <button class="btn small secondary">🔖 Save</button>
+      </div>
+    </div>
+  `).join("");
+}
+
+function createPost(){
+
+  const text=document.getElementById("postText").value.trim();
+
+  if(!text){
+    alert("Write something first.");
+    return;
+  }
+
+  posts.unshift({
+    name:"You",
+    text,
+    likes:0
+  });
+
+  document.getElementById("postText").value="";
+
+  renderFeed();
+}
+
+function likePost(index){
+  posts[index].likes++;
+  renderFeed();
+}
+
+
+/* =========================
+   CAMERA
+========================= */
 
 let cameraStream=null;
 let mediaRecorder=null;
 let recordedChunks=[];
 
-let photoURL=null;
-let photoRotation=0;
-let photoFilterValue="none";
-
-let videoURL=null;
-let videoFilterValue="none";
-
-let selectedTemplateElements=[];
-let myTemplates=JSON.parse(
-localStorage.getItem("rockyxMyTemplates")||"[]"
-);
-
-function showPage(pageId,button){
-
-document.querySelectorAll(".page").forEach(page=>{
-page.classList.remove("active");
-});
-
-const page=document.getElementById(pageId);
-
-if(page)page.classList.add("active");
-
-document.querySelectorAll(".nav-button").forEach(btn=>{
-btn.classList.remove("active");
-});
-
-if(button)button.classList.add("active");
-
-if(pageId==="myTemplates"){
-renderMyTemplates();
-}
-
-window.scrollTo({top:0,behavior:"smooth"});
-
-}
-
-
-function handleSearch(event){
-
-if(event.key!=="Enter")return;
-
-const value=event.target.value.trim();
-
-if(!value){
-alert("Please enter something to search.");
-return;
-}
-
-if(value.toLowerCase().includes("template")){
-showPage("templates");
-return;
-}
-
-alert(
-"Search is ready for the frontend. Full cross-platform search will be connected during the backend stage."
-);
-
-}
-
-
-/* CAMERA */
-
 async function startCamera(){
 
-try{
+  try{
 
-cameraStream=await navigator.mediaDevices.getUserMedia({
-video:true,
-audio:true
-});
+    cameraStream=await navigator.mediaDevices.getUserMedia({
+      video:true,
+      audio:true
+    });
 
-document.getElementById("cameraVideo").srcObject=cameraStream;
+    document.getElementById("cameraVideo").srcObject=cameraStream;
 
-document.getElementById("cameraStatus").textContent=
-"Camera is active.";
+  }catch(error){
 
-}catch(error){
-
-alert(
-"Camera access was not allowed. Please allow camera and microphone access."
-);
-
+    alert("Camera permission was not available.");
+  }
 }
-
-}
-
 
 function stopCamera(){
 
-if(cameraStream){
-cameraStream.getTracks().forEach(track=>track.stop());
-cameraStream=null;
+  if(cameraStream){
+
+    cameraStream.getTracks().forEach(track=>track.stop());
+
+    cameraStream=null;
+
+    document.getElementById("cameraVideo").srcObject=null;
+  }
 }
-
-document.getElementById("cameraVideo").srcObject=null;
-
-document.getElementById("cameraStatus").textContent=
-"Camera stopped.";
-
-}
-
 
 function takePhoto(){
 
-if(!cameraStream){
-alert("Start the camera first.");
-return;
+  const video=document.getElementById("cameraVideo");
+  const canvas=document.getElementById("cameraCanvas");
+
+  if(!video.videoWidth){
+    alert("Start the camera first.");
+    return;
+  }
+
+  canvas.width=video.videoWidth;
+  canvas.height=video.videoHeight;
+
+  const ctx=canvas.getContext("2d");
+
+  ctx.drawImage(video,0,0);
+
+  const image=canvas.toDataURL("image/png");
+
+  document.getElementById("cameraResult").innerHTML=`
+    <div class="card">
+      <img src="${image}" class="media-preview">
+      <a class="btn" href="${image}" download="rockyx-photo.png">Download Photo</a>
+    </div>
+  `;
 }
 
-const video=document.getElementById("cameraVideo");
-const canvas=document.getElementById("cameraCanvas");
+function startRecording(){
 
-canvas.width=video.videoWidth;
-canvas.height=video.videoHeight;
+  if(!cameraStream){
+    alert("Start the camera first.");
+    return;
+  }
 
-const context=canvas.getContext("2d");
+  recordedChunks=[];
 
-context.drawImage(
-video,0,0,canvas.width,canvas.height
-);
+  mediaRecorder=new MediaRecorder(cameraStream);
 
-canvas.toBlob(blob=>{
+  mediaRecorder.ondataavailable=e=>{
+    if(e.data.size>0){
+      recordedChunks.push(e.data);
+    }
+  };
 
-const url=URL.createObjectURL(blob);
+  mediaRecorder.onstop=()=>{
 
-addMediaItem(url,"image");
+    const blob=new Blob(recordedChunks,{type:"video/webm"});
 
-downloadBlob(blob,"rockyx-photo.jpg");
+    const url=URL.createObjectURL(blob);
 
-alert("Photo captured.");
+    document.getElementById("cameraResult").innerHTML=`
+      <div class="card">
+        <video class="media-preview" controls src="${url}"></video>
+        <a class="btn" href="${url}" download="rockyx-video.webm">Download Video</a>
+      </div>
+    `;
+  };
 
-},"image/jpeg",.92);
+  mediaRecorder.start();
 
+  alert("Recording started.");
 }
 
+function stopRecording(){
 
-function toggleRecording(){
-
-if(!cameraStream){
-alert("Start the camera first.");
-return;
-}
-
-if(mediaRecorder &&
-mediaRecorder.state==="recording"){
-
-mediaRecorder.stop();
-return;
-
-}
-
-recordedChunks=[];
-
-mediaRecorder=new MediaRecorder(cameraStream);
-
-mediaRecorder.ondataavailable=e=>{
-if(e.data.size>0)recordedChunks.push(e.data);
-};
-
-mediaRecorder.onstop=()=>{
-
-const blob=new Blob(
-recordedChunks,
-{type:"video/webm"}
-);
-
-const url=URL.createObjectURL(blob);
-
-addMediaItem(url,"video");
-
-downloadBlob(blob,"rockyx-video.webm");
-
-document.getElementById("cameraStatus").textContent=
-"Recording saved.";
-
-};
-
-mediaRecorder.start();
-
-document.getElementById("cameraStatus").textContent=
-"🔴 Recording...";
-
+  if(mediaRecorder && mediaRecorder.state!=="inactive"){
+    mediaRecorder.stop();
+    alert("Recording stopped.");
+  }
 }
 
 
-function downloadBlob(blob,filename){
+/* =========================
+   MEDIA
+========================= */
 
-const url=URL.createObjectURL(blob);
+function previewMedia(){
 
-const link=document.createElement("a");
+  const input=document.getElementById("mediaInput");
+  const preview=document.getElementById("mediaPreview");
 
-link.href=url;
-link.download=filename;
-link.click();
+  preview.innerHTML="";
 
-setTimeout(()=>{
-URL.revokeObjectURL(url);
-},1000);
+  Array.from(input.files).forEach(file=>{
 
+    const url=URL.createObjectURL(file);
+
+    if(file.type.startsWith("image/")){
+
+      preview.innerHTML+=`
+        <div class="card">
+          <img class="media-preview" src="${url}">
+          <p>${escapeHTML(file.name)}</p>
+        </div>
+      `;
+
+    }else{
+
+      preview.innerHTML+=`
+        <div class="card">
+          <video class="media-preview" controls src="${url}"></video>
+          <p>${escapeHTML(file.name)}</p>
+        </div>
+      `;
+    }
+  });
 }
 
 
-/* MEDIA */
+/* =========================
+   SHORTS / VIDEOS
+========================= */
 
-function loadLocalMedia(event){
+function addShort(){
 
-Array.from(event.target.files).forEach(file=>{
+  const file=document.getElementById("shortInput").files[0];
 
-const url=URL.createObjectURL(file);
+  if(!file){
+    alert("Choose a video first.");
+    return;
+  }
 
-addMediaItem(
-url,
-file.type.startsWith("video/")?"video":"image"
-);
+  const url=URL.createObjectURL(file);
 
-});
+  document.getElementById("shortList").innerHTML=`
+    <div class="card">
+      <video class="media-preview" controls src="${url}"></video>
+      <div class="post-actions">
+        <button class="btn secondary">❤️ Like</button>
+        <button class="btn secondary">💬 Comment</button>
+        <button class="btn secondary">↗ Share</button>
+        <button class="btn secondary">🔖 Save</button>
+      </div>
+    </div>
+  `;
+}
 
+function addLongVideo(){
+
+  const file=document.getElementById("longVideoInput").files[0];
+
+  if(!file){
+    alert("Choose a video first.");
+    return;
+  }
+
+  const url=URL.createObjectURL(file);
+
+  document.getElementById("videoList").innerHTML=`
+    <div class="card">
+      <video class="media-preview" controls src="${url}"></video>
+      <h3>${escapeHTML(file.name)}</h3>
+      <p class="muted">Local preview</p>
+    </div>
+  `;
 }
 
 
-function addMediaItem(url,type){
+/* =========================
+   SOUNDS
+========================= */
 
-const grid=document.getElementById("mediaGrid");
+function saveSound(sound){
 
-const item=document.createElement("div");
+  if(!savedSounds.includes(sound)){
+    savedSounds.push(sound);
+  }
 
-item.className="media-item";
+  localStorage.setItem(
+    "rockyxSavedSounds",
+    JSON.stringify(savedSounds)
+  );
 
-if(type==="video"){
+  renderSavedSounds();
 
-item.innerHTML=
-`<video src="${url}" controls playsinline></video>`;
-
-}else{
-
-item.innerHTML=
-`<img src="${url}" alt="Photo">`;
-
+  alert("Sound saved.");
 }
 
-grid.prepend(item);
+function renderSavedSounds(){
 
+  const box=document.getElementById("savedSounds");
+
+  if(!savedSounds.length){
+    box.innerHTML='<div class="empty">No saved sounds.</div>';
+    return;
+  }
+
+  box.innerHTML=savedSounds.map((s,i)=>`
+    <div class="cart-item">
+      <strong>🔊 ${escapeHTML(s)}</strong>
+      <button class="btn small danger" onclick="removeSound(${i})">Remove</button>
+    </div>
+  `).join("");
 }
 
+function removeSound(index){
 
-/* POSTS */
+  savedSounds.splice(index,1);
 
-function createPost(){
+  localStorage.setItem(
+    "rockyxSavedSounds",
+    JSON.stringify(savedSounds)
+  );
 
-const text=document.getElementById("postText").value.trim();
-
-if(!text){
-alert("Write something before posting.");
-return;
-}
-
-const post=document.createElement("article");
-
-post.className="post";
-
-post.innerHTML=`
-
-<div class="post-header">
-<div class="avatar">👤</div>
-
-<div>
-<strong>You</strong>
-<div style="color:#777;font-size:13px">Just now</div>
-</div>
-</div>
-
-<div class="post-content">
-${escapeHTML(text)}
-</div>
-
-<div class="post-actions">
-<button onclick="likePost(this)">❤️ Like</button>
-<button onclick="toggleComments(this)">💬 Comment</button>
-<button onclick="sharePost()">🔗 Share</button>
-<button onclick="savePost(this)">🔖 Save</button>
-</div>
-
-<div class="comment-box">
-<input
-type="text"
-placeholder="Write a comment..."
-onkeydown="submitComment(event)"
->
-</div>
-`;
-
-document.getElementById("feed").prepend(post);
-
-document.getElementById("postText").value="";
-
-updatePostCount();
-
+  renderSavedSounds();
 }
 
 
-function likePost(button){
+/* =========================
+   MARKETPLACE
+========================= */
 
-button.textContent=
-button.dataset.liked==="true"
-?"❤️ Like"
-:"❤️ Liked";
+function currency(){
 
-button.dataset.liked=
-button.dataset.liked==="true"
-?"false":"true";
+  const country=
+    document.getElementById("checkoutCountry")?.value ||
+    "Ghana";
 
+  const currencies={
+    Ghana:"GHS",
+    Nigeria:"NGN",
+    Kenya:"KES",
+    "South Africa":"ZAR",
+    "United Kingdom":"GBP",
+    "United States":"USD"
+  };
+
+  return currencies[country] || "GHS";
+}
+
+function renderProducts(){
+
+  const list=document.getElementById("productList");
+
+  if(!list)return;
+
+  const search=
+    document.getElementById("productSearch")?.value
+    .toLowerCase() || "";
+
+  const category=
+    document.getElementById("productCategory")?.value || "";
+
+  const filtered=products.filter(p=>{
+
+    const matchesSearch=
+      p.name.toLowerCase().includes(search) ||
+      p.description.toLowerCase().includes(search) ||
+      p.category.toLowerCase().includes(search);
+
+    const matchesCategory=
+      !category || p.category===category;
+
+    return matchesSearch && matchesCategory;
+  });
+
+  if(!filtered.length){
+
+    list.innerHTML='<div class="empty">No products found.</div>';
+    return;
+  }
+
+  list.innerHTML=filtered.map(p=>`
+
+    <div class="product-card">
+
+      <div class="product-image">
+
+        ${
+          p.image
+          ? `<img src="${p.image}">`
+          : `<span>🛍️</span>`
+        }
+
+      </div>
+
+      <div class="product-info">
+
+        <span class="badge">${escapeHTML(p.category)}</span>
+
+        <h3>${escapeHTML(p.name)}</h3>
+
+        <p class="muted">${escapeHTML(p.description)}</p>
+
+        <div class="price">GHS ${Number(p.price).toFixed(2)}</div>
+
+        <p class="muted">Seller: ${escapeHTML(p.seller)}</p>
+
+        <div>
+          <button class="btn small" onclick="openProduct(${p.id})">
+            View
+          </button>
+
+          <button class="btn small success" onclick="addToCart(${p.id})">
+            Add to Cart
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+  `).join("");
+
+  updateCartCount();
 }
 
 
-function toggleComments(button){
+function openProduct(id){
 
-const box=
-button.closest(".post").querySelector(".comment-box");
+  const p=products.find(x=>x.id===id);
 
-box.style.display=
-box.style.display==="block"?"none":"block";
+  if(!p)return;
 
+  document.getElementById("modalProductName").textContent=p.name;
+
+  document.getElementById("modalProductContent").innerHTML=`
+
+    <div class="product-image" style="height:250px">
+
+      ${
+        p.image
+        ? `<img src="${p.image}">`
+        : `<span>🛍️</span>`
+      }
+
+    </div>
+
+    <p style="margin-top:15px">
+      ${escapeHTML(p.description)}
+    </p>
+
+    <h2 style="margin-top:12px">
+      GHS ${Number(p.price).toFixed(2)}
+    </h2>
+
+    <p class="muted">
+      Category: ${escapeHTML(p.category)}
+    </p>
+
+    <p class="muted">
+      Seller: ${escapeHTML(p.seller)}
+    </p>
+
+    <button class="btn success" onclick="addToCart(${p.id});closeProductModal()">
+      Add to Cart
+    </button>
+  `;
+
+  document.getElementById("productModal").classList.add("show");
+}
+
+function closeProductModal(){
+
+  document.getElementById("productModal").classList.remove("show");
 }
 
 
-function submitComment(event){
+/* =========================
+   CART
+========================= */
 
-if(event.key!=="Enter")return;
+function addToCart(id){
 
-const input=event.target;
-const text=input.value.trim();
+  const product=products.find(p=>p.id===id);
 
-if(!text)return;
+  if(!product)return;
 
-const comment=document.createElement("div");
+  const existing=cart.find(item=>item.id===id);
 
-comment.style.padding="8px 16px";
-comment.style.borderTop="1px solid #eee";
+  if(existing){
+    existing.quantity++;
+  }else{
+    cart.push({
+      id:product.id,
+      name:product.name,
+      price:Number(product.price),
+      seller:product.seller,
+      quantity:1
+    });
+  }
 
-comment.innerHTML=
-"<strong>You:</strong> "+escapeHTML(text);
+  saveCart();
+  updateCartCount();
+  renderCart();
 
-input.closest(".comment-box").appendChild(comment);
+  alert("Product added to cart.");
+}
 
-input.value="";
+function removeFromCart(id){
 
+  cart=cart.filter(item=>item.id!==id);
+
+  saveCart();
+
+  renderCart();
+  updateCartCount();
+}
+
+function changeQuantity(id,amount){
+
+  const item=cart.find(x=>x.id===id);
+
+  if(!item)return;
+
+  item.quantity+=amount;
+
+  if(item.quantity<=0){
+    removeFromCart(id);
+    return;
+  }
+
+  saveCart();
+  renderCart();
+}
+
+function getCartTotal(){
+
+  return cart.reduce(
+    (total,item)=>total+(item.price*item.quantity),
+    0
+  );
+}
+
+function updateCartCount(){
+
+  const count=cart.reduce(
+    (total,item)=>total+item.quantity,
+    0
+  );
+
+  const el=document.getElementById("cartCount");
+
+  if(el)el.textContent=count;
+}
+
+function renderCart(){
+
+  const items=document.getElementById("cartItems");
+  const summary=document.getElementById("cartSummary");
+
+  if(!items)return;
+
+  if(!cart.length){
+
+    items.innerHTML='<div class="empty">Your cart is empty.</div>';
+    summary.innerHTML=`
+      <button class="btn" onclick="showPage('marketplace')">
+        Continue Shopping
+      </button>
+    `;
+    return;
+  }
+
+  items.innerHTML=cart.map(item=>`
+
+    <div class="cart-item">
+
+      <div>
+        <strong>${escapeHTML(item.name)}</strong>
+        <p class="muted">
+          GHS ${item.price.toFixed(2)} each
+        </p>
+
+        <div class="row">
+          <button class="btn small secondary"
+            onclick="changeQuantity(${item.id},-1)">−</button>
+
+          <strong>${item.quantity}</strong>
+
+          <button class="btn small secondary"
+            onclick="changeQuantity(${item.id},1)">+</button>
+        </div>
+      </div>
+
+      <div>
+        <strong>
+          GHS ${(item.price*item.quantity).toFixed(2)}
+        </strong>
+
+        <br>
+
+        <button class="btn small danger"
+          onclick="removeFromCart(${item.id})">
+          Remove
+        </button>
+      </div>
+
+    </div>
+  `).join("");
+
+  summary.innerHTML=`
+
+    <div class="cart-total">
+      Total: GHS ${getCartTotal().toFixed(2)}
+    </div>
+
+    <button class="btn success"
+      onclick="goCheckout()">
+      Proceed to Checkout
+    </button>
+
+    <button class="btn secondary"
+      onclick="showPage('marketplace')">
+      Continue Shopping
+    </button>
+  `;
 }
 
 
-function sharePost(){
-alert("Sharing will be connected during the backend phase.");
+/* =========================
+   CHECKOUT
+========================= */
+
+function goCheckout(){
+
+  if(!cart.length){
+    alert("Your cart is empty.");
+    return;
+  }
+
+  document.getElementById("checkoutTotal").textContent=
+    "Order total: GHS "+getCartTotal().toFixed(2);
+
+  showPage("checkout");
+}
+
+function placeDemoOrder(){
+
+  if(!cart.length){
+    alert("Your cart is empty.");
+    return;
+  }
+
+  const name=document.getElementById("checkoutName").value.trim();
+  const phone=document.getElementById("checkoutPhone").value.trim();
+  const address=document.getElementById("checkoutAddress").value.trim();
+  const country=document.getElementById("checkoutCountry").value;
+
+  if(!name || !phone || !address){
+    alert("Please complete your delivery details.");
+    return;
+  }
+
+  const subtotal=getCartTotal();
+
+  /*
+    Demo commission structure.
+
+    This is NOT a real payment.
+    Real commission calculations will be moved
+    to the secure backend later.
+  */
+
+  const commissionRate=0.05;
+  const commission=subtotal*commissionRate;
+  const sellerAmount=subtotal-commission;
+
+  const order={
+    id:"RX-"+Date.now(),
+    date:new Date().toLocaleString(),
+    customer:name,
+    phone,
+    address,
+    country,
+    currency:currency(),
+    items:JSON.parse(JSON.stringify(cart)),
+    subtotal,
+    commission,
+    sellerAmount,
+    status:"Pending",
+    paymentStatus:"Pending"
+  };
+
+  orders.unshift(order);
+
+  saveOrders();
+
+  cart=[];
+
+  saveCart();
+  updateCartCount();
+
+  document.getElementById("checkoutName").value="";
+  document.getElementById("checkoutPhone").value="";
+  document.getElementById("checkoutAddress").value="";
+
+  alert(
+    "Demo order created successfully.\n\n" +
+    "Real payment processing will be connected later."
+  );
+
+  showPage("orders");
 }
 
 
-function savePost(button){
+/* =========================
+   ORDERS
+========================= */
 
-button.textContent=
-button.dataset.saved==="true"
-?"🔖 Save":"🔖 Saved";
+function renderOrders(){
 
-button.dataset.saved=
-button.dataset.saved==="true"
-?"false":"true";
+  const list=document.getElementById("ordersList");
 
+  if(!list)return;
+
+  if(!orders.length){
+
+    list.innerHTML=`
+      <div class="card empty">
+        You have no orders yet.
+      </div>
+    `;
+
+    return;
+  }
+
+  list.innerHTML=orders.map(order=>`
+
+    <div class="order">
+
+      <div class="space">
+
+        <strong>${escapeHTML(order.id)}</strong>
+
+        <span class="status">
+          ${escapeHTML(order.status)}
+        </span>
+
+      </div>
+
+      <p class="muted">${escapeHTML(order.date)}</p>
+
+      <p style="margin-top:10px">
+        Customer: ${escapeHTML(order.customer)}
+      </p>
+
+      <p>
+        Country: ${escapeHTML(order.country)}
+      </p>
+
+      <p>
+        Payment: ${escapeHTML(order.paymentStatus)}
+      </p>
+
+      <h3 style="margin-top:10px">
+        GHS ${Number(order.subtotal).toFixed(2)}
+      </h3>
+
+      <button class="btn small secondary"
+        onclick="viewOrder('${order.id}')">
+        View Order
+      </button>
+
+    </div>
+
+  `).join("");
+}
+
+function viewOrder(id){
+
+  const order=orders.find(o=>o.id===id);
+
+  if(!order)return;
+
+  let items=order.items.map(item=>
+    `${item.name} × ${item.quantity}`
+  ).join("\n");
+
+  alert(
+    "Order: "+order.id+
+    "\n\nProducts:\n"+items+
+    "\n\nTotal: GHS "+order.subtotal.toFixed(2)+
+    "\n\nStatus: "+order.status
+  );
 }
 
 
-function uploadPostMedia(){
+/* =========================
+   SELLER TOOLS
+========================= */
 
-const input=document.createElement("input");
+function addSellerProduct(){
 
-input.type="file";
-input.accept="image/*,video/*";
+  const name=document.getElementById("newProductName").value.trim();
+  const description=document.getElementById("newProductDescription").value.trim();
+  const price=Number(document.getElementById("newProductPrice").value);
+  const category=document.getElementById("newProductCategory").value;
+  const file=document.getElementById("newProductImage").files[0];
 
-input.onchange=()=>{
+  if(!name || !description || !price || price<=0){
+    alert("Please complete the product information.");
+    return;
+  }
 
-const file=input.files[0];
+  const createProduct=image=>{
 
-if(!file)return;
+    const product={
+      id:Date.now(),
+      name,
+      description,
+      price,
+      category,
+      seller:"You",
+      image:image || ""
+    };
 
-const url=URL.createObjectURL(file);
+    products.unshift(product);
+    sellerProducts.unshift(product);
 
-const post=document.createElement("article");
+    saveProducts();
+    saveSellerProducts();
 
-post.className="post";
+    document.getElementById("newProductName").value="";
+    document.getElementById("newProductDescription").value="";
+    document.getElementById("newProductPrice").value="";
+    document.getElementById("newProductImage").value="";
 
-const media=file.type.startsWith("video/")
-?`<video src="${url}" controls playsinline style="width:100%;max-height:500px"></video>`
-:`<img src="${url}" style="width:100%;max-height:500px;object-fit:contain">`;
+    renderSeller();
+    renderProducts();
 
-post.innerHTML=`
+    alert("Product created on this device.");
+  };
 
-<div class="post-header">
-<div class="avatar">👤</div>
-<strong>You</strong>
-</div>
+  if(file){
 
-<div class="post-content">New media post</div>
+    const reader=new FileReader();
 
-<div class="post-media">${media}</div>
+    reader.onload=e=>{
+      createProduct(e.target.result);
+    };
 
-<div class="post-actions">
-<button onclick="likePost(this)">❤️ Like</button>
-<button onclick="toggleComments(this)">💬 Comment</button>
-<button onclick="sharePost()">🔗 Share</button>
-<button onclick="savePost(this)">🔖 Save</button>
-</div>
+    reader.readAsDataURL(file);
 
-<div class="comment-box">
-<input type="text"
-placeholder="Write a comment..."
-onkeydown="submitComment(event)">
-</div>
-`;
+  }else{
 
-document.getElementById("feed").prepend(post);
+    createProduct("");
+  }
+}
 
-updatePostCount();
+function renderSeller(){
 
-};
+  document.getElementById("sellerProducts").textContent=
+    sellerProducts.length;
 
-input.click();
+  const sellerOrders=orders.filter(order =>
+    order.items.some(item =>
+      sellerProducts.some(p=>p.id===item.id)
+    )
+  );
 
+  document.getElementById("sellerOrders").textContent=
+    sellerOrders.length;
+
+  const sales=sellerOrders.reduce(
+    (total,order)=>total+order.sellerAmount,
+    0
+  );
+
+  const commission=sellerOrders.reduce(
+    (total,order)=>total+order.commission,
+    0
+  );
+
+  document.getElementById("sellerSales").textContent=
+    "GHS "+sales.toFixed(2);
+
+  document.getElementById("sellerCommission").textContent=
+    "GHS "+commission.toFixed(2);
+
+  const list=document.getElementById("sellerProductList");
+
+  if(!sellerProducts.length){
+
+    list.innerHTML='<div class="empty">No products yet.</div>';
+    return;
+  }
+
+  list.innerHTML=sellerProducts.map(p=>`
+
+    <div class="cart-item">
+
+      <div>
+        <strong>${escapeHTML(p.name)}</strong>
+        <p class="muted">${escapeHTML(p.category)}</p>
+      </div>
+
+      <div>
+        <strong>GHS ${Number(p.price).toFixed(2)}</strong>
+      </div>
+
+    </div>
+
+  `).join("");
 }
 
 
-function updatePostCount(){
+/* =========================
+   CREATOR / PHOTO EDITOR
+========================= */
 
-document.getElementById("postCount").textContent=
-document.querySelectorAll("#feed .post").length;
-
-}
-
-
-/* PHOTO EDITOR */
+let photoEditorImage=null;
 
 function loadPhotoEditor(){
 
-const input=document.createElement("input");
+  const file=document.getElementById("photoEditorInput").files[0];
 
-input.type="file";
-input.accept="image/*";
+  if(!file)return;
 
-input.onchange=()=>{
+  const url=URL.createObjectURL(file);
 
-const file=input.files[0];
+  photoEditorImage=document.createElement("img");
 
-if(!file)return;
+  photoEditorImage.src=url;
+  photoEditorImage.className="media-preview";
+  photoEditorImage.style.filter="none";
 
-photoURL=URL.createObjectURL(file);
+  const box=document.getElementById("photoEditorPreview");
 
-const image=document.getElementById("photoEditorImage");
-
-image.src=photoURL;
-image.style.display="block";
-
-document.getElementById("photoEditorPlaceholder").style.display="none";
-
-photoRotation=0;
-photoFilterValue="none";
-
-updatePhotoAdjustments();
-
-};
-
-input.click();
-
+  box.innerHTML="";
+  box.appendChild(photoEditorImage);
 }
 
+function photoFilter(filter){
 
-function photoFilter(value,button){
-
-photoFilterValue=value;
-
-document.querySelectorAll("#photoEditor .tool-buttons button")
-.forEach(btn=>btn.classList.remove("active"));
-
-if(button)button.classList.add("active");
-
-updatePhotoAdjustments();
-
+  if(photoEditorImage){
+    photoEditorImage.style.filter=filter;
+  }
 }
 
+function savePhotoEdit(){
 
-function updatePhotoAdjustments(){
+  if(!photoEditorImage){
+    alert("Choose a photo first.");
+    return;
+  }
 
-const image=document.getElementById("photoEditorImage");
-
-if(image.style.display==="none")return;
-
-const brightness=
-document.getElementById("photoBrightness").value;
-
-const contrast=
-document.getElementById("photoContrast").value;
-
-const saturation=
-document.getElementById("photoSaturation").value;
-
-image.style.filter=
-`${photoFilterValue} brightness(${brightness}%)
-contrast(${contrast}%) saturate(${saturation}%)`;
-
-image.style.transform=
-`rotate(${photoRotation}deg)`;
-
+  alert(
+    "Your edited preview is ready. " +
+    "Advanced export tools will be expanded later."
+  );
 }
 
+function loadEditorVideo(){
 
-function rotatePhoto(degrees){
+  const file=document.getElementById("editorVideoInput").files[0];
 
-photoRotation+=degrees;
+  if(!file)return;
 
-updatePhotoAdjustments();
+  const url=URL.createObjectURL(file);
 
+  document.getElementById("editorPreview").src=url;
 }
-
-
-function updatePhotoText(){
-
-const text=
-document.getElementById("photoText").value;
-
-let overlay=document.getElementById("photoTextOverlay");
-
-if(!overlay){
-
-overlay=document.createElement("div");
-
-overlay.id="photoTextOverlay";
-
-overlay.style.position="absolute";
-overlay.style.bottom="30px";
-overlay.style.left="20px";
-overlay.style.right="20px";
-overlay.style.color="white";
-overlay.style.fontSize="28px";
-overlay.style.fontWeight="bold";
-overlay.style.textAlign="center";
-overlay.style.textShadow="2px 2px 4px #000";
-
-document.querySelector(".editor-preview").appendChild(overlay);
-
-}
-
-overlay.textContent=text;
-
-}
-
-
-function resetPhotoEditor(){
-
-const image=document.getElementById("photoEditorImage");
-
-image.style.filter="none";
-image.style.transform="rotate(0deg)";
-
-document.getElementById("photoBrightness").value=100;
-document.getElementById("photoContrast").value=100;
-document.getElementById("photoSaturation").value=100;
-document.getElementById("photoText").value="";
-
-const overlay=document.getElementById("photoTextOverlay");
-
-if(overlay)overlay.remove();
-
-photoRotation=0;
-photoFilterValue="none";
-
-}
-
-
-function savePhotoDraft(){
-
-localStorage.setItem(
-"rockyxPhotoDraft",
-JSON.stringify({
-rotation:photoRotation,
-filter:photoFilterValue,
-brightness:document.getElementById("photoBrightness").value,
-contrast:document.getElementById("photoContrast").value,
-saturation:document.getElementById("photoSaturation").value
-})
-);
-
-alert("Photo editing settings saved as a local draft.");
-
-}
-
-
-function downloadEditedPhoto(){
-
-const image=document.getElementById("photoEditorImage");
-
-if(image.style.display==="none"){
-alert("Choose a photo first.");
-return;
-}
-
-const canvas=document.createElement("canvas");
-
-canvas.width=image.naturalWidth;
-canvas.height=image.naturalHeight;
-
-const context=canvas.getContext("2d");
-
-context.filter=
-`brightness(${document.getElementById("photoBrightness").value}%)
-contrast(${document.getElementById("photoContrast").value}%)
-saturate(${document.getElementById("photoSaturation").value}%)`;
-
-context.translate(canvas.width/2,canvas.height/2);
-
-context.rotate(photoRotation*Math.PI/180);
-
-context.drawImage(
-image,
--canvas.width/2,
--canvas.height/2,
-canvas.width,
-canvas.height
-);
-
-canvas.toBlob(blob=>{
-downloadBlob(blob,"rockyx-edited-photo.jpg");
-},"image/jpeg",.92);
-
-}
-
-
-/* VIDEO EDITOR */
-
-function loadVideoEditor(){
-
-const input=document.createElement("input");
-
-input.type="file";
-input.accept="video/*";
-
-input.onchange=()=>{
-
-const file=input.files[0];
-
-if(!file)return;
-
-videoURL=URL.createObjectURL(file);
-
-const video=document.getElementById("videoEditorVideo");
-
-video.src=videoURL;
-video.style.display="block";
-
-document.getElementById("videoEditorPlaceholder").style.display="none";
-
-videoFilterValue="none";
-
-};
-
-input.click();
-
-}
-
-
-function resetVideoEditor(){
-
-const video=document.getElementById("videoEditorVideo");
-
-video.style.filter="none";
-video.playbackRate=1;
-video.currentTime=0;
-
-document.getElementById("trimStart").value=0;
-document.getElementById("trimEnd").value=100;
-document.getElementById("videoCaptionInput").value="";
-document.getElementById("videoCaptionOverlay").textContent="";
-
-}
-
-
-function updateTrim(){
-
-const start=
-Number(document.getElementById("trimStart").value);
-
-const end=
-Number(document.getElementById("trimEnd").value);
-
-if(end<start+1){
-document.getElementById("trimEnd").value=start+1;
-}
-
-document.getElementById("timelineProgress").style.width=
-`${end-start}%`;
-
-}
-
-
-function setVideoSpeed(speed){
-
-document.getElementById("videoEditorVideo").playbackRate=speed;
-
-}
-
-
-function videoFilter(value,button){
-
-videoFilterValue=value;
-
-const video=document.getElementById("videoEditorVideo");
-
-video.style.filter=value;
-
-document.querySelectorAll("#videoEditor .tool-buttons button")
-.forEach(btn=>btn.classList.remove("active"));
-
-if(button)button.classList.add("active");
-
-}
-
-
-function updateVideoCaption(){
-
-document.getElementById("videoCaptionOverlay").textContent=
-document.getElementById("videoCaptionInput").value;
-
-}
-
-
-function setAspect(ratio){
-
-document.getElementById("videoEditorVideo").style.aspectRatio=ratio;
-
-}
-
-
-function addEditorSound(sound){
-
-document.getElementById("selectedSound").textContent=
-"Selected sound: "+sound;
-
-}
-
 
 function saveVideoDraft(){
 
-localStorage.setItem(
-"rockyxVideoDraft",
-JSON.stringify({
-filter:videoFilterValue,
-speed:document.getElementById("videoEditorVideo").playbackRate,
-trimStart:document.getElementById("trimStart").value,
-trimEnd:document.getElementById("trimEnd").value,
-caption:document.getElementById("videoCaptionInput").value
-})
-);
-
-alert("Video project saved as a local draft.");
-
+  alert("Video draft saved locally for this demo.");
 }
 
 
-function publishEditedVideo(){
-
-if(!videoURL){
-alert("Choose a video first.");
-return;
-}
-
-alert(
-"Your edited video is ready for publishing. Real publishing and storage will be connected during the backend phase."
-);
-
-}
-
-
-/* AI */
-
-function aiAction(tool){
-
-alert(
-tool+
-" is ready as a Creator Studio feature. Real AI processing will be connected later."
-);
-
-}
-
-
-/* SHORTS */
-
-function uploadShort(){
-
-const input=document.createElement("input");
-
-input.type="file";
-input.accept="video/*";
-
-input.onchange=()=>{
-
-const file=input.files[0];
-
-if(!file)return;
-
-const url=URL.createObjectURL(file);
-
-const card=document.createElement("div");
-
-card.className="short-card";
-
-card.innerHTML=`
-
-<video src="${url}" controls playsinline></video>
-
-<div class="short-info">
-<strong>Your Short</strong>
-
-<div class="short-actions">
-<button>❤️</button>
-<button>💬</button>
-<button>↗️</button>
-<button>🔖</button>
-</div>
-</div>
-`;
-
-document.getElementById("shortsFeed").prepend(card);
-
-};
-
-input.click();
-
-}
-
-
-/* LONG VIDEOS */
-
-function uploadLongVideo(){
-
-const input=document.createElement("input");
-
-input.type="file";
-input.accept="video/*";
-
-input.onchange=()=>{
-
-const file=input.files[0];
-
-if(!file)return;
-
-const url=URL.createObjectURL(file);
-
-const card=document.createElement("div");
-
-card.className="video-card";
-
-card.innerHTML=`
-
-<video src="${url}" controls playsinline></video>
-
-<div class="video-card-info">
-<strong>Your Video</strong>
-<p style="color:#666;margin-top:7px">
-Added from this device.
-</p>
-</div>
-`;
-
-document.getElementById("videoLibrary").prepend(card);
-
-};
-
-input.click();
-
-}
-
-
-/* SOUNDS */
-
-function saveSound(){
-
-localStorage.setItem("rockyxSampleSound","saved");
-
-alert("Sample sound saved on this device.");
-
-}
-
-
-function showSavedSounds(){
-
-const box=document.getElementById("savedSoundsBox");
-
-box.style.display="block";
-
-box.innerHTML=
-localStorage.getItem("rockyxSampleSound")
-?"<strong>🔊 Sample Sound</strong>"
-:"No sounds saved yet.";
-
-}
-
-
-/* STAGE 5 TEMPLATE SYSTEM */
-
-function filterTemplates(category,button){
-
-document.querySelectorAll("#templateGrid .template-card")
-.forEach(card=>{
-
-if(category==="all" ||
-card.dataset.category===category){
-
-card.style.display="block";
-
-}else{
-
-card.style.display="none";
-
-}
-
-});
-
-document.querySelectorAll(".category-row button")
-.forEach(btn=>btn.classList.remove("active"));
-
-button.classList.add("active");
-
-}
-
-
-function useTemplate(name){
-
-alert(
-`"${name}" selected. The template editor will open when the full template backend is connected.`
-);
-
-showPage("creatorStudio");
-
-}
-
-
-function saveTemplate(name){
-
-let saved=JSON.parse(
-localStorage.getItem("rockyxSavedTemplates")||"[]"
-);
-
-if(!saved.includes(name))saved.push(name);
-
-localStorage.setItem(
-"rockyxSavedTemplates",
-JSON.stringify(saved)
-);
-
-alert("Template saved on this device.");
-
-}
-
-
-function toggleTemplateElement(button,name){
-
-button.classList.toggle("active");
-
-if(selectedTemplateElements.includes(name)){
-
-selectedTemplateElements=
-selectedTemplateElements.filter(item=>item!==name);
-
-}else{
-
-selectedTemplateElements.push(name);
-
-}
-
-}
-
+/* =========================
+   TEMPLATES
+========================= */
 
 function createTemplate(){
 
-const name=
-document.getElementById("templateName").value.trim();
+  const name=prompt("Enter a template name:");
 
-const category=
-document.getElementById("templateCategory").value;
+  if(!name)return;
 
-const description=
-document.getElementById("templateDescription").value.trim();
+  templates.push({
+    id:Date.now(),
+    name,
+    category:"General",
+    uses:0,
+    saves:0,
+    status:"Draft"
+  });
 
-if(!name){
+  localStorage.setItem(
+    "rockyxTemplates",
+    JSON.stringify(templates)
+  );
 
-alert("Enter a template name.");
+  renderMyTemplates();
 
-return;
-
+  alert("Template created as a draft.");
 }
 
-const template={
+function renderTemplates(){
 
-id:Date.now(),
-name:name,
-category:category,
-description:description,
-elements:[...selectedTemplateElements],
-status:"Draft",
-views:0,
-uses:0,
-saves:0,
-shares:0,
-premiumEligible:false
+  const box=document.getElementById("templateList");
 
-};
+  if(!templates.length){
 
-myTemplates.push(template);
+    box.innerHTML=`
+      <div class="empty">
+        No community templates yet.
+      </div>
+    `;
 
-localStorage.setItem(
-"rockyxMyTemplates",
-JSON.stringify(myTemplates)
-);
+    return;
+  }
 
-alert("Template created as a draft.");
+  box.innerHTML=templates
+    .filter(t=>t.status==="Published")
+    .map(t=>`
 
-document.getElementById("templateName").value="";
-document.getElementById("templateDescription").value="";
-selectedTemplateElements=[];
+      <div class="template-card">
 
-renderMyTemplates();
+        <h3>${escapeHTML(t.name)}</h3>
 
-showPage("myTemplates");
+        <span class="badge">
+          ${escapeHTML(t.category)}
+        </span>
 
+        <p class="muted">
+          Uses: ${t.uses}
+        </p>
+
+        <button class="btn"
+          onclick="useTemplate(${t.id})">
+          Use Template
+        </button>
+
+      </div>
+
+    `).join("");
 }
-
-
-function saveTemplateDraft(){
-
-const name=
-document.getElementById("templateName").value.trim();
-
-if(!name){
-
-alert("Enter a template name first.");
-
-return;
-
-}
-
-const draft={
-name:name,
-category:document.getElementById("templateCategory").value,
-description:document.getElementById("templateDescription").value,
-elements:[...selectedTemplateElements],
-status:"Draft"
-};
-
-localStorage.setItem(
-"rockyxTemplateDraft",
-JSON.stringify(draft)
-);
-
-alert("Template draft saved on this device.");
-
-}
-
 
 function renderMyTemplates(){
 
-const box=document.getElementById("myTemplateList");
+  const box=document.getElementById("myTemplateList");
 
-if(!myTemplates.length){
+  if(!templates.length){
 
-box.innerHTML=`
-<div class="card placeholder">
-<h3>No templates yet</h3>
-<p>Create your first template to see it here.</p>
-</div>
-`;
+    box.innerHTML=`
+      <div class="empty">
+        You haven't created any templates.
+      </div>
+    `;
 
-return;
+    return;
+  }
 
+  box.innerHTML=templates.map(t=>`
+
+    <div class="template-card">
+
+      <h3>${escapeHTML(t.name)}</h3>
+
+      <p class="muted">
+        Status: ${escapeHTML(t.status)}
+      </p>
+
+      <p>
+        Uses: ${t.uses} · Saves: ${t.saves}
+      </p>
+
+      <button class="btn small"
+        onclick="toggleTemplateStatus(${t.id})">
+        ${t.status==="Published"?"Unpublish":"Publish"}
+      </button>
+
+    </div>
+
+  `).join("");
 }
 
-box.innerHTML="";
+function toggleTemplateStatus(id){
 
-myTemplates.forEach(template=>{
+  const t=templates.find(x=>x.id===id);
 
-const card=document.createElement("div");
+  if(!t)return;
 
-card.className="card";
+  t.status=
+    t.status==="Published"
+    ? "Draft"
+    : "Published";
 
-card.innerHTML=`
+  localStorage.setItem(
+    "rockyxTemplates",
+    JSON.stringify(templates)
+  );
 
-<div style="
-display:flex;
-justify-content:space-between;
-gap:15px;
-align-items:center;
-flex-wrap:wrap
-">
+  renderMyTemplates();
+  renderTemplates();
+}
 
-<div>
+function useTemplate(id){
 
-<h3>${escapeHTML(template.name)}</h3>
+  const t=templates.find(x=>x.id===id);
 
-<p style="color:#666;margin-top:5px">
-${escapeHTML(template.description||"No description")}
-</p>
+  if(!t)return;
 
-<p style="font-size:13px;color:#777;margin-top:8px">
-Category: ${escapeHTML(template.category)}
-<br>
-Status: ${escapeHTML(template.status)}
-</p>
+  t.uses++;
 
-</div>
+  localStorage.setItem(
+    "rockyxTemplates",
+    JSON.stringify(templates)
+  );
 
-<div class="button-row">
-
-<button class="secondary-btn"
-onclick="publishTemplate(${template.id})">
-Publish
-</button>
-
-<button class="secondary-btn"
-onclick="editTemplate(${template.id})">
-Edit
-</button>
-
-<button class="danger-btn"
-onclick="deleteTemplate(${template.id})">
-Delete
-</button>
-
-</div>
-
-</div>
-`;
-
-box.appendChild(card);
-
-});
-
+  alert("Template selected: "+t.name);
 }
 
 
-function publishTemplate(id){
+/* =========================
+   ACCOUNT
+========================= */
 
-const template=myTemplates.find(item=>item.id===id);
+function signup(){
 
-if(!template)return;
+  const name=document.getElementById("signupName").value.trim();
+  const email=document.getElementById("signupEmail").value.trim();
+  const phone=document.getElementById("signupPhone").value.trim();
+  const country=document.getElementById("signupCountry").value;
+  const password=document.getElementById("signupPassword").value;
+  const confirm=document.getElementById("signupConfirm").value;
 
-template.status="Published";
+  if(!name || !email || !phone || !country || !password){
+    alert("Please complete all required fields.");
+    return;
+  }
 
-localStorage.setItem(
-"rockyxMyTemplates",
-JSON.stringify(myTemplates)
-);
+  if(password!==confirm){
+    alert("Passwords do not match.");
+    return;
+  }
 
-alert(
-"Template published locally. Premium review and public publishing will be connected later."
-);
+  /*
+    Frontend-only demo.
+    Passwords are intentionally NOT stored.
+    Real authentication comes during backend development.
+  */
 
-renderMyTemplates();
+  localStorage.setItem(
+    "rockyxDemoUser",
+    JSON.stringify({
+      name,
+      email,
+      phone,
+      country
+    })
+  );
 
+  document.getElementById("accountStatus").innerHTML=`
+    <strong>Demo account created.</strong>
+    <p class="muted">
+      Real secure authentication will be connected later.
+    </p>
+  `;
+
+  alert("Account created on this device.");
+}
+
+function signin(){
+
+  const email=document.getElementById("signinEmail").value.trim();
+  const password=document.getElementById("signinPassword").value;
+
+  if(!email || !password){
+    alert("Enter your email and password.");
+    return;
+  }
+
+  alert(
+    "Frontend demo sign-in completed.\n" +
+    "Secure authentication will be connected during backend development."
+  );
+
+  document.getElementById("accountStatus").innerHTML=`
+    <strong>Signed in (demo).</strong>
+    <p>${escapeHTML(email)}</p>
+  `;
 }
 
 
-function editTemplate(id){
+/* =========================
+   PROFILE
+========================= */
 
-const template=myTemplates.find(item=>item.id===id);
+function saveProfile(){
 
-if(!template)return;
+  const name=document.getElementById("profileName").value.trim();
+  const bio=document.getElementById("profileBio").value.trim();
 
-document.getElementById("templateName").value=template.name;
-document.getElementById("templateCategory").value=template.category;
-document.getElementById("templateDescription").value=template.description||"";
+  localStorage.setItem(
+    "rockyxProfile",
+    JSON.stringify({name,bio})
+  );
 
-selectedTemplateElements=
-[...template.elements];
-
-showPage("templateCreator");
-
+  alert("Profile saved on this device.");
 }
 
 
-function deleteTemplate(id){
-
-if(!confirm("Delete this template?"))return;
-
-myTemplates=
-myTemplates.filter(item=>item.id!==id);
-
-localStorage.setItem(
-"rockyxMyTemplates",
-JSON.stringify(myTemplates)
-);
-
-renderMyTemplates();
-
-}
-
-
-/* CREATOR PROGRAM */
-
-function checkPartnerStatus(){
-
-alert(
-"Your partner status will be calculated from real creator performance after the backend, analytics and eligibility systems are connected."
-);
-
-}
-
-
-/* AUTH */
-
-function createAccount(event){
-
-event.preventDefault();
-
-const password=
-document.getElementById("signupPassword").value;
-
-const confirm=
-document.getElementById("signupConfirmPassword").value;
-
-if(password!==confirm){
-
-alert("Passwords do not match.");
-
-return;
-
-}
-
-alert(
-"Account form completed. Real authentication will be connected during the backend phase."
-);
-
-}
-
-
-function signIn(event){
-
-event.preventDefault();
-
-alert(
-"Sign-in form is working. Real authentication will be connected during the backend phase."
-);
-
-}
-
-
-/* UTILITY */
+/* =========================
+   UTILITIES
+========================= */
 
 function escapeHTML(value){
 
-const div=document.createElement("div");
-
-div.textContent=value;
-
-return div.innerHTML;
-
+  return String(value)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
 }
 
 
-/* START */
+/* =========================
+   STARTUP
+========================= */
 
 document.addEventListener("DOMContentLoaded",()=>{
 
-updatePostCount();
-renderMyTemplates();
-showPage("home");
+  renderFeed();
+  renderProducts();
+  renderCart();
+  renderOrders();
+  renderSeller();
+  renderTemplates();
+  renderMyTemplates();
+  renderSavedSounds();
+  updateCartCount();
+
+  const profile=
+    JSON.parse(localStorage.getItem("rockyxProfile") || "null");
+
+  if(profile){
+
+    document.getElementById("profileName").value=
+      profile.name || "";
+
+    document.getElementById("profileBio").value=
+      profile.bio || "";
+  }
 
 });
 
