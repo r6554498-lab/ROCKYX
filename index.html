@@ -3,10 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#0b63f6">
 <title>RockyX</title>
 
-<!-- Leaflet Maps -->
 <link
   rel="stylesheet"
   href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -15,27 +13,14 @@
 <style>
 *{
   box-sizing:border-box;
-}
-
-:root{
-  --blue:#0b63f6;
-  --blue-dark:#084bb8;
-  --blue-light:#eaf2ff;
-  --white:#ffffff;
-  --bg:#f5f8fc;
-  --text:#172033;
-  --muted:#6d7890;
-  --border:#dfe6f1;
-  --danger:#e53935;
-  --success:#159447;
-  --shadow:0 4px 18px rgba(20,50,100,.08);
+  margin:0;
+  padding:0;
 }
 
 body{
-  margin:0;
   font-family:Arial,Helvetica,sans-serif;
-  background:var(--bg);
-  color:var(--text);
+  background:#f4f8ff;
+  color:#10213a;
 }
 
 button,
@@ -49,87 +34,51 @@ button{
   cursor:pointer;
 }
 
-a{
-  color:inherit;
-}
-
-.hidden{
-  display:none!important;
-}
-
-/* HEADER */
-header{
+.header{
   position:sticky;
   top:0;
   z-index:1000;
   height:64px;
-  background:#fff;
-  border-bottom:1px solid var(--border);
+  background:#0866ff;
+  color:white;
   display:flex;
   align-items:center;
-  gap:12px;
-  padding:8px 16px;
+  gap:10px;
+  padding:10px 16px;
+  box-shadow:0 2px 10px rgba(0,0,0,.15);
 }
 
 .logo{
-  font-size:21px;
+  font-size:24px;
   font-weight:800;
-  color:var(--blue);
   white-space:nowrap;
 }
 
-.search-box{
+.searchBox{
   flex:1;
-  max-width:700px;
-  position:relative;
+  max-width:650px;
+  margin:auto;
 }
 
-.search-box input{
+.searchBox input{
   width:100%;
-  padding:12px 16px;
-  border:1px solid var(--border);
-  border-radius:24px;
-  outline:none;
-  background:#f7f9fd;
-}
-
-.search-box input:focus{
-  border-color:var(--blue);
-  background:#fff;
-}
-
-.header-actions{
-  display:flex;
-  gap:7px;
-}
-
-.icon-btn{
-  width:42px;
-  height:42px;
   border:0;
-  border-radius:50%;
-  background:var(--blue-light);
-  color:var(--blue);
-  position:relative;
+  outline:0;
+  padding:12px 16px;
+  border-radius:25px;
+  background:white;
+  color:#123;
 }
 
-.badge{
-  position:absolute;
-  top:-3px;
-  right:-3px;
-  min-width:18px;
-  height:18px;
-  padding:0 4px;
-  border-radius:10px;
-  background:var(--danger);
-  color:#fff;
-  font-size:10px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+.headerBtn{
+  border:0;
+  background:white;
+  color:#0866ff;
+  padding:9px 12px;
+  border-radius:20px;
+  font-weight:bold;
 }
 
-/* LAYOUT */
 .layout{
   display:flex;
   min-height:calc(100vh - 64px);
@@ -137,37 +86,39 @@ header{
 
 .sidebar{
   width:240px;
-  background:#fff;
-  border-right:1px solid var(--border);
+  background:white;
+  border-right:1px solid #dce7f5;
   padding:14px 10px;
   position:sticky;
   top:64px;
   height:calc(100vh - 64px);
-  overflow:auto;
+  overflow-y:auto;
 }
 
-.nav-btn{
+.sideBtn{
   width:100%;
   border:0;
-  background:transparent;
+  background:white;
   text-align:left;
   padding:11px 13px;
+  margin:2px 0;
   border-radius:10px;
-  margin-bottom:3px;
-  color:#34405a;
+  color:#17304f;
 }
 
-.nav-btn:hover,
-.nav-btn.active{
-  background:var(--blue-light);
-  color:var(--blue);
-  font-weight:700;
+.sideBtn:hover,
+.sideBtn.active{
+  background:#e9f2ff;
+  color:#0866ff;
+  font-weight:bold;
 }
 
 .main{
   flex:1;
-  padding:20px;
-  min-width:0;
+  padding:18px;
+  max-width:1500px;
+  margin:auto;
+  width:100%;
 }
 
 .page{
@@ -178,388 +129,73 @@ header{
   display:block;
 }
 
-/* GENERAL */
 .card{
-  background:#fff;
-  border:1px solid var(--border);
-  border-radius:15px;
-  padding:16px;
-  box-shadow:var(--shadow);
+  background:white;
+  border:1px solid #dce7f5;
+  border-radius:16px;
+  padding:18px;
   margin-bottom:16px;
+  box-shadow:0 3px 12px rgba(20,70,130,.06);
 }
 
-.page-title{
-  margin:0 0 16px;
-  font-size:26px;
-}
-
-.section-title{
-  margin:22px 0 12px;
-}
-
-.muted{
-  color:var(--muted);
-}
-
-.btn{
-  border:0;
-  border-radius:9px;
-  padding:10px 15px;
-  background:var(--blue);
-  color:#fff;
-  font-weight:700;
-}
-
-.btn:hover{
-  background:var(--blue-dark);
-}
-
-.btn.secondary{
-  background:var(--blue-light);
-  color:var(--blue);
-}
-
-.btn.danger{
-  background:var(--danger);
-}
-
-.btn.success{
-  background:var(--success);
-}
-
-.btn.small{
-  padding:7px 10px;
-  font-size:13px;
-}
-
-.btn:disabled{
-  opacity:.5;
-  cursor:not-allowed;
-}
-
-/* HOME */
-.welcome{
-  background:linear-gradient(135deg,#0b63f6,#4c91ff);
-  color:#fff;
+.hero{
+  background:linear-gradient(135deg,#0866ff,#4b92ff);
+  color:white;
   border-radius:20px;
   padding:25px;
   margin-bottom:18px;
 }
 
-.welcome h1{
-  margin:0 0 8px;
+.hero h1{
+  font-size:32px;
+  margin-bottom:8px;
 }
 
-.welcome p{
-  margin:0 0 18px;
+.hero p{
   opacity:.95;
 }
 
-.nearby-home-grid{
+.grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(110px,1fr));
-  gap:9px;
-}
-
-.nearby-home-grid button{
-  border:0;
-  border-radius:12px;
-  padding:12px 7px;
-  background:#fff;
-  color:var(--blue);
-  font-weight:700;
-}
-
-/* STORIES */
-.stories{
-  display:flex;
-  gap:12px;
-  overflow-x:auto;
-  padding-bottom:5px;
-}
-
-.story{
-  min-width:78px;
-  text-align:center;
-}
-
-.story-avatar{
-  width:64px;
-  height:64px;
-  border-radius:50%;
-  background:linear-gradient(135deg,#0b63f6,#70a7ff);
-  border:3px solid #fff;
-  box-shadow:0 0 0 2px var(--blue);
-  margin:auto;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:#fff;
-  font-weight:bold;
-}
-
-.story span{
-  display:block;
-  margin-top:5px;
-  font-size:12px;
-}
-
-/* FEED */
-.post{
-  background:#fff;
-  border:1px solid var(--border);
-  border-radius:15px;
-  margin-bottom:15px;
-  overflow:hidden;
-  box-shadow:var(--shadow);
-}
-
-.post-head{
-  padding:14px;
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-
-.avatar{
-  width:42px;
-  height:42px;
-  border-radius:50%;
-  background:var(--blue);
-  color:#fff;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:bold;
-}
-
-.post-body{
-  padding:0 14px 14px;
-}
-
-.post-media{
-  width:100%;
-  max-height:480px;
-  object-fit:cover;
-  background:#000;
-}
-
-.post-actions{
-  display:flex;
-  gap:6px;
-  flex-wrap:wrap;
-  padding:10px 14px 14px;
-  border-top:1px solid var(--border);
-}
-
-.action-btn{
-  border:0;
-  background:var(--blue-light);
-  color:#26456e;
-  border-radius:9px;
-  padding:8px 11px;
-}
-
-.action-btn.liked{
-  background:#dceaff;
-  color:var(--blue);
-  font-weight:bold;
-}
-
-/* VIDEO */
-.video-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:16px;
-}
-
-.video-card{
-  background:#fff;
-  border:1px solid var(--border);
-  border-radius:15px;
-  overflow:hidden;
-  box-shadow:var(--shadow);
-}
-
-.video-card video{
-  width:100%;
-  display:block;
-  background:#000;
-  max-height:360px;
-}
-
-.video-info{
-  padding:12px;
-}
-
-.video-actions{
-  display:flex;
-  flex-wrap:wrap;
-  gap:6px;
-  padding:0 12px 12px;
-}
-
-/* MUSIC */
-.music-card{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  padding:13px;
-  border:1px solid var(--border);
-  border-radius:12px;
-  margin-bottom:10px;
-  background:#fff;
-}
-
-.music-cover{
-  width:58px;
-  height:58px;
-  border-radius:10px;
-  background:var(--blue);
-  color:#fff;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:23px;
-}
-
-.music-info{
-  flex:1;
-}
-
-.music-actions{
-  display:flex;
-  gap:5px;
-  flex-wrap:wrap;
-}
-
-/* MARKETPLACE */
-.product-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
   gap:15px;
 }
 
-.product{
-  background:#fff;
-  border:1px solid var(--border);
-  border-radius:14px;
-  overflow:hidden;
-  box-shadow:var(--shadow);
-}
-
-.product-img{
-  height:180px;
-  background:#eaf2ff;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:var(--blue);
-  font-size:45px;
-}
-
-.product-content{
-  padding:13px;
-}
-
-.price{
-  font-size:20px;
-  font-weight:800;
-  color:var(--blue);
-}
-
-/* MAPS */
-.map{
-  width:100%;
-  height:480px;
-  border-radius:14px;
-  overflow:hidden;
-  border:1px solid var(--border);
-}
-
-.map-toolbar{
-  display:flex;
-  gap:7px;
-  flex-wrap:wrap;
-  margin-bottom:12px;
-}
-
-.category-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
-  gap:9px;
-  margin-bottom:14px;
-}
-
-.category-btn{
-  border:1px solid var(--border);
-  background:#fff;
-  padding:12px 8px;
+.btn{
+  border:0;
+  background:#0866ff;
+  color:white;
+  padding:10px 15px;
   border-radius:10px;
-  color:#33415b;
-  font-weight:700;
+  font-weight:bold;
 }
 
-.category-btn.active{
-  background:var(--blue);
-  color:#fff;
-  border-color:var(--blue);
+.btn.secondary{
+  background:#e8f1ff;
+  color:#0866ff;
 }
 
-.location-list{
-  margin-top:15px;
+.btn.danger{
+  background:#e53935;
 }
 
-.location-card{
-  background:#fff;
-  border:1px solid var(--border);
-  border-radius:12px;
-  padding:13px;
-  margin-bottom:9px;
+.btn.success{
+  background:#159447;
 }
 
-.location-card h3{
-  margin:0 0 4px;
+.btn.light{
+  background:white;
+  color:#0866ff;
 }
 
-.location-actions{
-  display:flex;
-  gap:6px;
-  flex-wrap:wrap;
-  margin-top:9px;
-}
-
-/* TABLE */
-.table-wrap{
-  overflow:auto;
-}
-
-table{
+.input,
+textarea,
+select{
   width:100%;
-  border-collapse:collapse;
-  background:#fff;
-}
-
-th,td{
-  border-bottom:1px solid var(--border);
-  padding:11px;
-  text-align:left;
-}
-
-/* FORMS */
-.form-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:12px;
-}
-
-input,
-select,
-textarea{
-  width:100%;
-  padding:11px;
-  border:1px solid var(--border);
-  border-radius:9px;
+  padding:11px 13px;
+  border:1px solid #ccd9e9;
+  border-radius:10px;
+  margin:6px 0 10px;
   outline:none;
 }
 
@@ -568,235 +204,420 @@ textarea{
   resize:vertical;
 }
 
-input:focus,
-select:focus,
-textarea:focus{
-  border-color:var(--blue);
-}
-
-.form-group{
+.sectionTitle{
   margin-bottom:12px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
 }
 
-.form-group label{
-  display:block;
-  font-weight:700;
-  margin-bottom:6px;
+.sectionTitle h2{
+  font-size:21px;
 }
 
-/* PROFILE */
-.profile-cover{
-  height:160px;
-  border-radius:15px 15px 0 0;
-  background:linear-gradient(135deg,#0b63f6,#75aaff);
+.storyRow{
+  display:flex;
+  gap:12px;
+  overflow-x:auto;
+  padding-bottom:5px;
 }
 
-.profile-body{
-  padding:0 20px 20px;
+.story{
+  min-width:85px;
+  text-align:center;
 }
 
-.profile-avatar{
-  width:90px;
-  height:90px;
+.storyCircle{
+  width:68px;
+  height:68px;
   border-radius:50%;
-  background:#fff;
-  border:5px solid #fff;
-  box-shadow:0 2px 10px rgba(0,0,0,.15);
-  margin-top:-45px;
+  background:#0866ff;
+  border:4px solid #dbeaff;
+  margin:auto auto 6px;
   display:flex;
   align-items:center;
   justify-content:center;
-  color:var(--blue);
-  font-size:28px;
+  color:white;
+  font-size:25px;
+}
+
+.feedItem{
+  border:1px solid #dbe7f4;
+  border-radius:15px;
+  overflow:hidden;
+  margin-bottom:15px;
+  background:white;
+}
+
+.feedHeader{
+  padding:13px;
+  display:flex;
+  justify-content:space-between;
+}
+
+.feedContent{
+  padding:15px;
+}
+
+.feedActions{
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap;
+  padding:10px 13px;
+  border-top:1px solid #edf2f7;
+}
+
+.feedActions button{
+  border:0;
+  background:#eef5ff;
+  color:#0866ff;
+  border-radius:9px;
+  padding:8px 12px;
+}
+
+.video{
+  width:100%;
+  max-height:520px;
+  background:#000;
+  display:block;
+}
+
+.productImg{
+  width:100%;
+  height:180px;
+  object-fit:cover;
+  border-radius:12px;
+  background:#eaf2ff;
+}
+
+.price{
+  color:#0866ff;
+  font-size:20px;
+  font-weight:bold;
+  margin:7px 0;
+}
+
+.nearbyButtons{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(125px,1fr));
+  gap:9px;
+  margin-top:15px;
+}
+
+.nearbyButtons button{
+  border:1px solid #cfe0f5;
+  background:white;
+  color:#0866ff;
+  border-radius:11px;
+  padding:12px 8px;
   font-weight:bold;
 }
 
-/* NOTIFICATIONS */
-.notification{
-  display:flex;
+.nearbyButtons button:hover{
+  background:#eaf3ff;
+}
+
+#map,
+#sellerMap,
+#transportMap,
+#navigationMap{
+  width:100%;
+  height:430px;
+  border-radius:15px;
+  margin-top:12px;
+}
+
+.locationList{
+  display:grid;
   gap:10px;
-  align-items:flex-start;
-  padding:12px;
-  border-bottom:1px solid var(--border);
+  margin-top:12px;
 }
 
-.notification:last-child{
-  border-bottom:0;
+.locationItem{
+  border:1px solid #d8e5f4;
+  border-radius:12px;
+  padding:13px;
+  background:white;
 }
 
-.notification-icon{
-  width:38px;
-  height:38px;
-  background:var(--blue-light);
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+.locationItem h3{
+  margin-bottom:5px;
 }
 
-/* AD MODAL */
+.tag{
+  display:inline-block;
+  padding:4px 8px;
+  border-radius:20px;
+  background:#e8f2ff;
+  color:#0866ff;
+  font-size:12px;
+  margin:3px;
+}
+
 .modal{
+  display:none;
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.68);
   z-index:5000;
-  display:flex;
+  background:rgba(0,0,0,.55);
   align-items:center;
   justify-content:center;
-  padding:18px;
+  padding:15px;
 }
 
-.modal-box{
-  width:100%;
-  max-width:500px;
-  background:#fff;
+.modal.show{
+  display:flex;
+}
+
+.modalBox{
+  background:white;
   border-radius:18px;
-  overflow:hidden;
-  box-shadow:0 20px 60px rgba(0,0,0,.3);
+  width:min(600px,100%);
+  max-height:90vh;
+  overflow:auto;
+  padding:20px;
 }
 
-.modal-head{
-  padding:16px;
-  border-bottom:1px solid var(--border);
+.close{
+  float:right;
+  border:0;
+  background:#edf3fa;
+  width:34px;
+  height:34px;
+  border-radius:50%;
+}
+
+.notification{
+  padding:12px;
+  border-bottom:1px solid #e4ebf3;
+}
+
+.badge{
+  background:#e53935;
+  color:white;
+  border-radius:20px;
+  padding:2px 7px;
+  font-size:11px;
+}
+
+.empty{
+  text-align:center;
+  padding:30px;
+  color:#708198;
+}
+
+.shareGrid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
+
+.shareGrid button{
+  padding:13px;
+  border:1px solid #d6e3f2;
+  background:#f7faff;
+  border-radius:10px;
+  color:#0866ff;
+  font-weight:bold;
+}
+
+/* AI HELP */
+
+.aiFloating{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  z-index:4000;
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  border:0;
+  background:#0866ff;
+  color:white;
+  font-size:27px;
+  box-shadow:0 6px 20px rgba(0,70,180,.35);
+}
+
+.aiPanel{
+  position:fixed;
+  right:20px;
+  bottom:90px;
+  width:min(390px,calc(100vw - 30px));
+  height:580px;
+  background:white;
+  z-index:3999;
+  border-radius:20px;
+  box-shadow:0 10px 35px rgba(0,0,0,.22);
+  display:none;
+  overflow:hidden;
+  border:1px solid #d7e4f2;
+}
+
+.aiPanel.show{
+  display:flex;
+  flex-direction:column;
+}
+
+.aiHeader{
+  background:#0866ff;
+  color:white;
+  padding:15px;
   display:flex;
   justify-content:space-between;
   align-items:center;
 }
 
-.modal-body{
-  padding:20px;
+.aiMessages{
+  flex:1;
+  overflow-y:auto;
+  padding:13px;
+  background:#f5f8fc;
 }
 
-.close-btn{
-  border:0;
-  background:#eef2f7;
-  border-radius:50%;
-  width:35px;
-  height:35px;
+.aiMsg{
+  max-width:85%;
+  padding:10px 12px;
+  border-radius:14px;
+  margin-bottom:10px;
+  line-height:1.4;
+  font-size:14px;
 }
 
-.ad-box{
-  background:#111827;
-  color:#fff;
-  min-height:260px;
+.aiMsg.bot{
+  background:white;
+  border:1px solid #dbe5f0;
+  margin-right:auto;
+}
+
+.aiMsg.user{
+  background:#0866ff;
+  color:white;
+  margin-left:auto;
+}
+
+.aiInputArea{
+  padding:10px;
+  background:white;
+  border-top:1px solid #dde7f1;
   display:flex;
-  align-items:center;
-  justify-content:center;
-  flex-direction:column;
-  text-align:center;
-  border-radius:12px;
-  padding:20px;
+  gap:7px;
 }
 
-.ad-countdown{
-  font-size:38px;
-  font-weight:800;
+.aiInputArea input{
+  flex:1;
+  border:1px solid #ccd9e9;
+  border-radius:20px;
+  padding:10px 13px;
+  outline:none;
+}
+
+.aiInputArea button{
+  width:43px;
+  border:0;
+  border-radius:50%;
+  background:#0866ff;
+  color:white;
+}
+
+.aiSuggestions{
+  display:flex;
+  gap:7px;
+  overflow-x:auto;
+  padding:9px;
+  background:white;
+}
+
+.aiSuggestions button{
+  white-space:nowrap;
+  border:1px solid #cfe0f5;
+  background:#f5f9ff;
+  color:#0866ff;
+  border-radius:20px;
+  padding:7px 10px;
+  font-size:12px;
+}
+
+.adBox{
+  text-align:center;
+  padding:25px;
+  background:#f5f8fc;
+  border-radius:15px;
+}
+
+.countdown{
+  font-size:35px;
+  color:#0866ff;
+  font-weight:bold;
   margin:15px;
 }
 
-.ad-label{
-  background:#fff;
-  color:#333;
-  padding:5px 9px;
-  border-radius:5px;
-  font-size:11px;
-}
-
-/* COMMENTS */
-.comment-box{
-  display:flex;
-  gap:7px;
-  margin-top:10px;
-}
-
-.comments{
-  margin-top:10px;
-}
-
-.comment{
-  background:#f5f7fb;
-  padding:9px;
-  border-radius:9px;
-  margin-top:6px;
-}
-
-/* AUTH */
-.auth-modal .modal-box{
-  max-width:450px;
-}
-
-/* RESPONSIVE */
 @media(max-width:900px){
   .sidebar{
-    width:76px;
+    width:70px;
+    padding:8px 5px;
   }
 
-  .nav-btn{
-    text-align:center;
+  .sideBtn{
     font-size:0;
+    text-align:center;
+    padding:12px 5px;
   }
 
-  .nav-btn::first-letter{
+  .sideBtn:first-letter{
     font-size:20px;
   }
 
   .logo{
-    font-size:18px;
-  }
-}
-
-@media(max-width:650px){
-  header{
-    padding:7px 9px;
+    font-size:19px;
   }
 
-  .logo{
-    display:none;
+  .header{
+    padding:9px;
   }
 
-  .header-actions .icon-btn:nth-child(2){
-    display:none;
-  }
-
-  .sidebar{
-    position:fixed;
-    bottom:0;
-    left:0;
-    right:0;
-    top:auto;
-    width:100%;
-    height:62px;
-    z-index:2000;
-    display:flex;
-    overflow-x:auto;
-    padding:5px;
-    border-top:1px solid var(--border);
-    border-right:0;
-  }
-
-  .nav-btn{
-    min-width:65px;
-    margin:0;
-    padding:8px 5px;
-    font-size:10px;
-    text-align:center;
-  }
-
-  .nav-btn::first-letter{
-    font-size:17px;
+  .headerBtn{
+    padding:8px;
   }
 
   .main{
-    padding:12px;
-    padding-bottom:80px;
+    padding:10px;
+  }
+}
+
+@media(max-width:600px){
+  .header{
+    height:auto;
+    flex-wrap:wrap;
   }
 
-  .map{
-    height:400px;
+  .searchBox{
+    order:5;
+    flex-basis:100%;
   }
 
-  .page-title{
-    font-size:22px;
+  .layout{
+    min-height:calc(100vh - 115px);
+  }
+
+  .sidebar{
+    top:115px;
+    height:calc(100vh - 115px);
+  }
+
+  .hero h1{
+    font-size:25px;
+  }
+
+  #map,
+  #sellerMap,
+  #transportMap,
+  #navigationMap{
+    height:350px;
+  }
+
+  .shareGrid{
+    grid-template-columns:1fr;
   }
 }
 </style>
@@ -804,10 +625,11 @@ textarea:focus{
 
 <body>
 
-<header>
-  <div class="logo">RockyX</div>
+<header class="header">
 
-  <div class="search-box">
+  <div class="logo">X</div>
+
+  <div class="searchBox">
     <input
       id="globalSearch"
       type="search"
@@ -816,1362 +638,1115 @@ textarea:focus{
     >
   </div>
 
-  <div class="header-actions">
-    <button class="icon-btn" onclick="showPage('notifications')" title="Notifications">
-      🔔
-      <span id="notificationBadge" class="badge hidden">0</span>
-    </button>
+  <button class="headerBtn" onclick="showPage('notifications')">
+    🔔 <span id="notificationCount" class="badge">0</span>
+  </button>
 
-    <button class="icon-btn" onclick="showPage('messages')" title="Messages">💬</button>
+  <button class="headerBtn" onclick="showPage('messages')">💬</button>
 
-    <button class="icon-btn" onclick="showPage('marketplace')" title="Cart">
-      🛒
-      <span id="cartBadge" class="badge hidden">0</span>
-    </button>
+  <button class="headerBtn" onclick="showPage('marketplace')">🛒</button>
 
-    <button class="icon-btn" onclick="openAccount()" title="Account">👤</button>
-  </div>
+  <button class="headerBtn" onclick="showPage('account')">👤</button>
+
 </header>
 
 <div class="layout">
 
 <aside class="sidebar">
 
-  <button class="nav-btn active" data-page="home" onclick="showPage('home')">🏠 Home</button>
-  <button class="nav-btn" data-page="explore" onclick="showPage('explore')">🔎 Explore</button>
-  <button class="nav-btn" data-page="shorts" onclick="showPage('shorts')">🎬 Shorts</button>
-  <button class="nav-btn" data-page="videos" onclick="showPage('videos')">▶️ Videos</button>
-  <button class="nav-btn" data-page="live" onclick="showPage('live')">🔴 Live</button>
-  <button class="nav-btn" data-page="music" onclick="showPage('music')">🎵 Music</button>
-  <button class="nav-btn" data-page="sounds" onclick="showPage('sounds')">🔊 Sounds</button>
-  <button class="nav-btn" data-page="marketplace" onclick="showPage('marketplace')">🛒 Market</button>
-  <button class="nav-btn" data-page="nearby" onclick="showPage('nearby')">📍 Nearby</button>
-  <button class="nav-btn" data-page="navigation" onclick="showPage('navigation')">🧭 Navigation</button>
-  <button class="nav-btn" data-page="businesses" onclick="showPage('businesses')">🏪 Businesses</button>
-  <button class="nav-btn" data-page="services" onclick="showPage('services')">🛠 Services</button>
-  <button class="nav-btn" data-page="transport" onclick="showPage('transport')">🚕 Transport</button>
-  <button class="nav-btn" data-page="messages" onclick="showPage('messages')">💬 Messages</button>
-  <button class="nav-btn" data-page="notifications" onclick="showPage('notifications')">🔔 Notifications</button>
-  <button class="nav-btn" data-page="saved" onclick="showPage('saved')">🔖 Saved</button>
-  <button class="nav-btn" data-page="profile" onclick="showPage('profile')">👤 Profile</button>
-  <button class="nav-btn" data-page="creator" onclick="showPage('creator')">⭐ Creator</button>
-  <button class="nav-btn" data-page="templates" onclick="showPage('templates')">🎨 Templates</button>
-  <button class="nav-btn" data-page="editor" onclick="showPage('editor')">✂️ Editor</button>
-  <button class="nav-btn" data-page="upload" onclick="showPage('upload')">⬆️ Upload</button>
-  <button class="nav-btn" data-page="analytics" onclick="showPage('analytics')">📊 Analytics</button>
-  <button class="nav-btn" data-page="earnings" onclick="showPage('earnings')">💰 Earnings</button>
-  <button class="nav-btn" data-page="verification" onclick="showPage('verification')">☑️ Verification</button>
-  <button class="nav-btn" data-page="orders" onclick="showPage('orders')">📦 Orders</button>
-  <button class="nav-btn" data-page="security" onclick="showPage('security')">🔐 Security</button>
-  <button class="nav-btn" data-page="settings" onclick="showPage('settings')">⚙️ Settings</button>
-  <button class="nav-btn" data-page="account" onclick="showPage('account')">🧾 Account</button>
-  <button class="nav-btn" data-page="admin" onclick="showPage('admin')">🔒 Admin</button>
+<button class="sideBtn active" onclick="showPage('home')">🏠 Home</button>
+<button class="sideBtn" onclick="showPage('explore')">🔎 Explore</button>
+<button class="sideBtn" onclick="showPage('shorts')">🎬 Shorts</button>
+<button class="sideBtn" onclick="showPage('videos')">📺 Videos</button>
+<button class="sideBtn" onclick="showPage('live')">🔴 Live</button>
+<button class="sideBtn" onclick="showPage('music')">🎵 Music</button>
+<button class="sideBtn" onclick="showPage('sounds')">🔊 Sounds</button>
+<button class="sideBtn" onclick="showPage('marketplace')">🛍 Marketplace</button>
+<button class="sideBtn" onclick="showPage('nearby')">📍 Nearby</button>
+<button class="sideBtn" onclick="showPage('transport')">🚕 Transport</button>
+<button class="sideBtn" onclick="showPage('businesses')">🏢 Businesses</button>
+<button class="sideBtn" onclick="showPage('services')">🛠 Services</button>
+<button class="sideBtn" onclick="showPage('navigation')">🗺 Navigation</button>
+<button class="sideBtn" onclick="showPage('messages')">💬 Messages</button>
+<button class="sideBtn" onclick="showPage('notifications')">🔔 Notifications</button>
+<button class="sideBtn" onclick="showPage('saved')">🔖 Saved</button>
+<button class="sideBtn" onclick="showPage('profile')">👤 Profile</button>
+<button class="sideBtn" onclick="showPage('creator')">⭐ Creator</button>
+<button class="sideBtn" onclick="showPage('templates')">🎨 Templates</button>
+<button class="sideBtn" onclick="showPage('editor')">✂️ Editor</button>
+<button class="sideBtn" onclick="showPage('upload')">⬆️ Upload</button>
+<button class="sideBtn" onclick="showPage('analytics')">📊 Analytics</button>
+<button class="sideBtn" onclick="showPage('earnings')">💰 Earnings</button>
+<button class="sideBtn" onclick="showPage('verification')">✔️ Verification</button>
+<button class="sideBtn" onclick="showPage('security')">🔐 Security</button>
+<button class="sideBtn" onclick="showPage('settings')">⚙️ Settings</button>
+<button class="sideBtn" onclick="showPage('account')">🧑 Account</button>
+<button class="sideBtn" onclick="showPage('admin')">🔒 Admin</button>
 
 </aside>
 
 <main class="main">
 
 <!-- HOME -->
-<section id="page-home" class="page active">
 
-  <div class="welcome">
+<section id="home" class="page active">
 
-    <h1>Welcome</h1>
+<div class="hero">
 
-    <p>
-      Marketplace, social network, entertainment and services — all in one place.
-    </p>
+<h1>Welcome</h1>
 
-    <h3>📍 Nearby</h3>
+<p>
+Marketplace, social network, entertainment and services — all in one place.
+</p>
 
-    <div class="nearby-home-grid">
-      <button onclick="openNearbyCategory('businesses')">🏪 Businesses</button>
-      <button onclick="openNearbyCategory('sellers')">🛒 Sellers</button>
-      <button onclick="openNearbyCategory('services')">🛠 Services</button>
-      <button onclick="openNearbyCategory('transport')">🚕 Transport</button>
-      <button onclick="openNearbyCategory('fuel')">⛽ Fuel</button>
-      <button onclick="openNearbyCategory('hotels')">🏨 Hotels</button>
-      <button onclick="openNearbyCategory('restaurants')">🍽 Restaurants</button>
-      <button onclick="openNearbyCategory('all')">🗺 View Map</button>
-    </div>
+<h3 style="margin-top:18px;">📍 Find what is near you</h3>
 
-  </div>
+<div class="nearbyButtons">
 
-  <h2 class="section-title">Stories</h2>
+<button onclick="openNearbyCategory('businesses')">🏢 Businesses</button>
+<button onclick="openNearbyCategory('sellers')">🛒 Sellers</button>
+<button onclick="openNearbyCategory('services')">🛠 Services</button>
+<button onclick="openNearbyCategory('transport')">🚕 Transport</button>
+<button onclick="openNearbyCategory('fuel')">⛽ Fuel</button>
+<button onclick="openNearbyCategory('hotels')">🏨 Hotels</button>
+<button onclick="openNearbyCategory('restaurants')">🍽 Restaurants</button>
+<button onclick="openNearbyCategory('all')">🗺 View Map</button>
 
-  <div class="card">
-    <div class="stories">
+</div>
 
-      <div class="story">
-        <div class="story-avatar">+</div>
-        <span>Your Story</span>
-      </div>
+</div>
 
-      <div class="story">
-        <div class="story-avatar">R</div>
-        <span>Rocky</span>
-      </div>
+<div class="card">
 
-      <div class="story">
-        <div class="story-avatar">T</div>
-        <span>Tech</span>
-      </div>
+<div class="sectionTitle">
+<h2>Stories</h2>
+<button class="btn secondary" onclick="showPage('creator')">Create Story</button>
+</div>
 
-      <div class="story">
-        <div class="story-avatar">F</div>
-        <span>Fashion</span>
-      </div>
+<div class="storyRow">
 
-      <div class="story">
-        <div class="story-avatar">M</div>
-        <span>Music</span>
-      </div>
+<div class="story">
+<div class="storyCircle">+</div>
+<small>Your Story</small>
+</div>
 
-      <div class="story">
-        <div class="story-avatar">G</div>
-        <span>Ghana</span>
-      </div>
+<div class="story">
+<div class="storyCircle">👕</div>
+<small>Fashion</small>
+</div>
 
-    </div>
-  </div>
+<div class="story">
+<div class="storyCircle">🎵</div>
+<small>Music</small>
+</div>
 
-  <h2 class="section-title">New Feed</h2>
+<div class="story">
+<div class="storyCircle">🍔</div>
+<small>Food</small>
+</div>
 
-  <div id="homeFeed"></div>
+<div class="story">
+<div class="storyCircle">⚽</div>
+<small>Sports</small>
+</div>
+
+</div>
+
+</div>
+
+<div class="sectionTitle">
+<h2>New Feed</h2>
+<button class="btn secondary" onclick="showPage('explore')">Explore More</button>
+</div>
+
+<div id="homeFeed"></div>
+
+<div class="card">
+
+<div class="sectionTitle">
+<h2>Marketplace</h2>
+<button class="btn secondary" onclick="showPage('marketplace')">See All</button>
+</div>
+
+<div id="homeProducts" class="grid"></div>
+
+</div>
 
 </section>
-
 
 <!-- EXPLORE -->
-<section id="page-explore" class="page">
 
-  <h1 class="page-title">Explore</h1>
+<section id="explore" class="page">
 
-  <div class="card">
-    <h3>Discover RockyX</h3>
-    <p class="muted">
-      Find videos, music, businesses, products, services and people.
-    </p>
+<div class="card">
 
-    <div class="category-grid">
-      <button class="category-btn" onclick="showPage('shorts')">🎬 Shorts</button>
-      <button class="category-btn" onclick="showPage('videos')">▶️ Videos</button>
-      <button class="category-btn" onclick="showPage('music')">🎵 Music</button>
-      <button class="category-btn" onclick="showPage('marketplace')">🛒 Products</button>
-      <button class="category-btn" onclick="showPage('nearby')">📍 Nearby</button>
-      <button class="category-btn" onclick="showPage('businesses')">🏪 Businesses</button>
-      <button class="category-btn" onclick="showPage('services')">🛠 Services</button>
-      <button class="category-btn" onclick="showPage('transport')">🚕 Transport</button>
-    </div>
-  </div>
+<h2>Explore</h2>
 
-  <div id="searchResults"></div>
+<p style="margin:8px 0 15px;">
+Discover videos, products, businesses, services, music and creators.
+</p>
+
+<div class="grid">
+
+<button class="btn" onclick="showPage('shorts')">🎬 Shorts</button>
+<button class="btn" onclick="showPage('videos')">📺 Videos</button>
+<button class="btn" onclick="showPage('music')">🎵 Music</button>
+<button class="btn" onclick="showPage('marketplace')">🛍 Marketplace</button>
+<button class="btn" onclick="showPage('nearby')">📍 Nearby</button>
+<button class="btn" onclick="showPage('businesses')">🏢 Businesses</button>
+
+</div>
+
+</div>
+
+<div id="searchResults"></div>
 
 </section>
-
 
 <!-- SHORTS -->
-<section id="page-shorts" class="page">
 
-  <h1 class="page-title">Shorts</h1>
+<section id="shorts" class="page">
 
-  <div class="card">
-    <p class="muted">
-      Watch, like, comment, save, share and download videos.
-    </p>
-  </div>
+<div class="card">
 
-  <div id="shortsList" class="video-grid"></div>
+<div class="sectionTitle">
+<h2>Shorts</h2>
+<button class="btn" onclick="showPage('upload')">Upload Short</button>
+</div>
+
+<div id="shortsList"></div>
+
+</div>
 
 </section>
-
 
 <!-- VIDEOS -->
-<section id="page-videos" class="page">
 
-  <h1 class="page-title">Videos</h1>
+<section id="videos" class="page">
 
-  <div class="card">
-    <p class="muted">
-      Long-form videos from creators and businesses.
-    </p>
-  </div>
+<div class="card">
 
-  <div id="videoResults" class="video-grid"></div>
+<div class="sectionTitle">
+<h2>Videos</h2>
+<button class="btn" onclick="showPage('upload')">Upload Video</button>
+</div>
+
+<div id="videoResults"></div>
+
+</div>
 
 </section>
-
 
 <!-- LIVE -->
-<section id="page-live" class="page">
 
-  <h1 class="page-title">Live</h1>
+<section id="live" class="page">
 
-  <div class="card">
-    <h2>🔴 Live Streaming</h2>
-    <p class="muted">
-      Live streaming will connect to the real streaming service when the backend is added.
-    </p>
+<div class="card">
 
-    <button class="btn" onclick="startDemoLive()">Start Demo Live</button>
-  </div>
+<h2>🔴 Live</h2>
 
-  <div id="liveArea"></div>
+<div class="empty">
+
+<h3>Live streaming</h3>
+
+<p style="margin:10px 0;">
+Start or discover live streams.
+</p>
+
+<button class="btn" onclick="startLive()">Start Live</button>
+
+</div>
+
+</div>
 
 </section>
-
 
 <!-- MUSIC -->
-<section id="page-music" class="page">
 
-  <h1 class="page-title">Music</h1>
+<section id="music" class="page">
 
-  <div class="card">
+<div class="card">
 
-    <h3>🎵 Music</h3>
+<h2>🎵 Music</h2>
 
-    <p class="muted">
-      Artists can upload songs and albums. Free users may see ads before playback.
-    </p>
+<input
+class="input"
+placeholder="Search songs, artists and albums..."
+oninput="searchMusic(this.value)"
+>
 
-    <input
-      id="musicSearch"
-      placeholder="Search songs, artists or albums..."
-      oninput="searchMusic()"
-    >
+<div id="musicResults"></div>
 
-  </div>
-
-  <div id="musicResults"></div>
+</div>
 
 </section>
-
 
 <!-- SOUNDS -->
-<section id="page-sounds" class="page">
 
-  <h1 class="page-title">Sounds</h1>
+<section id="sounds" class="page">
 
-  <div class="card">
+<div class="card">
 
-    <input
-      id="soundSearch"
-      placeholder="Search sounds..."
-      oninput="searchSounds()"
-    >
+<h2>🔊 Sounds</h2>
 
-  </div>
+<input
+class="input"
+placeholder="Search sounds..."
+oninput="searchSounds(this.value)"
+>
 
-  <div id="soundsList"></div>
+<div id="soundsList"></div>
 
-  <h2>Saved Sounds</h2>
+<h3 style="margin-top:20px;">Saved Sounds</h3>
 
-  <div id="savedSounds"></div>
+<div id="savedSounds"></div>
+
+</div>
 
 </section>
-
 
 <!-- MARKETPLACE -->
-<section id="page-marketplace" class="page">
 
-  <h1 class="page-title">Marketplace</h1>
+<section id="marketplace" class="page">
 
-  <div class="card">
+<div class="card">
 
-    <div class="form-grid">
+<div class="sectionTitle">
+<h2>🛍 Marketplace</h2>
+<button class="btn secondary" onclick="showPage('orders')">Orders</button>
+</div>
 
-      <input
-        id="productSearch"
-        placeholder="Search products..."
-        oninput="renderProducts()"
-      >
+<div id="productList" class="grid"></div>
 
-      <select id="productCategory" onchange="renderProducts()">
-        <option value="">All categories</option>
-        <option>Fashion</option>
-        <option>Electronics</option>
-        <option>Accessories</option>
-        <option>Home</option>
-      </select>
-
-      <button class="btn" onclick="showPage('cart')">🛒 View Cart</button>
-
-    </div>
-
-  </div>
-
-  <div id="productList" class="product-grid"></div>
+</div>
 
 </section>
-
-
-<!-- CART -->
-<section id="page-cart" class="page">
-
-  <h1 class="page-title">Shopping Cart</h1>
-
-  <div class="card">
-
-    <div id="cartItems"></div>
-
-    <h2>Total: <span id="cartTotal">GHS 0.00</span></h2>
-
-    <button class="btn" onclick="placeDemoOrder()">
-      Place Order
-    </button>
-
-  </div>
-
-</section>
-
 
 <!-- NEARBY -->
-<section id="page-nearby" class="page">
 
-  <h1 class="page-title">Nearby</h1>
+<section id="nearby" class="page">
 
-  <div class="card">
+<div class="card">
 
-    <div class="category-grid">
+<h2>📍 Nearby</h2>
 
-      <button class="category-btn" data-nearby="all"
-        onclick="setNearbyCategory('all')">🗺 All</button>
+<p style="margin:8px 0 15px;">
+Choose what you want to find nearby.
+</p>
 
-      <button class="category-btn" data-nearby="businesses"
-        onclick="setNearbyCategory('businesses')">🏪 Businesses</button>
+<div class="nearbyButtons">
 
-      <button class="category-btn" data-nearby="sellers"
-        onclick="setNearbyCategory('sellers')">🛒 Sellers</button>
+<button onclick="setNearbyCategory('all')">🗺 All</button>
+<button onclick="setNearbyCategory('businesses')">🏢 Businesses</button>
+<button onclick="setNearbyCategory('sellers')">🛒 Sellers</button>
+<button onclick="setNearbyCategory('services')">🛠 Services</button>
+<button onclick="setNearbyCategory('transport')">🚕 Transport</button>
+<button onclick="setNearbyCategory('fuel')">⛽ Fuel</button>
+<button onclick="setNearbyCategory('hotels')">🏨 Hotels</button>
+<button onclick="setNearbyCategory('restaurants')">🍽 Restaurants</button>
 
-      <button class="category-btn" data-nearby="services"
-        onclick="setNearbyCategory('services')">🛠 Services</button>
+</div>
 
-      <button class="category-btn" data-nearby="transport"
-        onclick="setNearbyCategory('transport')">🚕 Transport</button>
+<div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">
 
-      <button class="category-btn" data-nearby="fuel"
-        onclick="setNearbyCategory('fuel')">⛽ Fuel</button>
+<button class="btn" onclick="locateUser('main')">
+📍 Use Current Location
+</button>
 
-      <button class="category-btn" data-nearby="hotels"
-        onclick="setNearbyCategory('hotels')">🏨 Hotels</button>
+<button class="btn secondary" onclick="updateNearbyMap()">
+🔄 Refresh Map
+</button>
 
-      <button class="category-btn" data-nearby="restaurants"
-        onclick="setNearbyCategory('restaurants')">🍽 Restaurants</button>
+</div>
 
-    </div>
+<div id="map"></div>
 
-    <div class="map-toolbar">
-      <button class="btn secondary" onclick="locateUser('main')">
-        📍 Use My Location
-      </button>
+<div id="nearbyLocations" class="locationList"></div>
 
-      <button class="btn secondary" onclick="showPage('navigation')">
-        🧭 Navigation
-      </button>
-    </div>
-
-    <div id="map" class="map"></div>
-
-    <div id="nearbyList" class="location-list"></div>
-
-  </div>
+</div>
 
 </section>
-
-
-<!-- NAVIGATION -->
-<section id="page-navigation" class="page">
-
-  <h1 class="page-title">Navigation</h1>
-
-  <div class="card">
-
-    <p class="muted">
-      Search for a place and get directions.
-    </p>
-
-    <div class="form-grid">
-
-      <input
-        id="navigationSearch"
-        placeholder="Search a place..."
-        onkeydown="if(event.key==='Enter') searchNavigation()"
-      >
-
-      <button class="btn" onclick="searchNavigation()">
-        Search
-      </button>
-
-      <button class="btn secondary" onclick="locateUser('navigation')">
-        📍 My Location
-      </button>
-
-    </div>
-
-    <div id="navigationMap" class="map" style="margin-top:14px"></div>
-
-    <div id="navigationResults" class="location-list"></div>
-
-  </div>
-
-</section>
-
-
-<!-- BUSINESSES -->
-<section id="page-businesses" class="page">
-
-  <h1 class="page-title">Businesses</h1>
-
-  <div class="card">
-    <p class="muted">
-      Discover businesses and their map locations.
-    </p>
-
-    <button class="btn" onclick="openNearbyCategory('businesses')">
-      📍 View Business Locations
-    </button>
-  </div>
-
-</section>
-
-
-<!-- SERVICES -->
-<section id="page-services" class="page">
-
-  <h1 class="page-title">Services</h1>
-
-  <div class="card">
-    <p class="muted">
-      Find nearby service providers.
-    </p>
-
-    <button class="btn" onclick="openNearbyCategory('services')">
-      🛠 Find Services
-    </button>
-  </div>
-
-</section>
-
 
 <!-- TRANSPORT -->
-<section id="page-transport" class="page">
 
-  <h1 class="page-title">Transport</h1>
+<section id="transport" class="page">
 
-  <div class="card">
+<div class="card">
 
-    <h3>🚕 Transport Locations</h3>
+<h2>🚕 Transport</h2>
 
-    <div class="category-grid">
+<p style="margin:8px 0;">
+Find transport locations and services.
+</p>
 
-      <button class="category-btn"
-        onclick="openNearbyCategory('transport')">
-        🚕 Transport
-      </button>
+<div id="transportMap"></div>
 
-      <button class="category-btn"
-        onclick="openNearbyCategory('fuel')">
-        ⛽ Fuel
-      </button>
+<div id="transportList" class="locationList"></div>
 
-    </div>
-
-    <div id="transportMap" class="map"></div>
-
-  </div>
+</div>
 
 </section>
 
+<!-- BUSINESSES -->
+
+<section id="businesses" class="page">
+
+<div class="card">
+
+<h2>🏢 Businesses</h2>
+
+<p style="margin:8px 0 15px;">
+Find businesses on the map.
+</p>
+
+<div id="businessPageMap"></div>
+
+<div id="businessList" class="locationList"></div>
+
+</div>
+
+</section>
+
+<!-- SERVICES -->
+
+<section id="services" class="page">
+
+<div class="card">
+
+<h2>🛠 Services</h2>
+
+<div id="serviceList" class="grid"></div>
+
+</div>
+
+</section>
+
+<!-- NAVIGATION -->
+
+<section id="navigation" class="page">
+
+<div class="card">
+
+<h2>🗺 Navigation</h2>
+
+<p style="margin:8px 0;">
+Search for a place and get directions.
+</p>
+
+<input
+id="navigationSearch"
+class="input"
+placeholder="Search place..."
+>
+
+<button class="btn" onclick="searchNavigation()">Search</button>
+
+<div id="navigationMap"></div>
+
+<div id="navigationResults" class="locationList"></div>
+
+</div>
+
+</section>
 
 <!-- MESSAGES -->
-<section id="page-messages" class="page">
 
-  <h1 class="page-title">Messages</h1>
+<section id="messages" class="page">
 
-  <div class="card">
+<div class="card">
 
-    <h3>💬 Messages</h3>
+<h2>💬 Messages</h2>
 
-    <div class="location-card">
-      <strong>RockyX Support</strong>
-      <p class="muted">Welcome to RockyX messaging.</p>
-    </div>
+<div class="empty">
+No conversations yet.
+</div>
 
-    <div class="comment-box">
-      <input id="messageInput" placeholder="Write a message...">
-      <button class="btn" onclick="sendDemoMessage()">Send</button>
-    </div>
-
-  </div>
+</div>
 
 </section>
-
 
 <!-- NOTIFICATIONS -->
-<section id="page-notifications" class="page">
 
-  <h1 class="page-title">Notifications</h1>
+<section id="notifications" class="page">
 
-  <div class="card">
+<div class="card">
 
-    <button class="btn secondary" onclick="markNotificationsRead()">
-      Mark all as read
-    </button>
+<div class="sectionTitle">
 
-    <div id="notificationList" style="margin-top:12px"></div>
+<h2>🔔 Notifications</h2>
 
-  </div>
+<button class="btn secondary" onclick="clearNotifications()">
+Clear
+</button>
+
+</div>
+
+<div id="notificationList"></div>
+
+</div>
 
 </section>
-
 
 <!-- SAVED -->
-<section id="page-saved" class="page">
 
-  <h1 class="page-title">Saved</h1>
+<section id="saved" class="page">
 
-  <div class="card">
+<div class="card">
 
-    <h3>🔖 Saved Content</h3>
+<h2>🔖 Saved</h2>
 
-    <div id="savedContent"></div>
+<div id="savedContent"></div>
 
-  </div>
+</div>
 
 </section>
-
 
 <!-- PROFILE -->
-<section id="page-profile" class="page">
 
-  <h1 class="page-title">Profile</h1>
+<section id="profile" class="page">
 
-  <div class="card">
+<div class="card">
 
-    <div class="profile-cover"></div>
+<h2>👤 Profile</h2>
 
-    <div class="profile-body">
+<div style="margin:15px 0;">
 
-      <div class="profile-avatar">R</div>
+<div class="storyCircle" style="margin:0 0 10px;">👤</div>
 
-      <h2 id="profileName">RockyX User</h2>
+<h3 id="profileName">RockyX User</h3>
 
-      <p id="profileEmail" class="muted">Not signed in</p>
+<p id="profileEmail">Not signed in</p>
 
-      <p>
-        Creator • Seller • Viewer
-      </p>
+</div>
 
-      <button class="btn secondary" onclick="openAccount()">
-        Edit Account
-      </button>
+<button class="btn" onclick="showPage('account')">
+Manage Account
+</button>
 
-    </div>
-
-  </div>
+</div>
 
 </section>
-
 
 <!-- CREATOR -->
-<section id="page-creator" class="page">
 
-  <h1 class="page-title">Creator</h1>
+<section id="creator" class="page">
 
-  <div class="card">
+<div class="card">
 
-    <h2>⭐ Creator Program</h2>
+<h2>⭐ Creator Studio</h2>
 
-    <p>
-      Build your audience and grow through RockyX.
-    </p>
+<p style="margin:8px 0 15px;">
+Create Shorts, videos, sounds, templates and other content.
+</p>
 
-    <div class="category-grid">
+<div class="grid">
 
-      <button class="category-btn">Creator</button>
-      <button class="category-btn">Rising Creator</button>
-      <button class="category-btn">Premium Creator</button>
-      <button class="category-btn">RockyX Partner</button>
-      <button class="category-btn">Pro Partner</button>
+<button class="btn" onclick="showPage('editor')">✂️ Video Editor</button>
+<button class="btn" onclick="showPage('upload')">⬆️ Upload</button>
+<button class="btn" onclick="showPage('templates')">🎨 Templates</button>
+<button class="btn" onclick="showPage('analytics')">📊 Analytics</button>
+<button class="btn" onclick="showPage('earnings')">💰 Earnings</button>
+<button class="btn" onclick="showPage('verification')">✔️ Verification</button>
 
-    </div>
+</div>
 
-    <h3>Creator Downloads</h3>
-
-    <label>
-      <input type="checkbox" id="allowDownloads" checked>
-      Allow viewers to download my videos
-    </label>
-
-  </div>
+</div>
 
 </section>
-
 
 <!-- TEMPLATES -->
-<section id="page-templates" class="page">
 
-  <h1 class="page-title">Templates</h1>
+<section id="templates" class="page">
 
-  <div class="card">
+<div class="card">
 
-    <h3>🎨 Creator Templates</h3>
+<h2>🎨 Templates</h2>
 
-    <p class="muted">
-      Templates can later become premium based on performance,
-      originality, quality, copyright and community requirements.
-    </p>
+<div class="grid">
 
-    <div class="category-grid">
-      <button class="category-btn">🎬 Video Template</button>
-      <button class="category-btn">📱 Short Template</button>
-      <button class="category-btn">🎵 Music Template</button>
-      <button class="category-btn">📢 Promotion Template</button>
-    </div>
+<div class="card">
+<h3>Trending Short</h3>
+<p style="margin:8px 0;">Fast social video template.</p>
+<button class="btn" onclick="useTemplate('Trending Short')">Use</button>
+</div>
 
-  </div>
+<div class="card">
+<h3>Product Promo</h3>
+<p style="margin:8px 0;">Promote your product.</p>
+<button class="btn" onclick="useTemplate('Product Promo')">Use</button>
+</div>
+
+<div class="card">
+<h3>Music Video</h3>
+<p style="margin:8px 0;">Create a music video.</p>
+<button class="btn" onclick="useTemplate('Music Video')">Use</button>
+</div>
+
+</div>
+
+</div>
 
 </section>
-
 
 <!-- EDITOR -->
-<section id="page-editor" class="page">
 
-  <h1 class="page-title">Creator Studio</h1>
+<section id="editor" class="page">
 
-  <div class="card">
+<div class="card">
 
-    <h3>✂️ Video Editor</h3>
+<h2>✂️ Video Editor</h2>
 
-    <div class="form-group">
-      <label>Choose local video</label>
-      <input
-        type="file"
-        id="editorVideoInput"
-        accept="video/*"
-        onchange="loadEditorVideo()"
-      >
-    </div>
+<input
+id="editorVideoInput"
+type="file"
+accept="video/*"
+class="input"
+onchange="loadEditorVideo(event)"
+>
 
-    <div id="editorPreview"></div>
+<video
+id="editorPreview"
+controls
+style="width:100%;max-height:450px;background:#000;border-radius:12px;"
+></video>
 
-    <div class="category-grid">
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;">
 
-      <button class="category-btn" onclick="editorAction('text')">
-        🔤 Add Text
-      </button>
+<button class="btn" onclick="addEditorText()">Add Text</button>
+<button class="btn" onclick="addEditorSound()">Add Sound</button>
+<button class="btn secondary" onclick="trimVideo()">Trim</button>
+<button class="btn secondary" onclick="saveEditorDraft()">Save Draft</button>
+<button class="btn success" onclick="publishEditedVideo(false)">Publish Video</button>
+<button class="btn" onclick="publishEditedVideo(true)">Publish Short</button>
 
-      <button class="category-btn" onclick="editorAction('sound')">
-        🎵 Add Sound
-      </button>
+</div>
 
-      <button class="category-btn" onclick="editorAction('trim')">
-        ✂️ Trim
-      </button>
-
-      <button class="category-btn" onclick="editorAction('filter')">
-        ✨ Filter
-      </button>
-
-      <button class="category-btn" onclick="editorAction('speed')">
-        ⚡ Speed
-      </button>
-
-      <button class="category-btn" onclick="editorAction('save')">
-        💾 Save Draft
-      </button>
-
-    </div>
-
-    <button class="btn" onclick="publishEditedVideo()">
-      Publish Video
-    </button>
-
-  </div>
+</div>
 
 </section>
-
 
 <!-- UPLOAD -->
-<section id="page-upload" class="page">
 
-  <h1 class="page-title">Upload</h1>
+<section id="upload" class="page">
 
-  <div class="card">
+<div class="card">
 
-    <h3>Upload Content</h3>
+<h2>⬆️ Upload</h2>
 
-    <div class="form-group">
-      <label>Content type</label>
+<input
+id="uploadVideo"
+type="file"
+accept="video/*"
+class="input"
+>
 
-      <select id="uploadType">
-        <option>Video</option>
-        <option>Short</option>
-        <option>Song</option>
-        <option>Album</option>
-        <option>Product</option>
-      </select>
-    </div>
+<input
+id="uploadTitle"
+class="input"
+placeholder="Video title"
+>
 
-    <div class="form-group">
-      <label>Select file</label>
-      <input type="file" id="uploadFile">
-    </div>
+<label>
+<input id="allowDownloads" type="checkbox" checked>
+ Allow viewers to download this video
+</label>
 
-    <button class="btn" onclick="demoUpload()">
-      Upload
-    </button>
+<br><br>
 
-  </div>
+<button class="btn" onclick="uploadDemoVideo(false)">
+Publish Video
+</button>
+
+<button class="btn" onclick="uploadDemoVideo(true)">
+Publish Short
+</button>
+
+</div>
 
 </section>
-
 
 <!-- ANALYTICS -->
-<section id="page-analytics" class="page">
 
-  <h1 class="page-title">Analytics</h1>
+<section id="analytics" class="page">
 
-  <div class="form-grid">
+<div class="card">
 
-    <div class="card">
-      <h3>Views</h3>
-      <h1>12,450</h1>
-    </div>
+<h2>📊 Analytics</h2>
 
-    <div class="card">
-      <h3>Followers</h3>
-      <h1>4,820</h1>
-    </div>
+<div class="grid">
 
-    <div class="card">
-      <h3>Likes</h3>
-      <h1>8,250</h1>
-    </div>
+<div class="card">
+<h3>Views</h3>
+<p style="font-size:30px;color:#0866ff;">1,250</p>
+</div>
 
-    <div class="card">
-      <h3>Shares</h3>
-      <h1>1,240</h1>
-    </div>
+<div class="card">
+<h3>Followers</h3>
+<p style="font-size:30px;color:#0866ff;">240</p>
+</div>
 
-  </div>
+<div class="card">
+<h3>Likes</h3>
+<p style="font-size:30px;color:#0866ff;">5,480</p>
+</div>
+
+<div class="card">
+<h3>Shares</h3>
+<p style="font-size:30px;color:#0866ff;">680</p>
+</div>
+
+</div>
+
+</div>
 
 </section>
-
 
 <!-- EARNINGS -->
-<section id="page-earnings" class="page">
 
-  <h1 class="page-title">Earnings</h1>
+<section id="earnings" class="page">
 
-  <div class="card">
+<div class="card">
 
-    <h2>💰 Creator Earnings</h2>
+<h2>💰 Earnings</h2>
 
-    <p class="muted">
-      Real earnings will appear after payment and advertising
-      systems are connected to the backend.
-    </p>
+<p style="margin:10px 0;">
+Your earnings dashboard will show eligible creator, marketplace and advertising revenue.
+</p>
 
-    <h1>GHS 0.00</h1>
+<div class="card">
 
-    <button class="btn" onclick="alert('Payout verification will be connected later.')">
-      Payout Settings
-    </button>
+<h3>Available Balance</h3>
 
-  </div>
+<p style="font-size:30px;color:#0866ff;margin-top:8px;">
+GHS 0.00
+</p>
+
+</div>
+
+<p>
+Payout verification may require additional identity and payment information.
+</p>
+
+</div>
 
 </section>
-
 
 <!-- VERIFICATION -->
-<section id="page-verification" class="page">
 
-  <h1 class="page-title">Verification</h1>
+<section id="verification" class="page">
 
-  <div class="card">
+<div class="card">
 
-    <h2>☑️ Creator Verification</h2>
+<h2>✔️ Creator Verification</h2>
 
-    <p>
-      Automatic eligibility can be based on creator performance.
-    </p>
+<p style="margin:10px 0;">
+Creator verification can become available when an account reaches the configured performance and trust requirements.
+</p>
 
-    <ul>
-      <li>10,000 followers target</li>
-      <li>Active account</li>
-      <li>Authentic account</li>
-      <li>Complete profile</li>
-      <li>Secure account</li>
-      <li>Community Guidelines compliance</li>
-    </ul>
+<div class="card">
 
-    <button class="btn" onclick="checkVerification()">
-      Check Verification Access
-    </button>
+<h3>Example eligibility</h3>
 
-  </div>
+<ul style="margin:10px 0 10px 20px;line-height:1.8;">
+<li>Strong creator performance</li>
+<li>Authentic account</li>
+<li>Complete and secure account</li>
+<li>Community Guidelines compliance</li>
+<li>Configured follower threshold</li>
+</ul>
 
-</section>
+</div>
 
+<button class="btn" onclick="checkVerification()">
+Check Access
+</button>
 
-<!-- ORDERS -->
-<section id="page-orders" class="page">
-
-  <h1 class="page-title">Orders</h1>
-
-  <div class="card">
-
-    <div id="ordersList"></div>
-
-  </div>
+</div>
 
 </section>
-
 
 <!-- SECURITY -->
-<section id="page-security" class="page">
 
-  <h1 class="page-title">Security</h1>
+<section id="security" class="page">
 
-  <div class="card">
+<div class="card">
 
-    <h3>🔐 Account Security</h3>
+<h2>🔐 Security</h2>
 
-    <label>
-      <input type="checkbox" checked>
-      Two-factor authentication
-    </label>
+<div class="card">
+<h3>Account protection</h3>
+<p style="margin-top:7px;">
+Use strong passwords and keep your recovery information secure.
+</p>
+</div>
 
-    <br><br>
+<div class="card">
+<h3>Login alerts</h3>
+<label>
+<input type="checkbox" checked>
+ Notify me about new sign-ins
+</label>
+</div>
 
-    <label>
-      <input type="checkbox" checked>
-      Login alerts
-    </label>
+<div class="card">
+<h3>Privacy</h3>
+<button class="btn secondary" onclick="alert('Privacy controls will be connected to the backend later.')">
+Manage Privacy
+</button>
+</div>
 
-    <br><br>
-
-    <label>
-      <input type="checkbox" checked>
-      Suspicious activity protection
-    </label>
-
-  </div>
+</div>
 
 </section>
-
 
 <!-- SETTINGS -->
-<section id="page-settings" class="page">
 
-  <h1 class="page-title">Settings</h1>
+<section id="settings" class="page">
 
-  <div class="card">
+<div class="card">
 
-    <h3>Privacy</h3>
+<h2>⚙️ Settings</h2>
 
-    <label>
-      <input type="checkbox" checked>
-      Allow people to find me
-    </label>
+<label>
+<input type="checkbox" checked>
+ Allow video downloads
+</label>
 
-    <br><br>
+<br><br>
 
-    <label>
-      <input type="checkbox" checked>
-      Allow messages
-    </label>
+<label>
+<input type="checkbox" checked>
+ Receive notifications
+</label>
 
-    <br><br>
+<br><br>
 
-    <label>
-      <input type="checkbox" checked>
-      Personalized recommendations
-    </label>
+<label>
+<input type="checkbox">
+ Reduce promotional messages
+</label>
 
-  </div>
+<br><br>
 
-  <div class="card">
+<button class="btn" onclick="saveSettings()">
+Save Settings
+</button>
 
-    <h3>Legal</h3>
-
-    <p>Privacy Policy</p>
-    <p>Terms of Service</p>
-    <p>Cookie Policy</p>
-    <p>Community Guidelines</p>
-
-  </div>
+</div>
 
 </section>
-
 
 <!-- ACCOUNT -->
-<section id="page-account" class="page">
 
-  <h1 class="page-title">Account</h1>
+<section id="account" class="page">
 
-  <div class="card">
+<div class="card">
 
-    <div id="accountStatus"></div>
+<h2>🧑 Account</h2>
 
-    <button class="btn" onclick="openSignin()">
-      Sign In
-    </button>
+<input id="accountName" class="input" placeholder="Full name">
 
-    <button class="btn secondary" onclick="openSignup()">
-      Create Account
-    </button>
+<input id="accountEmail" class="input" placeholder="Email">
 
-    <button class="btn danger" onclick="signOutDemo()">
-      Sign Out
-    </button>
+<input id="accountPhone" class="input" placeholder="Phone number">
 
-  </div>
+<select id="accountCountry" class="input">
+
+<option value="">Select country</option>
+<option>Ghana</option>
+<option>Nigeria</option>
+<option>United Kingdom</option>
+<option>United States</option>
+<option>Canada</option>
+<option>Other</option>
+
+</select>
+
+<select id="accountType" class="input">
+
+<option>Personal User</option>
+<option>Seller</option>
+<option>Business</option>
+<option>Restaurant</option>
+<option>Hotel</option>
+<option>Service Provider</option>
+<option>Transport Provider</option>
+<option>Creator</option>
+<option>Artist</option>
+
+</select>
+
+<button class="btn" onclick="saveAccount()">
+Save Account
+</button>
+
+<button class="btn secondary" onclick="demoSignIn()">
+Demo Sign In
+</button>
+
+<button class="btn danger" onclick="demoSignOut()">
+Sign Out
+</button>
+
+</div>
 
 </section>
-
 
 <!-- ADMIN -->
-<section id="page-admin" class="page">
 
-  <h1 class="page-title">Private Admin</h1>
+<section id="admin" class="page">
 
-  <div class="card">
+<div class="card">
 
-    <h3>🔒 Admin Access</h3>
+<h2>🔒 Private Admin</h2>
 
-    <p class="muted">
-      Admin controls are private and should not be publicly accessible
-      in the production backend.
-    </p>
+<p style="margin:8px 0;">
+This area is intended for platform administration and must be protected by the backend in production.
+</p>
 
-    <input
-      id="adminCode"
-      type="password"
-      placeholder="Admin code"
-    >
+<input
+id="adminCode"
+class="input"
+placeholder="Admin access code"
+>
 
-    <br><br>
+<button class="btn" onclick="openAdmin()">
+Access Admin
+</button>
 
-    <button class="btn" onclick="openAdmin()">
-      Open Admin
-    </button>
+<div id="adminPanel" style="display:none;margin-top:15px;">
 
-  </div>
+<h3>Admin Dashboard</h3>
 
-  <div id="adminPanel"></div>
+<div class="grid" style="margin-top:12px;">
+
+<div class="card">
+<h3>Users</h3>
+<p>Manage users and accounts.</p>
+</div>
+
+<div class="card">
+<h3>Content</h3>
+<p>Review reported content.</p>
+</div>
+
+<div class="card">
+<h3>Ads</h3>
+<p>Manage advertising settings.</p>
+</div>
+
+<div class="card">
+<h3>Marketplace</h3>
+<p>Manage sellers and orders.</p>
+</div>
+
+<div class="card">
+<h3>Creators</h3>
+<p>Manage creator programs.</p>
+</div>
+
+<div class="card">
+<h3>Security</h3>
+<p>Manage security controls.</p>
+</div>
+
+</div>
+
+</div>
+
+</div>
 
 </section>
-
 
 </main>
 </div>
 
+<!-- SHARE MODAL -->
 
-<!-- AUTH MODAL -->
-<div id="authModal" class="modal hidden">
+<div id="shareModal" class="modal">
 
-  <div class="modal-box">
+<div class="modalBox">
 
-    <div class="modal-head">
-      <strong id="authTitle">Create Account</strong>
-      <button class="close-btn" onclick="closeModals()">×</button>
-    </div>
+<button class="close" onclick="closeModal('shareModal')">×</button>
 
-    <div class="modal-body">
+<h2>Share</h2>
 
-      <div id="signupForm">
+<p id="shareText" style="margin:10px 0 15px;">
+Share this on another app or with another person.
+</p>
 
-        <div class="form-group">
-          <label>Full name</label>
-          <input id="signupName" type="text">
-        </div>
+<div class="shareGrid">
 
-        <div class="form-group">
-          <label>Email address</label>
-          <input id="signupEmail" type="email">
-        </div>
-
-        <div class="form-group">
-          <label>Phone</label>
-          <input id="signupPhone" type="tel">
-        </div>
-
-        <div class="form-group">
-          <label>Country</label>
-
-          <select id="signupCountry">
-            <option value="">Select country</option>
-            <option>Ghana</option>
-            <option>Nigeria</option>
-            <option>United States</option>
-            <option>United Kingdom</option>
-            <option>Canada</option>
-            <option>South Africa</option>
-            <option>Kenya</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label>Account type</label>
-
-          <select id="signupType">
-            <option>Personal User</option>
-            <option>Seller</option>
-            <option>Business</option>
-            <option>Restaurant</option>
-            <option>Hotel</option>
-            <option>Service Provider</option>
-            <option>Transport Provider</option>
-            <option>Artist</option>
-            <option>Creator</option>
-          </select>
-        </div>
-
-        <button class="btn" onclick="createAccount()">
-          Create Account
-        </button>
-
-        <button class="btn secondary" onclick="switchToSignin()">
-          Already have an account?
-        </button>
-
-      </div>
-
-
-      <div id="signinForm" class="hidden">
-
-        <div class="form-group">
-          <label>Email address</label>
-          <input id="signinEmail" type="email">
-        </div>
-
-        <div class="form-group">
-          <label>Password</label>
-          <input id="signinPassword" type="password">
-        </div>
-
-        <button class="btn" onclick="signIn()">
-          Sign In
-        </button>
-
-        <button class="btn secondary" onclick="switchToSignup()">
-          Create an account
-        </button>
-
-      </div>
-
-    </div>
-
-  </div>
+<button onclick="shareTo('WhatsApp')">WhatsApp</button>
+<button onclick="shareTo('Messenger')">Messenger</button>
+<button onclick="shareTo('Facebook')">Facebook</button>
+<button onclick="shareTo('Messages')">Messages</button>
+<button onclick="shareTo('Email')">Email</button>
+<button onclick="copyShareLink()">Copy Link</button>
 
 </div>
 
+<br>
+
+<button class="btn" style="width:100%;" onclick="nativeShare()">
+📤 Use Device Share
+</button>
+
+</div>
+
+</div>
 
 <!-- AD MODAL -->
-<div id="adModal" class="modal hidden">
 
-  <div class="modal-box">
+<div id="adModal" class="modal">
 
-    <div class="modal-head">
+<div class="modalBox">
 
-      <strong id="adTitle">
-        Advertisement
-      </strong>
+<h2 id="adTitle">Advertisement</h2>
 
-      <button
-        class="close-btn"
-        id="adCloseBtn"
-        onclick="closeAdModal()"
-        disabled
-      >
-        ×
-      </button>
+<div class="adBox">
 
-    </div>
+<p id="adMessage">
+Please wait while the advertisement finishes.
+</p>
 
-    <div class="modal-body">
+<div id="adCountdown" class="countdown">
+5
+</div>
 
-      <div class="ad-box">
-
-        <span class="ad-label">ADVERTISEMENT</span>
-
-        <div class="ad-countdown" id="adCountdown">
-          5
-        </div>
-
-        <strong id="adMessage">
-          Please watch this advertisement.
-        </strong>
-
-        <p style="opacity:.75">
-          Your content will continue after the advertisement.
-        </p>
-
-      </div>
-
-      <br>
-
-      <button
-        id="adContinueBtn"
-        class="btn"
-        style="width:100%"
-        disabled
-        onclick="finishAdGate()"
-      >
-        Please wait...
-      </button>
-
-    </div>
-
-  </div>
+<p>
+This is a RockyX frontend demonstration.
+</p>
 
 </div>
 
+<button
+id="adContinue"
+class="btn"
+style="width:100%;display:none;"
+onclick="finishAdGate()"
+>
+Continue
+</button>
+
+</div>
+
+</div>
+
+<!-- AI HELP -->
+
+<button
+class="aiFloating"
+onclick="toggleAI()"
+title="AI Help"
+>
+🤖
+</button>
+
+<div id="aiPanel" class="aiPanel">
+
+<div class="aiHeader">
+
+<div>
+<strong>🤖 AI Help</strong>
+<div style="font-size:11px;opacity:.9;">
+RockyX Assistant
+</div>
+</div>
+
+<button
+style="border:0;background:transparent;color:white;font-size:22px;"
+onclick="toggleAI()"
+>
+×
+</button>
+
+</div>
+
+<div id="aiSuggestions" class="aiSuggestions">
+
+<button onclick="askAI('How do I upload a Short?')">
+Upload Short
+</button>
+
+<button onclick="askAI('How do I find nearby businesses?')">
+Nearby
+</button>
+
+<button onclick="askAI('How do I buy something?')">
+Marketplace
+</button>
+
+<button onclick="askAI('How do I download a video?')">
+Downloads
+</button>
+
+<button onclick="askAI('How do I verify my creator account?')">
+Verification
+</button>
+
+</div>
+
+<div id="aiMessages" class="aiMessages">
+
+<div class="aiMsg bot">
+
+Hi! 👋 I'm RockyX AI Help.
+
+I can help you understand how to use RockyX, find features, troubleshoot problems and guide you through the app.
+
+</div>
+
+</div>
+
+<div class="aiInputArea">
+
+<input
+id="aiInput"
+placeholder="Ask RockyX AI Help..."
+onkeydown="if(event.key==='Enter') sendAI()"
+>
+
+<button onclick="sendAI()">➤</button>
+
+</div>
+
+</div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <script>
 
-/* =========================================================
-   ROCKYX FRONTEND
-   STAGE 1 - 10
-   PLUS AD GATE SYSTEM
-   ========================================================= */
-
-
 /* =========================
-   LOCAL STORAGE
+   BASIC STATE
 ========================= */
 
-const STORAGE = {
-  user:"rockyx_user",
-  notifications:"rockyx_notifications",
-  cart:"rockyx_cart",
-  orders:"rockyx_orders",
-  saved:"rockyx_saved",
-  savedSounds:"rockyx_saved_sounds",
-  liked:"rockyx_liked",
-  comments:"rockyx_comments",
-  drafts:"rockyx_drafts",
-  videos:"rockyx_videos"
+const STORAGE_KEY = "rockyx_frontend_demo";
+
+let state = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+
+state.notifications = state.notifications || [];
+state.saved = state.saved || [];
+state.savedSounds = state.savedSounds || [];
+state.likes = state.likes || {};
+state.comments = state.comments || {};
+state.cart = state.cart || [];
+state.videos = state.videos || [];
+state.account = state.account || {};
+state.settings = state.settings || {
+  allowDownloads:true,
+  notifications:true
 };
 
+localStorage.setItem(STORAGE_KEY,JSON.stringify(state));
 
-function getStorage(key, fallback){
-  try{
-    const value = localStorage.getItem(key);
-    return value ? JSON.parse(value) : fallback;
-  }catch(e){
-    return fallback;
-  }
+function saveState(){
+  localStorage.setItem(STORAGE_KEY,JSON.stringify(state));
+  updateNotificationCount();
 }
-
-
-function setStorage(key,value){
-  localStorage.setItem(key,JSON.stringify(value));
-}
-
 
 /* =========================
-   USER
-========================= */
-
-let currentUser = getStorage(STORAGE.user,null);
-
-
-function updateAccountUI(){
-
-  const status = document.getElementById("accountStatus");
-
-  if(!status) return;
-
-  if(currentUser){
-
-    status.innerHTML = `
-      <h3>Signed in</h3>
-      <p>
-        <strong>${escapeHtml(currentUser.name)}</strong>
-      </p>
-      <p class="muted">
-        ${escapeHtml(currentUser.email)}
-      </p>
-      <p>
-        Country: ${escapeHtml(currentUser.country || "Not selected")}
-      </p>
-      <p>
-        Account type: ${escapeHtml(currentUser.type || "Personal User")}
-      </p>
-    `;
-
-    document.getElementById("profileName").textContent =
-      currentUser.name || "RockyX User";
-
-    document.getElementById("profileEmail").textContent =
-      currentUser.email || "";
-
-  }else{
-
-    status.innerHTML = `
-      <h3>Not signed in</h3>
-      <p class="muted">
-        Create an account or sign in to use your account.
-      </p>
-    `;
-
-  }
-
-}
-
-
-function openAccount(){
-  showPage("account");
-}
-
-
-function openSignup(){
-
-  document.getElementById("authModal").classList.remove("hidden");
-
-  document.getElementById("authTitle").textContent =
-    "Create Account";
-
-  document.getElementById("signupForm").classList.remove("hidden");
-
-  document.getElementById("signinForm").classList.add("hidden");
-
-}
-
-
-function openSignin(){
-
-  document.getElementById("authModal").classList.remove("hidden");
-
-  document.getElementById("authTitle").textContent =
-    "Sign In";
-
-  document.getElementById("signupForm").classList.add("hidden");
-
-  document.getElementById("signinForm").classList.remove("hidden");
-
-}
-
-
-function switchToSignin(){
-  openSignin();
-}
-
-
-function switchToSignup(){
-  openSignup();
-}
-
-
-function closeModals(){
-  document.getElementById("authModal").classList.add("hidden");
-}
-
-
-function createAccount(){
-
-  const name =
-    document.getElementById("signupName").value.trim();
-
-  const email =
-    document.getElementById("signupEmail").value.trim();
-
-  const phone =
-    document.getElementById("signupPhone").value.trim();
-
-  const country =
-    document.getElementById("signupCountry").value;
-
-  const type =
-    document.getElementById("signupType").value;
-
-  if(!name || !email || !country){
-
-    alert("Please enter your name, email and country.");
-
-    return;
-  }
-
-  currentUser = {
-    name,
-    email,
-    phone,
-    country,
-    type,
-    createdAt:new Date().toISOString()
-  };
-
-  setStorage(STORAGE.user,currentUser);
-
-  addNotification(
-    "👋",
-    "Welcome to RockyX, " + name + "."
-  );
-
-  closeModals();
-
-  updateAccountUI();
-
-  alert("Account created successfully.");
-
-}
-
-
-function signIn(){
-
-  const email =
-    document.getElementById("signinEmail").value.trim();
-
-  if(!email){
-
-    alert("Please enter your email.");
-
-    return;
-  }
-
-  currentUser = {
-    name:"RockyX User",
-    email,
-    country:"Ghana",
-    type:"Personal User"
-  };
-
-  setStorage(STORAGE.user,currentUser);
-
-  addNotification(
-    "🔐",
-    "You signed in successfully."
-  );
-
-  closeModals();
-
-  updateAccountUI();
-
-  alert("Signed in successfully.");
-
-}
-
-
-function signOutDemo(){
-
-  currentUser = null;
-
-  localStorage.removeItem(STORAGE.user);
-
-  updateAccountUI();
-
-  alert("You have been signed out.");
-
-}
-
-
-/* =========================
-   PAGE SYSTEM
+   PAGE NAVIGATION
 ========================= */
 
 function showPage(page){
@@ -2180,63 +1755,21 @@ function showPage(page){
     p.classList.remove("active");
   });
 
-  const target =
-    document.getElementById("page-" + page);
+  const target=document.getElementById(page);
 
   if(target){
     target.classList.add("active");
   }
 
-  document.querySelectorAll(".nav-btn").forEach(btn=>{
-    btn.classList.toggle(
-      "active",
-      btn.dataset.page === page
-    );
+  document.querySelectorAll(".sideBtn").forEach(btn=>{
+    btn.classList.remove("active");
   });
 
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
+  const matching=[...document.querySelectorAll(".sideBtn")]
+    .find(btn=>btn.getAttribute("onclick")?.includes("'" + page + "'"));
 
-  if(page==="home"){
-    renderHomeFeed();
-  }
-
-  if(page==="shorts"){
-    renderVideos("short");
-  }
-
-  if(page==="videos"){
-    renderVideos("long");
-  }
-
-  if(page==="music"){
-    renderMusic();
-  }
-
-  if(page==="sounds"){
-    renderSounds();
-  }
-
-  if(page==="marketplace"){
-    renderProducts();
-  }
-
-  if(page==="cart"){
-    renderCart();
-  }
-
-  if(page==="notifications"){
-    renderNotifications();
-  }
-
-  if(page==="saved"){
-    renderSaved();
-  }
-
-  if(page==="orders"){
-    renderOrders();
+  if(matching){
+    matching.classList.add("active");
   }
 
   if(page==="nearby"){
@@ -2249,6 +1782,13 @@ function showPage(page){
   if(page==="transport"){
     setTimeout(()=>{
       initTransportMap();
+      renderTransport();
+    },100);
+  }
+
+  if(page==="businesses"){
+    setTimeout(()=>{
+      renderBusinesses();
     },100);
   }
 
@@ -2258,1206 +1798,1004 @@ function showPage(page){
     },100);
   }
 
-}
-
-
-/* =========================
-   SEARCH
-========================= */
-
-function performSearch(){
-
-  const query =
-    document.getElementById("globalSearch")
-    .value
-    .trim()
-    .toLowerCase();
-
-  if(!query){
-    return;
+  if(page==="notifications"){
+    renderNotifications();
   }
 
-  showPage("explore");
+  if(page==="saved"){
+    renderSaved();
+  }
 
-  const results =
-    document.getElementById("searchResults");
+  window.scrollTo({top:0,behavior:"smooth"});
+}
 
-  results.innerHTML = `
-    <div class="card">
-      <h3>Search results</h3>
-      <p>
-        Searching RockyX for:
-        <strong>${escapeHtml(query)}</strong>
-      </p>
-    </div>
-  `;
+/* =========================
+   NOTIFICATIONS
+========================= */
 
-  const matches = [];
+function addNotification(icon,text){
 
-  products.forEach(p=>{
-    if(
-      p.name.toLowerCase().includes(query) ||
-      p.description.toLowerCase().includes(query)
-    ){
-      matches.push(`
-        <div class="location-card">
-          <strong>🛒 ${escapeHtml(p.name)}</strong>
-          <p>${escapeHtml(p.description)}</p>
-          <button class="btn small"
-            onclick="showPage('marketplace')">
-            View Product
-          </button>
-        </div>
-      `);
-    }
+  state.notifications.unshift({
+    id:Date.now(),
+    icon,
+    text,
+    createdAt:new Date().toLocaleString()
   });
 
-  nearbyLocations.forEach(loc=>{
-    if(
-      loc.name.toLowerCase().includes(query) ||
-      loc.category.toLowerCase().includes(query) ||
-      loc.address.toLowerCase().includes(query)
-    ){
-      matches.push(`
-        <div class="location-card">
-          <strong>📍 ${escapeHtml(loc.name)}</strong>
-          <p>${escapeHtml(loc.address)}</p>
-          <button class="btn small"
-            onclick="focusNearbyLocation('${loc.id}')">
-            View Map
-          </button>
-        </div>
-      `);
-    }
-  });
+  state.notifications=state.notifications.slice(0,100);
 
-  if(!matches.length){
+  saveState();
 
-    results.innerHTML += `
-      <div class="card">
-        No demo results found.
+  renderNotifications();
+}
+
+function renderNotifications(){
+
+  const box=document.getElementById("notificationList");
+
+  if(!box)return;
+
+  if(!state.notifications.length){
+
+    box.innerHTML=`
+      <div class="empty">
+        You have no notifications.
       </div>
     `;
 
-  }else{
-
-    results.innerHTML += matches.join("");
-
-  }
-
-}
-
-
-/* =========================
-   FEED
-========================= */
-
-const feedPosts = [
-
-  {
-    id:"post1",
-    user:"Rocky Fashion",
-    text:"Discover new products and businesses on RockyX.",
-    likes:12,
-    image:""
-  },
-
-  {
-    id:"post2",
-    user:"Rocky Music",
-    text:"New music and sounds are coming to RockyX.",
-    likes:25,
-    image:""
-  },
-
-  {
-    id:"post3",
-    user:"Rocky Transport",
-    text:"Find transport locations near you.",
-    likes:18,
-    image:""
-  }
-
-];
-
-
-function renderHomeFeed(){
-
-  const container =
-    document.getElementById("homeFeed");
-
-  container.innerHTML =
-    feedPosts.map(post=>{
-
-      const liked =
-        getStorage(STORAGE.liked,[])
-        .includes(post.id);
-
-      return `
-        <article class="post">
-
-          <div class="post-head">
-
-            <div class="avatar">
-              ${escapeHtml(post.user.charAt(0))}
-            </div>
-
-            <div>
-              <strong>${escapeHtml(post.user)}</strong>
-              <div class="muted">Just now</div>
-            </div>
-
-          </div>
-
-          <div class="post-body">
-
-            <p>${escapeHtml(post.text)}</p>
-
-          </div>
-
-          <div class="post-actions">
-
-            <button
-              class="action-btn ${liked ? "liked":""}"
-              onclick="togglePostLike('${post.id}')"
-            >
-              👍 Like
-            </button>
-
-            <button
-              class="action-btn"
-              onclick="commentPost('${post.id}')"
-            >
-              💬 Comment
-            </button>
-
-            <button
-              class="action-btn"
-              onclick="sharePost('${post.id}')"
-            >
-              ↗️ Share
-            </button>
-
-            <button
-              class="action-btn"
-              onclick="saveContent('post','${post.id}')"
-            >
-              🔖 Save
-            </button>
-
-          </div>
-
-          <div id="comments-${post.id}" class="comments"></div>
-
-        </article>
-      `;
-
-    }).join("");
-
-}
-
-
-function togglePostLike(id){
-
-  const liked =
-    getStorage(STORAGE.liked,[]);
-
-  const index =
-    liked.indexOf(id);
-
-  if(index>=0){
-
-    liked.splice(index,1);
-
-  }else{
-
-    liked.push(id);
-
-    addNotification(
-      "👍",
-      "You liked a post."
-    );
-
-  }
-
-  setStorage(STORAGE.liked,liked);
-
-  renderHomeFeed();
-
-}
-
-
-function commentPost(id){
-
-  const text =
-    prompt("Write your comment:");
-
-  if(!text) return;
-
-  const comments =
-    getStorage(STORAGE.comments,{});
-
-  if(!comments[id]){
-    comments[id]=[];
-  }
-
-  comments[id].push({
-    text,
-    user:currentUser ?
-      currentUser.name :
-      "RockyX User"
-  });
-
-  setStorage(STORAGE.comments,comments);
-
-  renderHomeFeed();
-
-}
-
-
-function renderComments(id){
-
-  const comments =
-    getStorage(STORAGE.comments,{});
-
-  return (comments[id] || [])
-    .map(c=>`
-      <div class="comment">
-        <strong>${escapeHtml(c.user)}</strong>
-        <div>${escapeHtml(c.text)}</div>
-      </div>
-    `)
-    .join("");
-
-}
-
-
-/* =========================
-   VIDEOS
-========================= */
-
-const defaultVideo = {
-  id:"short1",
-  title:"RockyX Demo Video",
-  creator:"RockyX Creator",
-  type:"short",
-  src:"https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
-};
-
-
-let videos =
-  getStorage(STORAGE.videos,[defaultVideo]);
-
-
-function renderVideos(type){
-
-  const target =
-    type==="short"
-      ? document.getElementById("shortsList")
-      : document.getElementById("videoResults");
-
-  const list =
-    videos.filter(v=>v.type===type);
-
-  target.innerHTML =
-    list.map(v=>videoCard(v)).join("");
-
-}
-
-
-function videoCard(v){
-
-  const liked =
-    getStorage(STORAGE.liked,[])
-    .includes(v.id);
-
-  const saved =
-    getStorage(STORAGE.saved,[])
-    .some(x=>x.id===v.id);
-
-  return `
-    <div class="video-card">
-
-      <video
-        controls
-        playsinline
-        preload="metadata"
-        src="${escapeAttr(v.src)}"
-      ></video>
-
-      <div class="video-info">
-
-        <h3>${escapeHtml(v.title)}</h3>
-
-        <p class="muted">
-          ${escapeHtml(v.creator)}
-        </p>
-
-      </div>
-
-      <div class="video-actions">
-
-        <button
-          class="action-btn ${liked?"liked":""}"
-          onclick="toggleVideoLike('${v.id}')"
-        >
-          👍 Like
-        </button>
-
-        <button
-          class="action-btn"
-          onclick="commentVideo('${v.id}')"
-        >
-          💬 Comment
-        </button>
-
-        <button
-          class="action-btn"
-          onclick="shareVideo('${v.id}')"
-        >
-          ↗️ Share
-        </button>
-
-        <button
-          class="action-btn"
-          onclick="saveContent('video','${v.id}')"
-        >
-          ${saved ? "✅ Saved":"🔖 Save"}
-        </button>
-
-        <button
-          class="action-btn"
-          onclick="downloadVideo('${v.id}')"
-        >
-          ⬇️ Download
-        </button>
-
-      </div>
-
-      <div id="video-comments-${v.id}" class="comments"></div>
-
-    </div>
-  `;
-
-}
-
-
-function findVideo(id){
-  return videos.find(v=>v.id===id);
-}
-
-
-function toggleVideoLike(id){
-
-  const liked =
-    getStorage(STORAGE.liked,[]);
-
-  const index =
-    liked.indexOf(id);
-
-  if(index>=0){
-    liked.splice(index,1);
-  }else{
-    liked.push(id);
-    addNotification("👍","You liked a video.");
-  }
-
-  setStorage(STORAGE.liked,liked);
-
-  renderVideos("short");
-  renderVideos("long");
-
-}
-
-
-function commentVideo(id){
-
-  const text =
-    prompt("Write your comment:");
-
-  if(!text) return;
-
-  const comments =
-    getStorage(STORAGE.comments,{});
-
-  if(!comments[id]){
-    comments[id]=[];
-  }
-
-  comments[id].push({
-    user:currentUser ?
-      currentUser.name :
-      "RockyX User",
-    text
-  });
-
-  setStorage(STORAGE.comments,comments);
-
-  addNotification(
-    "💬",
-    "Your comment was added."
-  );
-
-  renderVideos("short");
-  renderVideos("long");
-
-}
-
-
-/* =========================
-   VIDEO DOWNLOAD
-========================= */
-
-function downloadVideo(id){
-
-  const video =
-    findVideo(id);
-
-  if(!video) return;
-
-  const allow =
-    document.getElementById("allowDownloads")?.checked !== false;
-
-  if(!allow){
-
-    alert(
-      "This creator has disabled downloads for this video."
-    );
-
     return;
   }
 
-  startAdGate(
-    "Video Download",
-    "Watch this advertisement to unlock the download.",
-    ()=>{
-      downloadFile(
-        video.src,
-        video.title.replace(/[^a-z0-9]/gi,"_")+".mp4"
-      );
+  box.innerHTML=state.notifications.map(n=>`
 
-      addNotification(
-        "⬇️",
-        "Your video download has started."
-      );
-    }
-  );
+    <div class="notification">
 
-}
+      <strong>${escapeHtml(n.icon)} ${escapeHtml(n.text)}</strong>
 
-
-/* =========================
-   MUSIC
-========================= */
-
-const music = [
-
-  {
-    id:"song1",
-    title:"Rocky Beat",
-    artist:"Rocky Artist",
-    album:"RockyX Sounds",
-    src:""
-  },
-
-  {
-    id:"song2",
-    title:"Ghana Vibes",
-    artist:"Rocky Music",
-    album:"Ghana Vibes",
-    src:""
-  },
-
-  {
-    id:"song3",
-    title:"Night Drive",
-    artist:"Rocky Creator",
-    album:"Night Drive",
-    src:""
-  }
-
-];
-
-
-function renderMusic(){
-
-  searchMusic();
-
-}
-
-
-function searchMusic(){
-
-  const query =
-    (
-      document.getElementById("musicSearch")?.value || ""
-    ).toLowerCase();
-
-  const results =
-    music.filter(song=>
-      song.title.toLowerCase().includes(query) ||
-      song.artist.toLowerCase().includes(query) ||
-      song.album.toLowerCase().includes(query)
-    );
-
-  document.getElementById("musicResults").innerHTML =
-    results.map(song=>`
-
-      <div class="music-card">
-
-        <div class="music-cover">🎵</div>
-
-        <div class="music-info">
-
-          <strong>${escapeHtml(song.title)}</strong>
-
-          <div class="muted">
-            ${escapeHtml(song.artist)}
-          </div>
-
-          <small>
-            ${escapeHtml(song.album)}
-          </small>
-
-        </div>
-
-        <div class="music-actions">
-
-          <button
-            class="btn small"
-            onclick="playSong('${song.id}')"
-          >
-            ▶️ Play
-          </button>
-
-          <button
-            class="btn small secondary"
-            onclick="downloadSong('${song.id}')"
-          >
-            ⬇️ Download
-          </button>
-
-        </div>
-
+      <div style="font-size:12px;color:#789;margin-top:4px;">
+        ${escapeHtml(n.createdAt)}
       </div>
 
-    `).join("");
+    </div>
 
+  `).join("");
 }
 
+function updateNotificationCount(){
 
-function playSong(id){
+  const count=document.getElementById("notificationCount");
 
-  const song =
-    music.find(x=>x.id===id);
-
-  if(!song) return;
-
-  startAdGate(
-    "Music Playback",
-    "Watch this advertisement before listening.",
-    ()=>{
-
-      if(song.src){
-
-        const audio =
-          new Audio(song.src);
-
-        audio.play().catch(()=>{});
-
-      }else{
-
-        alert(
-          "Demo song selected. Real audio playback will work after the music backend/storage is connected."
-        );
-
-      }
-
-      addNotification(
-        "🎵",
-        "Music playback started."
-      );
-
-    }
-  );
-
+  if(count){
+    count.textContent=state.notifications.length;
+  }
 }
 
+function clearNotifications(){
 
-function downloadSong(id){
+  state.notifications=[];
 
-  const song =
-    music.find(x=>x.id===id);
+  saveState();
 
-  if(!song) return;
-
-  startAdGate(
-    "Music Download",
-    "Watch this advertisement to unlock the song download.",
-    ()=>{
-
-      if(song.src){
-
-        downloadFile(
-          song.src,
-          song.title.replace(/[^a-z0-9]/gi,"_")+".mp3"
-        );
-
-      }else{
-
-        alert(
-          "Demo download unlocked. Real song files will download after music storage is connected."
-        );
-
-      }
-
-      addNotification(
-        "⬇️",
-        "Music download unlocked."
-      );
-
-    }
-  );
-
+  renderNotifications();
 }
-
 
 /* =========================
-   SOUNDS
+   PRODUCTS
 ========================= */
 
-const sounds = [
-
-  {
-    id:"sound1",
-    name:"Rocky Beat",
-    creator:"Rocky Artist"
-  },
-
-  {
-    id:"sound2",
-    name:"Ghana Vibes",
-    creator:"Rocky Music"
-  },
-
-  {
-    id:"sound3",
-    name:"Night Drive",
-    creator:"Rocky Creator"
-  }
-
-];
-
-
-function renderSounds(){
-
-  searchSounds();
-
-  renderSavedSounds();
-
-}
-
-
-function searchSounds(){
-
-  const query =
-    (
-      document.getElementById("soundSearch")?.value || ""
-    ).toLowerCase();
-
-  const list =
-    sounds.filter(s=>
-      s.name.toLowerCase().includes(query) ||
-      s.creator.toLowerCase().includes(query)
-    );
-
-  document.getElementById("soundsList").innerHTML =
-    list.map(s=>`
-
-      <div class="music-card">
-
-        <div class="music-cover">🔊</div>
-
-        <div class="music-info">
-
-          <strong>${escapeHtml(s.name)}</strong>
-
-          <div class="muted">
-            ${escapeHtml(s.creator)}
-          </div>
-
-        </div>
-
-        <div class="music-actions">
-
-          <button
-            class="btn small"
-            onclick="useSound('${s.id}')"
-          >
-            Use
-          </button>
-
-          <button
-            class="btn small secondary"
-            onclick="saveSound('${s.id}')"
-          >
-            🔖 Save
-          </button>
-
-        </div>
-
-      </div>
-
-    `).join("");
-
-}
-
-
-function saveSound(id){
-
-  const saved =
-    getStorage(STORAGE.savedSounds,[]);
-
-  if(!saved.includes(id)){
-    saved.push(id);
-  }
-
-  setStorage(STORAGE.savedSounds,saved);
-
-  addNotification(
-    "🔊",
-    "Sound saved."
-  );
-
-  renderSavedSounds();
-
-}
-
-
-function renderSavedSounds(){
-
-  const saved =
-    getStorage(STORAGE.savedSounds,[]);
-
-  const list =
-    sounds.filter(s=>saved.includes(s.id));
-
-  document.getElementById("savedSounds").innerHTML =
-    list.length
-      ? list.map(s=>`
-          <div class="location-card">
-            🔊 <strong>${escapeHtml(s.name)}</strong>
-            <p class="muted">${escapeHtml(s.creator)}</p>
-          </div>
-        `).join("")
-      : `<p class="muted">No saved sounds yet.</p>`;
-
-}
-
-
-function useSound(id){
-
-  const sound =
-    sounds.find(s=>s.id===id);
-
-  if(!sound) return;
-
-  alert(
-    "The sound \"" +
-    sound.name +
-    "\" is selected for your video editor."
-  );
-
-  showPage("editor");
-
-}
-
-
-/* =========================
-   MARKETPLACE
-========================= */
-
-const products = [
+const products=[
 
   {
     id:"product1",
     name:"Classic T-Shirt",
     description:"Comfortable everyday T-shirt.",
     price:80,
-    category:"Fashion",
-    seller:"Rocky Fashion",
-    emoji:"👕"
+    seller:"Local Product Seller"
   },
 
   {
     id:"product2",
     name:"Sneakers",
-    description:"Modern casual sneakers.",
+    description:"Casual everyday sneakers.",
     price:250,
-    category:"Fashion",
-    seller:"Rocky Shoes",
-    emoji:"👟"
+    seller:"Rocky Fashion Shop"
   },
 
   {
     id:"product3",
     name:"Wireless Headphones",
-    description:"Wireless audio headphones.",
+    description:"Wireless headphones for music and videos.",
     price:350,
-    category:"Electronics",
-    seller:"Tech Market",
-    emoji:"🎧"
+    seller:"Tech Market"
   },
 
   {
     id:"product4",
     name:"Backpack",
-    description:"Strong everyday backpack.",
+    description:"Everyday travel backpack.",
     price:120,
-    category:"Accessories",
-    seller:"Rocky Bags",
-    emoji:"🎒"
+    seller:"Local Product Seller"
   }
 
 ];
 
-
 function renderProducts(){
 
-  const query =
-    (
-      document.getElementById("productSearch")?.value || ""
-    ).toLowerCase();
+  const box=document.getElementById("productList");
 
-  const category =
-    document.getElementById("productCategory")?.value || "";
+  if(!box)return;
 
-  const list =
-    products.filter(p=>{
+  box.innerHTML=products.map(productCard).join("");
 
-      const matchesQuery =
-        p.name.toLowerCase().includes(query) ||
-        p.description.toLowerCase().includes(query);
+  const home=document.getElementById("homeProducts");
 
-      const matchesCategory =
-        !category || p.category===category;
+  if(home){
+    home.innerHTML=products.slice(0,4).map(productCard).join("");
+  }
+}
 
-      return matchesQuery && matchesCategory;
+function productCard(p){
 
-    });
+  return`
 
-  document.getElementById("productList").innerHTML =
-    list.map(p=>`
+    <div class="card">
 
-      <div class="product">
+      <div
+        class="productImg"
+        style="
+          display:flex;
+          align-items:center;
+          justify-content:center;
+          font-size:55px;
+        "
+      >
+        🛍️
+      </div>
 
-        <div class="product-img">
-          ${p.emoji}
-        </div>
+      <h3 style="margin-top:10px;">
+        ${escapeHtml(p.name)}
+      </h3>
 
-        <div class="product-content">
+      <p style="margin:7px 0;">
+        ${escapeHtml(p.description)}
+      </p>
 
-          <h3>${escapeHtml(p.name)}</h3>
+      <div class="price">
+        GHS ${p.price.toFixed(2)}
+      </div>
 
-          <p>${escapeHtml(p.description)}</p>
+      <small>
+        Seller: ${escapeHtml(p.seller)}
+      </small>
 
-          <div class="price">
-            GHS ${p.price.toFixed(2)}
-          </div>
+      <div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:10px;">
 
-          <p class="muted">
-            Seller: ${escapeHtml(p.seller)}
-          </p>
+        <button
+          class="btn"
+          onclick="addToCart('${p.id}')"
+        >
+          Add to Cart
+        </button>
 
-          <div class="location-actions">
-
-            <button
-              class="btn small"
-              onclick="addToCart('${p.id}')"
-            >
-              Add to Cart
-            </button>
-
-            <button
-              class="btn small secondary"
-              onclick="shareProduct('${p.id}')"
-            >
-              ↗️ Share
-            </button>
-
-          </div>
-
-        </div>
+        <button
+          class="btn secondary"
+          onclick="shareProduct('${p.id}')"
+        >
+          Share
+        </button>
 
       </div>
 
-    `).join("");
-
+    </div>
+  `;
 }
-
 
 function addToCart(id){
 
-  const cart =
-    getStorage(STORAGE.cart,[]);
+  const p=products.find(x=>x.id===id);
 
-  const existing =
-    cart.find(x=>x.id===id);
+  if(!p)return;
+
+  const existing=state.cart.find(x=>x.id===id);
 
   if(existing){
     existing.quantity++;
   }else{
-    cart.push({
-      id,
+    state.cart.push({
+      ...p,
       quantity:1
     });
   }
 
-  setStorage(STORAGE.cart,cart);
-
-  updateCartBadge();
+  saveState();
 
   addNotification(
     "🛒",
-    "Product added to your cart."
+    `${p.name} was added to your cart.`
   );
 
   alert("Added to cart.");
-
 }
-
 
 function renderCart(){
 
-  const cart =
-    getStorage(STORAGE.cart,[]);
-
-  const container =
-    document.getElementById("cartItems");
-
   let total=0;
 
-  if(!cart.length){
+  state.cart.forEach(x=>{
+    total += x.price*x.quantity;
+  });
 
-    container.innerHTML =
-      `<p class="muted">Your cart is empty.</p>`;
+  return`
 
-  }else{
+    <div class="card">
 
-    container.innerHTML =
-      cart.map(item=>{
+      <h3>Your Cart</h3>
 
-        const p =
-          products.find(x=>x.id===item.id);
+      ${
+        state.cart.length
+        ?
+        state.cart.map(x=>`
 
-        if(!p) return "";
+          <div
+            style="
+              padding:10px 0;
+              border-bottom:1px solid #e3eaf2;
+            "
+          >
 
-        const subtotal =
-          p.price*item.quantity;
+            <strong>${escapeHtml(x.name)}</strong>
 
-        total += subtotal;
+            <br>
 
-        return `
-          <div class="location-card">
+            Qty: ${x.quantity}
 
-            <strong>${escapeHtml(p.name)}</strong>
+            <br>
 
-            <p>
-              GHS ${p.price.toFixed(2)}
-              × ${item.quantity}
-            </p>
-
-            <strong>
-              GHS ${subtotal.toFixed(2)}
-            </strong>
-
-            <br><br>
-
-            <button
-              class="btn small danger"
-              onclick="removeFromCart('${p.id}')"
-            >
-              Remove
-            </button>
+            GHS ${(x.price*x.quantity).toFixed(2)}
 
           </div>
-        `;
 
-      }).join("");
+        `).join("")
+        :
+        `<div class="empty">Cart is empty.</div>`
+      }
 
-  }
+      <h3 style="margin-top:12px;">
+        Total: GHS ${total.toFixed(2)}
+      </h3>
 
-  document.getElementById("cartTotal").textContent =
-    "GHS " + total.toFixed(2);
+      <button
+        class="btn"
+        style="margin-top:10px;"
+        onclick="placeDemoOrder()"
+      >
+        Place Order
+      </button>
 
+    </div>
+  `;
 }
-
-
-function removeFromCart(id){
-
-  const cart =
-    getStorage(STORAGE.cart,[]);
-
-  const index =
-    cart.findIndex(x=>x.id===id);
-
-  if(index>=0){
-    cart.splice(index,1);
-  }
-
-  setStorage(STORAGE.cart,cart);
-
-  renderCart();
-  updateCartBadge();
-
-}
-
 
 function placeDemoOrder(){
 
-  const cart =
-    getStorage(STORAGE.cart,[]);
-
-  if(!cart.length){
+  if(!state.cart.length){
 
     alert("Your cart is empty.");
 
     return;
   }
 
-  let total=0;
-
-  cart.forEach(item=>{
-
-    const p =
-      products.find(x=>x.id===item.id);
-
-    if(p){
-      total += p.price*item.quantity;
-    }
-
-  });
-
-  const orders =
-    getStorage(STORAGE.orders,[]);
-
-  const order = {
-    id:"order_"+Date.now(),
-    total,
-    status:"Pending",
-    paymentStatus:"Pending",
-    createdAt:new Date().toISOString(),
-    items:cart
-  };
-
-  orders.unshift(order);
-
-  setStorage(STORAGE.orders,orders);
-
-  localStorage.removeItem(STORAGE.cart);
-
-  updateCartBadge();
+  const total=state.cart.reduce(
+    (sum,item)=>sum+item.price*item.quantity,
+    0
+  );
 
   addNotification(
-    "📦",
-    "Your order has been created. Payment is pending."
+    "🛍️",
+    `Your order was created for GHS ${total.toFixed(2)}.`
   );
 
-  alert(
-    "Order created.\n\nTotal: GHS " +
-    total.toFixed(2)
-  );
+  state.cart=[];
 
-  renderCart();
+  saveState();
 
+  alert("Order created in frontend demo mode.");
 }
 
+/* =========================
+   FEED
+========================= */
 
-function renderOrders(){
+const feedPosts=[
 
-  const orders =
-    getStorage(STORAGE.orders,[]);
+  {
+    id:"post1",
+    user:"RockyX Creator",
+    text:"Welcome to the new RockyX community.",
+    type:"post"
+  },
 
-  const container =
-    document.getElementById("ordersList");
+  {
+    id:"post2",
+    user:"Local Seller",
+    text:"Check out our latest products.",
+    type:"product"
+  },
 
-  if(!orders.length){
-
-    container.innerHTML =
-      `<p class="muted">No orders yet.</p>`;
-
-    return;
+  {
+    id:"post3",
+    user:"RockyX Music",
+    text:"Discover new music and sounds.",
+    type:"music"
   }
 
-  container.innerHTML =
-    orders.map(order=>`
+];
 
-      <div class="location-card">
+function renderHomeFeed(){
 
-        <strong>
-          Order ${escapeHtml(order.id)}
-        </strong>
+  const box=document.getElementById("homeFeed");
 
-        <p>
-          Total:
-          <strong>GHS ${order.total.toFixed(2)}</strong>
-        </p>
+  if(!box)return;
 
-        <p>
-          Status: ${escapeHtml(order.status)}
-        </p>
+  box.innerHTML=feedPosts.map(post=>`
 
-        <p>
-          Payment: ${escapeHtml(order.paymentStatus)}
-        </p>
+    <div class="feedItem">
+
+      <div class="feedHeader">
+
+        <strong>👤 ${escapeHtml(post.user)}</strong>
+
+        <span>•••</span>
 
       </div>
 
-    `).join("");
+      <div class="feedContent">
 
+        <p>${escapeHtml(post.text)}</p>
+
+      </div>
+
+      <div class="feedActions">
+
+        <button onclick="likePost('${post.id}')">
+          ❤️ Like
+        </button>
+
+        <button onclick="commentPost('${post.id}')">
+          💬 Comment
+        </button>
+
+        <button onclick="sharePost('${post.id}')">
+          ↗️ Share
+        </button>
+
+        <button onclick="savePost('${post.id}')">
+          🔖 Save
+        </button>
+
+      </div>
+
+    </div>
+
+  `).join("");
 }
 
+function likePost(id){
 
-/* =========================
-   CART BADGE
-========================= */
+  state.likes[id]=!state.likes[id];
 
-function updateCartBadge(){
+  saveState();
 
-  const cart =
-    getStorage(STORAGE.cart,[]);
+  renderHomeFeed();
+}
 
-  const count =
-    cart.reduce(
-      (sum,item)=>sum+item.quantity,
-      0
-    );
+function commentPost(id){
 
-  const badge =
-    document.getElementById("cartBadge");
+  const text=prompt("Write your comment:");
 
-  badge.textContent=count;
+  if(!text)return;
 
-  badge.classList.toggle(
-    "hidden",
-    count===0
+  state.comments[id]=state.comments[id] || [];
+
+  state.comments[id].push(text);
+
+  saveState();
+
+  addNotification(
+    "💬",
+    "Your comment was added."
   );
 
+  alert("Comment added.");
 }
 
+function savePost(id){
 
-/* =========================================================
-   NEARBY MAP SYSTEM
-   ========================================================= */
+  if(!state.saved.includes(id)){
+    state.saved.push(id);
+  }
 
-const nearbyLocations = [
+  saveState();
+
+  addNotification(
+    "🔖",
+    "Post saved."
+  );
+}
+
+/* =========================
+   VIDEOS
+========================= */
+
+const demoVideos=[
+
+  {
+    id:"short1",
+    title:"RockyX Demo Short",
+    short:true,
+    downloads:true,
+    src:"https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
+  },
+
+  {
+    id:"video1",
+    title:"RockyX Demo Video",
+    short:false,
+    downloads:true,
+    src:"https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
+  }
+
+];
+
+function renderVideos(){
+
+  const shorts=document.getElementById("shortsList");
+
+  const videos=document.getElementById("videoResults");
+
+  if(shorts){
+
+    shorts.innerHTML=demoVideos
+      .filter(v=>v.short)
+      .map(videoCard)
+      .join("");
+  }
+
+  if(videos){
+
+    videos.innerHTML=demoVideos
+      .filter(v=>!v.short)
+      .map(videoCard)
+      .join("");
+  }
+}
+
+function videoCard(v){
+
+  return`
+
+    <div class="feedItem">
+
+      <div class="feedHeader">
+        <strong>🎬 ${escapeHtml(v.title)}</strong>
+      </div>
+
+      <video
+        class="video"
+        controls
+        playsinline
+        src="${v.src}"
+      ></video>
+
+      <div class="feedActions">
+
+        <button onclick="likeVideo('${v.id}')">
+          ❤️ <span id="like-${v.id}">Like</span>
+        </button>
+
+        <button onclick="commentVideo('${v.id}')">
+          💬 Comment
+        </button>
+
+        <button onclick="shareVideo('${v.id}')">
+          ↗️ Share
+        </button>
+
+        <button onclick="saveVideo('${v.id}')">
+          🔖 Save
+        </button>
+
+        ${
+          v.downloads
+          ?
+          `<button onclick="downloadVideo('${v.id}')">
+            ⬇️ Download
+          </button>`
+          :
+          ""
+        }
+
+      </div>
+
+    </div>
+
+  `;
+}
+
+function likeVideo(id){
+
+  state.likes[id]=!state.likes[id];
+
+  saveState();
+
+  renderVideos();
+}
+
+function commentVideo(id){
+
+  const text=prompt("Write your comment:");
+
+  if(!text)return;
+
+  state.comments[id]=state.comments[id] || [];
+
+  state.comments[id].push(text);
+
+  saveState();
+
+  addNotification(
+    "💬",
+    "Your video comment was added."
+  );
+}
+
+function saveVideo(id){
+
+  if(!state.saved.includes(id)){
+    state.saved.push(id);
+  }
+
+  saveState();
+
+  addNotification(
+    "🔖",
+    "Video saved."
+  );
+}
+
+function downloadVideo(id){
+
+  const video=demoVideos.find(v=>v.id===id);
+
+  if(!video)return;
+
+  startAdGate(
+    "Video Download",
+    "Watch the advertisement before your download becomes available.",
+    ()=>{
+      const a=document.createElement("a");
+
+      a.href=video.src;
+      a.download=(video.title || "rockyx-video")+".mp4";
+
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+
+      addNotification(
+        "⬇️",
+        `${video.title} download started.`
+      );
+    }
+  );
+}
+
+/* =========================
+   MUSIC
+========================= */
+
+const musicData=[
+
+  {
+    id:"song1",
+    title:"RockyX Demo Song",
+    artist:"RockyX Artist",
+    album:"Demo Album"
+  },
+
+  {
+    id:"song2",
+    title:"New Beginning",
+    artist:"Demo Artist",
+    album:"New Beginnings"
+  }
+
+];
+
+function renderMusic(){
+
+  const box=document.getElementById("musicResults");
+
+  if(!box)return;
+
+  box.innerHTML=musicData.map(musicCard).join("");
+}
+
+function musicCard(m){
+
+  return`
+
+    <div class="card">
+
+      <h3>🎵 ${escapeHtml(m.title)}</h3>
+
+      <p>
+        Artist: ${escapeHtml(m.artist)}
+      </p>
+
+      <p>
+        Album: ${escapeHtml(m.album)}
+      </p>
+
+      <div style="margin-top:10px;display:flex;gap:7px;flex-wrap:wrap;">
+
+        <button
+          class="btn"
+          onclick="playMusic('${m.id}')"
+        >
+          ▶️ Play
+        </button>
+
+        <button
+          class="btn secondary"
+          onclick="downloadMusic('${m.id}')"
+        >
+          ⬇️ Download
+        </button>
+
+        <button
+          class="btn secondary"
+          onclick="shareMusic('${m.id}')"
+        >
+          ↗️ Share
+        </button>
+
+      </div>
+
+    </div>
+
+  `;
+}
+
+function searchMusic(q){
+
+  const box=document.getElementById("musicResults");
+
+  if(!box)return;
+
+  const query=q.toLowerCase();
+
+  const result=musicData.filter(m=>
+    `${m.title} ${m.artist} ${m.album}`
+      .toLowerCase()
+      .includes(query)
+  );
+
+  box.innerHTML=result.length
+    ? result.map(musicCard).join("")
+    : `<div class="empty">No music found.</div>`;
+}
+
+function playMusic(id){
+
+  const m=musicData.find(x=>x.id===id);
+
+  if(!m)return;
+
+  startAdGate(
+    "Music Advertisement",
+    "Watch the advertisement before playing this song.",
+    ()=>{
+      addNotification(
+        "🎵",
+        `${m.title} started playing.`
+      );
+
+      alert(`Playing: ${m.title}`);
+    }
+  );
+}
+
+function downloadMusic(id){
+
+  const m=musicData.find(x=>x.id===id);
+
+  if(!m)return;
+
+  startAdGate(
+    "Music Download",
+    "Watch the advertisement before downloading this song.",
+    ()=>{
+      addNotification(
+        "⬇️",
+        `${m.title} download is available.`
+      );
+
+      alert(
+        "Frontend demo: the real music file download will be connected through the backend."
+      );
+    }
+  );
+}
+
+function shareMusic(id){
+
+  const m=musicData.find(x=>x.id===id);
+
+  if(!m)return;
+
+  openShare(
+    m.title,
+    window.location.href+"?song="+encodeURIComponent(id)
+  );
+}
+
+function searchSounds(q){
+
+  const box=document.getElementById("soundsList");
+
+  if(!box)return;
+
+  const sounds=[
+    "Trending Beat",
+    "Afro Groove",
+    "RockyX Original",
+    "Funny Sound"
+  ];
+
+  const result=sounds.filter(x=>
+    x.toLowerCase().includes(q.toLowerCase())
+  );
+
+  box.innerHTML=result.map(s=>`
+
+    <div class="card">
+
+      <h3>🔊 ${escapeHtml(s)}</h3>
+
+      <button
+        class="btn"
+        onclick="saveSound('${escapeHtml(s)}')"
+      >
+        🔖 Save Sound
+      </button>
+
+      <button
+        class="btn secondary"
+        onclick="useSound('${escapeHtml(s)}')"
+      >
+        Use Sound
+      </button>
+
+    </div>
+
+  `).join("");
+}
+
+function saveSound(name){
+
+  if(!state.savedSounds.includes(name)){
+    state.savedSounds.push(name);
+  }
+
+  saveState();
+
+  renderSavedSounds();
+}
+
+function renderSavedSounds(){
+
+  const box=document.getElementById("savedSounds");
+
+  if(!box)return;
+
+  box.innerHTML=state.savedSounds.length
+    ? state.savedSounds.map(s=>`
+
+      <div class="card">
+        🔊 ${escapeHtml(s)}
+      </div>
+
+    `).join("")
+    :
+    `<div class="empty">No saved sounds.</div>`;
+}
+
+function useSound(name){
+
+  addNotification(
+    "🔊",
+    `Sound selected: ${name}`
+  );
+
+  showPage("editor");
+}
+
+/* =========================
+   SHARING
+========================= */
+
+let currentShare={
+  title:"",
+  url:""
+};
+
+function openShare(title,url){
+
+  currentShare={
+    title:title || "RockyX",
+    url:url || window.location.href
+  };
+
+  document.getElementById("shareText").textContent=
+    "Share " + currentShare.title;
+
+  document.getElementById("shareModal").classList.add("show");
+}
+
+function nativeShare(){
+
+  const data={
+    title:currentShare.title || "RockyX",
+    text:"Check this out on RockyX.",
+    url:currentShare.url || window.location.href
+  };
+
+  if(navigator.share){
+
+    navigator.share(data)
+      .then(()=>{
+        addNotification(
+          "↗️",
+          "Content shared successfully."
+        );
+      })
+      .catch(error=>{
+        if(error.name!=="AbortError"){
+          alert("Sharing could not be completed.");
+        }
+      });
+
+  }else{
+
+    copyShareLink();
+
+  }
+}
+
+function copyShareLink(){
+
+  const url=currentShare.url || window.location.href;
+
+  if(navigator.clipboard){
+
+    navigator.clipboard.writeText(url)
+      .then(()=>{
+        alert(
+          "Link copied. You can paste it into WhatsApp, Messenger, Facebook, Messages, email or another app."
+        );
+      });
+
+  }else{
+
+    prompt("Copy this link:",url);
+
+  }
+}
+
+function shareTo(app){
+
+  const url=encodeURIComponent(
+    currentShare.url || window.location.href
+  );
+
+  const text=encodeURIComponent(
+    "Check this out on RockyX."
+  );
+
+  let shareUrl="";
+
+  if(app==="WhatsApp"){
+    shareUrl=`https://wa.me/?text=${text}%20${url}`;
+  }
+
+  if(app==="Facebook"){
+    shareUrl=`https://www.facebook.com/sharer/sharer.php?u=${url}`;
+  }
+
+  if(app==="Email"){
+    shareUrl=`mailto:?subject=${encodeURIComponent(currentShare.title)}&body=${text}%20${url}`;
+  }
+
+  if(app==="Messenger"){
+    copyShareLink();
+    return;
+  }
+
+  if(app==="Messages"){
+    window.location.href=`sms:?body=${text}%20${url}`;
+    return;
+  }
+
+  if(shareUrl){
+    window.open(shareUrl,"_blank");
+  }
+
+  addNotification(
+    "↗️",
+    `Share link prepared for ${app}.`
+  );
+}
+
+function sharePost(id){
+
+  openShare(
+    "RockyX Post",
+    window.location.href+"?post="+id
+  );
+}
+
+function shareVideo(id){
+
+  const video=demoVideos.find(v=>v.id===id);
+
+  openShare(
+    video?.title || "RockyX Video",
+    window.location.href+"?video="+id
+  );
+}
+
+function shareProduct(id){
+
+  const p=products.find(x=>x.id===id);
+
+  if(!p)return;
+
+  openShare(
+    p.name,
+    window.location.href+"?product="+id
+  );
+}
+
+function shareBusiness(id){
+
+  const location=nearbyLocations.find(x=>x.id===id);
+
+  if(!location)return;
+
+  openShare(
+    location.name,
+    window.location.href+"?location="+id
+  );
+}
+
+function shareLocation(id){
+
+  shareBusiness(id);
+}
+
+/* =========================
+   NEARBY MAP
+========================= */
+
+const nearbyLocations=[
 
   {
     id:"loc1",
     name:"Rocky Fashion Shop",
     category:"businesses",
-    address:"Demo business location, Accra",
-    area:"Accra",
+    type:"Business",
+    location:"Demo Accra",
     lat:5.6037,
     lng:-0.1870
   },
@@ -3466,8 +2804,8 @@ const nearbyLocations = [
     id:"loc2",
     name:"Tech Market",
     category:"businesses",
-    address:"Demo business location, Accra",
-    area:"Accra",
+    type:"Business",
+    location:"Demo Accra",
     lat:5.6105,
     lng:-0.1840
   },
@@ -3476,8 +2814,8 @@ const nearbyLocations = [
     id:"loc3",
     name:"Local Product Seller",
     category:"sellers",
-    address:"Demo seller location, Accra",
-    area:"Accra",
+    type:"Seller",
+    location:"Demo Accra",
     lat:5.6080,
     lng:-0.1850
   },
@@ -3486,8 +2824,8 @@ const nearbyLocations = [
     id:"loc4",
     name:"QuickFix Services",
     category:"services",
-    address:"Demo service location, Accra",
-    area:"Accra",
+    type:"Service",
+    location:"Demo Accra",
     lat:5.5960,
     lng:-0.1920
   },
@@ -3496,8 +2834,8 @@ const nearbyLocations = [
     id:"loc5",
     name:"Clean Home",
     category:"services",
-    address:"Demo service location, Accra",
-    area:"Accra",
+    type:"Service",
+    location:"Demo Accra",
     lat:5.6060,
     lng:-0.1750
   },
@@ -3506,8 +2844,8 @@ const nearbyLocations = [
     id:"loc6",
     name:"Accra Taxi Point",
     category:"transport",
-    address:"Demo transport location, Accra",
-    area:"Accra",
+    type:"Transport",
+    location:"Demo Accra",
     lat:5.6000,
     lng:-0.1800
   },
@@ -3516,8 +2854,8 @@ const nearbyLocations = [
     id:"loc7",
     name:"City Bus Station",
     category:"transport",
-    address:"Demo transport location, Accra",
-    area:"Accra",
+    type:"Transport",
+    location:"Demo Accra",
     lat:5.6100,
     lng:-0.1900
   },
@@ -3526,8 +2864,8 @@ const nearbyLocations = [
     id:"loc8",
     name:"Rocky Ride Point",
     category:"transport",
-    address:"Demo transport location, Accra",
-    area:"Accra",
+    type:"Transport",
+    location:"Demo Accra",
     lat:5.5950,
     lng:-0.1920
   },
@@ -3536,8 +2874,8 @@ const nearbyLocations = [
     id:"loc9",
     name:"Accra Fuel Station",
     category:"fuel",
-    address:"Demo fuel station location, Accra",
-    area:"Accra",
+    type:"Fuel",
+    location:"Demo Accra",
     lat:5.6150,
     lng:-0.1750
   },
@@ -3546,8 +2884,8 @@ const nearbyLocations = [
     id:"loc10",
     name:"Accra City Hotel",
     category:"hotels",
-    address:"Demo hotel location, Accra",
-    area:"Accra",
+    type:"Hotel",
+    location:"Demo Accra",
     lat:5.5570,
     lng:-0.1960
   },
@@ -3556,8 +2894,8 @@ const nearbyLocations = [
     id:"loc11",
     name:"Golden Taste Restaurant",
     category:"restaurants",
-    address:"Demo restaurant location, Accra",
-    area:"Accra",
+    type:"Restaurant",
+    location:"Demo Accra",
     lat:5.6100,
     lng:-0.1800
   },
@@ -3566,76 +2904,50 @@ const nearbyLocations = [
     id:"loc12",
     name:"Rocky Food Point",
     category:"restaurants",
-    address:"Demo restaurant location, Accra",
-    area:"Accra",
+    type:"Restaurant",
+    location:"Demo Accra",
     lat:5.6000,
     lng:-0.2000
   }
 
 ];
 
-
-let currentNearbyCategory="all";
 let nearbyMap=null;
-let nearbyMarkers=[];
-
+let nearbyMarkers={};
+let nearbyCategory="all";
 
 function openNearbyCategory(category){
 
-  currentNearbyCategory=category;
+  nearbyCategory=category;
 
   showPage("nearby");
 
   setTimeout(()=>{
-
-    initNearbyMap();
-
-    updateNearbyMap();
-
+    setNearbyCategory(category);
   },150);
-
 }
-
 
 function setNearbyCategory(category){
 
-  currentNearbyCategory=category;
-
-  document.querySelectorAll("[data-nearby]").forEach(btn=>{
-
-    btn.classList.toggle(
-      "active",
-      btn.dataset.nearby===category
-    );
-
-  });
+  nearbyCategory=category;
 
   initNearbyMap();
 
   updateNearbyMap();
-
 }
-
 
 function initNearbyMap(){
 
-  const element =
-    document.getElementById("map");
+  if(nearbyMap)return;
 
-  if(!element) return;
+  const mapElement=document.getElementById("map");
 
-  if(nearbyMap){
+  if(!mapElement)return;
 
-    nearbyMap.invalidateSize();
-
-    return;
-  }
-
-  nearbyMap =
-    L.map("map").setView(
-      [5.6037,-0.1870],
-      13
-    );
+  nearbyMap=L.map("map").setView(
+    [5.6037,-0.1870],
+    13
+  );
 
   L.tileLayer(
     "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
@@ -3643,153 +2955,102 @@ function initNearbyMap(){
       attribution:"© OpenStreetMap contributors"
     }
   ).addTo(nearbyMap);
-
 }
-
 
 function updateNearbyMap(){
 
-  if(!nearbyMap) return;
+  initNearbyMap();
 
-  nearbyMarkers.forEach(marker=>{
+  if(!nearbyMap)return;
+
+  Object.values(nearbyMarkers).forEach(marker=>{
     nearbyMap.removeLayer(marker);
   });
 
-  nearbyMarkers=[];
+  nearbyMarkers={};
 
-  const list =
-    currentNearbyCategory==="all"
-      ? nearbyLocations
-      : nearbyLocations.filter(
-          x=>x.category===currentNearbyCategory
-        );
+  let list=nearbyLocations;
 
-  const listContainer =
-    document.getElementById("nearbyList");
+  if(nearbyCategory!=="all"){
 
-  listContainer.innerHTML =
-    list.map(loc=>`
+    list=nearbyLocations.filter(
+      x=>x.category===nearbyCategory
+    );
+  }
 
-      <div
-        class="location-card"
-        onclick="focusNearbyLocation('${loc.id}')"
-      >
+  const listBox=document.getElementById("nearbyLocations");
 
-        <h3>
-          📍 ${escapeHtml(loc.name)}
-        </h3>
+  if(listBox){
 
-        <p class="muted">
-          ${escapeHtml(loc.category)}
+    listBox.innerHTML=list.length
+      ? list.map(locationItemHTML).join("")
+      :
+      `<div class="empty">No locations found.</div>`;
+  }
+
+  const bounds=[];
+
+  list.forEach(location=>{
+
+    const marker=L.marker([
+      location.lat,
+      location.lng
+    ]).addTo(nearbyMap);
+
+    marker.bindPopup(`
+
+      <div style="min-width:190px;">
+
+        <strong>${escapeHtml(location.name)}</strong>
+
+        <br>
+
+        <span class="tag">
+          ${escapeHtml(location.type)}
+        </span>
+
+        <p style="margin:7px 0;">
+          📍 ${escapeHtml(location.location)}
         </p>
 
-        <p>
-          ${escapeHtml(loc.address)}
-        </p>
-
-        <div class="location-actions">
+        <div style="display:flex;gap:5px;flex-wrap:wrap;">
 
           <button
-            class="btn small"
-            onclick="event.stopPropagation(); focusNearbyLocation('${loc.id}')"
+            onclick="focusNearbyLocation('${location.id}')"
+            style="border:0;padding:7px;border-radius:7px;background:#eaf3ff;color:#0866ff;"
           >
-            View on Map
+            View
           </button>
 
           <button
-            class="btn small secondary"
-            onclick="event.stopPropagation(); openDirections(${loc.lat},${loc.lng})"
+            onclick="openDirections(${location.lat},${location.lng})"
+            style="border:0;padding:7px;border-radius:7px;background:#0866ff;color:white;"
           >
-            🧭 Directions
+            Directions
           </button>
 
           <button
-            class="btn small secondary"
-            onclick="event.stopPropagation(); shareLocation('${loc.id}')"
+            onclick="shareLocation('${location.id}')"
+            style="border:0;padding:7px;border-radius:7px;background:#eaf3ff;color:#0866ff;"
           >
-            ↗️ Share
+            Share
           </button>
 
         </div>
 
       </div>
 
-    `).join("");
+    `);
 
-  if(!list.length){
+    nearbyMarkers[location.id]=marker;
 
-    listContainer.innerHTML =
-      `<p class="muted">No demo locations in this category.</p>`;
-
-    return;
-  }
-
-  const bounds=[];
-
-  list.forEach(loc=>{
-
-    const marker =
-      L.marker([loc.lat,loc.lng])
-      .addTo(nearbyMap);
-
-    const popup = `
-      <div style="min-width:200px">
-
-        <strong>${escapeHtml(loc.name)}</strong>
-
-        <p>${escapeHtml(loc.category)}</p>
-
-        <p>${escapeHtml(loc.address)}</p>
-
-        <button
-          onclick="openDirections(${loc.lat},${loc.lng})"
-          style="
-            border:0;
-            padding:8px;
-            background:#0b63f6;
-            color:white;
-            border-radius:7px;
-            cursor:pointer;
-          "
-        >
-          🧭 Directions
-        </button>
-
-        <button
-          onclick="shareLocation('${loc.id}')"
-          style="
-            border:0;
-            padding:8px;
-            background:#eaf2ff;
-            color:#0b63f6;
-            border-radius:7px;
-            cursor:pointer;
-          "
-        >
-          ↗️ Share
-        </button>
-
-      </div>
-    `;
-
-    marker.bindPopup(popup);
-
-    marker.locationId=loc.id;
-
-    nearbyMarkers.push(marker);
-
-    bounds.push([loc.lat,loc.lng]);
-
+    bounds.push([
+      location.lat,
+      location.lng
+    ]);
   });
 
-  if(bounds.length===1){
-
-    nearbyMap.setView(
-      bounds[0],
-      17
-    );
-
-  }else{
+  if(bounds.length>1){
 
     nearbyMap.fitBounds(
       bounds,
@@ -3799,87 +3060,116 @@ function updateNearbyMap(){
       }
     );
 
-  }
-
-}
-
-
-function focusNearbyLocation(id){
-
-  const location =
-    nearbyLocations.find(x=>x.id===id);
-
-  if(!location) return;
-
-  showPage("nearby");
-
-  setTimeout(()=>{
-
-    initNearbyMap();
+  }else if(bounds.length===1){
 
     nearbyMap.setView(
-      [location.lat,location.lng],
+      bounds[0],
       17
     );
 
-    const marker =
-      nearbyMarkers.find(
-        m=>m.locationId===id
-      );
+  }else{
 
-    if(marker){
+    nearbyMap.setView(
+      [5.6037,-0.1870],
+      13
+    );
 
-      marker.openPopup();
-
-    }
-
-  },150);
-
+  }
 }
 
+function locationItemHTML(location){
+
+  return`
+
+    <div class="locationItem">
+
+      <h3>
+        ${escapeHtml(location.name)}
+      </h3>
+
+      <span class="tag">
+        ${escapeHtml(location.type)}
+      </span>
+
+      <p style="margin:7px 0;">
+        📍 ${escapeHtml(location.location)}
+      </p>
+
+      <div style="display:flex;gap:7px;flex-wrap:wrap;">
+
+        <button
+          class="btn secondary"
+          onclick="focusNearbyLocation('${location.id}')"
+        >
+          View on Map
+        </button>
+
+        <button
+          class="btn"
+          onclick="openDirections(${location.lat},${location.lng})"
+        >
+          Directions
+        </button>
+
+        <button
+          class="btn secondary"
+          onclick="shareLocation('${location.id}')"
+        >
+          Share
+        </button>
+
+      </div>
+
+    </div>
+
+  `;
+}
+
+function focusNearbyLocation(id){
+
+  const location=nearbyLocations.find(
+    x=>x.id===id
+  );
+
+  if(!location)return;
+
+  initNearbyMap();
+
+  nearbyMap.setView(
+    [location.lat,location.lng],
+    17
+  );
+
+  const marker=nearbyMarkers[id];
+
+  if(marker){
+    marker.openPopup();
+  }
+}
 
 function openDirections(lat,lng){
 
-  /*
-    Demo ad gate.
-
-    In production:
-    - show a real advertisement
-    - verify the ad event on the backend
-    - then open navigation
-  */
-
   startAdGate(
     "Navigation",
-    "Watch this advertisement before starting navigation.",
+    "Watch the advertisement before opening directions.",
     ()=>{
 
-      const url =
-        "https://www.google.com/maps/dir/?api=1&destination=" +
-        encodeURIComponent(lat + "," + lng);
+      const url=
+        "https://www.google.com/maps/dir/?api=1&destination="
+        +
+        encodeURIComponent(`${lat},${lng}`);
 
-      window.open(
-        url,
-        "_blank",
-        "noopener"
-      );
+      window.open(url,"_blank");
 
       addNotification(
-        "🧭",
-        "Navigation was opened."
+        "🗺️",
+        "Navigation directions opened."
       );
-
     }
   );
-
 }
 
-
-/* =========================
-   USER LOCATION
-========================= */
-
-function locateUser(mode){
+function locateUser(type){
 
   if(!navigator.geolocation){
 
@@ -3892,93 +3182,65 @@ function locateUser(mode){
 
     position=>{
 
-      const lat =
-        position.coords.latitude;
+      const lat=position.coords.latitude;
+      const lng=position.coords.longitude;
 
-      const lng =
-        position.coords.longitude;
+      if(type==="main"){
 
-      if(mode==="main"){
+        initNearbyMap();
 
-        showPage("nearby");
-
-        setTimeout(()=>{
-
-          initNearbyMap();
-
-          nearbyMap.setView(
-            [lat,lng],
-            16
-          );
-
-          L.marker([lat,lng])
-            .addTo(nearbyMap)
-            .bindPopup("📍 You are here")
-            .openPopup();
-
-        },150);
-
-      }
-
-      if(mode==="navigation"){
-
-        initNavigationMap();
-
-        navigationMap.setView(
+        nearbyMap.setView(
           [lat,lng],
           15
         );
 
-        L.marker([lat,lng])
-          .addTo(navigationMap)
-          .bindPopup("📍 You are here")
-          .openPopup();
+        L.marker([
+          lat,lng
+        ])
+        .addTo(nearbyMap)
+        .bindPopup("You are here.")
+        .openPopup();
 
+      }else{
+
+        initTransportMap();
+
+        transportMap.setView(
+          [lat,lng],
+          15
+        );
       }
 
     },
 
-    error=>{
-
+    ()=>{
       alert(
-        "We could not access your location. Please allow location permission in your browser."
+        "We could not access your location. You can still use the map manually."
       );
-
     }
-
   );
-
 }
 
-
-/* =========================================================
+/* =========================
    TRANSPORT MAP
-   ========================================================= */
+========================= */
 
 let transportMap=null;
 
-
 function initTransportMap(){
 
-  const element =
-    document.getElementById("transportMap");
+  if(transportMap)return;
 
-  if(!element) return;
+  const element=document.getElementById("transportMap");
 
-  if(transportMap){
+  if(!element)return;
 
-    transportMap.invalidateSize();
-
-    return;
-
-  }
-
-  transportMap =
-    L.map("transportMap")
-      .setView(
-        [5.6037,-0.1870],
-        13
-      );
+  transportMap=L.map(
+    "transportMap"
+  ).setView(
+    [5.6037,-0.1870],
+    13
+  );
 
   L.tileLayer(
     "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
@@ -3986,59 +3248,204 @@ function initTransportMap(){
       attribution:"© OpenStreetMap contributors"
     }
   ).addTo(transportMap);
+}
 
-  const transport =
-    nearbyLocations.filter(
-      x=>x.category==="transport"
-    );
+function renderTransport(){
 
-  transport.forEach(loc=>{
+  initTransportMap();
 
-    L.marker([loc.lat,loc.lng])
-      .addTo(transportMap)
-      .bindPopup(`
-        <strong>${escapeHtml(loc.name)}</strong>
-        <p>${escapeHtml(loc.address)}</p>
-        <button
-          onclick="openDirections(${loc.lat},${loc.lng})"
-        >
-          Directions
-        </button>
-      `);
+  const transport=nearbyLocations.filter(
+    x=>x.category==="transport"
+  );
+
+  transport.forEach(x=>{
+
+    L.marker([
+      x.lat,
+      x.lng
+    ])
+    .addTo(transportMap)
+    .bindPopup(`
+
+      <strong>${escapeHtml(x.name)}</strong>
+
+      <br>
+
+      📍 ${escapeHtml(x.location)}
+
+      <br><br>
+
+      <button
+        onclick="openDirections(${x.lat},${x.lng})"
+      >
+        Directions
+      </button>
+
+    `);
 
   });
 
+  const box=document.getElementById("transportList");
+
+  if(box){
+
+    box.innerHTML=transport
+      .map(locationItemHTML)
+      .join("");
+  }
 }
 
+/* =========================
+   BUSINESSES
+========================= */
 
-/* =========================================================
-   NAVIGATION MAP
-   ========================================================= */
+function renderBusinesses(){
+
+  const box=document.getElementById("businessList");
+
+  const businesses=nearbyLocations.filter(
+    x=>x.category==="businesses"
+  );
+
+  if(box){
+
+    box.innerHTML=businesses
+      .map(locationItemHTML)
+      .join("");
+  }
+
+  const mapBox=document.getElementById("businessPageMap");
+
+  if(mapBox){
+
+    mapBox.innerHTML=`
+      <div id="sellerMap"></div>
+    `;
+
+    const map=L.map("sellerMap").setView(
+      [5.6037,-0.1870],
+      13
+    );
+
+    L.tileLayer(
+      "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+      {
+        attribution:"© OpenStreetMap contributors"
+      }
+    ).addTo(map);
+
+    const bounds=[];
+
+    businesses.forEach(x=>{
+
+      L.marker([
+        x.lat,
+        x.lng
+      ])
+      .addTo(map)
+      .bindPopup(`
+
+        <strong>${escapeHtml(x.name)}</strong>
+
+        <br>
+
+        📍 ${escapeHtml(x.location)}
+
+        <br><br>
+
+        <button
+          onclick="openDirections(${x.lat},${x.lng})"
+        >
+          Directions
+        </button>
+
+      `);
+
+      bounds.push([
+        x.lat,
+        x.lng
+      ]);
+
+    });
+
+    if(bounds.length){
+      map.fitBounds(
+        bounds,
+        {
+          padding:[35,35],
+          maxZoom:16
+        }
+      );
+    }
+  }
+}
+
+/* =========================
+   SERVICES
+========================= */
+
+function renderServices(){
+
+  const box=document.getElementById("serviceList");
+
+  if(!box)return;
+
+  const services=nearbyLocations.filter(
+    x=>x.category==="services"
+  );
+
+  box.innerHTML=services.map(x=>`
+
+    <div class="card">
+
+      <h3>🛠 ${escapeHtml(x.name)}</h3>
+
+      <p style="margin:7px 0;">
+        📍 ${escapeHtml(x.location)}
+      </p>
+
+      <button
+        class="btn"
+        onclick="openDirections(${x.lat},${x.lng})"
+      >
+        Directions
+      </button>
+
+      <button
+        class="btn secondary"
+        onclick="shareLocation('${x.id}')"
+      >
+        Share
+      </button>
+
+    </div>
+
+  `).join("");
+}
+
+/* =========================
+   NAVIGATION
+========================= */
 
 let navigationMap=null;
-
+let navigationMarker=null;
 
 function initNavigationMap(){
 
-  const element =
-    document.getElementById("navigationMap");
+  if(navigationMap)return;
 
-  if(!element) return;
+  const element=document.getElementById(
+    "navigationMap"
+  );
 
-  if(navigationMap){
+  if(!element)return;
 
-    navigationMap.invalidateSize();
-
-    return;
-
-  }
-
-  navigationMap =
-    L.map("navigationMap")
-      .setView(
-        [5.6037,-0.1870],
-        13
-      );
+  navigationMap=L.map(
+    "navigationMap"
+  ).setView(
+    [5.6037,-0.1870],
+    12
+  );
 
   L.tileLayer(
     "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
@@ -4046,16 +3453,14 @@ function initNavigationMap(){
       attribution:"© OpenStreetMap contributors"
     }
   ).addTo(navigationMap);
-
 }
-
 
 async function searchNavigation(){
 
-  const query =
-    document.getElementById("navigationSearch")
-    .value
-    .trim();
+  const query=
+    document.getElementById(
+      "navigationSearch"
+    ).value.trim();
 
   if(!query){
 
@@ -4064,552 +3469,105 @@ async function searchNavigation(){
     return;
   }
 
-  const results =
-    document.getElementById("navigationResults");
-
-  results.innerHTML =
-    `<p class="muted">Searching...</p>`;
-
-  try{
-
-    const response =
-      await fetch(
-        "https://nominatim.openstreetmap.org/search?format=json&limit=5&q="+
-        encodeURIComponent(query)
-      );
-
-    const data =
-      await response.json();
-
-    if(!data.length){
-
-      results.innerHTML =
-        `<p class="muted">No location found.</p>`;
-
-      return;
-
-    }
-
-    results.innerHTML =
-      data.map((place,index)=>`
-
-        <div class="location-card">
-
-          <strong>
-            ${escapeHtml(place.display_name)}
-          </strong>
-
-          <div class="location-actions">
-
-            <button
-              class="btn small"
-              onclick="showNavigationPlace(${index})"
-            >
-              View on Map
-            </button>
-
-            <button
-              class="btn small secondary"
-              onclick="openDirections(${place.lat},${place.lon})"
-            >
-              🧭 Directions
-            </button>
-
-          </div>
-
-        </div>
-
-      `).join("");
-
-    window.navigationSearchResults=data;
-
-  }catch(error){
-
-    results.innerHTML =
-      `<p class="muted">Map search is temporarily unavailable.</p>`;
-
-  }
-
-}
-
-
-function showNavigationPlace(index){
-
-  const place =
-    window.navigationSearchResults[index];
-
-  if(!place) return;
-
   initNavigationMap();
 
-  navigationMap.setView(
-    [place.lat,place.lon],
-    16
-  );
+  const box=
+    document.getElementById(
+      "navigationResults"
+    );
 
-  L.marker([
-    place.lat,
-    place.lon
-  ])
-  .addTo(navigationMap)
-  .bindPopup(
-    escapeHtml(place.display_name)
-  )
-  .openPopup();
-
-}
-
-
-/* =========================================================
-   SHARING
-   ========================================================= */
-
-async function shareContent(
-  title,
-  url=window.location.href,
-  text="Check this out on RockyX."
-){
-
-  const shareData={
-    title:title || "RockyX",
-    text,
-    url
-  };
+  box.innerHTML=
+    `<div class="empty">Searching...</div>`;
 
   try{
 
-    if(navigator.share){
+    const response=await fetch(
+      "https://nominatim.openstreetmap.org/search?format=json&q="
+      +
+      encodeURIComponent(query)
+    );
 
-      await navigator.share(shareData);
+    const results=await response.json();
 
-      addNotification(
-        "↗️",
-        "Content shared successfully."
-      );
+    if(!results.length){
+
+      box.innerHTML=
+        `<div class="empty">No place found.</div>`;
 
       return;
-
     }
 
-    if(navigator.clipboard){
-
-      await navigator.clipboard.writeText(url);
-
-      alert(
-        "Sharing is not available directly on this device.\n\n"+
-        "The link has been copied. You can paste it into WhatsApp, Messenger, Facebook, Messages, email or another app."
-      );
-
-      return;
-
-    }
-
-    prompt(
-      "Copy this RockyX link:",
-      url
-    );
-
-  }catch(error){
-
-    if(error.name==="AbortError") return;
-
-    alert(
-      "Sharing could not be completed on this device."
-    );
-
-  }
-
-}
-
-
-function shareVideo(id){
-
-  const video =
-    findVideo(id);
-
-  if(!video) return;
-
-  const url =
-    window.location.origin +
-    window.location.pathname +
-    "?video="+encodeURIComponent(id);
-
-  shareContent(
-    video.title,
-    url,
-    "Check out this video on RockyX."
-  );
-
-}
-
-
-function sharePost(id){
-
-  const post =
-    feedPosts.find(x=>x.id===id);
-
-  if(!post) return;
-
-  const url =
-    window.location.origin +
-    window.location.pathname +
-    "?post="+encodeURIComponent(id);
-
-  shareContent(
-    post.user,
-    url,
-    post.text
-  );
-
-}
-
-
-function shareProduct(id){
-
-  const product =
-    products.find(x=>x.id===id);
-
-  if(!product) return;
-
-  const url =
-    window.location.origin +
-    window.location.pathname +
-    "?product="+encodeURIComponent(id);
-
-  shareContent(
-    product.name,
-    url,
-    "Check out this product on RockyX."
-  );
-
-}
-
-
-function shareLocation(id){
-
-  const location =
-    nearbyLocations.find(x=>x.id===id);
-
-  if(!location) return;
-
-  const url =
-    window.location.origin +
-    window.location.pathname +
-    "?location="+encodeURIComponent(id);
-
-  shareContent(
-    location.name,
-    url,
-    location.address
-  );
-
-}
-
-
-function handleSharedUrl(){
-
-  const params =
-    new URLSearchParams(
-      window.location.search
-    );
-
-  const videoId =
-    params.get("video");
-
-  const postId =
-    params.get("post");
-
-  const productId =
-    params.get("product");
-
-  const locationId =
-    params.get("location");
-
-  if(videoId){
-
-    showPage("shorts");
-
-    setTimeout(()=>{
-
-      const video =
-        findVideo(videoId);
-
-      if(video){
-
-        alert(
-          "Shared video: " + video.title
-        );
-
-      }
-
-    },200);
-
-  }
-
-  if(postId){
-
-    showPage("home");
-
-  }
-
-  if(productId){
-
-    showPage("marketplace");
-
-  }
-
-  if(locationId){
-
-    focusNearbyLocation(locationId);
-
-  }
-
-}
-
-
-/* =========================================================
-   SAVED CONTENT
-   ========================================================= */
-
-function saveContent(type,id){
-
-  const saved =
-    getStorage(STORAGE.saved,[]);
-
-  const exists =
-    saved.some(
-      x=>x.type===type && x.id===id
-    );
-
-  if(exists){
-
-    alert("Already saved.");
-
-    return;
-
-  }
-
-  saved.push({
-    type,
-    id
-  });
-
-  setStorage(STORAGE.saved,saved);
-
-  addNotification(
-    "🔖",
-    "Content saved."
-  );
-
-  renderSaved();
-
-}
-
-
-function renderSaved(){
-
-  const saved =
-    getStorage(STORAGE.saved,[]);
-
-  const container =
-    document.getElementById("savedContent");
-
-  if(!saved.length){
-
-    container.innerHTML =
-      `<p class="muted">Nothing saved yet.</p>`;
-
-    return;
-
-  }
-
-  container.innerHTML =
-    saved.map(item=>{
-
-      let title=item.id;
-
-      if(item.type==="video"){
-
-        const video =
-          findVideo(item.id);
-
-        title =
-          video ? video.title : item.id;
-
-      }
-
-      if(item.type==="post"){
-
-        const post =
-          feedPosts.find(x=>x.id===item.id);
-
-        title =
-          post ? post.text : item.id;
-
-      }
-
-      return `
-        <div class="location-card">
-          <strong>${escapeHtml(title)}</strong>
-          <p class="muted">${escapeHtml(item.type)}</p>
-        </div>
-      `;
-
-    }).join("");
-
-}
-
-
-/* =========================================================
-   NOTIFICATIONS
-   ========================================================= */
-
-function addNotification(icon,message){
-
-  const notifications =
-    getStorage(STORAGE.notifications,[]);
-
-  notifications.unshift({
-    id:Date.now(),
-    icon,
-    message,
-    read:false,
-    createdAt:new Date().toISOString()
-  });
-
-  setStorage(
-    STORAGE.notifications,
-    notifications.slice(0,100)
-  );
-
-  updateNotificationBadge();
-
-}
-
-
-function renderNotifications(){
-
-  const notifications =
-    getStorage(STORAGE.notifications,[]);
-
-  const container =
-    document.getElementById("notificationList");
-
-  if(!notifications.length){
-
-    container.innerHTML =
-      `<p class="muted">No notifications yet.</p>`;
-
-    return;
-
-  }
-
-  container.innerHTML =
-    notifications.map(n=>`
-
-      <div
-        class="notification"
-        style="${n.read ? "" : "background:#f0f6ff"}"
-      >
-
-        <div class="notification-icon">
-          ${escapeHtml(n.icon)}
-        </div>
-
-        <div>
-
-          <strong>
-            ${escapeHtml(n.message)}
-          </strong>
-
-          <div class="muted">
-            ${new Date(n.createdAt).toLocaleString()}
-          </div>
-
-        </div>
+    box.innerHTML=results.slice(0,5).map((r,i)=>`
+
+      <div class="locationItem">
+
+        <h3>
+          ${escapeHtml(r.display_name)}
+        </h3>
+
+        <button
+          class="btn"
+          onclick="showNavigationResult(
+            ${r.lat},
+            ${r.lon},
+            '${escapeHtml(r.display_name).replace(/'/g,"\\'")}'
+          )"
+        >
+          Show on Map
+        </button>
+
+        <button
+          class="btn secondary"
+          onclick="openDirections(${r.lat},${r.lon})"
+        >
+          Directions
+        </button>
 
       </div>
 
     `).join("");
 
+  }catch(error){
+
+    box.innerHTML=
+      `<div class="empty">
+        Search failed. Try again.
+      </div>`;
+  }
 }
 
+function showNavigationResult(lat,lng,name){
 
-function updateNotificationBadge(){
+  initNavigationMap();
 
-  const notifications =
-    getStorage(STORAGE.notifications,[]);
+  if(navigationMarker){
+    navigationMap.removeLayer(
+      navigationMarker
+    );
+  }
 
-  const unread =
-    notifications.filter(n=>!n.read).length;
+  navigationMarker=L.marker([
+    lat,lng
+  ])
+  .addTo(navigationMap)
+  .bindPopup(
+    `<strong>${escapeHtml(name)}</strong>`
+  )
+  .openPopup();
 
-  const badge =
-    document.getElementById("notificationBadge");
-
-  badge.textContent=unread;
-
-  badge.classList.toggle(
-    "hidden",
-    unread===0
+  navigationMap.setView(
+    [lat,lng],
+    16
   );
-
 }
 
+/* =========================
+   AD SYSTEM
+========================= */
 
-function markNotificationsRead(){
-
-  const notifications =
-    getStorage(STORAGE.notifications,[]);
-
-  notifications.forEach(n=>{
-    n.read=true;
-  });
-
-  setStorage(
-    STORAGE.notifications,
-    notifications
-  );
-
-  renderNotifications();
-
-  updateNotificationBadge();
-
-}
-
-
-/* =========================================================
-   ADVERTISEMENT GATE
-   ========================================================= */
-
-/*
- IMPORTANT:
-
- This is a FRONTEND DEMO.
-
- The countdown below is NOT a real advertisement
- and does NOT create real advertising revenue.
-
- Production version should:
-
- 1. Load an actual approved advertising provider.
- 2. Display a real eligible ad.
- 3. Record the ad impression/event.
- 4. Verify the event on the backend.
- 5. Only then unlock:
-      - music playback
-      - music download
-      - video download
-      - navigation
- 6. Calculate advertising revenue on the backend.
-
- Never trust a frontend-only countdown for real money.
-*/
-
-
-let adGateCallback=null;
+let adCallback=null;
 let adTimer=null;
-let adSeconds=5;
-
+let adRemaining=5;
 
 function startAdGate(
   title,
@@ -4617,436 +3575,1103 @@ function startAdGate(
   callback
 ){
 
-  adGateCallback=callback;
+  adCallback=callback;
+  adRemaining=5;
 
-  adSeconds=5;
+  document.getElementById(
+    "adTitle"
+  ).textContent=title;
 
-  document.getElementById("adTitle")
-    .textContent=title;
+  document.getElementById(
+    "adMessage"
+  ).textContent=message;
 
-  document.getElementById("adMessage")
-    .textContent=message;
+  document.getElementById(
+    "adCountdown"
+  ).textContent=adRemaining;
 
-  document.getElementById("adCountdown")
-    .textContent=adSeconds;
+  document.getElementById(
+    "adContinue"
+  ).style.display="none";
 
-  const continueBtn =
-    document.getElementById("adContinueBtn");
-
-  continueBtn.disabled=true;
-
-  continueBtn.textContent=
-    "Please wait...";
-
-  document.getElementById("adCloseBtn")
-    .disabled=true;
-
-  document.getElementById("adModal")
-    .classList.remove("hidden");
+  document.getElementById(
+    "adModal"
+  ).classList.add("show");
 
   clearInterval(adTimer);
 
-  adTimer =
-    setInterval(()=>{
+  adTimer=setInterval(()=>{
 
-      adSeconds--;
+    adRemaining--;
 
-      document.getElementById("adCountdown")
-        .textContent=adSeconds;
+    document.getElementById(
+      "adCountdown"
+    ).textContent=adRemaining;
 
-      if(adSeconds<=0){
+    if(adRemaining<=0){
 
-        clearInterval(adTimer);
+      clearInterval(adTimer);
 
-        continueBtn.disabled=false;
+      document.getElementById(
+        "adCountdown"
+      ).textContent="✓";
 
-        continueBtn.textContent=
-          "Continue";
+      document.getElementById(
+        "adContinue"
+      ).style.display="block";
+    }
 
-        document.getElementById("adCloseBtn")
-          .disabled=false;
-
-      }
-
-    },1000);
-
+  },1000);
 }
-
 
 function finishAdGate(){
 
-  const callback =
-    adGateCallback;
+  closeModal("adModal");
 
-  adGateCallback=null;
+  if(typeof adCallback==="function"){
 
-  document.getElementById("adModal")
-    .classList.add("hidden");
+    const callback=adCallback;
 
-  if(callback){
-
-    /*
-      In production, backend verification
-      must happen before this callback.
-    */
+    adCallback=null;
 
     callback();
-
   }
-
 }
 
+/*
+IMPORTANT:
 
-function closeAdModal(){
+This is only a frontend demonstration.
 
-  if(
-    document.getElementById("adCloseBtn").disabled
-  ){
+A production RockyX advertising system should use:
 
-    return;
+1. Real approved ad provider
+2. Backend verification
+3. Ad impression/event tracking
+4. Anti-fraud protection
+5. Revenue reporting
+6. Rules for creator/rightsholder payouts
 
-  }
+Do not treat this demo countdown as a real advertisement impression.
+*/
 
-  clearInterval(adTimer);
+/* =========================
+   VIDEO EDITOR
+========================= */
 
-  adGateCallback=null;
+function loadEditorVideo(event){
 
-  document.getElementById("adModal")
-    .classList.add("hidden");
+  const file=event.target.files[0];
 
-}
+  if(!file)return;
 
-
-/* =========================================================
-   DOWNLOAD HELPER
-   ========================================================= */
-
-function downloadFile(url,filename){
-
-  const link =
-    document.createElement("a");
-
-  link.href=url;
-
-  link.download=filename;
-
-  link.target="_blank";
-
-  document.body.appendChild(link);
-
-  link.click();
-
-  link.remove();
-
-}
-
-
-/* =========================================================
-   EDITOR
-   ========================================================= */
-
-function loadEditorVideo(){
-
-  const input =
-    document.getElementById("editorVideoInput");
-
-  const file =
-    input.files[0];
-
-  if(!file) return;
-
-  const url =
+  const url=
     URL.createObjectURL(file);
 
-  document.getElementById("editorPreview").innerHTML=`
-
-    <div class="card">
-
-      <video
-        controls
-        style="width:100%;max-height:450px;background:#000"
-        src="${url}"
-      ></video>
-
-      <p class="muted">
-        ${escapeHtml(file.name)}
-      </p>
-
-    </div>
-
-  `;
-
+  document.getElementById(
+    "editorPreview"
+  ).src=url;
 }
 
+function addEditorText(){
 
-function editorAction(action){
+  const text=prompt(
+    "Enter text to add to the video:"
+  );
 
-  const messages={
-    text:"Text tool selected.",
-    sound:"Sound tool selected.",
-    trim:"Trim tool selected.",
-    filter:"Filter tool selected.",
-    speed:"Speed tool selected.",
-    save:"Draft saved."
-  };
+  if(text){
 
-  alert(messages[action] || "Editor tool selected.");
-
-  if(action==="save"){
-
-    const drafts =
-      getStorage(STORAGE.drafts,[]);
-
-    drafts.push({
-      createdAt:new Date().toISOString()
-    });
-
-    setStorage(
-      STORAGE.drafts,
-      drafts
+    addNotification(
+      "✏️",
+      `Editor text added: ${text}`
     );
-
   }
-
 }
 
+function addEditorSound(){
 
-function publishEditedVideo(){
+  showPage("sounds");
+}
 
-  const input =
-    document.getElementById("editorVideoInput");
+function trimVideo(){
 
-  const file =
-    input.files[0];
+  alert(
+    "Trim controls will be connected to the full video-processing backend."
+  );
+}
 
-  if(!file){
+function saveEditorDraft(){
+
+  addNotification(
+    "💾",
+    "Video draft saved."
+  );
+
+  alert("Draft saved in frontend demo mode.");
+}
+
+function publishEditedVideo(isShort){
+
+  addNotification(
+    "⬆️",
+    isShort
+      ? "Short published in demo mode."
+      : "Video published in demo mode."
+  );
+
+  alert(
+    isShort
+      ? "Short published in demo mode."
+      : "Video published in demo mode."
+  );
+}
+
+function uploadDemoVideo(isShort){
+
+  const input=
+    document.getElementById("uploadVideo");
+
+  const title=
+    document.getElementById("uploadTitle").value
+    || "My RockyX Video";
+
+  if(!input.files.length){
 
     alert("Choose a video first.");
 
     return;
   }
 
-  const url =
-    URL.createObjectURL(file);
+  const downloads=
+    document.getElementById(
+      "allowDownloads"
+    ).checked;
 
-  const newVideo={
-    id:"video_"+Date.now(),
-    title:file.name,
-    creator:currentUser ?
-      currentUser.name :
-      "RockyX Creator",
-    type:"long",
-    src:url
-  };
+  state.videos.push({
 
-  videos.unshift(newVideo);
+    id:"user-"+Date.now(),
 
-  setStorage(
-    STORAGE.videos,
-    videos
-  );
+    title,
 
-  addNotification(
-    "🎬",
-    "Your video was published."
-  );
+    short:isShort,
 
-  alert("Video published.");
+    downloads,
 
-  showPage("videos");
+    local:true
 
-}
+  });
 
-
-/* =========================================================
-   UPLOAD
-   ========================================================= */
-
-function demoUpload(){
-
-  const file =
-    document.getElementById("uploadFile").files[0];
-
-  const type =
-    document.getElementById("uploadType").value;
-
-  if(!file){
-
-    alert("Choose a file first.");
-
-    return;
-
-  }
+  saveState();
 
   addNotification(
     "⬆️",
-    type + " upload selected."
+    `${title} was published in frontend demo mode.`
   );
 
   alert(
-    "Demo upload complete.\n\n" +
-    "The real file-storage system will be connected in the backend stage."
+    "Published in frontend demo mode."
   );
-
 }
 
+/* =========================
+   SAVED
+========================= */
 
-/* =========================================================
-   LIVE
-   ========================================================= */
+function renderSaved(){
 
-function startDemoLive(){
+  const box=document.getElementById(
+    "savedContent"
+  );
 
-  document.getElementById("liveArea").innerHTML=`
+  if(!box)return;
+
+  if(!state.saved.length){
+
+    box.innerHTML=
+      `<div class="empty">Nothing saved yet.</div>`;
+
+    return;
+  }
+
+  box.innerHTML=state.saved.map(id=>`
 
     <div class="card">
-
-      <h2>🔴 Demo Live Stream</h2>
-
-      <p>
-        Your demo live stream is active.
-      </p>
-
-      <button
-        class="btn danger"
-        onclick="stopDemoLive()"
-      >
-        Stop Live
-      </button>
-
+      🔖 Saved content: ${escapeHtml(id)}
     </div>
 
-  `;
-
-  addNotification(
-    "🔴",
-    "Your demo live stream started."
-  );
-
+  `).join("");
 }
 
+/* =========================
+   ACCOUNT
+========================= */
 
-function stopDemoLive(){
+function saveAccount(){
 
-  document.getElementById("liveArea").innerHTML="";
+  state.account={
+    name:document.getElementById("accountName").value,
+    email:document.getElementById("accountEmail").value,
+    phone:document.getElementById("accountPhone").value,
+    country:document.getElementById("accountCountry").value,
+    type:document.getElementById("accountType").value
+  };
+
+  saveState();
+
+  document.getElementById(
+    "profileName"
+  ).textContent=
+    state.account.name || "RockyX User";
+
+  document.getElementById(
+    "profileEmail"
+  ).textContent=
+    state.account.email || "Not signed in";
 
   addNotification(
-    "⏹️",
-    "Your live stream ended."
+    "👤",
+    "Account information saved."
   );
 
+  alert("Account saved.");
 }
 
+function loadAccount(){
 
-/* =========================================================
-   VERIFICATION
-   ========================================================= */
+  const a=state.account;
+
+  if(!a)return;
+
+  document.getElementById(
+    "accountName"
+  ).value=a.name || "";
+
+  document.getElementById(
+    "accountEmail"
+  ).value=a.email || "";
+
+  document.getElementById(
+    "accountPhone"
+  ).value=a.phone || "";
+
+  document.getElementById(
+    "accountCountry"
+  ).value=a.country || "";
+
+  document.getElementById(
+    "accountType"
+  ).value=a.type || "Personal User";
+
+  document.getElementById(
+    "profileName"
+  ).textContent=
+    a.name || "RockyX User";
+
+  document.getElementById(
+    "profileEmail"
+  ).textContent=
+    a.email || "Not signed in";
+}
+
+function demoSignIn(){
+
+  const email=
+    document.getElementById(
+      "accountEmail"
+    ).value
+    || "demo@rockyx.local";
+
+  state.account.email=email;
+
+  saveState();
+
+  loadAccount();
+
+  addNotification(
+    "🔐",
+    "You signed in using frontend demo mode."
+  );
+
+  alert(
+    "Signed in using frontend demo mode."
+  );
+}
+
+function demoSignOut(){
+
+  state.account={};
+
+  saveState();
+
+  loadAccount();
+
+  addNotification(
+    "🔐",
+    "You signed out."
+  );
+
+  alert("Signed out.");
+}
+
+/* =========================
+   SETTINGS
+========================= */
+
+function saveSettings(){
+
+  state.settings.allowDownloads=
+    document.querySelector(
+      "#settings input:nth-of-type(1)"
+    )?.checked ?? true;
+
+  saveState();
+
+  addNotification(
+    "⚙️",
+    "Settings saved."
+  );
+
+  alert("Settings saved.");
+}
+
+/* =========================
+   ADMIN
+========================= */
+
+function openAdmin(){
+
+  const code=
+    document.getElementById(
+      "adminCode"
+    ).value.trim();
+
+  if(code!=="ROCKYX-ADMIN-DEMO"){
+
+    alert("Invalid admin code.");
+
+    return;
+  }
+
+  document.getElementById(
+    "adminPanel"
+  ).style.display="block";
+
+  alert(
+    "Admin demo access granted."
+  );
+}
+
+/* =========================
+   CREATOR
+========================= */
 
 function checkVerification(){
 
   alert(
-    "Verification eligibility will be checked automatically by the real backend using creator performance and account requirements."
+    "Your verification access will be checked against RockyX's configured creator requirements after the backend is connected."
   );
-
 }
 
+function useTemplate(name){
 
-/* =========================================================
-   ADMIN
-   ========================================================= */
+  addNotification(
+    "🎨",
+    `${name} template selected.`
+  );
 
-function openAdmin(){
+  showPage("editor");
+}
 
-  const code =
-    document.getElementById("adminCode").value;
+/* =========================
+   LIVE
+========================= */
 
-  if(code!=="ROCKYX-ADMIN-DEMO"){
+function startLive(){
 
-    alert("Incorrect admin code.");
+  alert(
+    "Live streaming setup will be connected to the backend/live streaming provider."
+  );
+}
 
-    return;
+/* =========================
+   SEARCH
+========================= */
 
-  }
+function performSearch(){
 
-  document.getElementById("adminPanel").innerHTML=`
+  const q=
+    document.getElementById(
+      "globalSearch"
+    ).value.trim();
+
+  if(!q)return;
+
+  showPage("explore");
+
+  const query=q.toLowerCase();
+
+  const productResults=
+    products.filter(p=>
+      `${p.name} ${p.description} ${p.seller}`
+        .toLowerCase()
+        .includes(query)
+    );
+
+  const locationResults=
+    nearbyLocations.filter(x=>
+      `${x.name} ${x.type} ${x.location}`
+        .toLowerCase()
+        .includes(query)
+    );
+
+  const musicResults=
+    musicData.filter(x=>
+      `${x.title} ${x.artist} ${x.album}`
+        .toLowerCase()
+        .includes(query)
+    );
+
+  const videoResultsSearch=
+    demoVideos.filter(x=>
+      x.title.toLowerCase()
+        .includes(query)
+    );
+
+  const box=
+    document.getElementById(
+      "searchResults"
+    );
+
+  box.innerHTML=`
 
     <div class="card">
 
-      <h2>🔒 Admin Dashboard</h2>
+      <h2>Search results</h2>
 
-      <div class="form-grid">
-
-        <div class="card">
-          <h3>Users</h3>
-          <strong>Demo</strong>
-        </div>
-
-        <div class="card">
-          <h3>Creators</h3>
-          <strong>Demo</strong>
-        </div>
-
-        <div class="card">
-          <h3>Orders</h3>
-          <strong>${getStorage(STORAGE.orders,[]).length}</strong>
-        </div>
-
-        <div class="card">
-          <h3>Ads</h3>
-          <strong>Demo</strong>
-        </div>
-
-      </div>
-
-      <h3>Advertising Controls</h3>
-
-      <p>
-        Real ad-provider settings will be controlled from the secure backend.
+      <p style="margin:8px 0 15px;">
+        Results for:
+        <strong>${escapeHtml(q)}</strong>
       </p>
-
-      <button
-        class="btn"
-        onclick="alert('Demo advertising settings opened.')"
-      >
-        Manage Advertising
-      </button>
 
     </div>
 
-  `;
+    ${
+      productResults.length
+      ?
+      `
+      <div class="card">
 
+        <h3>🛍 Products</h3>
+
+        <div class="grid" style="margin-top:10px;">
+          ${productResults.map(productCard).join("")}
+        </div>
+
+      </div>
+      `
+      :
+      ""
+    }
+
+    ${
+      locationResults.length
+      ?
+      `
+      <div class="card">
+
+        <h3>📍 Nearby Locations</h3>
+
+        <div class="locationList" style="margin-top:10px;">
+          ${locationResults.map(locationItemHTML).join("")}
+        </div>
+
+      </div>
+      `
+      :
+      ""
+    }
+
+    ${
+      musicResults.length
+      ?
+      `
+      <div class="card">
+
+        <h3>🎵 Music</h3>
+
+        ${musicResults.map(musicCard).join("")}
+
+      </div>
+      `
+      :
+      ""
+    }
+
+    ${
+      videoResultsSearch.length
+      ?
+      `
+      <div class="card">
+
+        <h3>🎬 Videos</h3>
+
+        ${videoResultsSearch.map(videoCard).join("")}
+
+      </div>
+      `
+      :
+      ""
+    }
+
+    ${
+      !productResults.length &&
+      !locationResults.length &&
+      !musicResults.length &&
+      !videoResultsSearch.length
+      ?
+      `<div class="empty">
+        No results found.
+      </div>`
+      :
+      ""
+    }
+
+  `;
 }
 
+/* =========================
+   AI HELP
+========================= */
 
-/* =========================================================
-   DEMO MESSAGE
-   ========================================================= */
+function toggleAI(){
 
-function sendDemoMessage(){
+  document.getElementById(
+    "aiPanel"
+  ).classList.toggle("show");
 
-  const input =
-    document.getElementById("messageInput");
+  setTimeout(()=>{
+    document.getElementById(
+      "aiInput"
+    )?.focus();
+  },100);
+}
 
-  const message =
-    input.value.trim();
+function sendAI(){
 
-  if(!message) return;
+  const input=
+    document.getElementById(
+      "aiInput"
+    );
+
+  const text=input.value.trim();
+
+  if(!text)return;
+
+  askAI(text);
 
   input.value="";
-
-  addNotification(
-    "💬",
-    "Your message was sent."
-  );
-
-  alert("Demo message sent.");
-
 }
 
+function askAI(text){
 
-/* =========================================================
-   SECURITY HELPERS
-   ========================================================= */
+  addAIMessage(
+    text,
+    "user"
+  );
+
+  setTimeout(()=>{
+
+    const response=
+      getAIRuleResponse(text);
+
+    addAIMessage(
+      response.text,
+      "bot"
+    );
+
+    if(response.action){
+      addAIAction(
+        response.action
+      );
+    }
+
+  },350);
+}
+
+function addAIMessage(text,type){
+
+  const box=
+    document.getElementById(
+      "aiMessages"
+    );
+
+  const div=document.createElement("div");
+
+  div.className=
+    "aiMsg "+type;
+
+  div.innerHTML=
+    escapeHtml(text)
+      .replace(/\n/g,"<br>");
+
+  box.appendChild(div);
+
+  box.scrollTop=box.scrollHeight;
+}
+
+function addAIAction(action){
+
+  const box=
+    document.getElementById(
+      "aiMessages"
+    );
+
+  if(!action)return;
+
+  const button=document.createElement(
+    "button"
+  );
+
+  button.className="btn";
+
+  button.style.marginBottom="10px";
+
+  button.textContent=
+    action.label;
+
+  button.onclick=()=>{
+    action.run();
+  };
+
+  box.appendChild(button);
+
+  box.scrollTop=box.scrollHeight;
+}
+
+function getAIRuleResponse(question){
+
+  const q=question.toLowerCase();
+
+  if(
+    q.includes("short") &&
+    (
+      q.includes("upload") ||
+      q.includes("create") ||
+      q.includes("post")
+    )
+  ){
+
+    return{
+
+      text:
+`To upload a Short, open Upload from the menu, choose your video, enter a title and choose Publish Short.`,
+
+      action:{
+        label:"Open Upload",
+        run:()=>showPage("upload")
+      }
+
+    };
+  }
+
+  if(
+    q.includes("video") &&
+    (
+      q.includes("download") ||
+      q.includes("save")
+    )
+  ){
+
+    return{
+
+      text:
+`For videos that allow downloads, tap the Download button. In the current frontend demo, an advertisement gate appears first. The real download and ad verification will be connected through the backend.`,
+
+      action:{
+        label:"Open Videos",
+        run:()=>showPage("videos")
+      }
+
+    };
+  }
+
+  if(
+    q.includes("nearby") ||
+    q.includes("business") ||
+    q.includes("restaurant") ||
+    q.includes("hotel") ||
+    q.includes("fuel") ||
+    q.includes("transport")
+  ){
+
+    let category="all";
+
+    if(q.includes("business"))
+      category="businesses";
+
+    else if(q.includes("restaurant"))
+      category="restaurants";
+
+    else if(q.includes("hotel"))
+      category="hotels";
+
+    else if(q.includes("fuel"))
+      category="fuel";
+
+    else if(q.includes("transport"))
+      category="transport";
+
+    return{
+
+      text:
+`You can use Nearby to find businesses, sellers, services, transport, fuel stations, hotels and restaurants. The map shows the available locations and lets you open directions.`,
+
+      action:{
+        label:"Open Nearby",
+        run:()=>openNearbyCategory(category)
+      }
+
+    };
+  }
+
+  if(
+    q.includes("marketplace") ||
+    q.includes("buy") ||
+    q.includes("product") ||
+    q.includes("shop")
+  ){
+
+    return{
+
+      text:
+`Marketplace lets you browse products, add products to your cart and place an order. Sellers will eventually manage their products and orders through their accounts.`,
+
+      action:{
+        label:"Open Marketplace",
+        run:()=>showPage("marketplace")
+      }
+
+    };
+  }
+
+  if(
+    q.includes("music") ||
+    q.includes("song") ||
+    q.includes("artist") ||
+    q.includes("album")
+  ){
+
+    return{
+
+      text:
+`Music lets users discover songs, artists and albums. Artists will eventually be able to upload and manage their music through the creator system.`,
+
+      action:{
+        label:"Open Music",
+        run:()=>showPage("music")
+      }
+
+    };
+  }
+
+  if(
+    q.includes("sound")
+  ){
+
+    return{
+
+      text:
+`Sounds lets you discover sounds, save sounds and use them when creating content.`,
+
+      action:{
+        label:"Open Sounds",
+        run:()=>showPage("sounds")
+      }
+
+    };
+  }
+
+  if(
+    q.includes("verify") ||
+    q.includes("blue tick") ||
+    q.includes("verification")
+  ){
+
+    return{
+
+      text:
+`Creator verification is intended for eligible creators who meet RockyX's configured performance, authenticity, security and Community Guidelines requirements.`,
+
+      action:{
+        label:"Open Verification",
+        run:()=>showPage("verification")
+      }
+
+    };
+  }
+
+  if(
+    q.includes("earn") ||
+    q.includes("money") ||
+    q.includes("payout") ||
+    q.includes("revenue")
+  ){
+
+    return{
+
+      text:
+`The Earnings area will show eligible revenue from RockyX monetization programs. Actual payouts will require the secure backend and appropriate payment and verification systems.`,
+
+      action:{
+        label:"Open Earnings",
+        run:()=>showPage("earnings")
+      }
+
+    };
+  }
+
+  if(
+    q.includes("share") ||
+    q.includes("whatsapp") ||
+    q.includes("facebook") ||
+    q.includes("messenger")
+  ){
+
+    return{
+
+      text:
+`RockyX can use your device's native sharing system when available. Otherwise, it can copy the link so you can paste it into another app.`,
+
+      action:null
+
+    };
+  }
+
+  if(
+    q.includes("map") ||
+    q.includes("direction") ||
+    q.includes("navigation")
+  ){
+
+    return{
+
+      text:
+`Use Navigation to search for a place, or use Nearby to select a location and open directions.`,
+
+      action:{
+        label:"Open Navigation",
+        run:()=>showPage("navigation")
+      }
+
+    };
+  }
+
+  if(
+    q.includes("account") ||
+    q.includes("profile") ||
+    q.includes("settings")
+  ){
+
+    return{
+
+      text:
+`Your Account and Settings pages are where you will manage your profile, preferences, security and other account controls.`,
+
+      action:{
+        label:"Open Account",
+        run:()=>showPage("account")
+      }
+
+    };
+  }
+
+  if(
+    q.includes("security") ||
+    q.includes("privacy") ||
+    q.includes("password")
+  ){
+
+    return{
+
+      text:
+`Use the Security page for account-protection controls. The production backend will handle authentication, sessions, permissions and stronger security protections.`,
+
+      action:{
+        label:"Open Security",
+        run:()=>showPage("security")
+      }
+
+    };
+  }
+
+  if(
+    q.includes("live") ||
+    q.includes("stream")
+  ){
+
+    return{
+
+      text:
+`The Live section is where live streaming will be accessed. The real streaming service will be connected during backend development.`,
+
+      action:{
+        label:"Open Live",
+        run:()=>showPage("live")
+      }
+
+    };
+  }
+
+  if(
+    q.includes("editor") ||
+    q.includes("edit")
+  ){
+
+    return{
+
+      text:
+`The RockyX video editor is designed to let creators prepare videos, add text and sounds, save drafts and publish videos or Shorts.`,
+
+      action:{
+        label:"Open Editor",
+        run:()=>showPage("editor")
+      }
+
+    };
+  }
+
+  if(
+    q.includes("admin")
+  ){
+
+    return{
+
+      text:
+`The Admin section is intended to be private. In production, admin permissions and access must be enforced by the backend rather than frontend code alone.`,
+
+      action:{
+        label:"Open Admin",
+        run:()=>showPage("admin")
+      }
+
+    };
+  }
+
+  if(
+    q.includes("help") ||
+    q.includes("what can you do")
+  ){
+
+    return{
+
+      text:
+`I can help you with RockyX features such as Shorts, videos, music, sounds, marketplace, Nearby, navigation, sharing, creator tools, verification, earnings, security and account settings.`,
+
+      action:null
+
+    };
+  }
+
+  return{
+
+    text:
+`I can help with RockyX features and guide you around the app. Try asking something like “How do I upload a Short?”, “Find nearby businesses”, “How do I download a video?”, or “How does verification work?”`,
+
+    action:null
+
+  };
+}
+
+/*
+IMPORTANT:
+
+The AI Help above is a frontend demonstration.
+
+For the real RockyX AI assistant:
+
+User → RockyX frontend → secure backend → AI API → backend → RockyX
+
+The secret AI API key must NOT be placed in this public index.html.
+*/
+
+/* =========================
+   MODALS
+========================= */
+
+function closeModal(id){
+
+  document.getElementById(
+    id
+  )?.classList.remove("show");
+}
+
+/* =========================
+   URL SHARING
+========================= */
+
+function handleSharedUrl(){
+
+  const params=
+    new URLSearchParams(
+      window.location.search
+    );
+
+  const video=params.get("video");
+
+  const post=params.get("post");
+
+  const product=params.get("product");
+
+  const location=params.get("location");
+
+  const song=params.get("song");
+
+  if(video){
+
+    showPage("videos");
+
+    setTimeout(()=>{
+      const element=
+        document.getElementById(
+          "like-"+video
+        );
+
+      if(element){
+        element.scrollIntoView({
+          behavior:"smooth"
+        });
+      }
+    },300);
+  }
+
+  if(post){
+
+    showPage("home");
+  }
+
+  if(product){
+
+    showPage("marketplace");
+  }
+
+  if(location){
+
+    openNearbyCategory("all");
+
+    setTimeout(()=>{
+      focusNearbyLocation(location);
+    },400);
+  }
+
+  if(song){
+
+    showPage("music");
+  }
+}
+
+/* =========================
+   UTILITIES
+========================= */
 
 function escapeHtml(value){
 
@@ -5056,50 +4681,33 @@ function escapeHtml(value){
     .replace(/>/g,"&gt;")
     .replace(/"/g,"&quot;")
     .replace(/'/g,"&#039;");
-
 }
 
-
-function escapeAttr(value){
-
-  return escapeHtml(value);
-
-}
-
-
-/* =========================================================
+/* =========================
    INITIALIZE
-   ========================================================= */
+========================= */
 
 document.addEventListener(
   "DOMContentLoaded",
   ()=>{
 
-    updateAccountUI();
-
-    updateCartBadge();
-
-    updateNotificationBadge();
+    renderProducts();
 
     renderHomeFeed();
 
-    renderVideos("short");
-
-    renderVideos("long");
+    renderVideos();
 
     renderMusic();
 
-    renderSounds();
-
-    renderProducts();
-
-    renderCart();
+    renderSavedSounds();
 
     renderNotifications();
 
-    renderSaved();
+    loadAccount();
 
-    renderOrders();
+    updateNotificationCount();
+
+    renderServices();
 
     handleSharedUrl();
 
