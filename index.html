@@ -2,622 +2,533 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
 <title>RockyX</title>
 
-<link
-  rel="stylesheet"
-  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-/>
+<link rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
+*{box-sizing:border-box}
+:root{
+  --blue:#1264e8;
+  --blue2:#0b4fc4;
+  --light:#f4f8ff;
+  --white:#fff;
+  --text:#172033;
+  --muted:#6b7280;
+  --border:#dce5f3;
+  --danger:#e11d48;
+  --shadow:0 5px 22px rgba(20,60,120,.10)
 }
-
 body{
+  margin:0;
   font-family:Arial,Helvetica,sans-serif;
-  background:#f4f8ff;
-  color:#10213a;
+  background:var(--light);
+  color:var(--text)
 }
-
-button,
-input,
-select,
-textarea{
-  font:inherit;
+button,input,select,textarea{
+  font:inherit
 }
-
 button{
-  cursor:pointer;
+  cursor:pointer
 }
+.hidden{display:none!important}
 
-.header{
-  position:sticky;
-  top:0;
-  z-index:1000;
+header{
   height:64px;
-  background:#0866ff;
-  color:white;
+  background:var(--white);
+  border-bottom:1px solid var(--border);
   display:flex;
   align-items:center;
-  gap:10px;
-  padding:10px 16px;
-  box-shadow:0 2px 10px rgba(0,0,0,.15);
+  gap:12px;
+  padding:0 16px;
+  position:sticky;
+  top:0;
+  z-index:1000
 }
-
 .logo{
   font-size:24px;
   font-weight:800;
-  white-space:nowrap;
+  color:var(--blue);
+  white-space:nowrap
 }
-
-.searchBox{
+.search{
   flex:1;
   max-width:650px;
-  margin:auto;
+  margin:auto
 }
-
-.searchBox input{
+.search input{
   width:100%;
-  border:0;
-  outline:0;
-  padding:12px 16px;
-  border-radius:25px;
-  background:white;
-  color:#123;
+  border:1px solid var(--border);
+  border-radius:24px;
+  padding:11px 16px;
+  outline:none
 }
-
-.headerBtn{
+.header-actions{
+  display:flex;
+  gap:7px
+}
+.icon-btn{
   border:0;
-  background:white;
-  color:#0866ff;
-  padding:9px 12px;
+  background:#eef5ff;
+  color:var(--blue);
+  width:40px;
+  height:40px;
+  border-radius:50%
+}
+.badge{
+  background:var(--danger);
+  color:#fff;
   border-radius:20px;
-  font-weight:bold;
+  font-size:10px;
+  padding:2px 5px
 }
 
 .layout{
   display:flex;
-  min-height:calc(100vh - 64px);
+  min-height:calc(100vh - 64px)
 }
-
 .sidebar{
-  width:240px;
-  background:white;
-  border-right:1px solid #dce7f5;
+  width:235px;
+  background:#fff;
+  border-right:1px solid var(--border);
   padding:14px 10px;
-  position:sticky;
+  position:fixed;
   top:64px;
-  height:calc(100vh - 64px);
-  overflow-y:auto;
+  bottom:0;
+  overflow:auto
 }
-
-.sideBtn{
+.sidebar button{
   width:100%;
   border:0;
-  background:white;
+  background:transparent;
   text-align:left;
   padding:11px 13px;
-  margin:2px 0;
   border-radius:10px;
-  color:#17304f;
+  margin-bottom:3px;
+  color:#334155
 }
-
-.sideBtn:hover,
-.sideBtn.active{
-  background:#e9f2ff;
-  color:#0866ff;
-  font-weight:bold;
+.sidebar button:hover,
+.sidebar button.active{
+  background:#eaf2ff;
+  color:var(--blue);
+  font-weight:bold
 }
-
 .main{
-  flex:1;
+  margin-left:235px;
+  width:calc(100% - 235px);
   padding:18px;
-  max-width:1500px;
-  margin:auto;
-  width:100%;
+  max-width:1500px
 }
 
-.page{
-  display:none;
-}
-
-.page.active{
-  display:block;
-}
+.page{display:none}
+.page.active{display:block}
 
 .card{
-  background:white;
-  border:1px solid #dce7f5;
+  background:#fff;
+  border:1px solid var(--border);
   border-radius:16px;
-  padding:18px;
+  padding:16px;
   margin-bottom:16px;
-  box-shadow:0 3px 12px rgba(20,70,130,.06);
+  box-shadow:var(--shadow)
 }
-
 .hero{
-  background:linear-gradient(135deg,#0866ff,#4b92ff);
-  color:white;
+  background:linear-gradient(135deg,#0b4fc4,#2482ff);
+  color:#fff;
   border-radius:20px;
-  padding:25px;
-  margin-bottom:18px;
+  padding:24px;
+  margin-bottom:16px
 }
+.hero h1{margin:0 0 7px}
+.hero p{margin:0 0 16px;opacity:.9}
 
-.hero h1{
-  font-size:32px;
-  margin-bottom:8px;
+.btn{
+  border:0;
+  border-radius:10px;
+  padding:10px 14px;
+  background:var(--blue);
+  color:#fff;
+  font-weight:600
 }
-
-.hero p{
-  opacity:.95;
+.btn:hover{background:var(--blue2)}
+.btn.light{
+  background:#eef5ff;
+  color:var(--blue)
+}
+.btn.danger{
+  background:#fee2e2;
+  color:#b91c1c
+}
+.btn.green{
+  background:#16a34a
+}
+.btn.small{
+  padding:7px 10px;
+  font-size:13px
 }
 
 .grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-  gap:15px;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:14px
+}
+.two{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px
+}
+.three{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px
 }
 
-.btn{
-  border:0;
-  background:#0866ff;
-  color:white;
-  padding:10px 15px;
-  border-radius:10px;
-  font-weight:bold;
-}
-
-.btn.secondary{
-  background:#e8f1ff;
-  color:#0866ff;
-}
-
-.btn.danger{
-  background:#e53935;
-}
-
-.btn.success{
-  background:#159447;
-}
-
-.btn.light{
-  background:white;
-  color:#0866ff;
-}
-
-.input,
-textarea,
-select{
+input,select,textarea{
   width:100%;
-  padding:11px 13px;
-  border:1px solid #ccd9e9;
+  border:1px solid var(--border);
   border-radius:10px;
-  margin:6px 0 10px;
+  padding:11px;
+  margin-bottom:10px;
   outline:none;
+  background:#fff
 }
+textarea{min-height:100px;resize:vertical}
 
-textarea{
-  min-height:100px;
-  resize:vertical;
-}
-
-.sectionTitle{
-  margin-bottom:12px;
+.section-title{
   display:flex;
-  justify-content:space-between;
   align-items:center;
-  gap:10px;
+  justify-content:space-between;
+  margin:22px 0 12px
 }
 
-.sectionTitle h2{
-  font-size:21px;
-}
-
-.storyRow{
+.story-row{
   display:flex;
   gap:12px;
   overflow-x:auto;
-  padding-bottom:5px;
+  padding-bottom:6px
 }
-
 .story{
-  min-width:85px;
-  text-align:center;
+  min-width:75px;
+  text-align:center
 }
-
-.storyCircle{
-  width:68px;
-  height:68px;
+.story-avatar{
+  width:62px;
+  height:62px;
   border-radius:50%;
-  background:#0866ff;
-  border:4px solid #dbeaff;
-  margin:auto auto 6px;
+  background:linear-gradient(135deg,#1264e8,#65a4ff);
   display:flex;
   align-items:center;
   justify-content:center;
-  color:white;
-  font-size:25px;
+  color:#fff;
+  font-weight:bold;
+  margin:auto;
+  border:3px solid #fff;
+  box-shadow:0 0 0 2px var(--blue)
+}
+.story span{
+  font-size:12px;
+  display:block;
+  margin-top:5px
 }
 
-.feedItem{
-  border:1px solid #dbe7f4;
+.feed-card{
+  background:#fff;
+  border:1px solid var(--border);
   border-radius:15px;
-  overflow:hidden;
   margin-bottom:15px;
-  background:white;
+  overflow:hidden
 }
-
-.feedHeader{
-  padding:13px;
+.feed-head{
   display:flex;
-  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  padding:12px
 }
-
-.feedContent{
-  padding:15px;
+.avatar{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  background:#dbeafe;
+  color:var(--blue);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold
 }
+.feed-image{
+  width:100%;
+  max-height:480px;
+  object-fit:cover;
+  background:#eef4ff
+}
+.feed-body{padding:12px}
 
-.feedActions{
+.actions{
   display:flex;
   gap:7px;
   flex-wrap:wrap;
-  padding:10px 13px;
-  border-top:1px solid #edf2f7;
+  margin-top:10px
 }
-
-.feedActions button{
-  border:0;
-  background:#eef5ff;
-  color:#0866ff;
+.action-btn{
+  border:1px solid var(--border);
+  background:#fff;
+  color:#334155;
   border-radius:9px;
-  padding:8px 12px;
+  padding:8px 11px
+}
+.action-btn:hover{background:#eef5ff}
+.action-btn.liked{
+  background:#e8f1ff;
+  color:var(--blue);
+  border-color:#9bc1ff;
+  font-weight:bold
 }
 
-.video{
+.video-card{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:15px;
+  overflow:hidden
+}
+.video-card video{
   width:100%;
-  max-height:520px;
-  background:#000;
   display:block;
+  background:#000;
+  max-height:600px
 }
+.video-info{padding:12px}
 
-.productImg{
+.product{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:14px;
+  overflow:hidden
+}
+.product img{
   width:100%;
   height:180px;
   object-fit:cover;
-  border-radius:12px;
-  background:#eaf2ff;
+  background:#edf3fc
 }
-
+.product-body{padding:12px}
 .price{
-  color:#0866ff;
-  font-size:20px;
+  color:var(--blue);
   font-weight:bold;
-  margin:7px 0;
+  font-size:18px
 }
 
-.nearbyButtons{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(125px,1fr));
-  gap:9px;
-  margin-top:15px;
+.category-row{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap
+}
+.category-btn{
+  border:1px solid #c9daf7;
+  background:#fff;
+  color:var(--blue);
+  padding:9px 12px;
+  border-radius:20px
+}
+.category-btn.active{
+  background:var(--blue);
+  color:#fff
 }
 
-.nearbyButtons button{
-  border:1px solid #cfe0f5;
-  background:white;
-  color:#0866ff;
-  border-radius:11px;
-  padding:12px 8px;
-  font-weight:bold;
-}
-
-.nearbyButtons button:hover{
-  background:#eaf3ff;
-}
-
-#map,
-#sellerMap,
-#transportMap,
-#navigationMap{
-  width:100%;
+#map,#sellerMap,#transportMap,#navigationMap{
   height:430px;
-  border-radius:15px;
-  margin-top:12px;
+  border-radius:14px;
+  overflow:hidden
 }
 
-.locationList{
+.location-list{
   display:grid;
   gap:10px;
-  margin-top:12px;
+  margin-top:12px
 }
-
-.locationItem{
-  border:1px solid #d8e5f4;
+.location-item{
+  border:1px solid var(--border);
   border-radius:12px;
-  padding:13px;
-  background:white;
-}
-
-.locationItem h3{
-  margin-bottom:5px;
-}
-
-.tag{
-  display:inline-block;
-  padding:4px 8px;
-  border-radius:20px;
-  background:#e8f2ff;
-  color:#0866ff;
-  font-size:12px;
-  margin:3px;
+  padding:12px;
+  background:#fff
 }
 
 .modal{
-  display:none;
   position:fixed;
   inset:0;
-  z-index:5000;
-  background:rgba(0,0,0,.55);
+  background:rgba(0,0,0,.58);
+  z-index:3000;
+  display:none;
   align-items:center;
   justify-content:center;
-  padding:15px;
+  padding:15px
 }
-
-.modal.show{
-  display:flex;
-}
-
-.modalBox{
-  background:white;
-  border-radius:18px;
+.modal.show{display:flex}
+.modal-box{
+  background:#fff;
   width:min(600px,100%);
-  max-height:90vh;
+  max-height:92vh;
   overflow:auto;
-  padding:20px;
+  border-radius:18px;
+  padding:20px
 }
-
+.modal-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center
+}
 .close{
-  float:right;
   border:0;
-  background:#edf3fa;
-  width:34px;
-  height:34px;
-  border-radius:50%;
+  background:#f1f5f9;
+  width:36px;
+  height:36px;
+  border-radius:50%
 }
 
-.notification{
-  padding:12px;
-  border-bottom:1px solid #e4ebf3;
-}
-
-.badge{
-  background:#e53935;
-  color:white;
-  border-radius:20px;
-  padding:2px 7px;
-  font-size:11px;
-}
-
-.empty{
+.ad-box{
   text-align:center;
-  padding:30px;
-  color:#708198;
+  padding:25px
 }
-
-.shareGrid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:10px;
-}
-
-.shareGrid button{
-  padding:13px;
-  border:1px solid #d6e3f2;
-  background:#f7faff;
-  border-radius:10px;
-  color:#0866ff;
+.ad-count{
+  font-size:38px;
   font-weight:bold;
+  color:var(--blue);
+  margin:15px
 }
 
-/* AI HELP */
-
-.aiFloating{
-  position:fixed;
-  right:20px;
-  bottom:20px;
-  z-index:4000;
+/* CAMERA */
+.camera-shell{
+  background:#09111f;
+  border-radius:18px;
+  padding:12px
+}
+.camera-preview{
+  width:100%;
+  max-height:620px;
+  background:#000;
+  border-radius:14px;
+  display:block;
+  object-fit:cover
+}
+.camera-controls{
+  display:flex;
+  gap:8px;
+  justify-content:center;
+  flex-wrap:wrap;
+  padding-top:12px
+}
+.record-dot{
   width:60px;
   height:60px;
   border-radius:50%;
-  border:0;
-  background:#0866ff;
-  color:white;
-  font-size:27px;
-  box-shadow:0 6px 20px rgba(0,70,180,.35);
+  background:#e11d48;
+  border:6px solid #fff;
+  box-shadow:0 0 0 3px #e11d48
 }
-
-.aiPanel{
-  position:fixed;
-  right:20px;
-  bottom:90px;
-  width:min(390px,calc(100vw - 30px));
-  height:580px;
-  background:white;
-  z-index:3999;
-  border-radius:20px;
-  box-shadow:0 10px 35px rgba(0,0,0,.22);
-  display:none;
-  overflow:hidden;
-  border:1px solid #d7e4f2;
+.recording{
+  background:#111;
+  box-shadow:0 0 0 3px #e11d48
 }
-
-.aiPanel.show{
-  display:flex;
-  flex-direction:column;
-}
-
-.aiHeader{
-  background:#0866ff;
-  color:white;
-  padding:15px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.aiMessages{
-  flex:1;
-  overflow-y:auto;
-  padding:13px;
-  background:#f5f8fc;
-}
-
-.aiMsg{
-  max-width:85%;
-  padding:10px 12px;
-  border-radius:14px;
-  margin-bottom:10px;
-  line-height:1.4;
-  font-size:14px;
-}
-
-.aiMsg.bot{
-  background:white;
-  border:1px solid #dbe5f0;
-  margin-right:auto;
-}
-
-.aiMsg.user{
-  background:#0866ff;
-  color:white;
-  margin-left:auto;
-}
-
-.aiInputArea{
-  padding:10px;
-  background:white;
-  border-top:1px solid #dde7f1;
-  display:flex;
-  gap:7px;
-}
-
-.aiInputArea input{
-  flex:1;
-  border:1px solid #ccd9e9;
-  border-radius:20px;
-  padding:10px 13px;
-  outline:none;
-}
-
-.aiInputArea button{
-  width:43px;
-  border:0;
-  border-radius:50%;
-  background:#0866ff;
-  color:white;
-}
-
-.aiSuggestions{
-  display:flex;
-  gap:7px;
-  overflow-x:auto;
-  padding:9px;
-  background:white;
-}
-
-.aiSuggestions button{
-  white-space:nowrap;
-  border:1px solid #cfe0f5;
-  background:#f5f9ff;
-  color:#0866ff;
-  border-radius:20px;
-  padding:7px 10px;
-  font-size:12px;
-}
-
-.adBox{
+.timer{
   text-align:center;
-  padding:25px;
-  background:#f5f8fc;
-  border-radius:15px;
+  color:#fff;
+  font-size:22px;
+  font-weight:bold;
+  margin:8px
 }
 
-.countdown{
-  font-size:35px;
-  color:#0866ff;
-  font-weight:bold;
-  margin:15px;
+.editor-preview{
+  width:100%;
+  max-height:520px;
+  background:#000;
+  border-radius:14px
+}
+.tool-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+  gap:8px
+}
+.tool{
+  border:1px solid var(--border);
+  background:#fff;
+  border-radius:10px;
+  padding:12px;
+  text-align:center
+}
+.tool:hover{
+  background:#eef5ff;
+  color:var(--blue)
+}
+.range-row{
+  display:flex;
+  gap:10px;
+  align-items:center
+}
+.range-row input[type=range]{margin:0}
+
+.help-button{
+  position:fixed;
+  right:18px;
+  bottom:18px;
+  z-index:2000;
+  width:58px;
+  height:58px;
+  border-radius:50%;
+  border:0;
+  background:var(--blue);
+  color:#fff;
+  font-size:25px;
+  box-shadow:0 7px 25px rgba(0,0,0,.25)
+}
+
+.toast{
+  position:fixed;
+  right:18px;
+  bottom:90px;
+  z-index:5000;
+  background:#172033;
+  color:#fff;
+  padding:12px 15px;
+  border-radius:10px;
+  display:none;
+  max-width:320px
 }
 
 @media(max-width:900px){
   .sidebar{
-    width:70px;
-    padding:8px 5px;
+    width:70px
   }
-
-  .sideBtn{
-    font-size:0;
+  .sidebar button{
     text-align:center;
-    padding:12px 5px;
+    font-size:0
   }
-
-  .sideBtn:first-letter{
-    font-size:20px;
+  .sidebar button::first-letter{
+    font-size:20px
   }
-
-  .logo{
-    font-size:19px;
-  }
-
-  .header{
-    padding:9px;
-  }
-
-  .headerBtn{
-    padding:8px;
-  }
-
   .main{
-    padding:10px;
+    margin-left:70px;
+    width:calc(100% - 70px)
+  }
+  .two,.three{
+    grid-template-columns:1fr
+  }
+  .logo{font-size:20px}
+  .header-actions .optional{
+    display:none
   }
 }
-
 @media(max-width:600px){
-  .header{
-    height:auto;
-    flex-wrap:wrap;
+  header{
+    padding:0 8px
   }
-
-  .searchBox{
-    order:5;
-    flex-basis:100%;
+  .search{
+    max-width:none
   }
-
-  .layout{
-    min-height:calc(100vh - 115px);
+  .main{
+    padding:10px
   }
-
-  .sidebar{
-    top:115px;
-    height:calc(100vh - 115px);
-  }
-
-  .hero h1{
-    font-size:25px;
-  }
-
-  #map,
-  #sellerMap,
-  #transportMap,
-  #navigationMap{
-    height:350px;
-  }
-
-  .shareGrid{
-    grid-template-columns:1fr;
+  .hero{
+    padding:18px
   }
 }
 </style>
@@ -625,1376 +536,2034 @@ textarea{
 
 <body>
 
-<header class="header">
+<header>
+  <div class="logo">RockyX</div>
 
-  <div class="logo">X</div>
-
-  <div class="searchBox">
-    <input
-      id="globalSearch"
-      type="search"
-      placeholder="Search products, businesses, services, people, videos, songs and sounds..."
-      onkeydown="if(event.key==='Enter') performSearch()"
-    >
+  <div class="search">
+    <input id="globalSearch"
+           placeholder="Search products, businesses, people, videos, songs and sounds..."
+           onkeydown="if(event.key==='Enter')performSearch()">
   </div>
 
-  <button class="headerBtn" onclick="showPage('notifications')">
-    🔔 <span id="notificationCount" class="badge">0</span>
-  </button>
-
-  <button class="headerBtn" onclick="showPage('messages')">💬</button>
-
-  <button class="headerBtn" onclick="showPage('marketplace')">🛒</button>
-
-  <button class="headerBtn" onclick="showPage('account')">👤</button>
-
+  <div class="header-actions">
+    <button class="icon-btn" onclick="showPage('notifications')" title="Notifications">🔔</button>
+    <button class="icon-btn" onclick="showPage('messages')" title="Messages">💬</button>
+    <button class="icon-btn" onclick="showPage('marketplace')" title="Cart">🛒</button>
+    <button class="icon-btn optional" onclick="showPage('account')" title="Account">👤</button>
+  </div>
 </header>
 
 <div class="layout">
 
 <aside class="sidebar">
 
-<button class="sideBtn active" onclick="showPage('home')">🏠 Home</button>
-<button class="sideBtn" onclick="showPage('explore')">🔎 Explore</button>
-<button class="sideBtn" onclick="showPage('shorts')">🎬 Shorts</button>
-<button class="sideBtn" onclick="showPage('videos')">📺 Videos</button>
-<button class="sideBtn" onclick="showPage('live')">🔴 Live</button>
-<button class="sideBtn" onclick="showPage('music')">🎵 Music</button>
-<button class="sideBtn" onclick="showPage('sounds')">🔊 Sounds</button>
-<button class="sideBtn" onclick="showPage('marketplace')">🛍 Marketplace</button>
-<button class="sideBtn" onclick="showPage('nearby')">📍 Nearby</button>
-<button class="sideBtn" onclick="showPage('transport')">🚕 Transport</button>
-<button class="sideBtn" onclick="showPage('businesses')">🏢 Businesses</button>
-<button class="sideBtn" onclick="showPage('services')">🛠 Services</button>
-<button class="sideBtn" onclick="showPage('navigation')">🗺 Navigation</button>
-<button class="sideBtn" onclick="showPage('messages')">💬 Messages</button>
-<button class="sideBtn" onclick="showPage('notifications')">🔔 Notifications</button>
-<button class="sideBtn" onclick="showPage('saved')">🔖 Saved</button>
-<button class="sideBtn" onclick="showPage('profile')">👤 Profile</button>
-<button class="sideBtn" onclick="showPage('creator')">⭐ Creator</button>
-<button class="sideBtn" onclick="showPage('templates')">🎨 Templates</button>
-<button class="sideBtn" onclick="showPage('editor')">✂️ Editor</button>
-<button class="sideBtn" onclick="showPage('upload')">⬆️ Upload</button>
-<button class="sideBtn" onclick="showPage('analytics')">📊 Analytics</button>
-<button class="sideBtn" onclick="showPage('earnings')">💰 Earnings</button>
-<button class="sideBtn" onclick="showPage('verification')">✔️ Verification</button>
-<button class="sideBtn" onclick="showPage('security')">🔐 Security</button>
-<button class="sideBtn" onclick="showPage('settings')">⚙️ Settings</button>
-<button class="sideBtn" onclick="showPage('account')">🧑 Account</button>
-<button class="sideBtn" onclick="showPage('admin')">🔒 Admin</button>
+<button onclick="showPage('home')">🏠 Home</button>
+<button onclick="showPage('explore')">🔎 Explore</button>
+<button onclick="showPage('shorts')">🎬 Shorts</button>
+<button onclick="showPage('videos')">📺 Videos</button>
+<button onclick="showPage('live')">🔴 Live</button>
+<button onclick="showPage('music')">🎵 Music</button>
+<button onclick="showPage('sounds')">🔊 Sounds</button>
+
+<hr>
+
+<button onclick="showPage('marketplace')">🛒 Marketplace</button>
+<button onclick="showPage('nearby')">📍 Nearby</button>
+<button onclick="showPage('navigation')">🧭 Navigation</button>
+<button onclick="showPage('transport')">🚕 Transport</button>
+<button onclick="showPage('businesses')">🏢 Businesses</button>
+<button onclick="showPage('services')">🛠 Services</button>
+
+<hr>
+
+<button onclick="showPage('messages')">💬 Messages</button>
+<button onclick="showPage('notifications')">🔔 Notifications</button>
+<button onclick="showPage('saved')">🔖 Saved</button>
+
+<hr>
+
+<button onclick="showPage('creator')">🎥 Creator Studio</button>
+<button onclick="showPage('camera')">📷 Camera</button>
+<button onclick="showPage('editor')">✂️ Video Editor</button>
+<button onclick="showPage('upload')">⬆️ Upload</button>
+<button onclick="showPage('templates')">🧩 Templates</button>
+<button onclick="showPage('analytics')">📊 Analytics</button>
+
+<hr>
+
+<button onclick="showPage('earnings')">💰 Earnings</button>
+<button onclick="showPage('verification')">☑️ Verification</button>
+<button onclick="showPage('security')">🔐 Security</button>
+<button onclick="showPage('settings')">⚙️ Settings</button>
+<button onclick="showPage('account')">👤 Account</button>
+<button onclick="showPage('admin')">🛡️ Admin</button>
 
 </aside>
 
 <main class="main">
 
 <!-- HOME -->
-
 <section id="home" class="page active">
 
 <div class="hero">
+  <h1>Welcome</h1>
+  <p>Marketplace, social network, entertainment and services — all in one place.</p>
 
-<h1>Welcome</h1>
+  <h3>📍 Nearby</h3>
 
-<p>
-Marketplace, social network, entertainment and services — all in one place.
-</p>
-
-<h3 style="margin-top:18px;">📍 Find what is near you</h3>
-
-<div class="nearbyButtons">
-
-<button onclick="openNearbyCategory('businesses')">🏢 Businesses</button>
-<button onclick="openNearbyCategory('sellers')">🛒 Sellers</button>
-<button onclick="openNearbyCategory('services')">🛠 Services</button>
-<button onclick="openNearbyCategory('transport')">🚕 Transport</button>
-<button onclick="openNearbyCategory('fuel')">⛽ Fuel</button>
-<button onclick="openNearbyCategory('hotels')">🏨 Hotels</button>
-<button onclick="openNearbyCategory('restaurants')">🍽 Restaurants</button>
-<button onclick="openNearbyCategory('all')">🗺 View Map</button>
-
+  <div class="category-row">
+    <button class="category-btn" onclick="openNearbyCategory('businesses')">🏢 Businesses</button>
+    <button class="category-btn" onclick="openNearbyCategory('sellers')">🛒 Sellers</button>
+    <button class="category-btn" onclick="openNearbyCategory('services')">🛠 Services</button>
+    <button class="category-btn" onclick="openNearbyCategory('transport')">🚕 Transport</button>
+    <button class="category-btn" onclick="openNearbyCategory('fuel')">⛽ Fuel</button>
+    <button class="category-btn" onclick="openNearbyCategory('hotels')">🏨 Hotels</button>
+    <button class="category-btn" onclick="openNearbyCategory('restaurants')">🍽 Restaurants</button>
+    <button class="category-btn" onclick="showPage('nearby')">🗺 View Map</button>
+  </div>
 </div>
 
+<div class="section-title">
+  <h2>Stories</h2>
+  <button class="btn small" onclick="alert('Story creation will use your camera and media tools.')">＋ Add Story</button>
 </div>
 
 <div class="card">
-
-<div class="sectionTitle">
-<h2>Stories</h2>
-<button class="btn secondary" onclick="showPage('creator')">Create Story</button>
+  <div class="story-row">
+    <div class="story">
+      <div class="story-avatar">You</div>
+      <span>Your Story</span>
+    </div>
+    <div class="story">
+      <div class="story-avatar">RX</div>
+      <span>Rocky</span>
+    </div>
+    <div class="story">
+      <div class="story-avatar">A</div>
+      <span>Artist</span>
+    </div>
+    <div class="story">
+      <div class="story-avatar">S</div>
+      <span>Seller</span>
+    </div>
+    <div class="story">
+      <div class="story-avatar">B</div>
+      <span>Business</span>
+    </div>
+  </div>
 </div>
 
-<div class="storyRow">
-
-<div class="story">
-<div class="storyCircle">+</div>
-<small>Your Story</small>
-</div>
-
-<div class="story">
-<div class="storyCircle">👕</div>
-<small>Fashion</small>
-</div>
-
-<div class="story">
-<div class="storyCircle">🎵</div>
-<small>Music</small>
-</div>
-
-<div class="story">
-<div class="storyCircle">🍔</div>
-<small>Food</small>
-</div>
-
-<div class="story">
-<div class="storyCircle">⚽</div>
-<small>Sports</small>
-</div>
-
-</div>
-
-</div>
-
-<div class="sectionTitle">
-<h2>New Feed</h2>
-<button class="btn secondary" onclick="showPage('explore')">Explore More</button>
+<div class="section-title">
+  <h2>New Feed</h2>
+  <button class="btn light small" onclick="renderHomeFeed()">Refresh</button>
 </div>
 
 <div id="homeFeed"></div>
 
-<div class="card">
-
-<div class="sectionTitle">
-<h2>Marketplace</h2>
-<button class="btn secondary" onclick="showPage('marketplace')">See All</button>
-</div>
-
-<div id="homeProducts" class="grid"></div>
-
-</div>
-
 </section>
 
 <!-- EXPLORE -->
-
 <section id="explore" class="page">
-
 <div class="card">
-
-<h2>Explore</h2>
-
-<p style="margin:8px 0 15px;">
-Discover videos, products, businesses, services, music and creators.
-</p>
-
-<div class="grid">
-
-<button class="btn" onclick="showPage('shorts')">🎬 Shorts</button>
-<button class="btn" onclick="showPage('videos')">📺 Videos</button>
-<button class="btn" onclick="showPage('music')">🎵 Music</button>
-<button class="btn" onclick="showPage('marketplace')">🛍 Marketplace</button>
-<button class="btn" onclick="showPage('nearby')">📍 Nearby</button>
-<button class="btn" onclick="showPage('businesses')">🏢 Businesses</button>
-
+<h2>Explore RockyX</h2>
+<input id="exploreSearch" placeholder="Search anything..."
+       onkeydown="if(event.key==='Enter')performExploreSearch()">
+<button class="btn" onclick="performExploreSearch()">Search</button>
 </div>
-
-</div>
-
-<div id="searchResults"></div>
-
+<div id="searchResults" class="grid"></div>
 </section>
 
 <!-- SHORTS -->
-
 <section id="shorts" class="page">
-
-<div class="card">
-
-<div class="sectionTitle">
+<div class="section-title">
 <h2>Shorts</h2>
-<button class="btn" onclick="showPage('upload')">Upload Short</button>
+<button class="btn" onclick="showPage('camera')">📷 Create Short</button>
 </div>
-
-<div id="shortsList"></div>
-
-</div>
-
+<div id="shortsList" class="grid"></div>
 </section>
 
 <!-- VIDEOS -->
-
 <section id="videos" class="page">
-
-<div class="card">
-
-<div class="sectionTitle">
+<div class="section-title">
 <h2>Videos</h2>
-<button class="btn" onclick="showPage('upload')">Upload Video</button>
+<button class="btn" onclick="showPage('camera')">🎥 Create Video</button>
 </div>
-
-<div id="videoResults"></div>
-
-</div>
-
+<div id="videoResults" class="grid"></div>
 </section>
 
 <!-- LIVE -->
-
 <section id="live" class="page">
-
 <div class="card">
-
 <h2>🔴 Live</h2>
-
-<div class="empty">
-
-<h3>Live streaming</h3>
-
-<p style="margin:10px 0;">
-Start or discover live streams.
-</p>
-
+<p>Start a live stream from your camera when live streaming is connected to the RockyX backend.</p>
 <button class="btn" onclick="startLive()">Start Live</button>
-
 </div>
-
+<div class="card">
+<h3>Live creators</h3>
+<p>No live streams are currently active in this demo.</p>
 </div>
-
 </section>
 
 <!-- MUSIC -->
-
 <section id="music" class="page">
-
 <div class="card">
-
 <h2>🎵 Music</h2>
-
-<input
-class="input"
-placeholder="Search songs, artists and albums..."
-oninput="searchMusic(this.value)"
->
-
-<div id="musicResults"></div>
-
+<input id="musicSearch" placeholder="Search songs, artists or albums..."
+       onkeydown="if(event.key==='Enter')searchMusic()">
+<button class="btn" onclick="searchMusic()">Search</button>
 </div>
-
+<div id="musicResults" class="grid"></div>
 </section>
 
 <!-- SOUNDS -->
-
 <section id="sounds" class="page">
-
 <div class="card">
-
 <h2>🔊 Sounds</h2>
-
-<input
-class="input"
-placeholder="Search sounds..."
-oninput="searchSounds(this.value)"
->
-
-<div id="soundsList"></div>
-
-<h3 style="margin-top:20px;">Saved Sounds</h3>
-
-<div id="savedSounds"></div>
-
+<input id="soundSearch" placeholder="Search sounds..."
+       onkeydown="if(event.key==='Enter')searchSounds()">
+<button class="btn" onclick="searchSounds()">Search</button>
 </div>
 
+<div class="two">
+<div class="card">
+<h3>Popular Sounds</h3>
+<div id="soundsList"></div>
+</div>
+
+<div class="card">
+<h3>Saved Sounds</h3>
+<div id="savedSounds"></div>
+</div>
+</div>
 </section>
 
 <!-- MARKETPLACE -->
-
 <section id="marketplace" class="page">
-
-<div class="card">
-
-<div class="sectionTitle">
-<h2>🛍 Marketplace</h2>
-<button class="btn secondary" onclick="showPage('orders')">Orders</button>
+<div class="section-title">
+<h2>Marketplace</h2>
+<button class="btn light" onclick="openCart()">🛒 Cart (<span id="cartCount">0</span>)</button>
 </div>
-
 <div id="productList" class="grid"></div>
-
-</div>
-
 </section>
 
 <!-- NEARBY -->
-
 <section id="nearby" class="page">
-
 <div class="card">
-
 <h2>📍 Nearby</h2>
+<p>Choose what you want to find.</p>
 
-<p style="margin:8px 0 15px;">
-Choose what you want to find nearby.
-</p>
-
-<div class="nearbyButtons">
-
-<button onclick="setNearbyCategory('all')">🗺 All</button>
-<button onclick="setNearbyCategory('businesses')">🏢 Businesses</button>
-<button onclick="setNearbyCategory('sellers')">🛒 Sellers</button>
-<button onclick="setNearbyCategory('services')">🛠 Services</button>
-<button onclick="setNearbyCategory('transport')">🚕 Transport</button>
-<button onclick="setNearbyCategory('fuel')">⛽ Fuel</button>
-<button onclick="setNearbyCategory('hotels')">🏨 Hotels</button>
-<button onclick="setNearbyCategory('restaurants')">🍽 Restaurants</button>
-
+<div class="category-row">
+<button class="category-btn active" onclick="setNearbyCategory('all',this)">All</button>
+<button class="category-btn" onclick="setNearbyCategory('businesses',this)">🏢 Businesses</button>
+<button class="category-btn" onclick="setNearbyCategory('sellers',this)">🛒 Sellers</button>
+<button class="category-btn" onclick="setNearbyCategory('services',this)">🛠 Services</button>
+<button class="category-btn" onclick="setNearbyCategory('transport',this)">🚕 Transport</button>
+<button class="category-btn" onclick="setNearbyCategory('fuel',this)">⛽ Fuel</button>
+<button class="category-btn" onclick="setNearbyCategory('hotels',this)">🏨 Hotels</button>
+<button class="category-btn" onclick="setNearbyCategory('restaurants',this)">🍽 Restaurants</button>
 </div>
 
-<div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">
-
-<button class="btn" onclick="locateUser('main')">
-📍 Use Current Location
-</button>
-
-<button class="btn secondary" onclick="updateNearbyMap()">
-🔄 Refresh Map
-</button>
-
+<br>
+<button class="btn" onclick="locateUser('main')">📍 Use My Location</button>
 </div>
 
 <div id="map"></div>
-
-<div id="nearbyLocations" class="locationList"></div>
-
-</div>
-
-</section>
-
-<!-- TRANSPORT -->
-
-<section id="transport" class="page">
-
-<div class="card">
-
-<h2>🚕 Transport</h2>
-
-<p style="margin:8px 0;">
-Find transport locations and services.
-</p>
-
-<div id="transportMap"></div>
-
-<div id="transportList" class="locationList"></div>
-
-</div>
-
-</section>
-
-<!-- BUSINESSES -->
-
-<section id="businesses" class="page">
-
-<div class="card">
-
-<h2>🏢 Businesses</h2>
-
-<p style="margin:8px 0 15px;">
-Find businesses on the map.
-</p>
-
-<div id="businessPageMap"></div>
-
-<div id="businessList" class="locationList"></div>
-
-</div>
-
-</section>
-
-<!-- SERVICES -->
-
-<section id="services" class="page">
-
-<div class="card">
-
-<h2>🛠 Services</h2>
-
-<div id="serviceList" class="grid"></div>
-
-</div>
-
+<div id="nearbyLocations" class="location-list"></div>
 </section>
 
 <!-- NAVIGATION -->
-
 <section id="navigation" class="page">
-
 <div class="card">
-
-<h2>🗺 Navigation</h2>
-
-<p style="margin:8px 0;">
-Search for a place and get directions.
-</p>
-
-<input
-id="navigationSearch"
-class="input"
-placeholder="Search place..."
->
-
-<button class="btn" onclick="searchNavigation()">Search</button>
+<h2>🧭 Navigation</h2>
+<p>Search for a place and get directions.</p>
+<input id="navigationSearch" placeholder="Where do you want to go?">
+<button class="btn" onclick="searchNavigation()">Find Location</button>
+</div>
 
 <div id="navigationMap"></div>
 
-<div id="navigationResults" class="locationList"></div>
+<div class="card">
+<h3>Map Navigation</h3>
+<p>Free users may see an advertising screen before navigation in the demo system.</p>
+</div>
+</section>
 
+<!-- TRANSPORT -->
+<section id="transport" class="page">
+<div class="card">
+<h2>🚕 Transport</h2>
+<p>Find nearby transport points.</p>
+<button class="btn" onclick="locateUser('transport')">📍 Use My Location</button>
 </div>
 
+<div id="transportMap"></div>
+<div id="transportList" class="location-list"></div>
+</section>
+
+<!-- BUSINESSES -->
+<section id="businesses" class="page">
+<div class="card">
+<h2>🏢 Businesses</h2>
+<p>Discover businesses and open their locations on the map.</p>
+</div>
+<div id="businessList" class="grid"></div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" class="page">
+<div class="card">
+<h2>🛠 Services</h2>
+<p>Find service providers near you.</p>
+</div>
+<div id="serviceList" class="grid"></div>
 </section>
 
 <!-- MESSAGES -->
-
 <section id="messages" class="page">
-
 <div class="card">
-
 <h2>💬 Messages</h2>
-
-<div class="empty">
-No conversations yet.
+<p>Your conversations will appear here.</p>
+<button class="btn" onclick="alert('Messaging backend will be connected later.')">New Message</button>
 </div>
-
-</div>
-
 </section>
 
 <!-- NOTIFICATIONS -->
-
 <section id="notifications" class="page">
-
 <div class="card">
-
-<div class="sectionTitle">
-
+<div class="section-title">
 <h2>🔔 Notifications</h2>
-
-<button class="btn secondary" onclick="clearNotifications()">
-Clear
-</button>
-
+<button class="btn light small" onclick="clearNotifications()">Clear</button>
 </div>
-
 <div id="notificationList"></div>
-
 </div>
-
 </section>
 
 <!-- SAVED -->
-
 <section id="saved" class="page">
-
 <div class="card">
-
 <h2>🔖 Saved</h2>
-
 <div id="savedContent"></div>
-
 </div>
-
 </section>
 
-<!-- PROFILE -->
-
-<section id="profile" class="page">
-
-<div class="card">
-
-<h2>👤 Profile</h2>
-
-<div style="margin:15px 0;">
-
-<div class="storyCircle" style="margin:0 0 10px;">👤</div>
-
-<h3 id="profileName">RockyX User</h3>
-
-<p id="profileEmail">Not signed in</p>
-
-</div>
-
-<button class="btn" onclick="showPage('account')">
-Manage Account
-</button>
-
-</div>
-
-</section>
-
-<!-- CREATOR -->
-
+<!-- CREATOR STUDIO -->
 <section id="creator" class="page">
 
-<div class="card">
+<div class="hero">
+<h1>🎥 Creator Studio</h1>
+<p>Create, edit, publish and manage your videos.</p>
 
-<h2>⭐ Creator Studio</h2>
-
-<p style="margin:8px 0 15px;">
-Create Shorts, videos, sounds, templates and other content.
-</p>
+<button class="btn" onclick="showPage('camera')">📷 Open Camera</button>
+<button class="btn light" onclick="showPage('editor')">✂️ Open Editor</button>
+</div>
 
 <div class="grid">
 
-<button class="btn" onclick="showPage('editor')">✂️ Video Editor</button>
-<button class="btn" onclick="showPage('upload')">⬆️ Upload</button>
-<button class="btn" onclick="showPage('templates')">🎨 Templates</button>
-<button class="btn" onclick="showPage('analytics')">📊 Analytics</button>
-<button class="btn" onclick="showPage('earnings')">💰 Earnings</button>
-<button class="btn" onclick="showPage('verification')">✔️ Verification</button>
+<div class="card">
+<h3>📷 Camera</h3>
+<p>Record directly from your phone or computer camera.</p>
+<button class="btn" onclick="showPage('camera')">Open Camera</button>
+</div>
+
+<div class="card">
+<h3>✂️ Video Editor</h3>
+<p>Trim, text, speed, volume, filters and more.</p>
+<button class="btn" onclick="showPage('editor')">Edit Video</button>
+</div>
+
+<div class="card">
+<h3>📤 Upload</h3>
+<p>Upload an existing video from your device.</p>
+<button class="btn" onclick="showPage('upload')">Upload</button>
+</div>
+
+<div class="card">
+<h3>📊 Analytics</h3>
+<p>View views, likes, comments and shares.</p>
+<button class="btn" onclick="showPage('analytics')">Analytics</button>
+</div>
 
 </div>
 
+<div class="card">
+<h3>Creator download setting</h3>
+<label>
+<input type="checkbox" id="allowDownloads" onchange="toggleDownloadSetting()">
+ Allow viewers to download my videos
+</label>
 </div>
 
 </section>
 
-<!-- TEMPLATES -->
-
-<section id="templates" class="page">
-
-<div class="card">
-
-<h2>🎨 Templates</h2>
-
-<div class="grid">
+<!-- CAMERA -->
+<section id="camera" class="page">
 
 <div class="card">
-<h3>Trending Short</h3>
-<p style="margin:8px 0;">Fast social video template.</p>
-<button class="btn" onclick="useTemplate('Trending Short')">Use</button>
+<h2>📷 RockyX Camera Studio</h2>
+<p>Create your video directly on the website.</p>
+
+<div class="camera-shell">
+
+<video id="cameraPreview"
+       class="camera-preview"
+       autoplay
+       muted
+       playsinline></video>
+
+<div id="cameraTimer" class="timer">00:00</div>
+
+<div class="camera-controls">
+
+<button class="btn" onclick="startCamera()">📷 Start Camera</button>
+
+<button id="switchCameraBtn"
+        class="btn light"
+        onclick="switchCamera()">🔄 Switch Camera</button>
+
+<button id="recordButton"
+        class="record-dot"
+        onclick="toggleRecording()"
+        title="Record"></button>
+
+<button class="btn light" onclick="stopCamera()">⏹ Stop Camera</button>
+
+</div>
+
+</div>
 </div>
 
 <div class="card">
-<h3>Product Promo</h3>
-<p style="margin:8px 0;">Promote your product.</p>
-<button class="btn" onclick="useTemplate('Product Promo')">Use</button>
+<h3>Camera options</h3>
+
+<div class="tool-grid">
+<button class="tool" onclick="setCameraTimer(3)">⏱️ 3 sec timer</button>
+<button class="tool" onclick="setCameraTimer(5)">⏱️ 5 sec timer</button>
+<button class="tool" onclick="setCameraTimer(10)">⏱️ 10 sec timer</button>
+<button class="tool" onclick="setCameraMode('video')">🎥 Video</button>
+<button class="tool" onclick="setCameraMode('short')">🎬 Short</button>
 </div>
 
-<div class="card">
-<h3>Music Video</h3>
-<p style="margin:8px 0;">Create a music video.</p>
-<button class="btn" onclick="useTemplate('Music Video')">Use</button>
+<p id="cameraStatus">Camera is not started.</p>
 </div>
 
-</div>
+<div id="recordedVideoArea" class="card hidden">
+<h3>Recorded video</h3>
+<video id="recordedPreview"
+       class="editor-preview"
+       controls></video>
 
+<div class="actions">
+<button class="btn" onclick="useRecordedInEditor()">✂️ Edit Video</button>
+<button class="btn green" onclick="publishRecordedVideo()">📤 Publish</button>
+<button class="btn light" onclick="downloadRecordedVideo()">⬇️ Download</button>
+</div>
 </div>
 
 </section>
 
 <!-- EDITOR -->
-
 <section id="editor" class="page">
 
 <div class="card">
+<h2>✂️ RockyX Video Editor</h2>
+<p>Create your video with editing tools before publishing.</p>
 
-<h2>✂️ Video Editor</h2>
+<input id="editorVideoInput"
+       type="file"
+       accept="video/*"
+       onchange="loadEditorVideo(event)">
 
-<input
-id="editorVideoInput"
-type="file"
-accept="video/*"
-class="input"
-onchange="loadEditorVideo(event)"
->
-
-<video
-id="editorPreview"
-controls
-style="width:100%;max-height:450px;background:#000;border-radius:12px;"
-></video>
-
-<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;">
-
-<button class="btn" onclick="addEditorText()">Add Text</button>
-<button class="btn" onclick="addEditorSound()">Add Sound</button>
-<button class="btn secondary" onclick="trimVideo()">Trim</button>
-<button class="btn secondary" onclick="saveEditorDraft()">Save Draft</button>
-<button class="btn success" onclick="publishEditedVideo(false)">Publish Video</button>
-<button class="btn" onclick="publishEditedVideo(true)">Publish Short</button>
-
+<video id="editorPreview"
+       class="editor-preview"
+       controls></video>
 </div>
 
+<div class="card">
+<h3>Editing tools</h3>
+
+<div class="tool-grid">
+
+<button class="tool" onclick="editorAddText()">📝 Add Text</button>
+<button class="tool" onclick="editorAddSound()">🎵 Add Sound</button>
+<button class="tool" onclick="editorTrimStart()">✂️ Trim Start</button>
+<button class="tool" onclick="editorTrimEnd()">✂️ Trim End</button>
+<button class="tool" onclick="editorSetSpeed(.5)">🐌 0.5×</button>
+<button class="tool" onclick="editorSetSpeed(1)">▶️ 1×</button>
+<button class="tool" onclick="editorSetSpeed(1.5)">⚡ 1.5×</button>
+<button class="tool" onclick="editorSetSpeed(2)">🚀 2×</button>
+<button class="tool" onclick="editorSetVolume(.5)">🔉 50%</button>
+<button class="tool" onclick="editorSetVolume(1)">🔊 100%</button>
+<button class="tool" onclick="editorSetFilter('none')">🎨 Normal</button>
+<button class="tool" onclick="editorSetFilter('grayscale(1)')">⚫ B&W</button>
+<button class="tool" onclick="editorSetFilter('sepia(1)')">🟤 Sepia</button>
+<button class="tool" onclick="editorSetFilter('brightness(1.2)')">☀️ Bright</button>
+<button class="tool" onclick="editorSetFilter('contrast(1.3)')">✨ Contrast</button>
+<button class="tool" onclick="editorReset()">↩️ Reset</button>
+
+</div>
+</div>
+
+<div class="card">
+<h3>Trim controls</h3>
+
+<div class="range-row">
+<label>Start</label>
+<input id="trimStart"
+       type="range"
+       min="0"
+       max="100"
+       value="0"
+       oninput="updateTrimLabels()">
+<span id="trimStartLabel">0%</span>
+</div>
+
+<div class="range-row">
+<label>End</label>
+<input id="trimEnd"
+       type="range"
+       min="0"
+       max="100"
+       value="100"
+       oninput="updateTrimLabels()">
+<span id="trimEndLabel">100%</span>
+</div>
+</div>
+
+<div class="card">
+<h3>Text overlay</h3>
+<input id="editorText" placeholder="Enter text to add to your video">
+<button class="btn" onclick="applyEditorText()">Add Text</button>
+<p id="editorTextPreview"></p>
+</div>
+
+<div class="card">
+<button class="btn" onclick="saveEditorDraft()">💾 Save Draft</button>
+<button class="btn green" onclick="publishEditedVideo(false)">📤 Publish Video</button>
+<button class="btn" onclick="publishEditedVideo(true)">🎬 Publish as Short</button>
 </div>
 
 </section>
 
 <!-- UPLOAD -->
-
 <section id="upload" class="page">
-
 <div class="card">
+<h2>⬆️ Upload Video</h2>
 
-<h2>⬆️ Upload</h2>
+<input type="file"
+       id="uploadVideoInput"
+       accept="video/*"
+       onchange="previewUpload(event)">
 
-<input
-id="uploadVideo"
-type="file"
-accept="video/*"
-class="input"
->
+<video id="uploadPreview"
+       class="editor-preview"
+       controls></video>
 
-<input
-id="uploadTitle"
-class="input"
-placeholder="Video title"
->
+<div class="actions">
+<button class="btn" onclick="publishUpload(false)">📤 Publish Video</button>
+<button class="btn" onclick="publishUpload(true)">🎬 Publish Short</button>
+</div>
+</div>
+</section>
 
-<label>
-<input id="allowDownloads" type="checkbox" checked>
- Allow viewers to download this video
-</label>
-
-<br><br>
-
-<button class="btn" onclick="uploadDemoVideo(false)">
-Publish Video
-</button>
-
-<button class="btn" onclick="uploadDemoVideo(true)">
-Publish Short
-</button>
-
+<!-- TEMPLATES -->
+<section id="templates" class="page">
+<div class="card">
+<h2>🧩 Creator Templates</h2>
+<p>Use templates to speed up your video creation.</p>
 </div>
 
+<div class="grid">
+<div class="card">
+<h3>🔥 Trending</h3>
+<button class="btn" onclick="useTemplate('Trending')">Use Template</button>
+</div>
+<div class="card">
+<h3>🎵 Music Video</h3>
+<button class="btn" onclick="useTemplate('Music Video')">Use Template</button>
+</div>
+<div class="card">
+<h3>🛍 Product Promo</h3>
+<button class="btn" onclick="useTemplate('Product Promo')">Use Template</button>
+</div>
+<div class="card">
+<h3>🎬 Cinematic</h3>
+<button class="btn" onclick="useTemplate('Cinematic')">Use Template</button>
+</div>
+</div>
 </section>
 
 <!-- ANALYTICS -->
-
 <section id="analytics" class="page">
-
 <div class="card">
-
-<h2>📊 Analytics</h2>
-
-<div class="grid">
-
-<div class="card">
-<h3>Views</h3>
-<p style="font-size:30px;color:#0866ff;">1,250</p>
+<h2>📊 Creator Analytics</h2>
 </div>
-
-<div class="card">
-<h3>Followers</h3>
-<p style="font-size:30px;color:#0866ff;">240</p>
+<div class="three">
+<div class="card"><h3 id="analyticsViews">0</h3><p>Views</p></div>
+<div class="card"><h3 id="analyticsLikes">0</h3><p>Likes</p></div>
+<div class="card"><h3 id="analyticsShares">0</h3><p>Shares</p></div>
 </div>
-
-<div class="card">
-<h3>Likes</h3>
-<p style="font-size:30px;color:#0866ff;">5,480</p>
-</div>
-
-<div class="card">
-<h3>Shares</h3>
-<p style="font-size:30px;color:#0866ff;">680</p>
-</div>
-
-</div>
-
-</div>
-
 </section>
 
 <!-- EARNINGS -->
-
 <section id="earnings" class="page">
-
 <div class="card">
-
 <h2>💰 Earnings</h2>
-
-<p style="margin:10px 0;">
-Your earnings dashboard will show eligible creator, marketplace and advertising revenue.
-</p>
-
-<div class="card">
-
-<h3>Available Balance</h3>
-
-<p style="font-size:30px;color:#0866ff;margin-top:8px;">
-GHS 0.00
-</p>
-
+<h1>GHS <span id="earningsAmount">0.00</span></h1>
+<p>Creator earnings, marketplace commissions and eligible monetization will appear here after backend/payment integration.</p>
 </div>
-
-<p>
-Payout verification may require additional identity and payment information.
-</p>
-
-</div>
-
 </section>
 
 <!-- VERIFICATION -->
-
 <section id="verification" class="page">
-
 <div class="card">
+<h2>☑️ Creator Verification</h2>
+<p>RockyX can automatically check creator eligibility based on configured performance and account requirements.</p>
 
-<h2>✔️ Creator Verification</h2>
-
-<p style="margin:10px 0;">
-Creator verification can become available when an account reaches the configured performance and trust requirements.
-</p>
-
-<div class="card">
-
-<h3>Example eligibility</h3>
-
-<ul style="margin:10px 0 10px 20px;line-height:1.8;">
-<li>Strong creator performance</li>
+<ul>
 <li>Authentic account</li>
-<li>Complete and secure account</li>
+<li>Active account</li>
+<li>Secure account</li>
 <li>Community Guidelines compliance</li>
-<li>Configured follower threshold</li>
+<li>Creator performance</li>
+<li>Follower requirements configured by RockyX</li>
 </ul>
 
+<button class="btn" onclick="checkVerification()">Check Verification Access</button>
 </div>
-
-<button class="btn" onclick="checkVerification()">
-Check Access
-</button>
-
-</div>
-
 </section>
 
 <!-- SECURITY -->
-
 <section id="security" class="page">
-
 <div class="card">
-
 <h2>🔐 Security</h2>
-
-<div class="card">
-<h3>Account protection</h3>
-<p style="margin-top:7px;">
-Use strong passwords and keep your recovery information secure.
-</p>
+<p>Manage account security.</p>
+<button class="btn" onclick="alert('Security controls will connect to the backend later.')">Security Settings</button>
 </div>
-
-<div class="card">
-<h3>Login alerts</h3>
-<label>
-<input type="checkbox" checked>
- Notify me about new sign-ins
-</label>
-</div>
-
-<div class="card">
-<h3>Privacy</h3>
-<button class="btn secondary" onclick="alert('Privacy controls will be connected to the backend later.')">
-Manage Privacy
-</button>
-</div>
-
-</div>
-
 </section>
 
 <!-- SETTINGS -->
-
 <section id="settings" class="page">
-
 <div class="card">
-
 <h2>⚙️ Settings</h2>
 
-<label>
-<input type="checkbox" checked>
- Allow video downloads
-</label>
+<label>Username</label>
+<input placeholder="Your username">
 
-<br><br>
+<label>Country</label>
+<select>
+<option>Ghana</option>
+<option>Nigeria</option>
+<option>United States</option>
+<option>United Kingdom</option>
+<option>Other</option>
+</select>
 
-<label>
-<input type="checkbox" checked>
- Receive notifications
-</label>
+<label>Privacy</label>
+<select>
+<option>Public</option>
+<option>Friends</option>
+<option>Private</option>
+</select>
 
-<br><br>
-
-<label>
-<input type="checkbox">
- Reduce promotional messages
-</label>
-
-<br><br>
-
-<button class="btn" onclick="saveSettings()">
-Save Settings
-</button>
-
+<button class="btn" onclick="alert('Settings saved locally in this demo.')">Save Settings</button>
 </div>
 
+<div class="card">
+<h3>Legal</h3>
+<p>Privacy Policy · Terms · Cookie Policy · Community Guidelines</p>
+</div>
 </section>
 
 <!-- ACCOUNT -->
-
 <section id="account" class="page">
-
 <div class="card">
+<h2>👤 Account</h2>
 
-<h2>🧑 Account</h2>
+<input id="accountName" placeholder="Full name">
+<input id="accountEmail" placeholder="Email">
+<input id="accountPhone" placeholder="Phone">
 
-<input id="accountName" class="input" placeholder="Full name">
-
-<input id="accountEmail" class="input" placeholder="Email">
-
-<input id="accountPhone" class="input" placeholder="Phone number">
-
-<select id="accountCountry" class="input">
-
-<option value="">Select country</option>
-<option>Ghana</option>
-<option>Nigeria</option>
-<option>United Kingdom</option>
-<option>United States</option>
-<option>Canada</option>
-<option>Other</option>
-
-</select>
-
-<select id="accountType" class="input">
-
-<option>Personal User</option>
-<option>Seller</option>
-<option>Business</option>
-<option>Restaurant</option>
-<option>Hotel</option>
-<option>Service Provider</option>
-<option>Transport Provider</option>
-<option>Creator</option>
-<option>Artist</option>
-
-</select>
-
-<button class="btn" onclick="saveAccount()">
-Save Account
-</button>
-
-<button class="btn secondary" onclick="demoSignIn()">
-Demo Sign In
-</button>
-
-<button class="btn danger" onclick="demoSignOut()">
-Sign Out
-</button>
-
+<button class="btn" onclick="saveAccount()">Save Account</button>
+<button class="btn danger" onclick="signOut()">Sign Out</button>
 </div>
-
 </section>
 
 <!-- ADMIN -->
-
 <section id="admin" class="page">
-
 <div class="card">
+<h2>🛡️ Private Admin</h2>
+<p>The real admin system will be protected by backend authentication and server-side permissions.</p>
 
-<h2>🔒 Private Admin</h2>
+<input id="adminCode" type="password" placeholder="Admin access code">
+<button class="btn" onclick="openAdmin()">Open Admin</button>
 
-<p style="margin:8px 0;">
-This area is intended for platform administration and must be protected by the backend in production.
-</p>
-
-<input
-id="adminCode"
-class="input"
-placeholder="Admin access code"
->
-
-<button class="btn" onclick="openAdmin()">
-Access Admin
-</button>
-
-<div id="adminPanel" style="display:none;margin-top:15px;">
-
+<div id="adminPanel" class="hidden">
+<hr>
 <h3>Admin Dashboard</h3>
-
-<div class="grid" style="margin-top:12px;">
-
-<div class="card">
-<h3>Users</h3>
-<p>Manage users and accounts.</p>
+<div class="grid">
+<div class="card"><h3>Users</h3><p>Manage users</p></div>
+<div class="card"><h3>Creators</h3><p>Manage creators</p></div>
+<div class="card"><h3>Businesses</h3><p>Manage businesses</p></div>
+<div class="card"><h3>Ads</h3><p>Manage advertising</p></div>
+<div class="card"><h3>Payments</h3><p>Manage commissions</p></div>
+<div class="card"><h3>Reports</h3><p>Manage reports</p></div>
 </div>
-
-<div class="card">
-<h3>Content</h3>
-<p>Review reported content.</p>
 </div>
-
-<div class="card">
-<h3>Ads</h3>
-<p>Manage advertising settings.</p>
 </div>
-
-<div class="card">
-<h3>Marketplace</h3>
-<p>Manage sellers and orders.</p>
-</div>
-
-<div class="card">
-<h3>Creators</h3>
-<p>Manage creator programs.</p>
-</div>
-
-<div class="card">
-<h3>Security</h3>
-<p>Manage security controls.</p>
-</div>
-
-</div>
-
-</div>
-
-</div>
-
 </section>
 
 </main>
 </div>
 
-<!-- SHARE MODAL -->
-
-<div id="shareModal" class="modal">
-
-<div class="modalBox">
-
-<button class="close" onclick="closeModal('shareModal')">×</button>
-
-<h2>Share</h2>
-
-<p id="shareText" style="margin:10px 0 15px;">
-Share this on another app or with another person.
-</p>
-
-<div class="shareGrid">
-
-<button onclick="shareTo('WhatsApp')">WhatsApp</button>
-<button onclick="shareTo('Messenger')">Messenger</button>
-<button onclick="shareTo('Facebook')">Facebook</button>
-<button onclick="shareTo('Messages')">Messages</button>
-<button onclick="shareTo('Email')">Email</button>
-<button onclick="copyShareLink()">Copy Link</button>
-
+<!-- AUTH MODAL -->
+<div id="authModal" class="modal">
+<div class="modal-box">
+<div class="modal-head">
+<h2 id="authTitle">Sign In</h2>
+<button class="close" onclick="closeModal('authModal')">✕</button>
 </div>
 
-<br>
+<input id="authName" placeholder="Full name">
+<input id="authEmail" type="email" placeholder="Email">
+<input id="authPhone" placeholder="Phone">
 
-<button class="btn" style="width:100%;" onclick="nativeShare()">
-📤 Use Device Share
-</button>
+<select id="authCountry">
+<option value="">Select country</option>
+<option>Ghana</option>
+<option>Nigeria</option>
+<option>United States</option>
+<option>United Kingdom</option>
+<option>Other</option>
+</select>
 
+<button class="btn" onclick="demoSignIn()">Continue</button>
+</div>
 </div>
 
+<!-- CART MODAL -->
+<div id="cartModal" class="modal">
+<div class="modal-box">
+<div class="modal-head">
+<h2>🛒 Shopping Cart</h2>
+<button class="close" onclick="closeModal('cartModal')">✕</button>
+</div>
+
+<div id="cartItems"></div>
+<h3>Total: GHS <span id="cartTotal">0.00</span></h3>
+<button class="btn" onclick="placeOrder()">Place Order</button>
+</div>
 </div>
 
 <!-- AD MODAL -->
-
 <div id="adModal" class="modal">
-
-<div class="modalBox">
-
-<h2 id="adTitle">Advertisement</h2>
-
-<div class="adBox">
-
-<p id="adMessage">
-Please wait while the advertisement finishes.
-</p>
-
-<div id="adCountdown" class="countdown">
-5
+<div class="modal-box ad-box">
+<h2>Advertisement</h2>
+<p id="adMessage">Please wait while the advertisement finishes.</p>
+<div id="adCount" class="ad-count">5</div>
+<button id="adContinue"
+        class="btn hidden"
+        onclick="finishAdGate()">Continue</button>
 </div>
-
-<p>
-This is a RockyX frontend demonstration.
-</p>
-
-</div>
-
-<button
-id="adContinue"
-class="btn"
-style="width:100%;display:none;"
-onclick="finishAdGate()"
->
-Continue
-</button>
-
-</div>
-
 </div>
 
 <!-- AI HELP -->
+<button class="help-button" onclick="openAIHelp()">🤖</button>
 
-<button
-class="aiFloating"
-onclick="toggleAI()"
-title="AI Help"
->
-🤖
-</button>
+<div id="aiModal" class="modal">
+<div class="modal-box">
 
-<div id="aiPanel" class="aiPanel">
+<div class="modal-head">
+<h2>🤖 AI Help</h2>
+<button class="close" onclick="closeModal('aiModal')">✕</button>
+</div>
 
-<div class="aiHeader">
+<div id="aiMessages" class="card">
+<p><b>RockyX AI:</b> Hi! What do you need help with?</p>
+</div>
 
-<div>
-<strong>🤖 AI Help</strong>
-<div style="font-size:11px;opacity:.9;">
-RockyX Assistant
+<input id="aiInput"
+       placeholder="Ask about videos, maps, orders, music..."
+       onkeydown="if(event.key==='Enter')askAI()">
+
+<button class="btn" onclick="askAI()">Ask AI</button>
+
 </div>
 </div>
 
-<button
-style="border:0;background:transparent;color:white;font-size:22px;"
-onclick="toggleAI()"
->
-×
-</button>
-
-</div>
-
-<div id="aiSuggestions" class="aiSuggestions">
-
-<button onclick="askAI('How do I upload a Short?')">
-Upload Short
-</button>
-
-<button onclick="askAI('How do I find nearby businesses?')">
-Nearby
-</button>
-
-<button onclick="askAI('How do I buy something?')">
-Marketplace
-</button>
-
-<button onclick="askAI('How do I download a video?')">
-Downloads
-</button>
-
-<button onclick="askAI('How do I verify my creator account?')">
-Verification
-</button>
-
-</div>
-
-<div id="aiMessages" class="aiMessages">
-
-<div class="aiMsg bot">
-
-Hi! 👋 I'm RockyX AI Help.
-
-I can help you understand how to use RockyX, find features, troubleshoot problems and guide you through the app.
-
-</div>
-
-</div>
-
-<div class="aiInputArea">
-
-<input
-id="aiInput"
-placeholder="Ask RockyX AI Help..."
-onkeydown="if(event.key==='Enter') sendAI()"
->
-
-<button onclick="sendAI()">➤</button>
-
-</div>
-
-</div>
+<div id="toast" class="toast"></div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <script>
+/* =========================================================
+   ROCKYX FRONTEND
+   ========================================================= */
 
-/* =========================
-   BASIC STATE
-========================= */
+const DEMO_VIDEO =
+"https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4";
 
-const STORAGE_KEY = "rockyx_frontend_demo";
-
-let state = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+let state = JSON.parse(localStorage.getItem("rockyx_state") || "{}");
 
 state.notifications = state.notifications || [];
 state.saved = state.saved || [];
-state.savedSounds = state.savedSounds || [];
-state.likes = state.likes || {};
-state.comments = state.comments || {};
 state.cart = state.cart || [];
-state.videos = state.videos || [];
+state.liked = state.liked || {};
+state.likeCounts = state.likeCounts || {};
+state.savedVideos = state.savedVideos || {};
+state.videoShares = state.videoShares || {};
+state.postShares = state.postShares || {};
+state.allowDownloads = state.allowDownloads !== false;
 state.account = state.account || {};
-state.settings = state.settings || {
-  allowDownloads:true,
-  notifications:true
-};
-
-localStorage.setItem(STORAGE_KEY,JSON.stringify(state));
+state.videos = state.videos || [];
+state.drafts = state.drafts || [];
+state.sounds = state.sounds || [];
 
 function saveState(){
-  localStorage.setItem(STORAGE_KEY,JSON.stringify(state));
-  updateNotificationCount();
+  localStorage.setItem("rockyx_state",JSON.stringify(state));
 }
 
-/* =========================
-   PAGE NAVIGATION
-========================= */
+/* =========================================================
+   BASIC UI
+   ========================================================= */
 
-function showPage(page){
+function showPage(id){
 
   document.querySelectorAll(".page").forEach(p=>{
     p.classList.remove("active");
   });
 
-  const target=document.getElementById(page);
+  const page=document.getElementById(id);
 
-  if(target){
-    target.classList.add("active");
+  if(page){
+    page.classList.add("active");
+    window.scrollTo({top:0,behavior:"smooth"});
   }
 
-  document.querySelectorAll(".sideBtn").forEach(btn=>{
-    btn.classList.remove("active");
-  });
-
-  const matching=[...document.querySelectorAll(".sideBtn")]
-    .find(btn=>btn.getAttribute("onclick")?.includes("'" + page + "'"));
-
-  if(matching){
-    matching.classList.add("active");
-  }
-
-  if(page==="nearby"){
+  if(id==="home")renderHomeFeed();
+  if(id==="shorts")renderShorts();
+  if(id==="videos")renderVideos();
+  if(id==="marketplace")renderProducts();
+  if(id==="nearby"){
     setTimeout(()=>{
       initNearbyMap();
       updateNearbyMap();
     },100);
   }
-
-  if(page==="transport"){
+  if(id==="transport"){
     setTimeout(()=>{
       initTransportMap();
       renderTransport();
     },100);
   }
-
-  if(page==="businesses"){
-    setTimeout(()=>{
-      renderBusinesses();
-    },100);
-  }
-
-  if(page==="navigation"){
-    setTimeout(()=>{
-      initNavigationMap();
-    },100);
-  }
-
-  if(page==="notifications"){
-    renderNotifications();
-  }
-
-  if(page==="saved"){
-    renderSaved();
-  }
-
-  window.scrollTo({top:0,behavior:"smooth"});
+  if(id==="businesses")renderBusinesses();
+  if(id==="services")renderServices();
+  if(id==="notifications")renderNotifications();
+  if(id==="saved")renderSaved();
+  if(id==="sounds")renderSounds();
+  if(id==="analytics")renderAnalytics();
+  if(id==="account")loadAccount();
 }
 
-/* =========================
+function closeModal(id){
+  document.getElementById(id).classList.remove("show");
+}
+
+function toast(message){
+  const t=document.getElementById("toast");
+  t.textContent=message;
+  t.style.display="block";
+  clearTimeout(window.toastTimer);
+  window.toastTimer=setTimeout(()=>{
+    t.style.display="none";
+  },2600);
+}
+
+/* =========================================================
    NOTIFICATIONS
-========================= */
+   ========================================================= */
 
-function addNotification(icon,text){
-
+function addNotification(icon,message){
   state.notifications.unshift({
-    id:Date.now(),
     icon,
-    text,
-    createdAt:new Date().toLocaleString()
+    message,
+    time:new Date().toLocaleString()
   });
 
-  state.notifications=state.notifications.slice(0,100);
-
+  state.notifications=state.notifications.slice(0,50);
   saveState();
-
   renderNotifications();
 }
 
 function renderNotifications(){
 
   const box=document.getElementById("notificationList");
-
   if(!box)return;
 
   if(!state.notifications.length){
-
-    box.innerHTML=`
-      <div class="empty">
-        You have no notifications.
-      </div>
-    `;
-
+    box.innerHTML="<p>No notifications yet.</p>";
     return;
   }
 
   box.innerHTML=state.notifications.map(n=>`
-
-    <div class="notification">
-
-      <strong>${escapeHtml(n.icon)} ${escapeHtml(n.text)}</strong>
-
-      <div style="font-size:12px;color:#789;margin-top:4px;">
-        ${escapeHtml(n.createdAt)}
-      </div>
-
+    <div class="location-item">
+      <b>${n.icon} ${escapeHTML(n.message)}</b>
+      <small>${escapeHTML(n.time)}</small>
     </div>
-
   `).join("");
 }
 
-function updateNotificationCount(){
-
-  const count=document.getElementById("notificationCount");
-
-  if(count){
-    count.textContent=state.notifications.length;
-  }
-}
-
 function clearNotifications(){
-
   state.notifications=[];
-
   saveState();
-
   renderNotifications();
 }
 
-/* =========================
-   PRODUCTS
-========================= */
+/* =========================================================
+   LIKE SYSTEM — FIXED
+   ========================================================= */
 
-const products=[
+const posts=[
+ {
+  id:"post1",
+  user:"RockyX",
+  text:"Welcome to the new RockyX feed.",
+  likes:7,
+  comments:2,
+  image:""
+ },
+ {
+  id:"post2",
+  user:"Creator",
+  text:"Create your own videos directly on RockyX.",
+  likes:14,
+  comments:4,
+  image:""
+ }
+];
 
-  {
-    id:"product1",
-    name:"Classic T-Shirt",
-    description:"Comfortable everyday T-shirt.",
-    price:80,
-    seller:"Local Product Seller"
-  },
+const videoData=[
+ {
+  id:"short1",
+  title:"Beautiful Flower",
+  creator:"Rocky Creator",
+  type:"short",
+  src:DEMO_VIDEO,
+  likes:12,
+  comments:3
+ },
+ {
+  id:"short2",
+  title:"My New Short",
+  creator:"Creator",
+  type:"short",
+  src:DEMO_VIDEO,
+  likes:8,
+  comments:1
+ },
+ {
+  id:"video1",
+  title:"RockyX Full Video",
+  creator:"Rocky Creator",
+  type:"video",
+  src:DEMO_VIDEO,
+  likes:24,
+  comments:6
+ }
+];
 
-  {
-    id:"product2",
-    name:"Sneakers",
-    description:"Casual everyday sneakers.",
-    price:250,
-    seller:"Rocky Fashion Shop"
-  },
+function initialLikeCount(id){
 
-  {
-    id:"product3",
-    name:"Wireless Headphones",
-    description:"Wireless headphones for music and videos.",
-    price:350,
-    seller:"Tech Market"
-  },
+  const p=posts.find(x=>x.id===id);
+  if(p)return p.likes;
 
-  {
-    id:"product4",
-    name:"Backpack",
-    description:"Everyday travel backpack.",
-    price:120,
-    seller:"Local Product Seller"
+  const v=videoData.find(x=>x.id===id);
+  if(v)return v.likes;
+
+  const uploaded=state.videos.find(x=>x.id===id);
+  if(uploaded)return uploaded.likes || 0;
+
+  return 0;
+}
+
+function getLikeCount(id){
+  if(typeof state.likeCounts[id]==="number"){
+    return state.likeCounts[id];
   }
 
+  return initialLikeCount(id);
+}
+
+function isLiked(id){
+  return state.liked[id]===true;
+}
+
+function toggleLike(type,id,title){
+
+  const liked=isLiked(id);
+  let count=getLikeCount(id);
+
+  if(liked){
+    count=Math.max(0,count-1);
+    state.liked[id]=false;
+    toast("Like removed");
+  }else{
+    count++;
+    state.liked[id]=true;
+    toast("❤️ Liked");
+    addNotification("❤️",`You liked ${title || "this content"}.`);
+  }
+
+  state.likeCounts[id]=count;
+  saveState();
+
+  if(type==="video"){
+    renderShorts();
+    renderVideos();
+  }
+
+  if(type==="post"){
+    renderHomeFeed();
+  }
+
+  renderAnalytics();
+}
+
+function likeVideo(id,title){
+  toggleLike("video",id,title);
+}
+
+function likePost(id,title){
+  toggleLike("post",id,title);
+}
+
+/* =========================================================
+   HOME FEED
+   ========================================================= */
+
+function renderHomeFeed(){
+
+  const box=document.getElementById("homeFeed");
+  if(!box)return;
+
+  box.innerHTML=posts.map(p=>{
+
+    const liked=isLiked(p.id);
+    const count=getLikeCount(p.id);
+
+    return `
+    <div class="feed-card">
+
+      <div class="feed-head">
+        <div class="avatar">${p.user.charAt(0)}</div>
+        <div>
+          <b>${escapeHTML(p.user)}</b>
+          <small> • New Feed</small>
+        </div>
+      </div>
+
+      ${p.image ? `<img class="feed-image" src="${p.image}">` : ""}
+
+      <div class="feed-body">
+
+        <p>${escapeHTML(p.text)}</p>
+
+        <div class="actions">
+
+          <button
+            class="action-btn ${liked?"liked":""}"
+            onclick="likePost('${p.id}','${escapeAttribute(p.text)}')">
+            ❤️ ${liked?"Liked":"Like"}
+            <span>${count}</span>
+          </button>
+
+          <button
+            class="action-btn"
+            onclick="commentPost('${p.id}')">
+            💬 Comment ${p.comments}
+          </button>
+
+          <button
+            class="action-btn"
+            onclick="sharePost('${p.id}')">
+            ↗️ Share
+          </button>
+
+          <button
+            class="action-btn"
+            onclick="savePost('${p.id}')">
+            🔖 Save
+          </button>
+
+        </div>
+
+      </div>
+    </div>`;
+  }).join("");
+}
+
+/* =========================================================
+   VIDEOS
+   ========================================================= */
+
+function allVideos(){
+  return [...videoData,...state.videos];
+}
+
+function renderShorts(){
+
+  const box=document.getElementById("shortsList");
+  if(!box)return;
+
+  const videos=allVideos().filter(v=>v.type==="short");
+
+  box.innerHTML=videos.map(v=>renderVideoCard(v)).join("");
+}
+
+function renderVideos(){
+
+  const box=document.getElementById("videoResults");
+  if(!box)return;
+
+  const videos=allVideos().filter(v=>v.type==="video");
+
+  box.innerHTML=videos.map(v=>renderVideoCard(v)).join("");
+}
+
+function renderVideoCard(v){
+
+  const liked=isLiked(v.id);
+  const count=getLikeCount(v.id);
+  const saved=state.savedVideos[v.id]===true;
+
+  return `
+  <div class="video-card">
+
+    <video
+      src="${v.src}"
+      controls
+      playsinline
+      preload="metadata">
+    </video>
+
+    <div class="video-info">
+
+      <h3>${escapeHTML(v.title)}</h3>
+      <p>By ${escapeHTML(v.creator)}</p>
+
+      <div class="actions">
+
+        <button
+          class="action-btn ${liked?"liked":""}"
+          onclick="likeVideo('${v.id}','${escapeAttribute(v.title)}')">
+          ❤️ ${liked?"Liked":"Like"} <span>${count}</span>
+        </button>
+
+        <button
+          class="action-btn"
+          onclick="commentVideo('${v.id}')">
+          💬 Comment
+        </button>
+
+        <button
+          class="action-btn"
+          onclick="shareVideo('${v.id}')">
+          ↗️ Share
+        </button>
+
+        <button
+          class="action-btn ${saved?"liked":""}"
+          onclick="saveVideo('${v.id}')">
+          🔖 ${saved?"Saved":"Save"}
+        </button>
+
+        <button
+          class="action-btn"
+          onclick="downloadVideo('${v.id}')">
+          ⬇️ Download
+        </button>
+
+      </div>
+
+    </div>
+  </div>`;
+}
+
+function commentVideo(id){
+  const comment=prompt("Write your comment:");
+  if(!comment)return;
+
+  addNotification("💬","Your comment was added.");
+  toast("Comment added");
+}
+
+function commentPost(id){
+  const comment=prompt("Write your comment:");
+  if(!comment)return;
+
+  addNotification("💬","Your comment was added.");
+  toast("Comment added");
+}
+
+/* =========================================================
+   SAVE
+   ========================================================= */
+
+function saveVideo(id){
+
+  state.savedVideos[id]=!state.savedVideos[id];
+
+  saveState();
+
+  if(state.savedVideos[id]){
+    toast("🔖 Video saved");
+    addNotification("🔖","Video saved.");
+  }else{
+    toast("Video removed from saved");
+  }
+
+  renderShorts();
+  renderVideos();
+  renderSaved();
+}
+
+function savePost(id){
+
+  if(state.saved.includes(id)){
+    state.saved=state.saved.filter(x=>x!==id);
+    toast("Removed from saved");
+  }else{
+    state.saved.push(id);
+    toast("🔖 Post saved");
+  }
+
+  saveState();
+  renderSaved();
+}
+
+function renderSaved(){
+
+  const box=document.getElementById("savedContent");
+  if(!box)return;
+
+  const savedVideos=Object.keys(state.savedVideos)
+    .filter(id=>state.savedVideos[id]);
+
+  const savedPosts=state.saved;
+
+  box.innerHTML=`
+    <h3>Saved Videos</h3>
+    <p>${savedVideos.length} saved video(s)</p>
+
+    <h3>Saved Posts</h3>
+    <p>${savedPosts.length} saved post(s)</p>
+  `;
+}
+
+/* =========================================================
+   SHARING
+   ========================================================= */
+
+async function shareContent(title,url,text){
+
+  const data={
+    title:title || "RockyX",
+    text:text || "Check this out on RockyX.",
+    url:url || window.location.href
+  };
+
+  try{
+
+    if(navigator.share){
+      await navigator.share(data);
+      addNotification("↗️","Content shared successfully.");
+      return;
+    }
+
+    if(navigator.clipboard){
+      await navigator.clipboard.writeText(data.url);
+      alert(
+        "Sharing is not available directly on this device.\n\n"+
+        "The link has been copied. You can paste it into WhatsApp, "+
+        "Messenger, Facebook, Messages, email or another app."
+      );
+      return;
+    }
+
+    prompt("Copy this RockyX link:",data.url);
+
+  }catch(error){
+
+    if(error.name==="AbortError")return;
+
+    alert("Sharing could not be completed on this device.");
+  }
+}
+
+function shareVideo(id){
+
+  state.videoShares[id]=(state.videoShares[id]||0)+1;
+  saveState();
+
+  const url=location.origin+location.pathname+"?video="+encodeURIComponent(id);
+
+  shareContent(
+    "RockyX Video",
+    url,
+    "Check out this video on RockyX."
+  );
+}
+
+function sharePost(id){
+
+  state.postShares[id]=(state.postShares[id]||0)+1;
+  saveState();
+
+  const url=location.origin+location.pathname+"?post="+encodeURIComponent(id);
+
+  shareContent(
+    "RockyX Post",
+    url,
+    "Check out this post on RockyX."
+  );
+}
+
+/* =========================================================
+   DOWNLOAD
+   ========================================================= */
+
+function downloadVideo(id){
+
+  const video=allVideos().find(v=>v.id===id);
+  if(!video)return;
+
+  if(!state.allowDownloads){
+    alert("The creator has disabled downloads for this video.");
+    return;
+  }
+
+  startAdGate(
+    "Video Download",
+    "Watch this short advertisement before downloading.",
+    ()=>{
+      const a=document.createElement("a");
+      a.href=video.src;
+      a.download=(video.title||"rockyx-video")+".mp4";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+
+      addNotification("⬇️","Video download started.");
+    }
+  );
+}
+
+/* =========================================================
+   AD SYSTEM
+   ========================================================= */
+
+let adCallback=null;
+let adTimer=null;
+
+function startAdGate(title,message,callback){
+
+  document.getElementById("adMessage").textContent=message;
+  document.getElementById("adCount").textContent="5";
+  document.getElementById("adContinue").classList.add("hidden");
+
+  document.getElementById("adModal").classList.add("show");
+
+  adCallback=callback;
+
+  let count=5;
+
+  clearInterval(adTimer);
+
+  adTimer=setInterval(()=>{
+
+    count--;
+
+    document.getElementById("adCount").textContent=count;
+
+    if(count<=0){
+
+      clearInterval(adTimer);
+
+      document.getElementById("adCount").textContent="✓";
+      document.getElementById("adContinue").classList.remove("hidden");
+
+    }
+
+  },1000);
+}
+
+function finishAdGate(){
+
+  closeModal("adModal");
+
+  if(adCallback){
+    const cb=adCallback;
+    adCallback=null;
+    cb();
+  }
+}
+
+/* =========================================================
+   CAMERA SYSTEM
+   ========================================================= */
+
+let cameraStream=null;
+let cameraRecorder=null;
+let recordedChunks=[];
+let cameraFacing="user";
+let cameraTimerSeconds=0;
+let recordingStartedAt=0;
+let cameraTimerInterval=null;
+let recordedBlob=null;
+let cameraMode="video";
+
+async function startCamera(){
+
+  try{
+
+    if(cameraStream){
+      stopCamera();
+    }
+
+    cameraStream=await navigator.mediaDevices.getUserMedia({
+      video:{
+        facingMode:cameraFacing,
+        width:{ideal:1920},
+        height:{ideal:1080}
+      },
+      audio:true
+    });
+
+    const preview=document.getElementById("cameraPreview");
+    preview.srcObject=cameraStream;
+
+    document.getElementById("cameraStatus").textContent=
+      "Camera is ready.";
+
+    toast("📷 Camera started");
+
+  }catch(error){
+
+    console.error(error);
+
+    alert(
+      "Camera access was not available.\n\n"+
+      "Please allow camera and microphone permissions in your browser."
+    );
+  }
+}
+
+function stopCamera(){
+
+  if(cameraStream){
+
+    cameraStream.getTracks().forEach(track=>track.stop());
+
+    cameraStream=null;
+
+    document.getElementById("cameraPreview").srcObject=null;
+    document.getElementById("cameraStatus").textContent=
+      "Camera stopped.";
+  }
+}
+
+async function switchCamera(){
+
+  cameraFacing=cameraFacing==="user" ? "environment" : "user";
+
+  if(cameraStream){
+    await startCamera();
+  }else{
+    toast("Camera switched");
+  }
+}
+
+function setCameraTimer(seconds){
+
+  cameraTimerSeconds=seconds;
+
+  document.getElementById("cameraStatus").textContent=
+    `Recording timer: ${seconds} seconds`;
+
+  toast(`Timer set to ${seconds} seconds`);
+}
+
+function setCameraMode(mode){
+
+  cameraMode=mode;
+
+  document.getElementById("cameraStatus").textContent=
+    mode==="short"
+      ? "Short mode selected."
+      : "Video mode selected.";
+}
+
+async function toggleRecording(){
+
+  if(cameraRecorder && cameraRecorder.state==="recording"){
+    stopRecording();
+    return;
+  }
+
+  if(!cameraStream){
+    await startCamera();
+  }
+
+  if(!cameraStream)return;
+
+  if(cameraTimerSeconds>0){
+
+    document.getElementById("cameraStatus").textContent=
+      `Starting in ${cameraTimerSeconds}...`;
+
+    let n=cameraTimerSeconds;
+
+    const timer=setInterval(()=>{
+
+      n--;
+
+      document.getElementById("cameraStatus").textContent=
+        `Starting in ${n}...`;
+
+      if(n<=0){
+        clearInterval(timer);
+        beginRecording();
+      }
+
+    },1000);
+
+  }else{
+    beginRecording();
+  }
+}
+
+function beginRecording(){
+
+  recordedChunks=[];
+
+  let mime="video/webm;codecs=vp9,opus";
+
+  if(!MediaRecorder.isTypeSupported(mime)){
+    mime="video/webm";
+  }
+
+  cameraRecorder=new MediaRecorder(
+    cameraStream,
+    {mimeType:mime}
+  );
+
+  cameraRecorder.ondataavailable=e=>{
+    if(e.data && e.data.size>0){
+      recordedChunks.push(e.data);
+    }
+  };
+
+  cameraRecorder.onstop=finishRecording;
+
+  cameraRecorder.start(250);
+
+  recordingStartedAt=Date.now();
+
+  document.getElementById("recordButton").classList.add("recording");
+
+  startCameraTimerDisplay();
+
+  document.getElementById("cameraStatus").textContent=
+    "🔴 Recording...";
+}
+
+function stopRecording(){
+
+  if(cameraRecorder &&
+     cameraRecorder.state==="recording"){
+
+    cameraRecorder.stop();
+
+    clearInterval(cameraTimerInterval);
+
+    document.getElementById("recordButton")
+      .classList.remove("recording");
+
+    document.getElementById("cameraStatus")
+      .textContent="Processing recording...";
+  }
+}
+
+function finishRecording(){
+
+  recordedBlob=new Blob(
+    recordedChunks,
+    {type:cameraRecorder.mimeType || "video/webm"}
+  );
+
+  const url=URL.createObjectURL(recordedBlob);
+
+  const preview=document.getElementById("recordedPreview");
+
+  preview.src=url;
+
+  document.getElementById("recordedVideoArea")
+    .classList.remove("hidden");
+
+  document.getElementById("cameraStatus")
+    .textContent="Recording complete.";
+
+  toast("🎬 Video recorded");
+}
+
+function startCameraTimerDisplay(){
+
+  clearInterval(cameraTimerInterval);
+
+  cameraTimerInterval=setInterval(()=>{
+
+    const elapsed=Math.floor(
+      (Date.now()-recordingStartedAt)/1000
+    );
+
+    const minutes=String(
+      Math.floor(elapsed/60)
+    ).padStart(2,"0");
+
+    const seconds=String(
+      elapsed%60
+    ).padStart(2,"0");
+
+    document.getElementById("cameraTimer")
+      .textContent=`${minutes}:${seconds}`;
+
+  },500);
+}
+
+function useRecordedInEditor(){
+
+  if(!recordedBlob)return;
+
+  const url=URL.createObjectURL(recordedBlob);
+
+  const video=document.getElementById("editorPreview");
+
+  video.src=url;
+
+  showPage("editor");
+
+  toast("Video loaded into editor");
+}
+
+function downloadRecordedVideo(){
+
+  if(!recordedBlob)return;
+
+  const url=URL.createObjectURL(recordedBlob);
+
+  const a=document.createElement("a");
+
+  a.href=url;
+  a.download="rockyx-recording.webm";
+
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+
+  addNotification("⬇️","Your recorded video was downloaded.");
+}
+
+function publishRecordedVideo(){
+
+  if(!recordedBlob)return;
+
+  const url=URL.createObjectURL(recordedBlob);
+
+  const video={
+    id:"user_"+Date.now(),
+    title:cameraMode==="short"
+      ?"My RockyX Short"
+      :"My RockyX Video",
+    creator:"You",
+    type:cameraMode==="short" ? "short":"video",
+    src:url,
+    likes:0,
+    comments:0
+  };
+
+  state.videos.unshift(video);
+
+  saveState();
+
+  addNotification(
+    "📤",
+    cameraMode==="short"
+      ?"Your Short was published."
+      :"Your video was published."
+  );
+
+  toast("Published successfully");
+
+  showPage(
+    cameraMode==="short"
+      ?"shorts"
+      :"videos"
+  );
+}
+
+/* =========================================================
+   VIDEO EDITOR
+   ========================================================= */
+
+let editorFileUrl=null;
+let editorSpeed=1;
+let editorVolume=1;
+let editorFilter="none";
+let editorOverlayText="";
+
+function loadEditorVideo(event){
+
+  const file=event.target.files[0];
+
+  if(!file)return;
+
+  editorFileUrl=URL.createObjectURL(file);
+
+  const video=document.getElementById("editorPreview");
+
+  video.src=editorFileUrl;
+
+  video.playbackRate=editorSpeed;
+  video.volume=editorVolume;
+  video.style.filter=editorFilter;
+
+  toast("Video loaded");
+}
+
+function editorAddText(){
+
+  const text=prompt("Enter text to add to your video:");
+
+  if(!text)return;
+
+  document.getElementById("editorText").value=text;
+  applyEditorText();
+}
+
+function applyEditorText(){
+
+  editorOverlayText=
+    document.getElementById("editorText").value.trim();
+
+  document.getElementById("editorTextPreview").textContent=
+    editorOverlayText
+      ? "Text overlay: "+editorOverlayText
+      : "No text overlay.";
+
+  toast("Text added to editing project");
+}
+
+function editorAddSound(){
+
+  alert(
+    "Sound library opened.\n\n"+
+    "Choose a RockyX sound from the Sounds section. "+
+    "The full audio-mixing backend will be connected later."
+  );
+
+  showPage("sounds");
+}
+
+function editorSetSpeed(speed){
+
+  editorSpeed=speed;
+
+  const video=document.getElementById("editorPreview");
+
+  video.playbackRate=speed;
+
+  toast(`Playback speed ${speed}×`);
+}
+
+function editorSetVolume(volume){
+
+  editorVolume=volume;
+
+  const video=document.getElementById("editorPreview");
+
+  video.volume=volume;
+
+  toast(`Volume ${Math.round(volume*100)}%`);
+}
+
+function editorSetFilter(filter){
+
+  editorFilter=filter;
+
+  document.getElementById("editorPreview")
+    .style.filter=filter;
+
+  toast("Filter applied");
+}
+
+function editorTrimStart(){
+
+  const video=document.getElementById("editorPreview");
+
+  if(!video.duration)return;
+
+  const value=
+    Number(document.getElementById("trimStart").value);
+
+  video.currentTime=
+    video.duration*(value/100);
+
+  toast("Trim start set");
+}
+
+function editorTrimEnd(){
+
+  const video=document.getElementById("editorPreview");
+
+  if(!video.duration)return;
+
+  const value=
+    Number(document.getElementById("trimEnd").value);
+
+  const end=
+    video.duration*(value/100);
+
+  video.currentTime=Math.max(0,end-0.1);
+
+  toast("Trim end set");
+}
+
+function updateTrimLabels(){
+
+  const s=document.getElementById("trimStart").value;
+  const e=document.getElementById("trimEnd").value;
+
+  document.getElementById("trimStartLabel").textContent=s+"%";
+  document.getElementById("trimEndLabel").textContent=e+"%";
+
+  if(Number(s)>=Number(e)){
+    document.getElementById("trimEnd").value=
+      Math.min(100,Number(s)+1);
+
+    document.getElementById("trimEndLabel").textContent=
+      document.getElementById("trimEnd").value+"%";
+  }
+}
+
+function editorReset(){
+
+  editorSpeed=1;
+  editorVolume=1;
+  editorFilter="none";
+  editorOverlayText="";
+
+  const video=document.getElementById("editorPreview");
+
+  video.playbackRate=1;
+  video.volume=1;
+  video.style.filter="none";
+
+  document.getElementById("editorText").value="";
+  document.getElementById("editorTextPreview").textContent="";
+
+  document.getElementById("trimStart").value=0;
+  document.getElementById("trimEnd").value=100;
+
+  updateTrimLabels();
+
+  toast("Editor reset");
+}
+
+function saveEditorDraft(){
+
+  state.drafts.push({
+    id:"draft_"+Date.now(),
+    title:editorOverlayText || "Untitled Draft",
+    created:new Date().toLocaleString()
+  });
+
+  saveState();
+
+  addNotification("💾","Video saved as a draft.");
+  toast("Draft saved");
+}
+
+function publishEditedVideo(asShort){
+
+  const video=document.getElementById("editorPreview");
+
+  if(!video.src){
+    alert("Please choose or record a video first.");
+    return;
+  }
+
+  const item={
+    id:"edited_"+Date.now(),
+    title:editorOverlayText || "My RockyX Video",
+    creator:"You",
+    type:asShort ? "short":"video",
+    src:video.src,
+    likes:0,
+    comments:0
+  };
+
+  state.videos.unshift(item);
+
+  saveState();
+
+  addNotification(
+    "📤",
+    asShort
+      ?"Your edited Short was published."
+      :"Your edited video was published."
+  );
+
+  showPage(asShort?"shorts":"videos");
+}
+
+/* =========================================================
+   UPLOAD
+   ========================================================= */
+
+let uploadUrl=null;
+
+function previewUpload(event){
+
+  const file=event.target.files[0];
+
+  if(!file)return;
+
+  uploadUrl=URL.createObjectURL(file);
+
+  document.getElementById("uploadPreview").src=uploadUrl;
+}
+
+function publishUpload(asShort){
+
+  if(!uploadUrl){
+    alert("Please select a video first.");
+    return;
+  }
+
+  state.videos.unshift({
+    id:"upload_"+Date.now(),
+    title:"Uploaded RockyX Video",
+    creator:"You",
+    type:asShort?"short":"video",
+    src:uploadUrl,
+    likes:0,
+    comments:0
+  });
+
+  saveState();
+
+  addNotification(
+    "📤",
+    asShort
+      ?"Your uploaded Short was published."
+      :"Your uploaded video was published."
+  );
+
+  showPage(asShort?"shorts":"videos");
+}
+
+/* =========================================================
+   DOWNLOAD SETTING
+   ========================================================= */
+
+function toggleDownloadSetting(){
+
+  state.allowDownloads=
+    document.getElementById("allowDownloads").checked;
+
+  saveState();
+
+  toast(
+    state.allowDownloads
+      ?"Downloads enabled"
+      :"Downloads disabled"
+  );
+}
+
+/* =========================================================
+   PRODUCTS
+   ========================================================= */
+
+const products=[
+ {
+  id:"product1",
+  name:"Classic T-Shirt",
+  price:80,
+  image:"https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=800&q=80"
+ },
+ {
+  id:"product2",
+  name:"Sneakers",
+  price:250,
+  image:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=800&q=80"
+ },
+ {
+  id:"product3",
+  name:"Wireless Headphones",
+  price:350,
+  image:"https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=80"
+ },
+ {
+  id:"product4",
+  name:"Backpack",
+  price:120,
+  image:"https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=800&q=80"
+ }
 ];
 
 function renderProducts(){
 
   const box=document.getElementById("productList");
-
   if(!box)return;
 
-  box.innerHTML=products.map(productCard).join("");
+  box.innerHTML=products.map(p=>`
+    <div class="product">
 
-  const home=document.getElementById("homeProducts");
+      <img src="${p.image}" alt="${escapeAttribute(p.name)}">
 
-  if(home){
-    home.innerHTML=products.slice(0,4).map(productCard).join("");
-  }
-}
+      <div class="product-body">
 
-function productCard(p){
+        <h3>${escapeHTML(p.name)}</h3>
 
-  return`
+        <p class="price">GHS ${p.price.toFixed(2)}</p>
 
-    <div class="card">
+        <div class="actions">
 
-      <div
-        class="productImg"
-        style="
-          display:flex;
-          align-items:center;
-          justify-content:center;
-          font-size:55px;
-        "
-      >
-        🛍️
-      </div>
+          <button
+            class="btn small"
+            onclick="addToCart('${p.id}')">
+            Add to Cart
+          </button>
 
-      <h3 style="margin-top:10px;">
-        ${escapeHtml(p.name)}
-      </h3>
+          <button
+            class="action-btn"
+            onclick="shareProduct('${p.id}')">
+            ↗️ Share
+          </button>
 
-      <p style="margin:7px 0;">
-        ${escapeHtml(p.description)}
-      </p>
-
-      <div class="price">
-        GHS ${p.price.toFixed(2)}
-      </div>
-
-      <small>
-        Seller: ${escapeHtml(p.seller)}
-      </small>
-
-      <div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:10px;">
-
-        <button
-          class="btn"
-          onclick="addToCart('${p.id}')"
-        >
-          Add to Cart
-        </button>
-
-        <button
-          class="btn secondary"
-          onclick="shareProduct('${p.id}')"
-        >
-          Share
-        </button>
+        </div>
 
       </div>
-
     </div>
-  `;
+  `).join("");
+
+  updateCartCount();
 }
 
 function addToCart(id){
 
-  const p=products.find(x=>x.id===id);
+  const product=products.find(p=>p.id===id);
 
-  if(!p)return;
+  if(!product)return;
 
   const existing=state.cart.find(x=>x.id===id);
 
@@ -2002,914 +2571,259 @@ function addToCart(id){
     existing.quantity++;
   }else{
     state.cart.push({
-      ...p,
+      id,
       quantity:1
     });
   }
 
   saveState();
 
-  addNotification(
-    "🛒",
-    `${p.name} was added to your cart.`
+  updateCartCount();
+
+  toast("🛒 Added to cart");
+}
+
+function updateCartCount(){
+
+  const count=state.cart.reduce(
+    (sum,item)=>sum+item.quantity,
+    0
   );
 
-  alert("Added to cart.");
+  const el=document.getElementById("cartCount");
+
+  if(el)el.textContent=count;
+}
+
+function openCart(){
+
+  renderCart();
+
+  document.getElementById("cartModal")
+    .classList.add("show");
 }
 
 function renderCart(){
 
+  const box=document.getElementById("cartItems");
+
   let total=0;
 
-  state.cart.forEach(x=>{
-    total += x.price*x.quantity;
-  });
+  if(!state.cart.length){
+    box.innerHTML="<p>Your cart is empty.</p>";
+  }else{
 
-  return`
+    box.innerHTML=state.cart.map(item=>{
 
-    <div class="card">
+      const p=products.find(x=>x.id===item.id);
 
-      <h3>Your Cart</h3>
+      const subtotal=p.price*item.quantity;
 
-      ${
-        state.cart.length
-        ?
-        state.cart.map(x=>`
+      total+=subtotal;
 
-          <div
-            style="
-              padding:10px 0;
-              border-bottom:1px solid #e3eaf2;
-            "
-          >
+      return `
+      <div class="location-item">
 
-            <strong>${escapeHtml(x.name)}</strong>
+        <b>${escapeHTML(p.name)}</b>
 
-            <br>
+        <p>
+          GHS ${p.price.toFixed(2)}
+          × ${item.quantity}
+        </p>
 
-            Qty: ${x.quantity}
+        <button
+          class="btn danger small"
+          onclick="removeCartItem('${item.id}')">
+          Remove
+        </button>
 
-            <br>
+      </div>`;
+    }).join("");
+  }
 
-            GHS ${(x.price*x.quantity).toFixed(2)}
-
-          </div>
-
-        `).join("")
-        :
-        `<div class="empty">Cart is empty.</div>`
-      }
-
-      <h3 style="margin-top:12px;">
-        Total: GHS ${total.toFixed(2)}
-      </h3>
-
-      <button
-        class="btn"
-        style="margin-top:10px;"
-        onclick="placeDemoOrder()"
-      >
-        Place Order
-      </button>
-
-    </div>
-  `;
+  document.getElementById("cartTotal")
+    .textContent=total.toFixed(2);
 }
 
-function placeDemoOrder(){
+function removeCartItem(id){
+
+  state.cart=
+    state.cart.filter(x=>x.id!==id);
+
+  saveState();
+
+  renderCart();
+  updateCartCount();
+}
+
+function placeOrder(){
 
   if(!state.cart.length){
-
     alert("Your cart is empty.");
-
     return;
   }
 
-  const total=state.cart.reduce(
-    (sum,item)=>sum+item.price*item.quantity,
-    0
-  );
-
   addNotification(
     "🛍️",
-    `Your order was created for GHS ${total.toFixed(2)}.`
+    "Your order has been created in the demo."
   );
 
   state.cart=[];
 
   saveState();
 
-  alert("Order created in frontend demo mode.");
-}
-
-/* =========================
-   FEED
-========================= */
-
-const feedPosts=[
-
-  {
-    id:"post1",
-    user:"RockyX Creator",
-    text:"Welcome to the new RockyX community.",
-    type:"post"
-  },
-
-  {
-    id:"post2",
-    user:"Local Seller",
-    text:"Check out our latest products.",
-    type:"product"
-  },
-
-  {
-    id:"post3",
-    user:"RockyX Music",
-    text:"Discover new music and sounds.",
-    type:"music"
-  }
-
-];
-
-function renderHomeFeed(){
-
-  const box=document.getElementById("homeFeed");
-
-  if(!box)return;
-
-  box.innerHTML=feedPosts.map(post=>`
-
-    <div class="feedItem">
-
-      <div class="feedHeader">
-
-        <strong>👤 ${escapeHtml(post.user)}</strong>
-
-        <span>•••</span>
-
-      </div>
-
-      <div class="feedContent">
-
-        <p>${escapeHtml(post.text)}</p>
-
-      </div>
-
-      <div class="feedActions">
-
-        <button onclick="likePost('${post.id}')">
-          ❤️ Like
-        </button>
-
-        <button onclick="commentPost('${post.id}')">
-          💬 Comment
-        </button>
-
-        <button onclick="sharePost('${post.id}')">
-          ↗️ Share
-        </button>
-
-        <button onclick="savePost('${post.id}')">
-          🔖 Save
-        </button>
-
-      </div>
-
-    </div>
-
-  `).join("");
-}
-
-function likePost(id){
-
-  state.likes[id]=!state.likes[id];
-
-  saveState();
-
-  renderHomeFeed();
-}
-
-function commentPost(id){
-
-  const text=prompt("Write your comment:");
-
-  if(!text)return;
-
-  state.comments[id]=state.comments[id] || [];
-
-  state.comments[id].push(text);
-
-  saveState();
-
-  addNotification(
-    "💬",
-    "Your comment was added."
-  );
-
-  alert("Comment added.");
-}
-
-function savePost(id){
-
-  if(!state.saved.includes(id)){
-    state.saved.push(id);
-  }
-
-  saveState();
-
-  addNotification(
-    "🔖",
-    "Post saved."
-  );
-}
-
-/* =========================
-   VIDEOS
-========================= */
-
-const demoVideos=[
-
-  {
-    id:"short1",
-    title:"RockyX Demo Short",
-    short:true,
-    downloads:true,
-    src:"https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
-  },
-
-  {
-    id:"video1",
-    title:"RockyX Demo Video",
-    short:false,
-    downloads:true,
-    src:"https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
-  }
-
-];
-
-function renderVideos(){
-
-  const shorts=document.getElementById("shortsList");
-
-  const videos=document.getElementById("videoResults");
-
-  if(shorts){
-
-    shorts.innerHTML=demoVideos
-      .filter(v=>v.short)
-      .map(videoCard)
-      .join("");
-  }
-
-  if(videos){
-
-    videos.innerHTML=demoVideos
-      .filter(v=>!v.short)
-      .map(videoCard)
-      .join("");
-  }
-}
-
-function videoCard(v){
-
-  return`
-
-    <div class="feedItem">
-
-      <div class="feedHeader">
-        <strong>🎬 ${escapeHtml(v.title)}</strong>
-      </div>
-
-      <video
-        class="video"
-        controls
-        playsinline
-        src="${v.src}"
-      ></video>
-
-      <div class="feedActions">
-
-        <button onclick="likeVideo('${v.id}')">
-          ❤️ <span id="like-${v.id}">Like</span>
-        </button>
-
-        <button onclick="commentVideo('${v.id}')">
-          💬 Comment
-        </button>
-
-        <button onclick="shareVideo('${v.id}')">
-          ↗️ Share
-        </button>
-
-        <button onclick="saveVideo('${v.id}')">
-          🔖 Save
-        </button>
-
-        ${
-          v.downloads
-          ?
-          `<button onclick="downloadVideo('${v.id}')">
-            ⬇️ Download
-          </button>`
-          :
-          ""
-        }
-
-      </div>
-
-    </div>
-
-  `;
-}
-
-function likeVideo(id){
-
-  state.likes[id]=!state.likes[id];
-
-  saveState();
-
-  renderVideos();
-}
-
-function commentVideo(id){
-
-  const text=prompt("Write your comment:");
-
-  if(!text)return;
-
-  state.comments[id]=state.comments[id] || [];
-
-  state.comments[id].push(text);
-
-  saveState();
-
-  addNotification(
-    "💬",
-    "Your video comment was added."
-  );
-}
-
-function saveVideo(id){
-
-  if(!state.saved.includes(id)){
-    state.saved.push(id);
-  }
-
-  saveState();
-
-  addNotification(
-    "🔖",
-    "Video saved."
-  );
-}
-
-function downloadVideo(id){
-
-  const video=demoVideos.find(v=>v.id===id);
-
-  if(!video)return;
-
-  startAdGate(
-    "Video Download",
-    "Watch the advertisement before your download becomes available.",
-    ()=>{
-      const a=document.createElement("a");
-
-      a.href=video.src;
-      a.download=(video.title || "rockyx-video")+".mp4";
-
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-
-      addNotification(
-        "⬇️",
-        `${video.title} download started.`
-      );
-    }
-  );
-}
-
-/* =========================
-   MUSIC
-========================= */
-
-const musicData=[
-
-  {
-    id:"song1",
-    title:"RockyX Demo Song",
-    artist:"RockyX Artist",
-    album:"Demo Album"
-  },
-
-  {
-    id:"song2",
-    title:"New Beginning",
-    artist:"Demo Artist",
-    album:"New Beginnings"
-  }
-
-];
-
-function renderMusic(){
-
-  const box=document.getElementById("musicResults");
-
-  if(!box)return;
-
-  box.innerHTML=musicData.map(musicCard).join("");
-}
-
-function musicCard(m){
-
-  return`
-
-    <div class="card">
-
-      <h3>🎵 ${escapeHtml(m.title)}</h3>
-
-      <p>
-        Artist: ${escapeHtml(m.artist)}
-      </p>
-
-      <p>
-        Album: ${escapeHtml(m.album)}
-      </p>
-
-      <div style="margin-top:10px;display:flex;gap:7px;flex-wrap:wrap;">
-
-        <button
-          class="btn"
-          onclick="playMusic('${m.id}')"
-        >
-          ▶️ Play
-        </button>
-
-        <button
-          class="btn secondary"
-          onclick="downloadMusic('${m.id}')"
-        >
-          ⬇️ Download
-        </button>
-
-        <button
-          class="btn secondary"
-          onclick="shareMusic('${m.id}')"
-        >
-          ↗️ Share
-        </button>
-
-      </div>
-
-    </div>
-
-  `;
-}
-
-function searchMusic(q){
-
-  const box=document.getElementById("musicResults");
-
-  if(!box)return;
-
-  const query=q.toLowerCase();
-
-  const result=musicData.filter(m=>
-    `${m.title} ${m.artist} ${m.album}`
-      .toLowerCase()
-      .includes(query)
-  );
-
-  box.innerHTML=result.length
-    ? result.map(musicCard).join("")
-    : `<div class="empty">No music found.</div>`;
-}
-
-function playMusic(id){
-
-  const m=musicData.find(x=>x.id===id);
-
-  if(!m)return;
-
-  startAdGate(
-    "Music Advertisement",
-    "Watch the advertisement before playing this song.",
-    ()=>{
-      addNotification(
-        "🎵",
-        `${m.title} started playing.`
-      );
-
-      alert(`Playing: ${m.title}`);
-    }
-  );
-}
-
-function downloadMusic(id){
-
-  const m=musicData.find(x=>x.id===id);
-
-  if(!m)return;
-
-  startAdGate(
-    "Music Download",
-    "Watch the advertisement before downloading this song.",
-    ()=>{
-      addNotification(
-        "⬇️",
-        `${m.title} download is available.`
-      );
-
-      alert(
-        "Frontend demo: the real music file download will be connected through the backend."
-      );
-    }
-  );
-}
-
-function shareMusic(id){
-
-  const m=musicData.find(x=>x.id===id);
-
-  if(!m)return;
-
-  openShare(
-    m.title,
-    window.location.href+"?song="+encodeURIComponent(id)
-  );
-}
-
-function searchSounds(q){
-
-  const box=document.getElementById("soundsList");
-
-  if(!box)return;
-
-  const sounds=[
-    "Trending Beat",
-    "Afro Groove",
-    "RockyX Original",
-    "Funny Sound"
-  ];
-
-  const result=sounds.filter(x=>
-    x.toLowerCase().includes(q.toLowerCase())
-  );
-
-  box.innerHTML=result.map(s=>`
-
-    <div class="card">
-
-      <h3>🔊 ${escapeHtml(s)}</h3>
-
-      <button
-        class="btn"
-        onclick="saveSound('${escapeHtml(s)}')"
-      >
-        🔖 Save Sound
-      </button>
-
-      <button
-        class="btn secondary"
-        onclick="useSound('${escapeHtml(s)}')"
-      >
-        Use Sound
-      </button>
-
-    </div>
-
-  `).join("");
-}
-
-function saveSound(name){
-
-  if(!state.savedSounds.includes(name)){
-    state.savedSounds.push(name);
-  }
-
-  saveState();
-
-  renderSavedSounds();
-}
-
-function renderSavedSounds(){
-
-  const box=document.getElementById("savedSounds");
-
-  if(!box)return;
-
-  box.innerHTML=state.savedSounds.length
-    ? state.savedSounds.map(s=>`
-
-      <div class="card">
-        🔊 ${escapeHtml(s)}
-      </div>
-
-    `).join("")
-    :
-    `<div class="empty">No saved sounds.</div>`;
-}
-
-function useSound(name){
-
-  addNotification(
-    "🔊",
-    `Sound selected: ${name}`
-  );
-
-  showPage("editor");
-}
-
-/* =========================
-   SHARING
-========================= */
-
-let currentShare={
-  title:"",
-  url:""
-};
-
-function openShare(title,url){
-
-  currentShare={
-    title:title || "RockyX",
-    url:url || window.location.href
-  };
-
-  document.getElementById("shareText").textContent=
-    "Share " + currentShare.title;
-
-  document.getElementById("shareModal").classList.add("show");
-}
-
-function nativeShare(){
-
-  const data={
-    title:currentShare.title || "RockyX",
-    text:"Check this out on RockyX.",
-    url:currentShare.url || window.location.href
-  };
-
-  if(navigator.share){
-
-    navigator.share(data)
-      .then(()=>{
-        addNotification(
-          "↗️",
-          "Content shared successfully."
-        );
-      })
-      .catch(error=>{
-        if(error.name!=="AbortError"){
-          alert("Sharing could not be completed.");
-        }
-      });
-
-  }else{
-
-    copyShareLink();
-
-  }
-}
-
-function copyShareLink(){
-
-  const url=currentShare.url || window.location.href;
-
-  if(navigator.clipboard){
-
-    navigator.clipboard.writeText(url)
-      .then(()=>{
-        alert(
-          "Link copied. You can paste it into WhatsApp, Messenger, Facebook, Messages, email or another app."
-        );
-      });
-
-  }else{
-
-    prompt("Copy this link:",url);
-
-  }
-}
-
-function shareTo(app){
-
-  const url=encodeURIComponent(
-    currentShare.url || window.location.href
-  );
-
-  const text=encodeURIComponent(
-    "Check this out on RockyX."
-  );
-
-  let shareUrl="";
-
-  if(app==="WhatsApp"){
-    shareUrl=`https://wa.me/?text=${text}%20${url}`;
-  }
-
-  if(app==="Facebook"){
-    shareUrl=`https://www.facebook.com/sharer/sharer.php?u=${url}`;
-  }
-
-  if(app==="Email"){
-    shareUrl=`mailto:?subject=${encodeURIComponent(currentShare.title)}&body=${text}%20${url}`;
-  }
-
-  if(app==="Messenger"){
-    copyShareLink();
-    return;
-  }
-
-  if(app==="Messages"){
-    window.location.href=`sms:?body=${text}%20${url}`;
-    return;
-  }
-
-  if(shareUrl){
-    window.open(shareUrl,"_blank");
-  }
-
-  addNotification(
-    "↗️",
-    `Share link prepared for ${app}.`
-  );
-}
-
-function sharePost(id){
-
-  openShare(
-    "RockyX Post",
-    window.location.href+"?post="+id
-  );
-}
-
-function shareVideo(id){
-
-  const video=demoVideos.find(v=>v.id===id);
-
-  openShare(
-    video?.title || "RockyX Video",
-    window.location.href+"?video="+id
+  renderCart();
+  updateCartCount();
+
+  alert(
+    "Order created.\n\n"+
+    "Real payments, seller payouts and commission "+
+    "will be connected during backend development."
   );
 }
 
 function shareProduct(id){
 
   const p=products.find(x=>x.id===id);
-
   if(!p)return;
 
-  openShare(
+  const url=
+    location.origin+
+    location.pathname+
+    "?product="+encodeURIComponent(id);
+
+  shareContent(
     p.name,
-    window.location.href+"?product="+id
+    url,
+    "Check out this product on RockyX."
   );
 }
 
-function shareBusiness(id){
-
-  const location=nearbyLocations.find(x=>x.id===id);
-
-  if(!location)return;
-
-  openShare(
-    location.name,
-    window.location.href+"?location="+id
-  );
-}
-
-function shareLocation(id){
-
-  shareBusiness(id);
-}
-
-/* =========================
-   NEARBY MAP
-========================= */
+/* =========================================================
+   NEARBY
+   ========================================================= */
 
 const nearbyLocations=[
 
-  {
-    id:"loc1",
-    name:"Rocky Fashion Shop",
-    category:"businesses",
-    type:"Business",
-    location:"Demo Accra",
-    lat:5.6037,
-    lng:-0.1870
-  },
+ {
+  id:"loc1",
+  name:"Rocky Fashion Shop",
+  category:"businesses",
+  description:"Fashion business",
+  address:"Demo location, Accra",
+  lat:5.6037,
+  lng:-0.1870
+ },
 
-  {
-    id:"loc2",
-    name:"Tech Market",
-    category:"businesses",
-    type:"Business",
-    location:"Demo Accra",
-    lat:5.6105,
-    lng:-0.1840
-  },
+ {
+  id:"loc2",
+  name:"Tech Market",
+  category:"businesses",
+  description:"Technology products",
+  address:"Demo location, Accra",
+  lat:5.6105,
+  lng:-0.1840
+ },
 
-  {
-    id:"loc3",
-    name:"Local Product Seller",
-    category:"sellers",
-    type:"Seller",
-    location:"Demo Accra",
-    lat:5.6080,
-    lng:-0.1850
-  },
+ {
+  id:"loc3",
+  name:"Local Product Seller",
+  category:"sellers",
+  description:"Marketplace seller",
+  address:"Demo location, Accra",
+  lat:5.6080,
+  lng:-0.1850
+ },
 
-  {
-    id:"loc4",
-    name:"QuickFix Services",
-    category:"services",
-    type:"Service",
-    location:"Demo Accra",
-    lat:5.5960,
-    lng:-0.1920
-  },
+ {
+  id:"loc4",
+  name:"QuickFix Services",
+  category:"services",
+  description:"General services",
+  address:"Demo location, Accra",
+  lat:5.5960,
+  lng:-0.1920
+ },
 
-  {
-    id:"loc5",
-    name:"Clean Home",
-    category:"services",
-    type:"Service",
-    location:"Demo Accra",
-    lat:5.6060,
-    lng:-0.1750
-  },
+ {
+  id:"loc5",
+  name:"Clean Home",
+  category:"services",
+  description:"Cleaning services",
+  address:"Demo location, Accra",
+  lat:5.6060,
+  lng:-0.1750
+ },
 
-  {
-    id:"loc6",
-    name:"Accra Taxi Point",
-    category:"transport",
-    type:"Transport",
-    location:"Demo Accra",
-    lat:5.6000,
-    lng:-0.1800
-  },
+ {
+  id:"loc6",
+  name:"Accra Taxi Point",
+  category:"transport",
+  description:"Taxi pickup",
+  address:"Demo location, Accra",
+  lat:5.6000,
+  lng:-0.1800
+ },
 
-  {
-    id:"loc7",
-    name:"City Bus Station",
-    category:"transport",
-    type:"Transport",
-    location:"Demo Accra",
-    lat:5.6100,
-    lng:-0.1900
-  },
+ {
+  id:"loc7",
+  name:"City Bus Station",
+  category:"transport",
+  description:"Bus station",
+  address:"Demo location, Accra",
+  lat:5.6100,
+  lng:-0.1900
+ },
 
-  {
-    id:"loc8",
-    name:"Rocky Ride Point",
-    category:"transport",
-    type:"Transport",
-    location:"Demo Accra",
-    lat:5.5950,
-    lng:-0.1920
-  },
+ {
+  id:"loc8",
+  name:"Rocky Ride Point",
+  category:"transport",
+  description:"Ride pickup",
+  address:"Demo location, Accra",
+  lat:5.5950,
+  lng:-0.1920
+ },
 
-  {
-    id:"loc9",
-    name:"Accra Fuel Station",
-    category:"fuel",
-    type:"Fuel",
-    location:"Demo Accra",
-    lat:5.6150,
-    lng:-0.1750
-  },
+ {
+  id:"loc9",
+  name:"Accra Fuel Station",
+  category:"fuel",
+  description:"Fuel station",
+  address:"Demo location, Accra",
+  lat:5.6150,
+  lng:-0.1750
+ },
 
-  {
-    id:"loc10",
-    name:"Accra City Hotel",
-    category:"hotels",
-    type:"Hotel",
-    location:"Demo Accra",
-    lat:5.5570,
-    lng:-0.1960
-  },
+ {
+  id:"loc10",
+  name:"Accra City Hotel",
+  category:"hotels",
+  description:"Hotel",
+  address:"Demo location, Accra",
+  lat:5.5570,
+  lng:-0.1960
+ },
 
-  {
-    id:"loc11",
-    name:"Golden Taste Restaurant",
-    category:"restaurants",
-    type:"Restaurant",
-    location:"Demo Accra",
-    lat:5.6100,
-    lng:-0.1800
-  },
+ {
+  id:"loc11",
+  name:"Golden Taste Restaurant",
+  category:"restaurants",
+  description:"Restaurant",
+  address:"Demo location, Accra",
+  lat:5.6100,
+  lng:-0.1800
+ },
 
-  {
-    id:"loc12",
-    name:"Rocky Food Point",
-    category:"restaurants",
-    type:"Restaurant",
-    location:"Demo Accra",
-    lat:5.6000,
-    lng:-0.2000
-  }
-
+ {
+  id:"loc12",
+  name:"Rocky Food Point",
+  category:"restaurants",
+  description:"Restaurant",
+  address:"Demo location, Accra",
+  lat:5.6000,
+  lng:-0.2000
+ }
 ];
 
 let nearbyMap=null;
@@ -2923,15 +2837,22 @@ function openNearbyCategory(category){
   showPage("nearby");
 
   setTimeout(()=>{
-    setNearbyCategory(category);
-  },150);
+
+    initNearbyMap();
+
+    updateNearbyMap();
+
+  },100);
 }
 
-function setNearbyCategory(category){
+function setNearbyCategory(category,button){
 
   nearbyCategory=category;
 
-  initNearbyMap();
+  document.querySelectorAll("#nearby .category-btn")
+    .forEach(b=>b.classList.remove("active"));
+
+  if(button)button.classList.add("active");
 
   updateNearbyMap();
 }
@@ -2940,114 +2861,101 @@ function initNearbyMap(){
 
   if(nearbyMap)return;
 
-  const mapElement=document.getElementById("map");
-
-  if(!mapElement)return;
-
-  nearbyMap=L.map("map").setView(
-    [5.6037,-0.1870],
-    13
-  );
+  nearbyMap=L.map("map")
+    .setView([5.6037,-0.1870],13);
 
   L.tileLayer(
     "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
     {
-      attribution:"© OpenStreetMap contributors"
+      maxZoom:19,
+      attribution:"© OpenStreetMap"
     }
   ).addTo(nearbyMap);
 }
 
 function updateNearbyMap(){
 
-  initNearbyMap();
-
   if(!nearbyMap)return;
 
-  Object.values(nearbyMarkers).forEach(marker=>{
-    nearbyMap.removeLayer(marker);
-  });
+  Object.values(nearbyMarkers)
+    .forEach(m=>nearbyMap.removeLayer(m));
 
   nearbyMarkers={};
 
-  let list=nearbyLocations;
+  const list=
+    nearbyCategory==="all"
+      ? nearbyLocations
+      : nearbyLocations.filter(
+          x=>x.category===nearbyCategory
+        );
 
-  if(nearbyCategory!=="all"){
+  const listBox=
+    document.getElementById("nearbyLocations");
 
-    list=nearbyLocations.filter(
-      x=>x.category===nearbyCategory
-    );
-  }
+  listBox.innerHTML=
+    list.map(location=>`
 
-  const listBox=document.getElementById("nearbyLocations");
+      <div class="location-item">
 
-  if(listBox){
+        <h3>${escapeHTML(location.name)}</h3>
 
-    listBox.innerHTML=list.length
-      ? list.map(locationItemHTML).join("")
-      :
-      `<div class="empty">No locations found.</div>`;
-  }
-
-  const bounds=[];
-
-  list.forEach(location=>{
-
-    const marker=L.marker([
-      location.lat,
-      location.lng
-    ]).addTo(nearbyMap);
-
-    marker.bindPopup(`
-
-      <div style="min-width:190px;">
-
-        <strong>${escapeHtml(location.name)}</strong>
-
-        <br>
-
-        <span class="tag">
-          ${escapeHtml(location.type)}
-        </span>
-
-        <p style="margin:7px 0;">
-          📍 ${escapeHtml(location.location)}
+        <p>
+          ${escapeHTML(location.description)}
         </p>
 
-        <div style="display:flex;gap:5px;flex-wrap:wrap;">
+        <p>
+          📍 ${escapeHTML(location.address)}
+        </p>
+
+        <div class="actions">
 
           <button
-            onclick="focusNearbyLocation('${location.id}')"
-            style="border:0;padding:7px;border-radius:7px;background:#eaf3ff;color:#0866ff;"
-          >
-            View
+            class="btn small"
+            onclick="focusNearbyLocation('${location.id}')">
+            View on Map
           </button>
 
           <button
-            onclick="openDirections(${location.lat},${location.lng})"
-            style="border:0;padding:7px;border-radius:7px;background:#0866ff;color:white;"
-          >
-            Directions
+            class="btn light small"
+            onclick="openDirections(${location.lat},${location.lng})">
+            🧭 Directions
           </button>
 
           <button
-            onclick="shareLocation('${location.id}')"
-            style="border:0;padding:7px;border-radius:7px;background:#eaf3ff;color:#0866ff;"
-          >
-            Share
+            class="action-btn"
+            onclick="shareLocation('${location.id}')">
+            ↗️ Share
           </button>
 
         </div>
 
       </div>
 
+    `).join("");
+
+  const bounds=[];
+
+  list.forEach(location=>{
+
+    const marker=
+      L.marker([location.lat,location.lng])
+       .addTo(nearbyMap);
+
+    marker.bindPopup(`
+      <b>${escapeHTML(location.name)}</b>
+      <br>
+      ${escapeHTML(location.description)}
+      <br>
+      ${escapeHTML(location.address)}
+      <br><br>
+      <button onclick="openDirections(${location.lat},${location.lng})">
+        Directions
+      </button>
     `);
 
     nearbyMarkers[location.id]=marker;
 
-    bounds.push([
-      location.lat,
-      location.lng
-    ]);
+    bounds.push([location.lat,location.lng]);
   });
 
   if(bounds.length>1){
@@ -3066,104 +2974,72 @@ function updateNearbyMap(){
       bounds[0],
       17
     );
-
-  }else{
-
-    nearbyMap.setView(
-      [5.6037,-0.1870],
-      13
-    );
-
   }
-}
-
-function locationItemHTML(location){
-
-  return`
-
-    <div class="locationItem">
-
-      <h3>
-        ${escapeHtml(location.name)}
-      </h3>
-
-      <span class="tag">
-        ${escapeHtml(location.type)}
-      </span>
-
-      <p style="margin:7px 0;">
-        📍 ${escapeHtml(location.location)}
-      </p>
-
-      <div style="display:flex;gap:7px;flex-wrap:wrap;">
-
-        <button
-          class="btn secondary"
-          onclick="focusNearbyLocation('${location.id}')"
-        >
-          View on Map
-        </button>
-
-        <button
-          class="btn"
-          onclick="openDirections(${location.lat},${location.lng})"
-        >
-          Directions
-        </button>
-
-        <button
-          class="btn secondary"
-          onclick="shareLocation('${location.id}')"
-        >
-          Share
-        </button>
-
-      </div>
-
-    </div>
-
-  `;
 }
 
 function focusNearbyLocation(id){
 
-  const location=nearbyLocations.find(
-    x=>x.id===id
-  );
+  const location=
+    nearbyLocations.find(x=>x.id===id);
 
   if(!location)return;
 
-  initNearbyMap();
+  showPage("nearby");
 
-  nearbyMap.setView(
-    [location.lat,location.lng],
-    17
+  setTimeout(()=>{
+
+    initNearbyMap();
+
+    nearbyMap.setView(
+      [location.lat,location.lng],
+      17
+    );
+
+    const marker=nearbyMarkers[id];
+
+    if(marker){
+      marker.openPopup();
+    }
+
+  },100);
+}
+
+function shareLocation(id){
+
+  const location=
+    nearbyLocations.find(x=>x.id===id);
+
+  if(!location)return;
+
+  const url=
+    location.origin+
+    location.pathname+
+    "?location="+encodeURIComponent(id);
+
+  shareContent(
+    location.name,
+    url,
+    "Check out this location on RockyX."
   );
-
-  const marker=nearbyMarkers[id];
-
-  if(marker){
-    marker.openPopup();
-  }
 }
 
 function openDirections(lat,lng){
 
   startAdGate(
     "Navigation",
-    "Watch the advertisement before opening directions.",
+    "Watch this short advertisement before opening navigation.",
     ()=>{
 
       const url=
-        "https://www.google.com/maps/dir/?api=1&destination="
-        +
-        encodeURIComponent(`${lat},${lng}`);
+        "https://www.google.com/maps/dir/?api=1"+
+        "&destination="+
+        encodeURIComponent(lat+","+lng);
 
       window.open(url,"_blank");
 
       addNotification(
-        "🗺️",
-        "Navigation directions opened."
+        "🧭",
+        "Navigation opened."
       );
     }
   );
@@ -3173,8 +3049,7 @@ function locateUser(type){
 
   if(!navigator.geolocation){
 
-    alert("Location is not available on this device.");
-
+    alert("Location is not supported by this browser.");
     return;
   }
 
@@ -3185,45 +3060,61 @@ function locateUser(type){
       const lat=position.coords.latitude;
       const lng=position.coords.longitude;
 
-      if(type==="main"){
+      if(type==="transport"){
 
-        initNearbyMap();
+        showPage("transport");
 
-        nearbyMap.setView(
-          [lat,lng],
-          15
-        );
+        setTimeout(()=>{
 
-        L.marker([
-          lat,lng
-        ])
-        .addTo(nearbyMap)
-        .bindPopup("You are here.")
-        .openPopup();
+          initTransportMap();
+
+          transportMap.setView(
+            [lat,lng],
+            14
+          );
+
+          L.marker([lat,lng])
+            .addTo(transportMap)
+            .bindPopup("You are here")
+            .openPopup();
+
+        },100);
 
       }else{
 
-        initTransportMap();
+        showPage("nearby");
 
-        transportMap.setView(
-          [lat,lng],
-          15
-        );
+        setTimeout(()=>{
+
+          initNearbyMap();
+
+          nearbyMap.setView(
+            [lat,lng],
+            14
+          );
+
+          L.marker([lat,lng])
+            .addTo(nearbyMap)
+            .bindPopup("You are here")
+            .openPopup();
+
+        },100);
       }
 
     },
 
-    ()=>{
+    error=>{
       alert(
-        "We could not access your location. You can still use the map manually."
+        "We could not access your location. "+
+        "Please allow location access in your browser."
       );
     }
   );
 }
 
-/* =========================
+/* =========================================================
    TRANSPORT MAP
-========================= */
+   ========================================================= */
 
 let transportMap=null;
 
@@ -3231,226 +3122,78 @@ function initTransportMap(){
 
   if(transportMap)return;
 
-  const element=document.getElementById("transportMap");
-
-  if(!element)return;
-
-  transportMap=L.map(
-    "transportMap"
-  ).setView(
-    [5.6037,-0.1870],
-    13
-  );
+  transportMap=L.map("transportMap")
+    .setView([5.6037,-0.1870],13);
 
   L.tileLayer(
     "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
     {
-      attribution:"© OpenStreetMap contributors"
+      maxZoom:19,
+      attribution:"© OpenStreetMap"
     }
   ).addTo(transportMap);
 }
 
 function renderTransport(){
 
-  initTransportMap();
+  if(!transportMap)return;
 
-  const transport=nearbyLocations.filter(
-    x=>x.category==="transport"
-  );
-
-  transport.forEach(x=>{
-
-    L.marker([
-      x.lat,
-      x.lng
-    ])
-    .addTo(transportMap)
-    .bindPopup(`
-
-      <strong>${escapeHtml(x.name)}</strong>
-
-      <br>
-
-      📍 ${escapeHtml(x.location)}
-
-      <br><br>
-
-      <button
-        onclick="openDirections(${x.lat},${x.lng})"
-      >
-        Directions
-      </button>
-
-    `);
-
-  });
-
-  const box=document.getElementById("transportList");
-
-  if(box){
-
-    box.innerHTML=transport
-      .map(locationItemHTML)
-      .join("");
-  }
-}
-
-/* =========================
-   BUSINESSES
-========================= */
-
-function renderBusinesses(){
-
-  const box=document.getElementById("businessList");
-
-  const businesses=nearbyLocations.filter(
-    x=>x.category==="businesses"
-  );
-
-  if(box){
-
-    box.innerHTML=businesses
-      .map(locationItemHTML)
-      .join("");
-  }
-
-  const mapBox=document.getElementById("businessPageMap");
-
-  if(mapBox){
-
-    mapBox.innerHTML=`
-      <div id="sellerMap"></div>
-    `;
-
-    const map=L.map("sellerMap").setView(
-      [5.6037,-0.1870],
-      13
+  const list=
+    nearbyLocations.filter(
+      x=>x.category==="transport"
     );
 
-    L.tileLayer(
-      "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-      {
-        attribution:"© OpenStreetMap contributors"
-      }
-    ).addTo(map);
+  const box=
+    document.getElementById("transportList");
 
-    const bounds=[];
-
-    businesses.forEach(x=>{
-
-      L.marker([
-        x.lat,
-        x.lng
-      ])
-      .addTo(map)
-      .bindPopup(`
-
-        <strong>${escapeHtml(x.name)}</strong>
-
-        <br>
-
-        📍 ${escapeHtml(x.location)}
-
-        <br><br>
-
-        <button
-          onclick="openDirections(${x.lat},${x.lng})"
-        >
-          Directions
-        </button>
-
-      `);
-
-      bounds.push([
-        x.lat,
-        x.lng
-      ]);
-
-    });
-
-    if(bounds.length){
-      map.fitBounds(
-        bounds,
-        {
-          padding:[35,35],
-          maxZoom:16
-        }
-      );
-    }
-  }
-}
-
-/* =========================
-   SERVICES
-========================= */
-
-function renderServices(){
-
-  const box=document.getElementById("serviceList");
-
-  if(!box)return;
-
-  const services=nearbyLocations.filter(
-    x=>x.category==="services"
-  );
-
-  box.innerHTML=services.map(x=>`
-
-    <div class="card">
-
-      <h3>🛠 ${escapeHtml(x.name)}</h3>
-
-      <p style="margin:7px 0;">
-        📍 ${escapeHtml(x.location)}
-      </p>
+  box.innerHTML=list.map(x=>`
+    <div class="location-item">
+      <h3>🚕 ${escapeHTML(x.name)}</h3>
+      <p>${escapeHTML(x.address)}</p>
 
       <button
-        class="btn"
-        onclick="openDirections(${x.lat},${x.lng})"
-      >
+        class="btn small"
+        onclick="transportMap.setView([${x.lat},${x.lng}],17)">
+        View
+      </button>
+
+      <button
+        class="btn light small"
+        onclick="openDirections(${x.lat},${x.lng})">
         Directions
       </button>
-
-      <button
-        class="btn secondary"
-        onclick="shareLocation('${x.id}')"
-      >
-        Share
-      </button>
-
     </div>
-
   `).join("");
+
+  list.forEach(x=>{
+
+    L.marker([x.lat,x.lng])
+      .addTo(transportMap)
+      .bindPopup(`
+        <b>${escapeHTML(x.name)}</b>
+        <br>${escapeHTML(x.address)}
+      `);
+  });
 }
 
-/* =========================
-   NAVIGATION
-========================= */
+/* =========================================================
+   NAVIGATION SEARCH
+   ========================================================= */
 
 let navigationMap=null;
-let navigationMarker=null;
 
 function initNavigationMap(){
 
   if(navigationMap)return;
 
-  const element=document.getElementById(
-    "navigationMap"
-  );
-
-  if(!element)return;
-
-  navigationMap=L.map(
-    "navigationMap"
-  ).setView(
-    [5.6037,-0.1870],
-    12
-  );
+  navigationMap=L.map("navigationMap")
+    .setView([5.6037,-0.1870],13);
 
   L.tileLayer(
     "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
     {
-      attribution:"© OpenStreetMap contributors"
+      maxZoom:19,
+      attribution:"© OpenStreetMap"
     }
   ).addTo(navigationMap);
 }
@@ -3458,1222 +3201,710 @@ function initNavigationMap(){
 async function searchNavigation(){
 
   const query=
-    document.getElementById(
-      "navigationSearch"
-    ).value.trim();
+    document.getElementById("navigationSearch")
+      .value.trim();
 
-  if(!query){
-
-    alert("Enter a place to search.");
-
-    return;
-  }
+  if(!query)return;
 
   initNavigationMap();
 
-  const box=
-    document.getElementById(
-      "navigationResults"
-    );
-
-  box.innerHTML=
-    `<div class="empty">Searching...</div>`;
-
   try{
 
-    const response=await fetch(
-      "https://nominatim.openstreetmap.org/search?format=json&q="
-      +
-      encodeURIComponent(query)
-    );
+    const response=
+      await fetch(
+        "https://nominatim.openstreetmap.org/search?format=json&q="+
+        encodeURIComponent(query)
+      );
 
     const results=await response.json();
 
     if(!results.length){
 
-      box.innerHTML=
-        `<div class="empty">No place found.</div>`;
-
+      alert("Location not found.");
       return;
     }
 
-    box.innerHTML=results.slice(0,5).map((r,i)=>`
+    const result=results[0];
 
-      <div class="locationItem">
+    const lat=Number(result.lat);
+    const lon=Number(result.lon);
 
-        <h3>
-          ${escapeHtml(r.display_name)}
-        </h3>
+    navigationMap.setView(
+      [lat,lon],
+      15
+    );
+
+    L.marker([lat,lon])
+      .addTo(navigationMap)
+      .bindPopup(
+        escapeHTML(result.display_name)
+      )
+      .openPopup();
+
+  }catch(error){
+
+    alert("Could not search for this location.");
+  }
+}
+
+/* =========================================================
+   BUSINESS / SERVICE PAGES
+   ========================================================= */
+
+function renderBusinesses(){
+
+  const box=document.getElementById("businessList");
+
+  const list=
+    nearbyLocations.filter(
+      x=>x.category==="businesses"
+    );
+
+  box.innerHTML=list.map(x=>`
+    <div class="card">
+
+      <h3>🏢 ${escapeHTML(x.name)}</h3>
+
+      <p>${escapeHTML(x.description)}</p>
+
+      <p>📍 ${escapeHTML(x.address)}</p>
+
+      <button
+        class="btn small"
+        onclick="focusNearbyLocation('${x.id}')">
+        View Location
+      </button>
+
+      <button
+        class="btn light small"
+        onclick="openDirections(${x.lat},${x.lng})">
+        Directions
+      </button>
+
+    </div>
+  `).join("");
+}
+
+function renderServices(){
+
+  const box=document.getElementById("serviceList");
+
+  const list=
+    nearbyLocations.filter(
+      x=>x.category==="services"
+    );
+
+  box.innerHTML=list.map(x=>`
+    <div class="card">
+
+      <h3>🛠 ${escapeHTML(x.name)}</h3>
+
+      <p>${escapeHTML(x.description)}</p>
+
+      <p>📍 ${escapeHTML(x.address)}</p>
+
+      <button
+        class="btn small"
+        onclick="focusNearbyLocation('${x.id}')">
+        View Location
+      </button>
+
+    </div>
+  `).join("");
+}
+
+/* =========================================================
+   MUSIC
+   ========================================================= */
+
+const music=[
+ {
+  id:"song1",
+  title:"RockyX Demo Song",
+  artist:"Rocky Artist"
+ },
+ {
+  id:"song2",
+  title:"New Energy",
+  artist:"Independent Artist"
+ },
+ {
+  id:"song3",
+  title:"Ghana Vibes",
+  artist:"Ghana Artist"
+ }
+];
+
+function renderMusic(list=music){
+
+  const box=document.getElementById("musicResults");
+
+  box.innerHTML=list.map(song=>`
+    <div class="card">
+
+      <h3>🎵 ${escapeHTML(song.title)}</h3>
+      <p>${escapeHTML(song.artist)}</p>
+
+      <button
+        class="btn small"
+        onclick="playMusic('${song.id}')">
+        ▶️ Play
+      </button>
+
+      <button
+        class="btn light small"
+        onclick="downloadMusic('${song.id}')">
+        ⬇️ Download
+      </button>
+
+    </div>
+  `).join("");
+}
+
+function searchMusic(){
+
+  const q=
+    document.getElementById("musicSearch")
+      .value.toLowerCase();
+
+  const results=
+    music.filter(x=>
+      x.title.toLowerCase().includes(q) ||
+      x.artist.toLowerCase().includes(q)
+    );
+
+  renderMusic(results);
+}
+
+function playMusic(id){
+
+  const song=music.find(x=>x.id===id);
+
+  if(!song)return;
+
+  startAdGate(
+    "Music",
+    "Watch this short advertisement before listening.",
+    ()=>{
+      alert(
+        `Now playing: ${song.title}\n\n`+
+        "The real music streaming player will be connected later."
+      );
+    }
+  );
+}
+
+function downloadMusic(id){
+
+  const song=music.find(x=>x.id===id);
+
+  if(!song)return;
+
+  startAdGate(
+    "Music Download",
+    "Watch this short advertisement before downloading.",
+    ()=>{
+      alert(
+        `Download ready for ${song.title}.\n\n`+
+        "The real music file delivery will be connected through the backend."
+      );
+    }
+  );
+}
+
+/* =========================================================
+   SOUNDS
+   ========================================================= */
+
+const soundData=[
+ {id:"sound1",name:"Rocky Beat"},
+ {id:"sound2",name:"Afro Vibe"},
+ {id:"sound3",name:"Travel Sound"},
+ {id:"sound4",name:"Funny Sound"}
+];
+
+function renderSounds(list=soundData){
+
+  const box=document.getElementById("soundsList");
+
+  box.innerHTML=list.map(s=>`
+    <div class="location-item">
+
+      <b>🔊 ${escapeHTML(s.name)}</b>
+
+      <div class="actions">
 
         <button
-          class="btn"
-          onclick="showNavigationResult(
-            ${r.lat},
-            ${r.lon},
-            '${escapeHtml(r.display_name).replace(/'/g,"\\'")}'
-          )"
-        >
-          Show on Map
+          class="btn small"
+          onclick="useSound('${s.id}')">
+          Use Sound
         </button>
 
         <button
-          class="btn secondary"
-          onclick="openDirections(${r.lat},${r.lon})"
-        >
-          Directions
+          class="btn light small"
+          onclick="saveSound('${s.id}')">
+          Save
         </button>
 
       </div>
 
-    `).join("");
+    </div>
+  `).join("");
 
-  }catch(error){
-
-    box.innerHTML=
-      `<div class="empty">
-        Search failed. Try again.
-      </div>`;
-  }
+  renderSavedSounds();
 }
 
-function showNavigationResult(lat,lng,name){
+function searchSounds(){
 
-  initNavigationMap();
+  const q=
+    document.getElementById("soundSearch")
+      .value.toLowerCase();
 
-  if(navigationMarker){
-    navigationMap.removeLayer(
-      navigationMarker
+  const results=
+    soundData.filter(
+      s=>s.name.toLowerCase().includes(q)
     );
+
+  renderSounds(results);
+}
+
+function saveSound(id){
+
+  if(!state.sounds.includes(id)){
+    state.sounds.push(id);
+    addNotification("🔊","Sound saved.");
+  }else{
+    state.sounds=
+      state.sounds.filter(x=>x!==id);
+    toast("Sound removed");
   }
-
-  navigationMarker=L.marker([
-    lat,lng
-  ])
-  .addTo(navigationMap)
-  .bindPopup(
-    `<strong>${escapeHtml(name)}</strong>`
-  )
-  .openPopup();
-
-  navigationMap.setView(
-    [lat,lng],
-    16
-  );
-}
-
-/* =========================
-   AD SYSTEM
-========================= */
-
-let adCallback=null;
-let adTimer=null;
-let adRemaining=5;
-
-function startAdGate(
-  title,
-  message,
-  callback
-){
-
-  adCallback=callback;
-  adRemaining=5;
-
-  document.getElementById(
-    "adTitle"
-  ).textContent=title;
-
-  document.getElementById(
-    "adMessage"
-  ).textContent=message;
-
-  document.getElementById(
-    "adCountdown"
-  ).textContent=adRemaining;
-
-  document.getElementById(
-    "adContinue"
-  ).style.display="none";
-
-  document.getElementById(
-    "adModal"
-  ).classList.add("show");
-
-  clearInterval(adTimer);
-
-  adTimer=setInterval(()=>{
-
-    adRemaining--;
-
-    document.getElementById(
-      "adCountdown"
-    ).textContent=adRemaining;
-
-    if(adRemaining<=0){
-
-      clearInterval(adTimer);
-
-      document.getElementById(
-        "adCountdown"
-      ).textContent="✓";
-
-      document.getElementById(
-        "adContinue"
-      ).style.display="block";
-    }
-
-  },1000);
-}
-
-function finishAdGate(){
-
-  closeModal("adModal");
-
-  if(typeof adCallback==="function"){
-
-    const callback=adCallback;
-
-    adCallback=null;
-
-    callback();
-  }
-}
-
-/*
-IMPORTANT:
-
-This is only a frontend demonstration.
-
-A production RockyX advertising system should use:
-
-1. Real approved ad provider
-2. Backend verification
-3. Ad impression/event tracking
-4. Anti-fraud protection
-5. Revenue reporting
-6. Rules for creator/rightsholder payouts
-
-Do not treat this demo countdown as a real advertisement impression.
-*/
-
-/* =========================
-   VIDEO EDITOR
-========================= */
-
-function loadEditorVideo(event){
-
-  const file=event.target.files[0];
-
-  if(!file)return;
-
-  const url=
-    URL.createObjectURL(file);
-
-  document.getElementById(
-    "editorPreview"
-  ).src=url;
-}
-
-function addEditorText(){
-
-  const text=prompt(
-    "Enter text to add to the video:"
-  );
-
-  if(text){
-
-    addNotification(
-      "✏️",
-      `Editor text added: ${text}`
-    );
-  }
-}
-
-function addEditorSound(){
-
-  showPage("sounds");
-}
-
-function trimVideo(){
-
-  alert(
-    "Trim controls will be connected to the full video-processing backend."
-  );
-}
-
-function saveEditorDraft(){
-
-  addNotification(
-    "💾",
-    "Video draft saved."
-  );
-
-  alert("Draft saved in frontend demo mode.");
-}
-
-function publishEditedVideo(isShort){
-
-  addNotification(
-    "⬆️",
-    isShort
-      ? "Short published in demo mode."
-      : "Video published in demo mode."
-  );
-
-  alert(
-    isShort
-      ? "Short published in demo mode."
-      : "Video published in demo mode."
-  );
-}
-
-function uploadDemoVideo(isShort){
-
-  const input=
-    document.getElementById("uploadVideo");
-
-  const title=
-    document.getElementById("uploadTitle").value
-    || "My RockyX Video";
-
-  if(!input.files.length){
-
-    alert("Choose a video first.");
-
-    return;
-  }
-
-  const downloads=
-    document.getElementById(
-      "allowDownloads"
-    ).checked;
-
-  state.videos.push({
-
-    id:"user-"+Date.now(),
-
-    title,
-
-    short:isShort,
-
-    downloads,
-
-    local:true
-
-  });
 
   saveState();
+  renderSavedSounds();
+}
 
-  addNotification(
-    "⬆️",
-    `${title} was published in frontend demo mode.`
-  );
+function renderSavedSounds(){
+
+  const box=document.getElementById("savedSounds");
+
+  const saved=
+    soundData.filter(
+      x=>state.sounds.includes(x.id)
+    );
+
+  box.innerHTML=saved.length
+    ? saved.map(s=>`
+      <div class="location-item">
+        🔊 ${escapeHTML(s.name)}
+      </div>
+    `).join("")
+    : "<p>No saved sounds.</p>";
+}
+
+function useSound(id){
+
+  const sound=
+    soundData.find(x=>x.id===id);
 
   alert(
-    "Published in frontend demo mode."
-  );
-}
-
-/* =========================
-   SAVED
-========================= */
-
-function renderSaved(){
-
-  const box=document.getElementById(
-    "savedContent"
+    `Using ${sound.name}.\n\n`+
+    "Open Camera or Editor to continue creating your video."
   );
 
-  if(!box)return;
-
-  if(!state.saved.length){
-
-    box.innerHTML=
-      `<div class="empty">Nothing saved yet.</div>`;
-
-    return;
-  }
-
-  box.innerHTML=state.saved.map(id=>`
-
-    <div class="card">
-      🔖 Saved content: ${escapeHtml(id)}
-    </div>
-
-  `).join("");
+  showPage("camera");
 }
 
-/* =========================
+/* =========================================================
+   SEARCH
+   ========================================================= */
+
+function performSearch(){
+
+  const q=
+    document.getElementById("globalSearch")
+      .value.trim();
+
+  if(!q)return;
+
+  document.getElementById("exploreSearch").value=q;
+
+  showPage("explore");
+
+  performExploreSearch();
+}
+
+function performExploreSearch(){
+
+  const q=
+    document.getElementById("exploreSearch")
+      .value.toLowerCase()
+      .trim();
+
+  const box=
+    document.getElementById("searchResults");
+
+  const results=[];
+
+  products.forEach(p=>{
+    if(
+      p.name.toLowerCase().includes(q)
+    ){
+      results.push(`
+        <div class="card">
+          <h3>🛒 ${escapeHTML(p.name)}</h3>
+          <p>GHS ${p.price}</p>
+          <button
+            class="btn small"
+            onclick="addToCart('${p.id}')">
+            Add to Cart
+          </button>
+        </div>
+      `);
+    }
+  });
+
+  allVideos().forEach(v=>{
+    if(
+      v.title.toLowerCase().includes(q) ||
+      v.creator.toLowerCase().includes(q)
+    ){
+      results.push(`
+        <div class="card">
+          <h3>🎬 ${escapeHTML(v.title)}</h3>
+          <p>${escapeHTML(v.creator)}</p>
+          <button
+            class="btn small"
+            onclick="showPage('${v.type==="short"?"shorts":"videos"}')">
+            Open Videos
+          </button>
+        </div>
+      `);
+    }
+  });
+
+  nearbyLocations.forEach(l=>{
+    if(
+      l.name.toLowerCase().includes(q) ||
+      l.category.toLowerCase().includes(q)
+    ){
+      results.push(`
+        <div class="card">
+          <h3>📍 ${escapeHTML(l.name)}</h3>
+          <p>${escapeHTML(l.category)}</p>
+          <button
+            class="btn small"
+            onclick="focusNearbyLocation('${l.id}')">
+            View Location
+          </button>
+        </div>
+      `);
+    }
+  });
+
+  music.forEach(m=>{
+    if(
+      m.title.toLowerCase().includes(q) ||
+      m.artist.toLowerCase().includes(q)
+    ){
+      results.push(`
+        <div class="card">
+          <h3>🎵 ${escapeHTML(m.title)}</h3>
+          <p>${escapeHTML(m.artist)}</p>
+        </div>
+      `);
+    }
+  });
+
+  box.innerHTML=
+    results.length
+      ? results.join("")
+      : "<div class='card'><p>No results found.</p></div>";
+}
+
+/* =========================================================
    ACCOUNT
-========================= */
+   ========================================================= */
 
 function saveAccount(){
 
   state.account={
     name:document.getElementById("accountName").value,
     email:document.getElementById("accountEmail").value,
-    phone:document.getElementById("accountPhone").value,
-    country:document.getElementById("accountCountry").value,
-    type:document.getElementById("accountType").value
+    phone:document.getElementById("accountPhone").value
   };
 
   saveState();
 
-  document.getElementById(
-    "profileName"
-  ).textContent=
-    state.account.name || "RockyX User";
-
-  document.getElementById(
-    "profileEmail"
-  ).textContent=
-    state.account.email || "Not signed in";
-
   addNotification(
     "👤",
-    "Account information saved."
+    "Account information saved locally."
   );
-
-  alert("Account saved.");
 }
 
 function loadAccount(){
 
-  const a=state.account;
+  document.getElementById("accountName").value=
+    state.account.name || "";
 
-  if(!a)return;
+  document.getElementById("accountEmail").value=
+    state.account.email || "";
 
-  document.getElementById(
-    "accountName"
-  ).value=a.name || "";
-
-  document.getElementById(
-    "accountEmail"
-  ).value=a.email || "";
-
-  document.getElementById(
-    "accountPhone"
-  ).value=a.phone || "";
-
-  document.getElementById(
-    "accountCountry"
-  ).value=a.country || "";
-
-  document.getElementById(
-    "accountType"
-  ).value=a.type || "Personal User";
-
-  document.getElementById(
-    "profileName"
-  ).textContent=
-    a.name || "RockyX User";
-
-  document.getElementById(
-    "profileEmail"
-  ).textContent=
-    a.email || "Not signed in";
+  document.getElementById("accountPhone").value=
+    state.account.phone || "";
 }
+
+function signOut(){
+
+  localStorage.removeItem("rockyx_demo_user");
+
+  alert("Signed out of this demo.");
+}
+
+/* =========================================================
+   AUTH
+   ========================================================= */
 
 function demoSignIn(){
 
   const email=
-    document.getElementById(
-      "accountEmail"
-    ).value
-    || "demo@rockyx.local";
+    document.getElementById("authEmail").value.trim();
 
-  state.account.email=email;
+  if(!email){
 
-  saveState();
+    alert("Enter your email.");
+    return;
+  }
 
-  loadAccount();
-
-  addNotification(
-    "🔐",
-    "You signed in using frontend demo mode."
+  localStorage.setItem(
+    "rockyx_demo_user",
+    JSON.stringify({
+      name:document.getElementById("authName").value,
+      email
+    })
   );
 
-  alert(
-    "Signed in using frontend demo mode."
+  closeModal("authModal");
+
+  addNotification(
+    "👋",
+    "Welcome to RockyX."
   );
 }
 
-function demoSignOut(){
-
-  state.account={};
-
-  saveState();
-
-  loadAccount();
-
-  addNotification(
-    "🔐",
-    "You signed out."
-  );
-
-  alert("Signed out.");
-}
-
-/* =========================
-   SETTINGS
-========================= */
-
-function saveSettings(){
-
-  state.settings.allowDownloads=
-    document.querySelector(
-      "#settings input:nth-of-type(1)"
-    )?.checked ?? true;
-
-  saveState();
-
-  addNotification(
-    "⚙️",
-    "Settings saved."
-  );
-
-  alert("Settings saved.");
-}
-
-/* =========================
+/* =========================================================
    ADMIN
-========================= */
+   ========================================================= */
 
 function openAdmin(){
 
   const code=
-    document.getElementById(
-      "adminCode"
-    ).value.trim();
+    document.getElementById("adminCode").value;
 
   if(code!=="ROCKYX-ADMIN-DEMO"){
 
-    alert("Invalid admin code.");
-
+    alert("Incorrect demo admin code.");
     return;
   }
 
-  document.getElementById(
-    "adminPanel"
-  ).style.display="block";
+  document.getElementById("adminPanel")
+    .classList.remove("hidden");
 
-  alert(
-    "Admin demo access granted."
-  );
+  toast("Admin demo opened");
 }
 
-/* =========================
-   CREATOR
-========================= */
+/* =========================================================
+   CREATOR / VERIFICATION
+   ========================================================= */
 
 function checkVerification(){
 
   alert(
-    "Your verification access will be checked against RockyX's configured creator requirements after the backend is connected."
+    "RockyX will automatically check creator eligibility "+
+    "using the configured verification rules."
   );
 }
 
 function useTemplate(name){
 
-  addNotification(
-    "🎨",
-    `${name} template selected.`
+  alert(
+    `${name} template selected.\n\n`+
+    "Open the Camera or Editor to create your video."
   );
 
-  showPage("editor");
+  showPage("camera");
 }
 
-/* =========================
+/* =========================================================
+   ANALYTICS
+   ========================================================= */
+
+function renderAnalytics(){
+
+  let likes=0;
+
+  allVideos().forEach(v=>{
+    likes+=getLikeCount(v.id);
+  });
+
+  posts.forEach(p=>{
+    likes+=getLikeCount(p.id);
+  });
+
+  let shares=
+    Object.values(state.videoShares)
+      .reduce((a,b)=>a+b,0)
+    +
+    Object.values(state.postShares)
+      .reduce((a,b)=>a+b,0);
+
+  document.getElementById("analyticsViews").textContent=
+    allVideos().length*25;
+
+  document.getElementById("analyticsLikes").textContent=
+    likes;
+
+  document.getElementById("analyticsShares").textContent=
+    shares;
+}
+
+/* =========================================================
    LIVE
-========================= */
+   ========================================================= */
 
 function startLive(){
 
   alert(
-    "Live streaming setup will be connected to the backend/live streaming provider."
+    "Live streaming camera setup will use the same camera "+
+    "system. Real-time streaming requires the backend/live server."
   );
 }
 
-/* =========================
-   SEARCH
-========================= */
-
-function performSearch(){
-
-  const q=
-    document.getElementById(
-      "globalSearch"
-    ).value.trim();
-
-  if(!q)return;
-
-  showPage("explore");
-
-  const query=q.toLowerCase();
-
-  const productResults=
-    products.filter(p=>
-      `${p.name} ${p.description} ${p.seller}`
-        .toLowerCase()
-        .includes(query)
-    );
-
-  const locationResults=
-    nearbyLocations.filter(x=>
-      `${x.name} ${x.type} ${x.location}`
-        .toLowerCase()
-        .includes(query)
-    );
-
-  const musicResults=
-    musicData.filter(x=>
-      `${x.title} ${x.artist} ${x.album}`
-        .toLowerCase()
-        .includes(query)
-    );
-
-  const videoResultsSearch=
-    demoVideos.filter(x=>
-      x.title.toLowerCase()
-        .includes(query)
-    );
-
-  const box=
-    document.getElementById(
-      "searchResults"
-    );
-
-  box.innerHTML=`
-
-    <div class="card">
-
-      <h2>Search results</h2>
-
-      <p style="margin:8px 0 15px;">
-        Results for:
-        <strong>${escapeHtml(q)}</strong>
-      </p>
-
-    </div>
-
-    ${
-      productResults.length
-      ?
-      `
-      <div class="card">
-
-        <h3>🛍 Products</h3>
-
-        <div class="grid" style="margin-top:10px;">
-          ${productResults.map(productCard).join("")}
-        </div>
-
-      </div>
-      `
-      :
-      ""
-    }
-
-    ${
-      locationResults.length
-      ?
-      `
-      <div class="card">
-
-        <h3>📍 Nearby Locations</h3>
-
-        <div class="locationList" style="margin-top:10px;">
-          ${locationResults.map(locationItemHTML).join("")}
-        </div>
-
-      </div>
-      `
-      :
-      ""
-    }
-
-    ${
-      musicResults.length
-      ?
-      `
-      <div class="card">
-
-        <h3>🎵 Music</h3>
-
-        ${musicResults.map(musicCard).join("")}
-
-      </div>
-      `
-      :
-      ""
-    }
-
-    ${
-      videoResultsSearch.length
-      ?
-      `
-      <div class="card">
-
-        <h3>🎬 Videos</h3>
-
-        ${videoResultsSearch.map(videoCard).join("")}
-
-      </div>
-      `
-      :
-      ""
-    }
-
-    ${
-      !productResults.length &&
-      !locationResults.length &&
-      !musicResults.length &&
-      !videoResultsSearch.length
-      ?
-      `<div class="empty">
-        No results found.
-      </div>`
-      :
-      ""
-    }
-
-  `;
-}
-
-/* =========================
+/* =========================================================
    AI HELP
-========================= */
+   ========================================================= */
 
-function toggleAI(){
+function openAIHelp(){
 
-  document.getElementById(
-    "aiPanel"
-  ).classList.toggle("show");
-
-  setTimeout(()=>{
-    document.getElementById(
-      "aiInput"
-    )?.focus();
-  },100);
+  document.getElementById("aiModal")
+    .classList.add("show");
 }
 
-function sendAI(){
+function askAI(){
 
   const input=
-    document.getElementById(
-      "aiInput"
-    );
+    document.getElementById("aiInput");
 
-  const text=input.value.trim();
+  const question=
+    input.value.trim();
 
-  if(!text)return;
-
-  askAI(text);
-
-  input.value="";
-}
-
-function askAI(text){
-
-  addAIMessage(
-    text,
-    "user"
-  );
-
-  setTimeout(()=>{
-
-    const response=
-      getAIRuleResponse(text);
-
-    addAIMessage(
-      response.text,
-      "bot"
-    );
-
-    if(response.action){
-      addAIAction(
-        response.action
-      );
-    }
-
-  },350);
-}
-
-function addAIMessage(text,type){
+  if(!question)return;
 
   const box=
-    document.getElementById(
-      "aiMessages"
-    );
+    document.getElementById("aiMessages");
 
-  const div=document.createElement("div");
-
-  div.className=
-    "aiMsg "+type;
-
-  div.innerHTML=
-    escapeHtml(text)
-      .replace(/\n/g,"<br>");
-
-  box.appendChild(div);
-
-  box.scrollTop=box.scrollHeight;
-}
-
-function addAIAction(action){
-
-  const box=
-    document.getElementById(
-      "aiMessages"
-    );
-
-  if(!action)return;
-
-  const button=document.createElement(
-    "button"
-  );
-
-  button.className="btn";
-
-  button.style.marginBottom="10px";
-
-  button.textContent=
-    action.label;
-
-  button.onclick=()=>{
-    action.run();
-  };
-
-  box.appendChild(button);
-
-  box.scrollTop=box.scrollHeight;
-}
-
-function getAIRuleResponse(question){
+  box.innerHTML+=`
+    <p><b>You:</b> ${escapeHTML(question)}</p>
+  `;
 
   const q=question.toLowerCase();
 
-  if(
-    q.includes("short") &&
-    (
-      q.includes("upload") ||
-      q.includes("create") ||
-      q.includes("post")
-    )
-  ){
+  let answer=
+    "I can help with RockyX videos, camera, editing, music, marketplace, maps, transport, businesses, services, notifications, security and creator tools.";
 
-    return{
+  if(q.includes("camera") ||
+     q.includes("record") ||
+     q.includes("create video")){
 
-      text:
-`To upload a Short, open Upload from the menu, choose your video, enter a title and choose Publish Short.`,
-
-      action:{
-        label:"Open Upload",
-        run:()=>showPage("upload")
-      }
-
-    };
+    answer=
+      "Open Creator Studio → Camera. Allow camera and microphone access, then tap the red record button.";
   }
 
-  if(
-    q.includes("video") &&
-    (
-      q.includes("download") ||
-      q.includes("save")
-    )
-  ){
+  else if(q.includes("edit")){
 
-    return{
-
-      text:
-`For videos that allow downloads, tap the Download button. In the current frontend demo, an advertisement gate appears first. The real download and ad verification will be connected through the backend.`,
-
-      action:{
-        label:"Open Videos",
-        run:()=>showPage("videos")
-      }
-
-    };
+    answer=
+      "Open Creator Studio → Video Editor. You can load a video and use text, sound, speed, volume, filters and trim controls.";
   }
 
-  if(
-    q.includes("nearby") ||
-    q.includes("business") ||
-    q.includes("restaurant") ||
-    q.includes("hotel") ||
-    q.includes("fuel") ||
-    q.includes("transport")
-  ){
+  else if(q.includes("like")){
 
-    let category="all";
-
-    if(q.includes("business"))
-      category="businesses";
-
-    else if(q.includes("restaurant"))
-      category="restaurants";
-
-    else if(q.includes("hotel"))
-      category="hotels";
-
-    else if(q.includes("fuel"))
-      category="fuel";
-
-    else if(q.includes("transport"))
-      category="transport";
-
-    return{
-
-      text:
-`You can use Nearby to find businesses, sellers, services, transport, fuel stations, hotels and restaurants. The map shows the available locations and lets you open directions.`,
-
-      action:{
-        label:"Open Nearby",
-        run:()=>openNearbyCategory(category)
-      }
-
-    };
+    answer=
+      "Tap the ❤️ Like button under a video or post. The button changes to Liked and the count updates.";
   }
 
-  if(
-    q.includes("marketplace") ||
-    q.includes("buy") ||
-    q.includes("product") ||
-    q.includes("shop")
-  ){
+  else if(q.includes("map") ||
+          q.includes("nearby")){
 
-    return{
-
-      text:
-`Marketplace lets you browse products, add products to your cart and place an order. Sellers will eventually manage their products and orders through their accounts.`,
-
-      action:{
-        label:"Open Marketplace",
-        run:()=>showPage("marketplace")
-      }
-
-    };
+    answer=
+      "Open Nearby and choose Businesses, Sellers, Services, Transport, Fuel, Hotels or Restaurants. Tap View on Map.";
   }
 
-  if(
-    q.includes("music") ||
-    q.includes("song") ||
-    q.includes("artist") ||
-    q.includes("album")
-  ){
+  else if(q.includes("download")){
 
-    return{
-
-      text:
-`Music lets users discover songs, artists and albums. Artists will eventually be able to upload and manage their music through the creator system.`,
-
-      action:{
-        label:"Open Music",
-        run:()=>showPage("music")
-      }
-
-    };
+    answer=
+      "For videos where downloads are allowed, tap Download. RockyX can place an advertising step before the download.";
   }
 
-  if(
-    q.includes("sound")
-  ){
+  else if(q.includes("share")){
 
-    return{
-
-      text:
-`Sounds lets you discover sounds, save sounds and use them when creating content.`,
-
-      action:{
-        label:"Open Sounds",
-        run:()=>showPage("sounds")
-      }
-
-    };
+    answer=
+      "Tap Share. On supported phones, RockyX opens the device sharing menu so you can share to other apps.";
   }
 
-  if(
-    q.includes("verify") ||
-    q.includes("blue tick") ||
-    q.includes("verification")
-  ){
+  box.innerHTML+=`
+    <p><b>RockyX AI:</b> ${escapeHTML(answer)}</p>
+  `;
 
-    return{
+  input.value="";
 
-      text:
-`Creator verification is intended for eligible creators who meet RockyX's configured performance, authenticity, security and Community Guidelines requirements.`,
-
-      action:{
-        label:"Open Verification",
-        run:()=>showPage("verification")
-      }
-
-    };
-  }
-
-  if(
-    q.includes("earn") ||
-    q.includes("money") ||
-    q.includes("payout") ||
-    q.includes("revenue")
-  ){
-
-    return{
-
-      text:
-`The Earnings area will show eligible revenue from RockyX monetization programs. Actual payouts will require the secure backend and appropriate payment and verification systems.`,
-
-      action:{
-        label:"Open Earnings",
-        run:()=>showPage("earnings")
-      }
-
-    };
-  }
-
-  if(
-    q.includes("share") ||
-    q.includes("whatsapp") ||
-    q.includes("facebook") ||
-    q.includes("messenger")
-  ){
-
-    return{
-
-      text:
-`RockyX can use your device's native sharing system when available. Otherwise, it can copy the link so you can paste it into another app.`,
-
-      action:null
-
-    };
-  }
-
-  if(
-    q.includes("map") ||
-    q.includes("direction") ||
-    q.includes("navigation")
-  ){
-
-    return{
-
-      text:
-`Use Navigation to search for a place, or use Nearby to select a location and open directions.`,
-
-      action:{
-        label:"Open Navigation",
-        run:()=>showPage("navigation")
-      }
-
-    };
-  }
-
-  if(
-    q.includes("account") ||
-    q.includes("profile") ||
-    q.includes("settings")
-  ){
-
-    return{
-
-      text:
-`Your Account and Settings pages are where you will manage your profile, preferences, security and other account controls.`,
-
-      action:{
-        label:"Open Account",
-        run:()=>showPage("account")
-      }
-
-    };
-  }
-
-  if(
-    q.includes("security") ||
-    q.includes("privacy") ||
-    q.includes("password")
-  ){
-
-    return{
-
-      text:
-`Use the Security page for account-protection controls. The production backend will handle authentication, sessions, permissions and stronger security protections.`,
-
-      action:{
-        label:"Open Security",
-        run:()=>showPage("security")
-      }
-
-    };
-  }
-
-  if(
-    q.includes("live") ||
-    q.includes("stream")
-  ){
-
-    return{
-
-      text:
-`The Live section is where live streaming will be accessed. The real streaming service will be connected during backend development.`,
-
-      action:{
-        label:"Open Live",
-        run:()=>showPage("live")
-      }
-
-    };
-  }
-
-  if(
-    q.includes("editor") ||
-    q.includes("edit")
-  ){
-
-    return{
-
-      text:
-`The RockyX video editor is designed to let creators prepare videos, add text and sounds, save drafts and publish videos or Shorts.`,
-
-      action:{
-        label:"Open Editor",
-        run:()=>showPage("editor")
-      }
-
-    };
-  }
-
-  if(
-    q.includes("admin")
-  ){
-
-    return{
-
-      text:
-`The Admin section is intended to be private. In production, admin permissions and access must be enforced by the backend rather than frontend code alone.`,
-
-      action:{
-        label:"Open Admin",
-        run:()=>showPage("admin")
-      }
-
-    };
-  }
-
-  if(
-    q.includes("help") ||
-    q.includes("what can you do")
-  ){
-
-    return{
-
-      text:
-`I can help you with RockyX features such as Shorts, videos, music, sounds, marketplace, Nearby, navigation, sharing, creator tools, verification, earnings, security and account settings.`,
-
-      action:null
-
-    };
-  }
-
-  return{
-
-    text:
-`I can help with RockyX features and guide you around the app. Try asking something like “How do I upload a Short?”, “Find nearby businesses”, “How do I download a video?”, or “How does verification work?”`,
-
-    action:null
-
-  };
+  box.scrollTop=box.scrollHeight;
 }
 
-/*
-IMPORTANT:
-
-The AI Help above is a frontend demonstration.
-
-For the real RockyX AI assistant:
-
-User → RockyX frontend → secure backend → AI API → backend → RockyX
-
-The secret AI API key must NOT be placed in this public index.html.
-*/
-
-/* =========================
-   MODALS
-========================= */
-
-function closeModal(id){
-
-  document.getElementById(
-    id
-  )?.classList.remove("show");
-}
-
-/* =========================
-   URL SHARING
-========================= */
+/* =========================================================
+   SHARED URL
+   ========================================================= */
 
 function handleSharedUrl(){
 
   const params=
-    new URLSearchParams(
-      window.location.search
-    );
+    new URLSearchParams(location.search);
 
   const video=params.get("video");
-
   const post=params.get("post");
-
   const product=params.get("product");
-
-  const location=params.get("location");
-
-  const song=params.get("song");
+  const locationId=params.get("location");
 
   if(video){
 
-    showPage("videos");
+    const v=
+      allVideos().find(x=>x.id===video);
 
-    setTimeout(()=>{
-      const element=
-        document.getElementById(
-          "like-"+video
-        );
-
-      if(element){
-        element.scrollIntoView({
-          behavior:"smooth"
-        });
-      }
-    },300);
+    if(v){
+      showPage(
+        v.type==="short"
+          ?"shorts"
+          :"videos"
+      );
+    }
   }
 
   if(post){
-
     showPage("home");
   }
 
   if(product){
-
     showPage("marketplace");
   }
 
-  if(location){
-
-    openNearbyCategory("all");
-
-    setTimeout(()=>{
-      focusNearbyLocation(location);
-    },400);
-  }
-
-  if(song){
-
-    showPage("music");
+  if(locationId){
+    focusNearbyLocation(locationId);
   }
 }
 
-/* =========================
-   UTILITIES
-========================= */
+/* =========================================================
+   HELPERS
+   ========================================================= */
 
-function escapeHtml(value){
+function escapeHTML(value){
 
   return String(value ?? "")
     .replace(/&/g,"&amp;")
@@ -4683,36 +3914,40 @@ function escapeHtml(value){
     .replace(/'/g,"&#039;");
 }
 
-/* =========================
+function escapeAttribute(value){
+
+  return String(value ?? "")
+    .replace(/\\/g,"\\\\")
+    .replace(/'/g,"\\'")
+    .replace(/"/g,"&quot;");
+}
+
+/* =========================================================
    INITIALIZE
-========================= */
+   ========================================================= */
 
-document.addEventListener(
-  "DOMContentLoaded",
-  ()=>{
+document.addEventListener("DOMContentLoaded",()=>{
 
-    renderProducts();
+  renderHomeFeed();
+  renderShorts();
+  renderVideos();
+  renderProducts();
+  renderMusic();
+  renderSounds();
+  renderNotifications();
+  renderAnalytics();
+  updateCartCount();
 
-    renderHomeFeed();
+  document.getElementById("allowDownloads").checked=
+    state.allowDownloads;
 
-    renderVideos();
+  handleSharedUrl();
 
-    renderMusic();
+});
 
-    renderSavedSounds();
-
-    renderNotifications();
-
-    loadAccount();
-
-    updateNotificationCount();
-
-    renderServices();
-
-    handleSharedUrl();
-
-  }
-);
+window.addEventListener("beforeunload",()=>{
+  saveState();
+});
 
 </script>
 
