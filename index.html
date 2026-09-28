@@ -5179,5 +5179,768 @@ startup();
 
 </script>
 
+<script>
+/* =========================================================
+   ROCKYX — UNIVERSAL BUTTON CLICK SYSTEM
+   ========================================================= */
+
+function rockyButtonMessage(title, message) {
+  if (typeof notify === "function") {
+    notify(title, message);
+  } else {
+    alert(title + "\n\n" + message);
+  }
+}
+
+/* ---------- GENERAL BUTTON ---------- */
+
+function rockyButtonClick(button, action) {
+  button.addEventListener("click", function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    try {
+      action(button, event);
+    } catch (error) {
+      console.error("RockyX button error:", error);
+      rockyButtonMessage(
+        "RockyX",
+        "This button could not complete the action."
+      );
+    }
+  });
+}
+
+
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
+
+document.querySelectorAll("[data-page]").forEach(button => {
+  rockyButtonClick(button, function () {
+    const page = button.dataset.page;
+
+    if (typeof show === "function") {
+      show(page);
+    } else if (typeof showPage === "function") {
+      showPage(page);
+    }
+  });
+});
+
+
+/* =========================================================
+   LIKE BUTTONS
+   ========================================================= */
+
+document.querySelectorAll(
+  ".likeBtn, .like-button, [data-action='like']"
+).forEach(button => {
+  rockyButtonClick(button, function () {
+
+    button.classList.toggle("active");
+
+    if (button.classList.contains("active")) {
+      button.innerHTML = "❤️ Liked";
+    } else {
+      button.innerHTML = "♡ Like";
+    }
+  });
+});
+
+
+/* =========================================================
+   COMMENT BUTTONS
+   ========================================================= */
+
+document.querySelectorAll(
+  ".commentBtn, .comment-button, [data-action='comment']"
+).forEach(button => {
+  rockyButtonClick(button, function () {
+
+    const comment = prompt("Write your comment:");
+
+    if (comment && comment.trim()) {
+      rockyButtonMessage(
+        "Comment",
+        "Your comment was added."
+      );
+    }
+  });
+});
+
+
+/* =========================================================
+   SHARE BUTTONS
+   ========================================================= */
+
+document.querySelectorAll(
+  ".shareBtn, .share-button, [data-action='share']"
+).forEach(button => {
+  rockyButtonClick(button, async function () {
+
+    const shareData = {
+      title: "RockyX",
+      text: "Check this out on RockyX!"
+    };
+
+    try {
+      if (navigator.share) {
+        await navigator.share(shareData);
+      } else {
+        await navigator.clipboard.writeText(
+          window.location.href
+        );
+
+        rockyButtonMessage(
+          "Shared",
+          "RockyX link copied to your clipboard."
+        );
+      }
+    } catch (error) {
+      console.log("Share cancelled.");
+    }
+  });
+});
+
+
+/* =========================================================
+   SAVE BUTTONS
+   ========================================================= */
+
+document.querySelectorAll(
+  ".saveBtn, .save-button, [data-action='save']"
+).forEach(button => {
+  rockyButtonClick(button, function () {
+
+    button.classList.toggle("active");
+
+    if (button.classList.contains("active")) {
+      button.innerHTML = "🔖 Saved";
+
+      rockyButtonMessage(
+        "Saved",
+        "This item has been saved."
+      );
+    } else {
+      button.innerHTML = "🔖 Save";
+    }
+  });
+});
+
+
+/* =========================================================
+   PLAY MUSIC
+   ========================================================= */
+
+document.querySelectorAll(
+  ".playBtn, .play-button, [data-action='play']"
+).forEach(button => {
+  rockyButtonClick(button, function () {
+
+    const title =
+      button.dataset.title ||
+      button.closest(".card")?.querySelector("h3")?.textContent ||
+      "Music";
+
+    rockyButtonMessage(
+      "▶ Playing",
+      title
+    );
+  });
+});
+
+
+/* =========================================================
+   ADD TO CART
+   ========================================================= */
+
+document.querySelectorAll(
+  ".addCartBtn, .add-cart, [data-action='cart']"
+).forEach(button => {
+  rockyButtonClick(button, function () {
+
+    const product =
+      button.dataset.product ||
+      button.closest(".card")?.querySelector("h3")?.textContent ||
+      "Product";
+
+    rockyButtonMessage(
+      "🛒 Added to Cart",
+      product
+    );
+
+    if (typeof renderCart === "function") {
+      try {
+        renderCart();
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  });
+});
+
+
+/* =========================================================
+   CHECKOUT
+   ========================================================= */
+
+document.querySelectorAll(
+  ".checkoutBtn, .checkout-button, [data-action='checkout']"
+).forEach(button => {
+  rockyButtonClick(button, function () {
+
+    if (typeof show === "function") {
+      show("checkout");
+    } else if (typeof showPage === "function") {
+      showPage("checkout");
+    }
+  });
+});
+
+
+/* =========================================================
+   BUY NOW
+   ========================================================= */
+
+document.querySelectorAll(
+  ".buyBtn, .buy-button, [data-action='buy']"
+).forEach(button => {
+  rockyButtonClick(button, function () {
+
+    if (typeof show === "function") {
+      show("checkout");
+    }
+
+    rockyButtonMessage(
+      "RockyX Checkout",
+      "Your checkout page is ready."
+    );
+  });
+});
+
+
+/* =========================================================
+   FOLLOW BUTTON
+   ========================================================= */
+
+document.querySelectorAll(
+  ".followBtn, .follow-button, [data-action='follow']"
+).forEach(button => {
+  rockyButtonClick(button, function () {
+
+    const following =
+      button.dataset.following === "true";
+
+    if (following) {
+      button.dataset.following = "false";
+      button.textContent = "Follow";
+    } else {
+      button.dataset.following = "true";
+      button.textContent = "Following";
+    }
+  });
+});
+
+
+/* =========================================================
+   LIVE STREAM
+   ========================================================= */
+
+document.querySelectorAll(
+  "[data-action='live'], .startLiveBtn"
+).forEach(button => {
+  rockyButtonClick(button, function () {
+
+    rockyButtonMessage(
+      "🔴 RockyX LIVE",
+      "Live streaming setup opened."
+    );
+
+    if (typeof show === "function") {
+      show("live");
+    }
+  });
+});
+
+
+/* =========================================================
+   VIDEO EDITOR BUTTONS
+   ========================================================= */
+
+document.querySelectorAll(
+  "[data-editor-tool]"
+).forEach(button => {
+  rockyButtonClick(button, function () {
+
+    const tool = button.dataset.editorTool;
+
+    if (typeof editorTool === "function") {
+      editorTool(tool);
+      return;
+    }
+
+    rockyButtonMessage(
+      "Video Editor",
+      tool + " tool selected."
+    );
+  });
+});
+
+
+function editorTool(tool) {
+
+  if (tool === "Trim") {
+
+    if (typeof trimInfo === "function") {
+      trimInfo();
+    } else {
+      rockyButtonMessage(
+        "Trim",
+        "Select the beginning and ending points of your video."
+      );
+    }
+
+    return;
+  }
+
+  if (tool === "Text") {
+
+    if (typeof addEditorText === "function") {
+      addEditorText();
+    } else {
+      rockyButtonMessage(
+        "Text",
+        "Text tool selected."
+      );
+    }
+
+    return;
+  }
+
+  if (tool === "Sound") {
+
+    rockyButtonMessage(
+      "Sound",
+      "Choose a sound from your saved sounds."
+    );
+
+    return;
+  }
+
+  if (tool === "Effects") {
+
+    rockyButtonMessage(
+      "Effects",
+      "Effects tool selected."
+    );
+
+    return;
+  }
+
+  if (tool === "Filters") {
+
+    rockyButtonMessage(
+      "Filters",
+      "Filters tool selected."
+    );
+
+    return;
+  }
+
+  if (tool === "Captions") {
+
+    rockyButtonMessage(
+      "Captions",
+      "Caption tool selected."
+    );
+
+    return;
+  }
+
+  rockyButtonMessage(
+    "Video Editor",
+    tool + " selected."
+  );
+}
+
+
+/* =========================================================
+   AI STUDIO BUTTONS
+   ========================================================= */
+
+document.querySelectorAll(
+  "[data-ai-tool]"
+).forEach(button => {
+  rockyButtonClick(button, function () {
+
+    const tool = button.dataset.aiTool;
+
+    rockyButtonMessage(
+      "AI Studio",
+      tool + " selected."
+    );
+  });
+});
+
+
+/* =========================================================
+   TEMPLATE BUTTONS
+   ========================================================= */
+
+document.querySelectorAll(
+  "[data-template]"
+).forEach(button => {
+  rockyButtonClick(button, function () {
+
+    const template = button.dataset.template;
+
+    rockyButtonMessage(
+      "Template",
+      template + " selected."
+    );
+
+    if (typeof show === "function") {
+      show("createTemplate");
+    }
+  });
+});
+
+
+/* =========================================================
+   TRANSPORT BUTTONS
+   ========================================================= */
+
+document.querySelectorAll(
+  "[data-transport]"
+).forEach(button => {
+  rockyButtonClick(button, function () {
+
+    const type = button.dataset.transport;
+
+    rockyButtonMessage(
+      "🚕 Transport",
+      type + " selected."
+    );
+
+    if (typeof show === "function") {
+      show("transport");
+    }
+
+    if (typeof searchNearby === "function") {
+      try {
+        searchNearby("transport");
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  });
+});
+
+
+/* =========================================================
+   LOCATION BUTTONS
+   ========================================================= */
+
+document.querySelectorAll(
+  "[data-location]"
+).forEach(button => {
+  rockyButtonClick(button, function () {
+
+    const type = button.dataset.location;
+
+    if (type === "main" && typeof locateMain === "function") {
+      locateMain();
+    }
+
+    if (type === "nearby" && typeof locateNearby === "function") {
+      locateNearby();
+    }
+
+    if (
+      type === "transport" &&
+      typeof locateTransport === "function"
+    ) {
+      locateTransport();
+    }
+
+    if (
+      type === "navigation" &&
+      typeof findDestination === "function"
+    ) {
+      findDestination();
+    }
+  });
+});
+
+
+/* =========================================================
+   SEARCH BUTTONS
+   ========================================================= */
+
+document.querySelectorAll(
+  "[data-search]"
+).forEach(button => {
+  rockyButtonClick(button, function () {
+
+    const inputId = button.dataset.search;
+    const input = document.getElementById(inputId);
+
+    if (!input) return;
+
+    const query = input.value.trim();
+
+    if (!query) {
+      rockyButtonMessage(
+        "Search",
+        "Type something to search."
+      );
+      return;
+    }
+
+    if (typeof searchAll === "function") {
+      searchAll();
+    }
+
+    if (typeof performSearch === "function") {
+      performSearch(query);
+    }
+  });
+});
+
+
+/* =========================================================
+   UPLOAD BUTTONS
+   ========================================================= */
+
+document.querySelectorAll(
+  "[data-upload]"
+).forEach(button => {
+  rockyButtonClick(button, function () {
+
+    const inputId = button.dataset.upload;
+    const input = document.getElementById(inputId);
+
+    if (input) {
+      input.click();
+    } else {
+      rockyButtonMessage(
+        "Upload",
+        "Select a file from your device."
+      );
+    }
+  });
+});
+
+
+/* =========================================================
+   DOWNLOAD BUTTONS
+   ========================================================= */
+
+document.querySelectorAll(
+  "[data-download]"
+).forEach(button => {
+  rockyButtonClick(button, function () {
+
+    const url = button.dataset.download;
+
+    if (!url) {
+      rockyButtonMessage(
+        "Download",
+        "There is no downloadable file attached yet."
+      );
+      return;
+    }
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "RockyX-download";
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  });
+});
+
+
+/* =========================================================
+   CLOSE BUTTONS
+   ========================================================= */
+
+document.querySelectorAll(
+  ".closeBtn, .close-button, [data-action='close']"
+).forEach(button => {
+  rockyButtonClick(button, function () {
+
+    if (typeof closeModal === "function") {
+      closeModal();
+      return;
+    }
+
+    if (typeof closeModals === "function") {
+      closeModals();
+      return;
+    }
+
+    const modal = button.closest(".modal");
+
+    if (modal) {
+      modal.style.display = "none";
+    }
+  });
+});
+
+
+/* =========================================================
+   GENERIC BUTTON FALLBACK
+   ---------------------------------------------------------
+   Any normal button that has no other RockyX handler will
+   still respond when clicked.
+   ========================================================= */
+
+document.querySelectorAll("button").forEach(button => {
+
+  if (
+    button.dataset.rockyxBound === "true" ||
+    button.disabled
+  ) {
+    return;
+  }
+
+  button.dataset.rockyxBound = "true";
+
+  button.addEventListener("click", function () {
+
+    const text =
+      this.innerText.trim() ||
+      this.getAttribute("aria-label") ||
+      "Button";
+
+    console.log("RockyX button clicked:", text);
+
+    /*
+      Do not show an alert for navigation buttons or buttons
+      already handled by another function.
+    */
+
+    if (
+      this.closest(".side") ||
+      this.closest(".bottomNav") ||
+      this.classList.contains("iconBtn")
+    ) {
+      return;
+    }
+
+    /*
+      If the button still has no obvious action, give the
+      user feedback instead of doing nothing.
+    */
+
+    if (!this.dataset.action &&
+        !this.dataset.page &&
+        !this.dataset.editorTool &&
+        !this.dataset.aiTool &&
+        !this.dataset.template &&
+        !this.dataset.transport &&
+        !this.dataset.location &&
+        !this.dataset.search &&
+        !this.dataset.upload &&
+        !this.dataset.download) {
+
+      rockyButtonMessage(
+        "RockyX",
+        text + " clicked."
+      );
+    }
+  });
+});
+
+
+/* =========================================================
+   HEADER ICONS
+   ========================================================= */
+
+const headerActions = {
+
+  notifications: function () {
+    if (typeof show === "function") {
+      show("notifications");
+    }
+  },
+
+  messages: function () {
+    if (typeof show === "function") {
+      show("messages");
+    }
+  },
+
+  cart: function () {
+    if (typeof show === "function") {
+      show("cart");
+    }
+  },
+
+  account: function () {
+    if (typeof show === "function") {
+      show("account");
+    }
+  }
+};
+
+
+document.querySelectorAll("[data-header-action]").forEach(button => {
+
+  rockyButtonClick(button, function () {
+
+    const action = button.dataset.headerAction;
+
+    if (headerActions[action]) {
+      headerActions[action]();
+    }
+  });
+
+});
+
+
+/* =========================================================
+   RE-BIND DYNAMIC BUTTONS
+   ---------------------------------------------------------
+   Useful when RockyX creates cards/buttons dynamically.
+   ========================================================= */
+
+const rockyButtonObserver = new MutationObserver(function () {
+
+  document.querySelectorAll(
+    "[data-action], [data-page], [data-editor-tool], " +
+    "[data-ai-tool], [data-template], [data-transport], " +
+    "[data-location], [data-search], [data-upload], " +
+    "[data-download]"
+  ).forEach(button => {
+
+    if (button.dataset.rockyxObserved === "true") {
+      return;
+    }
+
+    button.dataset.rockyxObserved = "true";
+
+    button.addEventListener("click", function () {
+      console.log(
+        "RockyX dynamic button clicked:",
+        this.innerText.trim()
+      );
+    });
+
+  });
+
+});
+
+rockyButtonObserver.observe(document.body, {
+  childList: true,
+  subtree: true
+});
+
+
+console.log("ROCKYX BUTTON SYSTEM READY");
+</script>
+
 </body>
 </html>
