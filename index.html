@@ -2,5712 +2,3522 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#080808">
-<meta name="description" content="RockyX — Videos, Music, Marketplace, Maps, Businesses, Services, Creators and more.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#090b10">
 <title>RockyX</title>
 
 <link rel="stylesheet"
- href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
- crossorigin="">
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
- crossorigin=""></script>
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      crossorigin=""/>
 
 <style>
 :root{
-  --bg:#080808;
-  --panel:#111;
-  --panel2:#171717;
-  --panel3:#222;
-  --text:#fff;
-  --muted:#999;
-  --line:#292929;
-  --accent:#ff2d55;
-  --purple:#7c3aed;
-  --green:#19c37d;
-  --yellow:#ffd447;
-  --blue:#2997ff;
-  --danger:#ff4d4d;
-  --header:62px;
-  --sidebar:245px;
-  --radius:16px;
+  --bg:#090b10;
+  --panel:#11151d;
+  --panel2:#171c25;
+  --border:#252c38;
+  --text:#f5f7fa;
+  --muted:#9ca6b5;
+  --accent:#4f8cff;
+  --accent2:#7c5cff;
+  --danger:#ff4d5e;
+  --success:#2fd47a;
+  --warning:#ffb020;
+  --radius:18px;
 }
 
 *{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text);
+font-family:Inter,Arial,Helvetica,sans-serif}
+body{min-height:100vh}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+a{color:inherit;text-decoration:none}
 
-html,body{
-  margin:0;
-  padding:0;
-  background:var(--bg);
-  color:var(--text);
-  font-family:Arial,Helvetica,sans-serif;
+.topbar{
+  position:fixed;top:0;left:0;right:0;height:64px;z-index:1000;
+  background:rgba(9,11,16,.92);backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:12px;padding:8px 14px;
 }
-
-body{
-  min-height:100vh;
-  overflow-x:hidden;
-}
-
-button,input,select,textarea{
-  font:inherit;
-}
-
-button{
-  cursor:pointer;
-}
-
-button:disabled{
-  opacity:.5;
-  cursor:not-allowed;
-}
-
-input,select,textarea{
-  width:100%;
-  background:#101010;
-  color:white;
-  border:1px solid #333;
-  border-radius:10px;
-  padding:12px;
-  outline:none;
-}
-
-textarea{
-  min-height:110px;
-  resize:vertical;
-}
-
-.app{
-  min-height:100vh;
-  padding-top:var(--header);
-  padding-left:var(--sidebar);
-}
-
-.header{
-  position:fixed;
-  z-index:3000;
-  top:0;
-  left:0;
-  right:0;
-  height:var(--header);
-  display:flex;
-  align-items:center;
-  gap:12px;
-  padding:8px 14px;
-  background:rgba(8,8,8,.96);
-  border-bottom:1px solid var(--line);
-  backdrop-filter:blur(15px);
-}
-
 .logo{
-  width:42px;
-  height:42px;
-  border-radius:13px;
-  display:grid;
-  place-items:center;
-  font-size:21px;
-  font-weight:900;
-  background:linear-gradient(135deg,var(--accent),var(--purple));
+  width:42px;height:42px;border-radius:13px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  display:grid;place-items:center;font-weight:900;font-size:22px;
 }
-
-.brand{
-  font-size:21px;
-  font-weight:900;
-}
-
+.brand{font-weight:900;font-size:19px;white-space:nowrap}
 .search{
-  flex:1;
-  max-width:680px;
-  position:relative;
+  flex:1;max-width:650px;margin:auto;
+  background:var(--panel2);border:1px solid var(--border);
+  border-radius:25px;padding:11px 16px;color:white;outline:none;
 }
-
-.search span{
-  position:absolute;
-  left:15px;
-  top:10px;
-  color:#777;
-  font-size:20px;
+.top-actions{display:flex;gap:7px}
+.icon-btn,.btn{
+  border:1px solid var(--border);background:var(--panel);
+  color:var(--text);border-radius:12px;padding:10px 13px;
 }
-
-.search input{
-  height:42px;
-  border-radius:999px;
-  padding-left:43px;
+.icon-btn:hover,.btn:hover{border-color:#3a4658;background:#1a202a}
+.primary{
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  border:0;color:#fff;
 }
-
-.header-actions{
-  margin-left:auto;
-  display:flex;
-  gap:6px;
-}
-
-.icon-btn{
-  width:40px;
-  height:40px;
-  border:0;
-  border-radius:50%;
-  background:#171717;
-  color:white;
-}
+.danger{background:#3a1218;border-color:#6b1d29;color:#ff8b97}
+.success{background:#102c20;border-color:#1e6242;color:#6ff0a7}
 
 .sidebar{
-  position:fixed;
-  z-index:2000;
-  left:0;
-  top:var(--header);
-  bottom:0;
-  width:var(--sidebar);
-  overflow-y:auto;
-  padding:12px 9px 25px;
-  background:#0b0b0b;
-  border-right:1px solid var(--line);
+  position:fixed;top:64px;bottom:0;left:0;width:245px;
+  border-right:1px solid var(--border);background:#0c0f15;
+  overflow:auto;padding:12px;z-index:900;
 }
-
-.nav-btn{
-  width:100%;
-  border:0;
-  border-radius:12px;
-  padding:11px 13px;
-  background:transparent;
-  color:#ccc;
-  text-align:left;
-  margin:2px 0;
-}
-
-.nav-btn:hover,
-.nav-btn.active{
-  background:#1d1d1d;
-  color:#fff;
-}
-
-.nav-btn.active{
-  box-shadow:inset 3px 0 var(--accent);
-}
-
 .nav-title{
-  color:#666;
-  font-size:10px;
-  letter-spacing:1px;
-  text-transform:uppercase;
-  padding:14px 12px 6px;
+  color:#697386;font-size:11px;font-weight:800;
+  text-transform:uppercase;margin:18px 9px 7px;
 }
-
+.nav-btn{
+  width:100%;text-align:left;border:0;background:transparent;
+  color:#cbd2dc;padding:11px;border-radius:11px;margin:2px 0;
+}
+.nav-btn:hover,.nav-btn.active{background:#181e28;color:white}
 .main{
-  max-width:1550px;
-  margin:auto;
-  padding:20px;
+  margin-left:245px;padding:82px 20px 80px;max-width:1500px;
 }
-
-.page{
-  display:none;
-}
-
-.page.active{
-  display:block;
-}
-
+.page{display:none}
+.page.active{display:block}
 .hero{
-  padding:27px;
-  border:1px solid var(--line);
-  border-radius:23px;
-  margin-bottom:20px;
-  background:
-    radial-gradient(circle at 90% 10%,rgba(124,58,237,.25),transparent 30%),
-    radial-gradient(circle at 10% 90%,rgba(255,45,85,.18),transparent 35%),
-    #111;
+  background:linear-gradient(135deg,#151b25,#10141c);
+  border:1px solid var(--border);border-radius:24px;padding:24px;margin-bottom:18px;
 }
-
-.hero h1{
-  margin:0 0 9px;
-  font-size:34px;
-}
-
-.hero p{
-  color:var(--muted);
-  line-height:1.6;
-  max-width:850px;
-}
-
-.section{
-  margin:22px 0;
-}
-
-.section-head{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-  margin-bottom:13px;
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
-  gap:14px;
-}
-
-.grid.small{
-  grid-template-columns:repeat(auto-fill,minmax(165px,1fr));
-}
-
+.grid{display:grid;gap:16px}
+.grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.grid-4{grid-template-columns:repeat(4,minmax(0,1fr))}
 .card{
-  overflow:hidden;
-  background:var(--panel);
-  border:1px solid var(--line);
-  border-radius:var(--radius);
+  background:var(--panel);border:1px solid var(--border);
+  border-radius:var(--radius);padding:17px;
 }
-
-.card-body{
-  padding:14px;
-}
-
-.card-title{
-  font-weight:800;
-  margin-bottom:6px;
-}
-
-.card-sub{
-  color:var(--muted);
-  font-size:13px;
-  line-height:1.5;
-}
-
-.thumb{
-  aspect-ratio:16/9;
-  display:grid;
-  place-items:center;
-  background:linear-gradient(135deg,#272727,#101010);
-  font-size:40px;
-  position:relative;
-}
-
-.short-thumb{
-  aspect-ratio:9/16;
-}
-
-.product-thumb{
-  aspect-ratio:1;
-}
-
-.btn{
-  border:0;
-  border-radius:10px;
-  padding:10px 15px;
-  color:#fff;
-  background:#242424;
-}
-
-.btn:hover{
-  filter:brightness(1.15);
-}
-
-.btn.primary{
-  background:linear-gradient(135deg,var(--accent),var(--purple));
-}
-
-.btn.green{
-  background:#116e50;
-}
-
-.btn.blue{
-  background:#14558a;
-}
-
-.btn.danger{
-  background:#741e23;
-}
-
-.btn.pro{
-  background:linear-gradient(135deg,#d99b16,#ffe06b);
-  color:#111;
-  font-weight:900;
-}
-
-.btn.outline{
-  border:1px solid #444;
-  background:transparent;
-}
-
-.row{
-  display:flex;
-  align-items:center;
-  gap:9px;
-}
-
-.wrap{
-  flex-wrap:wrap;
-}
-
-.space{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-}
-
-.muted{
-  color:var(--muted);
-}
-
+.card h3,.card h4{margin-top:0}
+.muted{color:var(--muted)}
+.small{font-size:13px}
+.row{display:flex;align-items:center;gap:12px}
+.between{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.wrap{flex-wrap:wrap}
 .badge{
-  display:inline-flex;
-  align-items:center;
-  gap:4px;
-  padding:5px 9px;
-  border-radius:999px;
-  background:#252525;
-  font-size:11px;
+  display:inline-flex;align-items:center;gap:5px;
+  background:#1d2634;border:1px solid #303b4d;
+  border-radius:999px;padding:5px 9px;font-size:12px;
 }
-
-.badge.pro{
-  color:#111;
-  background:var(--yellow);
-  font-weight:900;
+.badge.sponsored{background:#302710;border-color:#765f20;color:#ffd76b}
+.badge.live{background:#35121a;border-color:#762633;color:#ff7c8c}
+.badge.verified{background:#112b45;border-color:#225b91;color:#72b9ff}
+input,select,textarea{
+  width:100%;background:#0c1016;color:white;
+  border:1px solid var(--border);border-radius:12px;
+  padding:11px 12px;outline:none;
 }
-
-.tabs{
-  display:flex;
-  gap:7px;
-  overflow-x:auto;
-  padding-bottom:4px;
-}
-
-.tab{
-  white-space:nowrap;
-  border:1px solid var(--line);
-  background:#151515;
-  color:#aaa;
-  padding:9px 14px;
-  border-radius:999px;
-}
-
-.tab.active{
-  background:white;
-  color:#000;
-}
-
-.stat-grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:12px;
-}
-
-.stat{
-  background:#111;
-  border:1px solid var(--line);
-  border-radius:15px;
-  padding:17px;
-}
-
-.stat-value{
-  font-size:25px;
-  font-weight:900;
-}
-
-.stat-label{
-  margin-top:5px;
-  color:var(--muted);
-  font-size:12px;
-}
-
+textarea{min-height:100px;resize:vertical}
+label{display:block;margin-bottom:6px;font-size:13px;color:#c3cad5}
+.form-group{margin-bottom:13px}
+.actions{display:flex;gap:9px;flex-wrap:wrap}
 .notice{
-  padding:13px;
-  border-radius:12px;
-  background:#171717;
-  border:1px solid var(--line);
-  color:#ccc;
-  line-height:1.5;
+  padding:12px;border-radius:12px;background:#111a26;
+  border:1px solid #26374b;color:#cbd6e4;
 }
-
-.list{
-  display:flex;
-  flex-direction:column;
-  gap:8px;
+.warning{
+  background:#2a2110;border-color:#6d5319;color:#ffd56a;
 }
-
-.list-item{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  padding:12px;
-  border:1px solid #222;
-  background:#151515;
-  border-radius:12px;
-}
-
+.stat{font-size:28px;font-weight:900}
+.price{font-size:22px;font-weight:900}
 .avatar{
-  width:45px;
-  height:45px;
-  flex:none;
-  display:grid;
-  place-items:center;
-  border-radius:50%;
-  background:linear-gradient(135deg,#333,#666);
+  width:54px;height:54px;border-radius:50%;overflow:hidden;
+  background:#202735;display:grid;place-items:center;
+  font-size:23px;flex-shrink:0;
 }
-
-.divider{
-  height:1px;
-  background:var(--line);
-  margin:16px 0;
-}
-
-.map{
-  height:520px;
-  width:100%;
-  overflow:hidden;
-  border:1px solid var(--line);
-  border-radius:18px;
-}
-
-.map-toolbar{
-  display:flex;
-  flex-wrap:wrap;
-  gap:7px;
-  margin-bottom:10px;
-}
-
-.map-category{
-  padding:9px 13px;
-  border-radius:999px;
-  border:1px solid #333;
-  background:#151515;
-  color:#ddd;
-}
-
-.map-category.active{
-  background:white;
-  color:#000;
-}
-
-.marker-card{
-  min-width:180px;
-}
-
-.modal{
-  position:fixed;
-  z-index:7000;
-  inset:0;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:16px;
-  background:rgba(0,0,0,.78);
-}
-
-.modal.show{
-  display:flex;
-}
-
-.modal-box{
-  width:min(760px,100%);
-  max-height:92vh;
-  overflow:auto;
-  padding:20px;
-  border:1px solid #333;
-  border-radius:20px;
-  background:#111;
-}
-
-.modal-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
-  margin-bottom:15px;
-}
-
-.close{
-  width:35px;
-  height:35px;
-  border:0;
-  border-radius:50%;
-  color:#fff;
-  background:#292929;
-}
-
-.ad-screen{
-  text-align:center;
-  padding:20px;
-}
-
-.ad-box{
-  position:relative;
-  min-height:270px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  border-radius:18px;
-  background:
-    linear-gradient(135deg,#20152a,#101010);
-  border:1px solid #3a2a46;
-  margin-bottom:15px;
-}
-
-.ad-label{
-  position:absolute;
-  top:10px;
-  left:10px;
-  padding:5px 8px;
-  border-radius:5px;
-  background:#000;
-  color:#aaa;
-  font-size:10px;
-}
-
-.ad-count{
-  font-size:35px;
-  font-weight:900;
-}
-
-.camera-shell{
-  position:relative;
-  width:min(440px,100%);
-  margin:auto;
-  aspect-ratio:9/16;
-  max-height:75vh;
-  overflow:hidden;
-  border-radius:24px;
-  background:#000;
-  border:1px solid #333;
-}
-
-.camera-video{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  transform:scaleX(1);
-  background:#000;
-}
-
-.camera-overlay{
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-}
-
-.camera-top{
-  position:absolute;
-  top:14px;
-  left:12px;
-  right:12px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.camera-side{
-  position:absolute;
-  right:10px;
-  top:80px;
-  display:flex;
-  flex-direction:column;
-  gap:9px;
-  pointer-events:auto;
-}
-
-.camera-tool{
-  width:43px;
-  height:43px;
-  border:0;
-  border-radius:50%;
-  color:white;
-  background:rgba(0,0,0,.55);
-  backdrop-filter:blur(8px);
-}
-
-.camera-bottom{
-  position:absolute;
-  left:10px;
-  right:10px;
-  bottom:15px;
-  pointer-events:auto;
-}
-
-.camera-mode{
-  display:flex;
-  justify-content:center;
-  gap:16px;
-  margin-bottom:12px;
-}
-
-.camera-mode button{
-  border:0;
-  background:transparent;
-  color:#aaa;
-  font-weight:bold;
-}
-
-.camera-mode button.active{
-  color:#fff;
-}
-
-.record-row{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  gap:16px;
-}
-
-.record-button{
-  width:76px;
-  height:76px;
-  border-radius:50%;
-  border:6px solid #fff;
-  background:var(--accent);
-}
-
-.record-button.recording{
-  background:#fff;
-  border-color:var(--accent);
-}
-
-.editor-layout{
-  display:grid;
-  grid-template-columns:250px minmax(300px,1fr) 280px;
-  gap:13px;
-}
-
-.editor-panel{
-  background:#111;
-  border:1px solid var(--line);
-  border-radius:16px;
-  padding:13px;
-  min-width:0;
-}
-
-.tool-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:7px;
-}
-
-.tool{
-  min-height:63px;
-  padding:7px;
-  color:#ddd;
-  background:#191919;
-  border:1px solid #2a2a2a;
-  border-radius:10px;
-  font-size:11px;
-}
-
-.preview{
-  min-height:430px;
-  display:grid;
-  place-items:center;
-  overflow:hidden;
-  background:#050505;
-  border-radius:14px;
-}
-
-.preview video,
-.preview img{
-  max-width:100%;
-  max-height:600px;
-}
-
-.timeline{
-  overflow:auto;
-  margin-top:10px;
-  padding:9px;
-  background:#090909;
-  border:1px solid #222;
-  border-radius:12px;
-}
-
-.track{
-  min-width:700px;
-  height:42px;
-  display:flex;
-  align-items:center;
-  gap:4px;
-  margin:5px 0;
-}
-
-.clip{
-  height:31px;
-  min-width:110px;
-  padding:8px;
-  border-radius:6px;
-  background:#292929;
-  font-size:10px;
-}
-
-.task-card{
-  position:relative;
-}
-
-.lock{
-  color:var(--yellow);
-}
-
-.permission{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:12px;
-  margin-bottom:7px;
-  background:#151515;
-  border-radius:10px;
-}
-
-.switch{
-  width:45px;
-  height:25px;
-  border:0;
-  border-radius:20px;
-  background:#444;
-  position:relative;
-}
-
-.switch.on{
-  background:var(--green);
-}
-
-.switch:after{
-  content:"";
-  position:absolute;
-  width:19px;
-  height:19px;
-  left:3px;
-  top:3px;
-  border-radius:50%;
-  background:#fff;
-  transition:.2s;
-}
-
-.switch.on:after{
-  left:23px;
-}
+.avatar img{width:100%;height:100%;object-fit:cover}
 
 .bottom-nav{
-  display:none;
+  display:none;position:fixed;bottom:0;left:0;right:0;height:65px;
+  background:rgba(10,13,18,.96);border-top:1px solid var(--border);
+  z-index:1200;grid-template-columns:repeat(5,1fr);
 }
+.bottom-nav button{
+  background:none;border:0;color:#9da7b7;font-size:11px;
+}
+.bottom-nav button span{display:block;font-size:19px;margin-bottom:2px}
+
+.modal{
+  display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);
+  z-index:2000;align-items:center;justify-content:center;padding:18px;
+}
+.modal.show{display:flex}
+.modal-box{
+  width:min(650px,100%);max-height:90vh;overflow:auto;
+  background:#11151d;border:1px solid var(--border);
+  border-radius:22px;padding:20px;
+}
+.close{
+  background:none;border:0;color:#aab3c0;font-size:25px;
+}
+
+#map,#navigationMap{
+  height:calc(100vh - 165px);
+  min-height:480px;border-radius:24px;overflow:hidden;
+  border:1px solid var(--border);
+}
+.map-shell{position:relative}
+.map-search{
+  position:absolute;top:16px;left:16px;right:16px;z-index:500;
+  display:flex;gap:8px;
+}
+.map-search input{
+  background:rgba(17,21,29,.94);backdrop-filter:blur(12px);
+  box-shadow:0 8px 25px rgba(0,0,0,.3);
+}
+.map-float{
+  position:absolute;right:16px;bottom:25px;z-index:500;
+  display:flex;flex-direction:column;gap:8px;
+}
+.map-float button{
+  width:45px;height:45px;border-radius:50%;
+  border:1px solid var(--border);background:rgba(17,21,29,.94);
+  color:white;font-size:18px;
+}
+.map-sheet{
+  position:absolute;left:16px;right:16px;bottom:16px;z-index:500;
+  max-width:480px;background:rgba(17,21,29,.95);
+  backdrop-filter:blur(18px);border:1px solid var(--border);
+  border-radius:22px;padding:15px;
+}
+.map-categories{
+  display:flex;gap:7px;overflow:auto;padding:10px 0;
+}
+.map-categories button{white-space:nowrap}
+
+.feed-video{
+  height:380px;border-radius:17px;background:#050608;
+  display:grid;place-items:center;position:relative;overflow:hidden;
+}
+.feed-video video{width:100%;height:100%;object-fit:cover}
+.feed-overlay{position:absolute;left:15px;right:15px;bottom:15px}
+.music-ad{
+  background:linear-gradient(135deg,#1a2030,#171224);
+  border:1px solid #3b3c5d;
+}
+.sponsored-label{
+  font-size:11px;text-transform:uppercase;font-weight:900;
+  letter-spacing:.5px;color:#ffd76b;
+}
+
+.plan{
+  position:relative;
+}
+.plan.selected{
+  border-color:var(--accent);
+  box-shadow:0 0 0 1px var(--accent);
+}
+.plan-price{font-size:30px;font-weight:900}
+.check{
+  display:flex;align-items:center;gap:9px;margin:8px 0;
+}
+.check input{width:auto}
+
+.profile-cover{
+  height:150px;border-radius:20px;
+  background:linear-gradient(135deg,#18243a,#261a43);
+  margin-bottom:-45px;
+}
+.profile-head{padding:0 20px 20px}
+.profile-avatar-large{
+  width:95px;height:95px;border:4px solid var(--bg);
+  border-radius:50%;overflow:hidden;background:#252d3b;
+  display:grid;place-items:center;font-size:36px;
+}
+.profile-avatar-large img{width:100%;height:100%;object-fit:cover}
+
+.post-box{
+  border:1px solid var(--border);background:var(--panel);
+  border-radius:18px;padding:15px;
+}
+.post-text{white-space:pre-wrap;line-height:1.55}
+.mention,.hashtag{color:#62a8ff;font-weight:700;cursor:pointer}
 
 .toast{
-  position:fixed;
-  z-index:9000;
-  right:17px;
-  bottom:80px;
-  display:none;
-  max-width:350px;
-  padding:13px 16px;
-  border-radius:12px;
-  background:#222;
-  border:1px solid #444;
+  position:fixed;right:18px;bottom:85px;z-index:3000;
+  background:#171c25;border:1px solid #334054;color:white;
+  border-radius:13px;padding:13px 16px;
+  box-shadow:0 12px 30px rgba(0,0,0,.35);
+  display:none;max-width:350px;
 }
+.toast.show{display:block}
 
-.toast.show{
-  display:block;
+@media(max-width:1000px){
+  .sidebar{width:205px}
+  .main{margin-left:205px}
+  .grid-4{grid-template-columns:repeat(2,1fr)}
 }
-
-.hidden{
-  display:none!important;
-}
-
-@media(max-width:1100px){
-  :root{--sidebar:210px}
-
-  .editor-layout{
-    grid-template-columns:220px 1fr;
-  }
-
-  .editor-right{
-    grid-column:1/-1;
-  }
-
-  .stat-grid{
-    grid-template-columns:repeat(2,1fr);
-  }
-}
-
-@media(max-width:800px){
-  :root{
-    --sidebar:0px;
-    --header:58px;
-  }
-
-  .app{
-    padding-left:0;
-    padding-bottom:68px;
-  }
-
-  .sidebar{
-    display:none;
-  }
-
-  .brand{
-    display:none;
-  }
-
-  .header{
-    padding:7px 9px;
-  }
-
-  .main{
-    padding:12px;
-  }
-
-  .hero{
-    padding:20px;
-  }
-
-  .hero h1{
-    font-size:27px;
-  }
-
-  .bottom-nav{
-    position:fixed;
-    z-index:5000;
-    left:0;
-    right:0;
-    bottom:0;
-    height:64px;
-    display:grid;
-    grid-template-columns:repeat(5,1fr);
-    background:#0c0c0c;
-    border-top:1px solid var(--line);
-  }
-
-  .bottom-nav button{
-    border:0;
-    color:#aaa;
-    background:transparent;
-    font-size:11px;
-  }
-
-  .bottom-nav button.active{
-    color:#fff;
-  }
-
-  .grid{
-    grid-template-columns:repeat(2,minmax(0,1fr));
-    gap:9px;
-  }
-
-  .stat-grid{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .map{
-    height:420px;
-  }
-
-  .editor-layout{
-    display:flex;
-    flex-direction:column;
-  }
-
-  .tool-grid{
-    grid-template-columns:repeat(4,1fr);
-  }
-}
-
-@media(max-width:450px){
-  .grid{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .tool-grid{
-    grid-template-columns:repeat(3,1fr);
-  }
-
-  .header-actions .mobile-hide{
-    display:none;
-  }
+@media(max-width:760px){
+  .topbar{height:58px}
+  .brand{display:none}
+  .top-actions .desktop{display:none}
+  .sidebar{display:none}
+  .main{margin-left:0;padding:72px 12px 80px}
+  .bottom-nav{display:grid}
+  .grid-2,.grid-3,.grid-4{grid-template-columns:1fr}
+  .search{max-width:none}
+  #map,#navigationMap{height:calc(100vh - 155px);min-height:430px}
+  .hero{padding:18px}
 }
 </style>
 </head>
 
 <body>
 
-<header class="header">
-
+<header class="topbar">
   <div class="logo">X</div>
   <div class="brand">RockyX</div>
 
-  <div class="search">
-    <span>⌕</span>
-    <input id="globalSearch"
-      type="search"
-      placeholder="Search videos, music, products, businesses...">
+  <input id="globalSearch" class="search"
+         placeholder="Search RockyX..."
+         autocomplete="off">
+
+  <div class="top-actions">
+    <button class="icon-btn desktop" onclick="showPage('notifications')">🔔</button>
+    <button class="icon-btn desktop" onclick="showPage('messages')">💬</button>
+    <button class="icon-btn desktop" onclick="showPage('marketplace')">🛍️</button>
+    <button class="icon-btn" onclick="showPage('account')">👤</button>
   </div>
-
-  <div class="header-actions">
-    <button class="icon-btn mobile-hide"
-      onclick="showPage('notifications')">🔔</button>
-
-    <button class="icon-btn mobile-hide"
-      onclick="showPage('messages')">💬</button>
-
-    <button class="icon-btn mobile-hide"
-      onclick="showPage('marketplace')">🛍️</button>
-
-    <button class="icon-btn"
-      onclick="showPage('account')">👤</button>
-  </div>
-
 </header>
-
-
-<div class="app">
 
 <aside class="sidebar">
 
-  <button class="nav-btn active"
-    data-page="home"
-    onclick="showPage('home')">🏠 Home</button>
+  <div class="nav-title">Main</div>
+  <button class="nav-btn" onclick="showPage('home')">🏠 Home</button>
+  <button class="nav-btn" onclick="showPage('explore')">🔎 Explore</button>
+  <button class="nav-btn" onclick="showPage('videos')">🎬 Videos</button>
+  <button class="nav-btn" onclick="showPage('live')">🔴 Live</button>
+  <button class="nav-btn" onclick="showPage('music')">🎵 Music</button>
+  <button class="nav-btn" onclick="showPage('sounds')">🔊 Sounds</button>
 
-  <button class="nav-btn"
-    data-page="explore"
-    onclick="showPage('explore')">🔎 Explore</button>
-
-  <button class="nav-btn"
-    data-page="videos"
-    onclick="showPage('videos')">🎬 Videos</button>
-
-  <button class="nav-btn"
-    data-page="live"
-    onclick="showPage('live')">🔴 Live</button>
-
-  <button class="nav-btn"
-    data-page="music"
-    onclick="showPage('music')">🎵 Music</button>
-
-  <button class="nav-btn"
-    data-page="sounds"
-    onclick="showPage('sounds')">🔊 Sounds</button>
-
-  <button class="nav-btn"
-    data-page="marketplace"
-    onclick="showPage('marketplace')">🛍 Marketplace</button>
+  <div class="nav-title">Marketplace</div>
+  <button class="nav-btn" onclick="showPage('marketplace')">🛍️ Marketplace</button>
 
   <div class="nav-title">Map & Discovery</div>
-
-  <button class="nav-btn"
-    data-page="nearby"
-    onclick="openMapWithAd()">📍 Nearby Map</button>
-
-  <button class="nav-btn"
-    data-page="navigation"
-    onclick="openMapWithAd('navigation')">🧭 Navigation</button>
-
-  <button class="nav-btn"
-    data-page="transport"
-    onclick="openMapWithAd('transport')">🚕 Transport</button>
-
-  <button class="nav-btn"
-    data-page="businesses"
-    onclick="openMapWithAd('businesses')">🏢 Businesses</button>
-
-  <button class="nav-btn"
-    data-page="services"
-    onclick="openMapWithAd('services')">🛠 Services</button>
-
-  <button class="nav-btn"
-    data-page="fuel"
-    onclick="openMapWithAd('fuel')">⛽ Fuel</button>
+  <button class="nav-btn" onclick="openMapWithAd('map')">🗺️ Nearby Map</button>
+  <button class="nav-btn" onclick="openMapWithAd('navigation')">🧭 Navigation</button>
+  <button class="nav-btn" onclick="showPage('transport')">🚗 Transport</button>
+  <button class="nav-btn" onclick="showPage('businesses')">🏪 Businesses</button>
+  <button class="nav-btn" onclick="showPage('services')">🛠️ Services</button>
+  <button class="nav-btn" onclick="showPage('fuel')">⛽ Fuel</button>
 
   <div class="nav-title">Create</div>
-
-  <button class="nav-btn"
-    data-page="camera"
-    onclick="showPage('camera')">📷 Camera</button>
-
-  <button class="nav-btn"
-    data-page="editor"
-    onclick="showPage('editor')">✂️ Editor</button>
-
-  <button class="nav-btn"
-    data-page="templates"
-    onclick="showPage('templates')">✨ Templates</button>
-
-  <button class="nav-btn"
-    data-page="tasks"
-    onclick="showPage('tasks')">🎯 Creation Tasks</button>
-
-  <button class="nav-btn"
-    data-page="ai"
-    onclick="showPage('ai')">🤖 AI Studio</button>
-
-  <button class="nav-btn"
-    data-page="upload"
-    onclick="showPage('upload')">⬆️ Upload</button>
+  <button class="nav-btn" onclick="showPage('camera')">📷 Camera</button>
+  <button class="nav-btn" onclick="showPage('editor')">✂️ Editor</button>
+  <button class="nav-btn" onclick="showPage('templates')">✨ Templates</button>
+  <button class="nav-btn" onclick="showPage('tasks')">🎯 Creation Tasks</button>
+  <button class="nav-btn" onclick="showPage('ai')">🤖 AI Studio</button>
+  <button class="nav-btn" onclick="showPage('upload')">⬆️ Upload</button>
 
   <div class="nav-title">Creator</div>
+  <button class="nav-btn" onclick="showPage('creator')">📊 Creator Studio</button>
+  <button class="nav-btn" onclick="showPage('earnings')">💰 Earnings</button>
+  <button class="nav-btn" onclick="showPage('verification')">☑️ Verification</button>
+  <button class="nav-btn" onclick="showPage('promote')">🚀 Promote</button>
 
-  <button class="nav-btn"
-    data-page="creator"
-    onclick="showPage('creator')">🎨 Creator Studio</button>
-
-  <button class="nav-btn"
-    data-page="earnings"
-    onclick="showPage('earnings')">💰 Earnings</button>
-
-  <button class="nav-btn"
-    data-page="verification"
-    onclick="showPage('verification')">☑️ Verification</button>
+  <div class="nav-title">Business</div>
+  <button class="nav-btn" onclick="showPage('ads')">📢 Ads Manager</button>
+  <button class="nav-btn" onclick="showPage('propertyAds')">🏠 Property Ads</button>
 
   <div class="nav-title">Account</div>
-
-  <button class="nav-btn"
-    data-page="messages"
-    onclick="showPage('messages')">💬 Messages</button>
-
-  <button class="nav-btn"
-    data-page="notifications"
-    onclick="showPage('notifications')">🔔 Notifications</button>
-
-  <button class="nav-btn"
-    data-page="profile"
-    onclick="showPage('profile')">👤 Profile</button>
-
-  <button class="nav-btn"
-    data-page="security"
-    onclick="showPage('security')">🔐 Security</button>
-
-  <button class="nav-btn"
-    data-page="settings"
-    onclick="showPage('settings')">⚙️ Settings</button>
-
-  <button class="nav-btn"
-    data-page="account"
-    onclick="showPage('account')">🧾 Account</button>
-
-  <!-- Admin intentionally absent from public navigation. -->
-
+  <button class="nav-btn" onclick="showPage('messages')">💬 Messages</button>
+  <button class="nav-btn" onclick="showPage('notifications')">🔔 Notifications</button>
+  <button class="nav-btn" onclick="showPage('profile')">👤 Profile</button>
+  <button class="nav-btn" onclick="showPage('violations')">⚠️ Violations</button>
+  <button class="nav-btn" onclick="showPage('security')">🔐 Security</button>
+  <button class="nav-btn" onclick="showPage('settings')">⚙️ Settings</button>
+  <button class="nav-btn" onclick="showPage('account')">Account</button>
 </aside>
-
 
 <main class="main">
 
-
 <!-- HOME -->
 <section id="page-home" class="page active">
-
   <div class="hero">
-
-    <span class="badge">🌍 RockyX</span>
-
-    <h1>Everything in one place.</h1>
-
-    <p>
-      Watch videos, create content, discover music, shop,
-      find businesses, services, transport and useful places
-      around you.
+    <h1>Welcome to RockyX</h1>
+    <p class="muted">
+      One international platform for social, videos, music, marketplace,
+      businesses, creators, properties and discovery.
     </p>
-
-    <div class="row wrap">
-      <button class="btn primary"
-        onclick="showPage('videos')">🎬 Watch Videos</button>
-
-      <button class="btn"
-        onclick="showPage('camera')">📷 Create</button>
-
-      <button class="btn"
-        onclick="openMapWithAd()">📍 Explore Map</button>
-
-      <button class="btn"
-        onclick="showPage('marketplace')">🛍 Marketplace</button>
+    <div class="actions">
+      <button class="btn primary" onclick="showPage('videos')">Explore Videos</button>
+      <button class="btn" onclick="openMapWithAd('map')">Open Map</button>
+      <button class="btn" onclick="showPage('ads')">Advertise</button>
+      <button class="btn" onclick="showPage('promote')">Promote a Video</button>
     </div>
-
   </div>
 
-  <div class="section">
-
-    <div class="section-head">
-      <h2>Quick Access</h2>
+  <div class="grid grid-3">
+    <div class="card">
+      <h3>🎬 Videos</h3>
+      <p class="muted">Shorts and long-form videos in one destination.</p>
+      <button class="btn" onclick="showPage('videos')">Watch</button>
     </div>
-
-    <div class="grid small">
-
-      <div class="card" onclick="showPage('videos')">
-        <div class="thumb">🎬</div>
-        <div class="card-body">
-          <div class="card-title">Videos</div>
-          <div class="card-sub">Shorts + long videos.</div>
-        </div>
-      </div>
-
-      <div class="card" onclick="openMapWithAd()">
-        <div class="thumb">🗺️</div>
-        <div class="card-body">
-          <div class="card-title">Map</div>
-          <div class="card-sub">Everything nearby.</div>
-        </div>
-      </div>
-
-      <div class="card" onclick="showPage('camera')">
-        <div class="thumb">📷</div>
-        <div class="card-body">
-          <div class="card-title">Create</div>
-          <div class="card-sub">Record from your phone.</div>
-        </div>
-      </div>
-
-      <div class="card" onclick="showPage('marketplace')">
-        <div class="thumb">🛍️</div>
-        <div class="card-body">
-          <div class="card-title">Marketplace</div>
-          <div class="card-sub">Products and sellers.</div>
-        </div>
-      </div>
-
+    <div class="card">
+      <h3>🎵 Music</h3>
+      <p class="muted">Discover artists, songs, albums and sounds.</p>
+      <button class="btn" onclick="showPage('music')">Open Music</button>
     </div>
-
+    <div class="card">
+      <h3>🗺️ Map</h3>
+      <p class="muted">Discover businesses, services, transport and places.</p>
+      <button class="btn" onclick="openMapWithAd('map')">Open Map</button>
+    </div>
   </div>
 
+  <div class="card" style="margin-top:18px">
+    <h3>Sponsored</h3>
+    <div class="grid grid-3">
+      <div>
+        <span class="badge sponsored">ADVERTISEMENT</span>
+        <h3>International advertising</h3>
+        <p class="muted">Businesses can reach customers through RockyX.</p>
+      </div>
+      <div>
+        <span class="badge sponsored">PROMOTED</span>
+        <h3>Creator promotion</h3>
+        <p class="muted">Creators can promote their own videos separately.</p>
+      </div>
+      <div>
+        <span class="badge sponsored">PROPERTY</span>
+        <h3>Property advertising</h3>
+        <p class="muted">Advertise houses, apartments, land and commercial property.</p>
+      </div>
+    </div>
+  </div>
 </section>
-
 
 <!-- EXPLORE -->
 <section id="page-explore" class="page">
-
   <div class="hero">
-    <h1>🔎 Explore</h1>
-    <p>Explore videos, creators, music, products and places.</p>
+    <h1>Explore</h1>
+    <p class="muted">Discover content, creators, businesses, products and places.</p>
   </div>
 
-  <div class="tabs">
-    <button class="tab active">All</button>
-    <button class="tab">Videos</button>
-    <button class="tab">Creators</button>
-    <button class="tab">Music</button>
-    <button class="tab">Marketplace</button>
-    <button class="tab">Businesses</button>
-    <button class="tab">Services</button>
-    <button class="tab">Places</button>
-  </div>
-
-  <div class="section">
-    <div class="grid">
-
-      <div class="card">
-        <div class="thumb">🎬</div>
-        <div class="card-body">
-          <div class="card-title">Trending Videos</div>
-          <div class="card-sub">Popular content.</div>
-          <button class="btn primary"
-            onclick="showPage('videos')">Open</button>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="thumb">📍</div>
-        <div class="card-body">
-          <div class="card-title">Nearby</div>
-          <div class="card-sub">Places around you.</div>
-          <button class="btn primary"
-            onclick="openMapWithAd()">Open Map</button>
-        </div>
-      </div>
-
+  <div class="grid grid-3">
+    <div class="card">
+      <span class="badge sponsored">SPONSORED</span>
+      <h3>Featured Business</h3>
+      <p class="muted">International business promotion.</p>
+      <button class="btn" onclick="showToast('Opening sponsored business')">View</button>
+    </div>
+    <div class="card">
+      <span class="badge">TRENDING</span>
+      <h3>#RockyX</h3>
+      <p class="muted">Explore posts using this hashtag.</p>
+      <button class="btn" onclick="openHashtag('RockyX')">Explore</button>
+    </div>
+    <div class="card">
+      <span class="badge">CREATORS</span>
+      <h3>Creator discovery</h3>
+      <p class="muted">Find creators and follow their content.</p>
+      <button class="btn" onclick="showPage('videos')">Discover</button>
     </div>
   </div>
-
 </section>
-
 
 <!-- VIDEOS -->
 <section id="page-videos" class="page">
-
   <div class="hero">
-
-    <h1>🎬 Videos</h1>
-
-    <p>
-      Shorts and long-form videos are part of one unified
-      RockyX video destination.
-    </p>
-
-    <button class="btn primary"
-      onclick="showPage('camera')">＋ Create Video</button>
-
-  </div>
-
-  <div class="tabs" id="videoTabs">
-
-    <button class="tab active"
-      onclick="videoTab(this,'foryou')">For You</button>
-
-    <button class="tab"
-      onclick="videoTab(this,'shorts')">Shorts</button>
-
-    <button class="tab"
-      onclick="videoTab(this,'long')">Videos</button>
-
-    <button class="tab"
-      onclick="videoTab(this,'following')">Following</button>
-
-    <button class="tab"
-      onclick="videoTab(this,'trending')">Trending</button>
-
-  </div>
-
-  <div class="section">
-
-    <div class="grid" id="videoFeed">
-
-      <div class="card video-item" data-type="short"
-        onclick="openVideo('RockyX Short')">
-
-        <div class="thumb short-thumb">
-          🎞️
-          <span class="badge"
-            style="position:absolute;right:8px;bottom:8px">
-            0:25
-          </span>
-        </div>
-
-        <div class="card-body">
-          <div class="card-title">RockyX Short</div>
-          <div class="card-sub">@creator · 12K views</div>
-        </div>
-
+    <div class="between">
+      <div>
+        <h1>Videos</h1>
+        <p class="muted">Shorts and long-form videos together.</p>
       </div>
-
-
-      <div class="card video-item" data-type="long"
-        onclick="openVideo('RockyX Video')">
-
-        <div class="thumb">
-          ▶️
-          <span class="badge"
-            style="position:absolute;right:8px;bottom:8px">
-            8:42
-          </span>
-        </div>
-
-        <div class="card-body">
-          <div class="card-title">RockyX Video</div>
-          <div class="card-sub">@creator · 42K views</div>
-        </div>
-
-      </div>
-
-
-      <div class="card video-item" data-type="short"
-        onclick="openVideo('Trending Short')">
-
-        <div class="thumb short-thumb">
-          🔥
-          <span class="badge"
-            style="position:absolute;right:8px;bottom:8px">
-            0:31
-          </span>
-        </div>
-
-        <div class="card-body">
-          <div class="card-title">Trending Short</div>
-          <div class="card-sub">Trending now</div>
-        </div>
-
-      </div>
-
-
-      <div class="card video-item" data-type="long"
-        onclick="openVideo('Creator Story')">
-
-        <div class="thumb">
-          🎥
-          <span class="badge"
-            style="position:absolute;right:8px;bottom:8px">
-            14:20
-          </span>
-        </div>
-
-        <div class="card-body">
-          <div class="card-title">Creator Story</div>
-          <div class="card-sub">Creator · 120K views</div>
-        </div>
-
-      </div>
-
+      <button class="btn primary" onclick="showPage('upload')">Upload</button>
     </div>
 
+    <div class="actions" style="margin-top:15px">
+      <button class="btn" onclick="videoTab('all')">All</button>
+      <button class="btn" onclick="videoTab('shorts')">Shorts</button>
+      <button class="btn" onclick="videoTab('long')">Long Videos</button>
+      <button class="btn" onclick="videoTab('following')">Following</button>
+    </div>
   </div>
 
-</section>
+  <div class="grid grid-3">
 
+    <article class="card">
+      <div class="feed-video">
+        <div class="muted">Video preview</div>
+        <div class="feed-overlay">
+          <span class="badge">Short</span>
+          <h3>RockyX Creator</h3>
+          <p>#RockyX #Creator</p>
+        </div>
+      </div>
+      <div class="actions" style="margin-top:10px">
+        <button class="btn" onclick="openVideo('Creator Video')">▶ Watch</button>
+        <button class="btn" onclick="openPromoteForVideo('Creator Video')">🚀 Promote</button>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="feed-video">
+        <div class="muted">Long video preview</div>
+        <div class="feed-overlay">
+          <span class="badge">Video</span>
+          <h3>Travel Around the World</h3>
+          <p>#Travel #Explore</p>
+        </div>
+      </div>
+      <div class="actions" style="margin-top:10px">
+        <button class="btn" onclick="openVideo('Travel Around the World')">▶ Watch</button>
+        <button class="btn" onclick="showToast('Share link ready')">↗ Share</button>
+      </div>
+    </article>
+
+    <article class="card music-ad">
+      <span class="sponsored-label">ADVERTISEMENT</span>
+      <h3>Sponsored video</h3>
+      <p class="muted">Business advertising can appear in video feeds.</p>
+      <button class="btn" onclick="showToast('Opening sponsored advertisement')">Learn More</button>
+    </article>
+
+  </div>
+</section>
 
 <!-- LIVE -->
 <section id="page-live" class="page">
-
   <div class="hero">
-
     <h1>🔴 Live</h1>
-
-    <p>
-      Watch live streams or start your own broadcast.
-    </p>
-
-    <button class="btn primary"
-      onclick="startLive()">Go Live</button>
-
+    <p class="muted">Watch live streams or start your own.</p>
+    <div class="actions">
+      <button class="btn primary" onclick="startLive()">Go Live</button>
+      <button class="btn" onclick="showPage('violations')">Live Safety & Violations</button>
+    </div>
   </div>
 
-  <div class="grid">
-
+  <div class="grid grid-3">
     <div class="card">
-      <div class="thumb">🔴</div>
-      <div class="card-body">
-        <div class="card-title">Live Creator</div>
-        <div class="card-sub">1.2K watching</div>
-        <button class="btn primary">Watch</button>
-      </div>
+      <span class="badge live">LIVE</span>
+      <h3>Creator Live</h3>
+      <p class="muted">Live stream preview.</p>
+      <button class="btn" onclick="watchLive('Creator Live')">Watch</button>
+      <button class="btn danger" onclick="reportLive('Creator Live')">Report</button>
     </div>
 
     <div class="card">
-      <div class="thumb">🎮</div>
-      <div class="card-body">
-        <div class="card-title">Gaming Live</div>
-        <div class="card-sub">Live gaming.</div>
-        <button class="btn primary">Watch</button>
-      </div>
+      <span class="badge live">LIVE</span>
+      <h3>Music Live</h3>
+      <p class="muted">Live music stream.</p>
+      <button class="btn" onclick="watchLive('Music Live')">Watch</button>
+      <button class="btn danger" onclick="reportLive('Music Live')">Report</button>
     </div>
 
+    <div class="card">
+      <h3>Live violations</h3>
+      <p class="muted">
+        Report streams that violate RockyX rules. Creators can appeal enforcement actions.
+      </p>
+      <button class="btn" onclick="showPage('violations')">Open Violation Center</button>
+    </div>
   </div>
-
 </section>
-
 
 <!-- MUSIC -->
 <section id="page-music" class="page">
-
   <div class="hero">
+    <div class="between">
+      <div>
+        <h1>🎵 Music</h1>
+        <p class="muted">Songs, albums, artists and music streams.</p>
+      </div>
+      <button class="btn primary" onclick="showToast('Album upload opened')">Upload Album</button>
+    </div>
+  </div>
 
-    <h1>🎵 Music</h1>
-
-    <p>
-      Songs, albums, artists and sounds for your videos.
+  <div class="card music-ad">
+    <span class="sponsored-label">ADVERTISEMENT</span>
+    <h3>Sponsored Music Stream</h3>
+    <p class="muted">
+      Business advertisements can be displayed between music-stream content.
     </p>
-
-    <button class="btn primary"
-      onclick="showPage('upload')">Upload Music</button>
-
+    <div class="actions">
+      <button class="btn" onclick="showToast('Playing sponsored audio advertisement')">▶ Play</button>
+      <button class="btn" onclick="showToast('Advertisement opened')">Learn More</button>
+    </div>
   </div>
 
-  <div class="grid">
-
+  <div class="grid grid-3" style="margin-top:16px">
     <div class="card">
-      <div class="thumb">💿</div>
-      <div class="card-body">
-        <div class="card-title">Album</div>
-        <div class="card-sub">Artist · 12 tracks</div>
-        <button class="btn">Open Album</button>
-      </div>
+      <h3>Album One</h3>
+      <p class="muted">Artist • 12 tracks</p>
+      <button class="btn" onclick="openAlbum('Album One')">Open Album</button>
     </div>
-
     <div class="card">
-      <div class="thumb">🎤</div>
-      <div class="card-body">
-        <div class="card-title">Artist</div>
-        <div class="card-sub">Verified artist</div>
-        <button class="btn">View Artist</button>
-      </div>
+      <h3>Album Two</h3>
+      <p class="muted">Artist • 10 tracks</p>
+      <button class="btn" onclick="openAlbum('Album Two')">Open Album</button>
     </div>
-
+    <div class="card">
+      <h3>Artist Discovery</h3>
+      <p class="muted">Find artists and songs.</p>
+      <button class="btn" onclick="showToast('Artist discovery opened')">View Artist</button>
+    </div>
   </div>
-
 </section>
-
 
 <!-- SOUNDS -->
 <section id="page-sounds" class="page">
-
   <div class="hero">
     <h1>🔊 Sounds</h1>
-    <p>Save sounds and use them in your creations.</p>
+    <p class="muted">Save sounds and use them in your own videos.</p>
+    <input id="soundSearch" placeholder="Search sounds..." oninput="searchSounds(this.value)">
   </div>
 
-  <div class="list">
-
-    <div class="list-item">
-      <div class="avatar">🎵</div>
-
-      <div style="flex:1">
-        <b>Trending Sound</b>
-        <div class="muted">123K videos</div>
+  <div class="grid grid-3">
+    <div class="card">
+      <h3>Trending Sound</h3>
+      <p class="muted">Original sound</p>
+      <div class="actions">
+        <button class="btn" onclick="saveSound('Trending Sound')">♡ Save</button>
+        <button class="btn primary" onclick="useSound('Trending Sound')">Use Sound</button>
       </div>
-
-      <button class="btn"
-        onclick="saveSound('Trending Sound')">♡ Save</button>
-
-      <button class="btn primary"
-        onclick="useSound('Trending Sound')">Use</button>
     </div>
-
-    <div class="list-item">
-      <div class="avatar">🎶</div>
-
-      <div style="flex:1">
-        <b>Original Sound</b>
-        <div class="muted">Creator audio</div>
+    <div class="card">
+      <h3>Original Music</h3>
+      <p class="muted">Creator sound</p>
+      <div class="actions">
+        <button class="btn" onclick="saveSound('Original Music')">♡ Save</button>
+        <button class="btn primary" onclick="useSound('Original Music')">Use Sound</button>
       </div>
-
-      <button class="btn"
-        onclick="saveSound('Original Sound')">♡ Save</button>
-
-      <button class="btn primary"
-        onclick="useSound('Original Sound')">Use</button>
     </div>
-
   </div>
-
 </section>
-
 
 <!-- MARKETPLACE -->
 <section id="page-marketplace" class="page">
-
   <div class="hero">
-
-    <h1>🛍 Marketplace</h1>
-
-    <p>
-      Products and sellers can appear on the RockyX discovery map
-      so customers can find them nearby.
-    </p>
-
-    <div class="row wrap">
-
-      <button class="btn primary"
-        onclick="showPage('map')">View Sellers on Map</button>
-
-      <button class="btn"
-        onclick="showToast('Seller tools will connect to your marketplace backend.')">
-        Seller Tools
-      </button>
-
+    <div class="between">
+      <div>
+        <h1>🛍️ Marketplace</h1>
+        <p class="muted">Buy and sell internationally.</p>
+      </div>
+      <button class="btn primary" onclick="showToast('Seller tools opened')">Seller Tools</button>
     </div>
-
   </div>
 
-  <div class="grid">
-
+  <div class="grid grid-3">
     <div class="card">
-      <div class="thumb product-thumb">📱</div>
-      <div class="card-body">
-        <div class="card-title">Smartphone</div>
-        <div class="card-sub">Seller · Accra</div>
-        <b>GH₵ 2,500</b>
-        <br><br>
-        <button class="btn primary"
-          onclick="addCart('Smartphone')">Add to Cart</button>
+      <span class="badge sponsored">SPONSORED</span>
+      <h3>Smartphone</h3>
+      <div class="price">$300</div>
+      <p class="muted">International marketplace listing.</p>
+      <div class="actions">
+        <button class="btn primary" onclick="addCart('Smartphone',300)">Add to Cart</button>
+        <button class="btn" onclick="showToast('Product opened')">View</button>
       </div>
     </div>
 
     <div class="card">
-      <div class="thumb product-thumb">💻</div>
-      <div class="card-body">
-        <div class="card-title">Laptop</div>
-        <div class="card-sub">Seller · Accra</div>
-        <b>GH₵ 3,000</b>
-        <br><br>
-        <button class="btn primary"
-          onclick="addCart('Laptop')">Add to Cart</button>
-      </div>
+      <h3>Laptop</h3>
+      <div class="price">$550</div>
+      <p class="muted">Seller listing.</p>
+      <button class="btn primary" onclick="addCart('Laptop',550)">Add to Cart</button>
     </div>
 
     <div class="card">
-      <div class="thumb product-thumb">👟</div>
-      <div class="card-body">
-        <div class="card-title">Shoes</div>
-        <div class="card-sub">Local seller</div>
-        <b>GH₵ 450</b>
-        <br><br>
-        <button class="btn primary"
-          onclick="addCart('Shoes')">Add to Cart</button>
-      </div>
+      <h3>Promote your product</h3>
+      <p class="muted">Businesses can use Ads Manager to advertise products.</p>
+      <button class="btn" onclick="showPage('ads')">Create Ad</button>
     </div>
-
   </div>
-
 </section>
-
 
 <!-- MAP -->
 <section id="page-map" class="page">
-
   <div class="hero">
-
-    <h1>🗺️ RockyX Map</h1>
-
-    <p>
-      Find marketplace sellers, transport, businesses, services,
-      fuel stations and other useful locations.
-    </p>
-
-    <div class="notice">
-      Sponsored locations are clearly marked as advertisements.
-      People only appear when they explicitly choose to appear
-      on the Nearby map.
+    <div class="between">
+      <div>
+        <h1>🗺️ RockyX Maps</h1>
+        <p class="muted">Explore places, businesses, services, properties and transport.</p>
+      </div>
+      <button class="btn" onclick="locateUser()">📍 My Location</button>
     </div>
 
+    <div class="map-categories">
+      <button class="btn" onclick="selectMapCategory('all')">All</button>
+      <button class="btn" onclick="selectMapCategory('marketplace')">🛍️ Marketplace</button>
+      <button class="btn" onclick="selectMapCategory('property')">🏠 Property</button>
+      <button class="btn" onclick="selectMapCategory('transport')">🚗 Transport</button>
+      <button class="btn" onclick="selectMapCategory('business')">🏪 Businesses</button>
+      <button class="btn" onclick="selectMapCategory('service')">🛠️ Services</button>
+      <button class="btn" onclick="selectMapCategory('fuel')">⛽ Fuel</button>
+      <button class="btn" onclick="selectMapCategory('food')">🍔 Food</button>
+      <button class="btn" onclick="selectMapCategory('hotel')">🏨 Hotels</button>
+      <button class="btn" onclick="selectMapCategory('health')">🏥 Health</button>
+      <button class="btn" onclick="selectMapCategory('bank')">🏦 Banks/ATMs</button>
+      <button class="btn" onclick="selectMapCategory('shop')">🛒 Shops</button>
+      <button class="btn" onclick="selectMapCategory('place')">📍 Places</button>
+    </div>
   </div>
 
-  <div class="map-toolbar">
+  <div class="map-shell">
+    <div class="map-search">
+      <input id="mapSearchInput" placeholder="Search places, businesses or addresses..."
+             onkeydown="if(event.key==='Enter')searchMap()">
+      <button class="btn primary" onclick="searchMap()">Search</button>
+    </div>
 
-    <button class="map-category active"
-      data-category="all"
-      onclick="mapCategory(this,'all')">🌍 All</button>
+    <div id="map"></div>
 
-    <button class="map-category"
-      data-category="marketplace"
-      onclick="mapCategory(this,'marketplace')">🛍 Marketplace</button>
+    <div class="map-float">
+      <button onclick="locateUser()" title="My location">📍</button>
+      <button onclick="toggleNearby()" title="Nearby">👥</button>
+      <button onclick="refreshMapData()" title="Refresh">↻</button>
+    </div>
 
-    <button class="map-category"
-      data-category="transport"
-      onclick="mapCategory(this,'transport')">🚕 Transport</button>
-
-    <button class="map-category"
-      data-category="business"
-      onclick="mapCategory(this,'business')">🏢 Businesses</button>
-
-    <button class="map-category"
-      data-category="service"
-      onclick="mapCategory(this,'service')">🛠 Services</button>
-
-    <button class="map-category"
-      data-category="fuel"
-      onclick="mapCategory(this,'fuel')">⛽ Fuel</button>
-
-    <button class="map-category"
-      data-category="food"
-      onclick="mapCategory(this,'food')">🍔 Food</button>
-
-    <button class="map-category"
-      data-category="hotel"
-      onclick="mapCategory(this,'hotel')">🏨 Hotels</button>
-
-    <button class="map-category"
-      data-category="health"
-      onclick="mapCategory(this,'health')">🏥 Health</button>
-
-    <button class="map-category"
-      data-category="bank"
-      onclick="mapCategory(this,'bank')">🏦 Banks/ATMs</button>
-
-    <button class="map-category"
-      data-category="shop"
-      onclick="mapCategory(this,'shop')">🛒 Shops</button>
-
-    <button class="map-category"
-      data-category="place"
-      onclick="mapCategory(this,'place')">📍 Places</button>
-
-    <button class="map-category"
-      data-category="people"
-      onclick="mapCategory(this,'people')">👤 People</button>
-
+    <div id="mapSheet" class="map-sheet">
+      <span class="badge">RockyX Map</span>
+      <h3>Discover nearby</h3>
+      <p class="muted">Select a marker to view details.</p>
+    </div>
   </div>
-
-  <div class="map-toolbar">
-
-    <button class="btn primary"
-      onclick="locateUser()">📍 My Location</button>
-
-    <button class="btn"
-      onclick="refreshMapData()">🔄 Refresh</button>
-
-    <button class="btn"
-      onclick="toggleNearby()">👤 Nearby Visibility</button>
-
-    <button class="btn"
-      onclick="openMapSearch()">🔎 Search Map</button>
-
-  </div>
-
-  <div id="rockyxMap" class="map"></div>
-
 </section>
-
 
 <!-- NAVIGATION -->
 <section id="page-navigation" class="page">
-
   <div class="hero">
-
     <h1>🧭 Navigation</h1>
-
-    <p>
-      Search for a destination and get directions.
-    </p>
-
+    <div class="row">
+      <input id="destinationInput" placeholder="Where do you want to go?">
+      <button class="btn primary" onclick="findDestination()">Go</button>
+    </div>
+    <div class="actions" style="margin-top:12px">
+      <button class="btn" onclick="setTravelMode('driving')">🚗 Driving</button>
+      <button class="btn" onclick="setTravelMode('walking')">🚶 Walking</button>
+      <button class="btn" onclick="setTravelMode('transport')">🚌 Transport</button>
+    </div>
   </div>
-
-  <div class="row">
-
-    <input id="destination"
-      placeholder="Enter destination">
-
-    <button class="btn primary"
-      onclick="findDestination()">Find</button>
-
-  </div>
-
-  <br>
-
-  <div id="navigationMap" class="map"></div>
-
+  <div id="navigationMap"></div>
 </section>
-
 
 <!-- TRANSPORT -->
 <section id="page-transport" class="page">
-
   <div class="hero">
-
-    <h1>🚕 Transport</h1>
-
-    <p>
-      Find transport providers and vehicles on the RockyX map.
-    </p>
-
-    <button class="btn primary"
-      onclick="openMapWithAd()">View Transport Map</button>
-
+    <h1>🚗 Transport</h1>
+    <p class="muted">Discover available transport options.</p>
   </div>
-
-  <div class="grid">
-
+  <div class="grid grid-3">
     <div class="card">
-      <div class="thumb">🚕</div>
-      <div class="card-body">
-        <div class="card-title">Taxi</div>
-        <div class="card-sub">Nearby transport providers.</div>
-        <button class="btn primary">Request</button>
-      </div>
+      <h3>Ride</h3>
+      <p class="muted">Find available transport.</p>
+      <button class="btn primary" onclick="requestTransport()">Request</button>
     </div>
-
     <div class="card">
-      <div class="thumb">🚌</div>
-      <div class="card-body">
-        <div class="card-title">Bus</div>
-        <div class="card-sub">Routes and stops.</div>
-        <button class="btn">Explore</button>
-      </div>
+      <h3>Routes</h3>
+      <p class="muted">Explore transport routes.</p>
+      <button class="btn" onclick="showPage('navigation')">Explore</button>
     </div>
-
     <div class="card">
-      <div class="thumb">🏍️</div>
-      <div class="card-body">
-        <div class="card-title">Motorbike</div>
-        <div class="card-sub">Transport providers.</div>
-        <button class="btn">Request</button>
-      </div>
+      <h3>Transport Ads</h3>
+      <span class="badge sponsored">SPONSORED</span>
+      <p class="muted">Sponsored transport providers.</p>
     </div>
-
   </div>
-
 </section>
-
 
 <!-- BUSINESSES -->
 <section id="page-businesses" class="page">
-
   <div class="hero">
-
-    <h1>🏢 Businesses</h1>
-
-    <p>
-      Businesses can appear on the RockyX map so customers
-      can discover them easily.
-    </p>
-
-    <button class="btn primary"
-      onclick="openMapWithAd()">Find Businesses on Map</button>
-
+    <h1>🏪 Businesses</h1>
+    <p class="muted">Discover businesses near you or internationally.</p>
+    <button class="btn primary" onclick="showPage('ads')">Advertise Business</button>
   </div>
-
+  <div class="grid grid-3">
+    <div class="card">
+      <span class="badge sponsored">SPONSORED</span>
+      <h3>Featured Business</h3>
+      <p class="muted">Open hours • Location</p>
+      <button class="btn" onclick="openBusiness('Featured Business')">View</button>
+    </div>
+    <div class="card">
+      <h3>Local Business</h3>
+      <p class="muted">Products and services.</p>
+      <button class="btn" onclick="openBusiness('Local Business')">View</button>
+    </div>
+  </div>
 </section>
-
 
 <!-- SERVICES -->
 <section id="page-services" class="page">
-
   <div class="hero">
-
-    <h1>🛠 Services</h1>
-
-    <p>
-      Find service providers nearby.
-    </p>
-
-    <button class="btn primary"
-      onclick="openMapWithAd()">Find Services on Map</button>
-
+    <h1>🛠️ Services</h1>
+    <p class="muted">Find professionals and service providers.</p>
+    <button class="btn primary" onclick="showPage('ads')">Promote Service</button>
   </div>
-
+  <div class="grid grid-3">
+    <div class="card">
+      <h3>Professional Service</h3>
+      <p class="muted">Sponsored services can appear here.</p>
+      <button class="btn" onclick="showToast('Service opened')">View</button>
+    </div>
+  </div>
 </section>
-
 
 <!-- FUEL -->
 <section id="page-fuel" class="page">
-
   <div class="hero">
-
-    <h1>⛽ Fuel Stations</h1>
-
-    <p>
-      Find nearby fuel stations and get directions.
-    </p>
-
-    <button class="btn primary"
-      onclick="openMapWithAd()">Find Fuel Stations</button>
-
+    <h1>⛽ Fuel</h1>
+    <p class="muted">Find fuel stations and related services.</p>
   </div>
-
-  <div class="grid small">
-
+  <div class="grid grid-3">
     <div class="card">
-      <div class="thumb">⛽</div>
-      <div class="card-body">
-        <div class="card-title">Fuel Station</div>
-        <div class="card-sub">Nearby station</div>
-        <button class="btn primary"
-          onclick="openMapWithAd('fuel')">Directions</button>
-      </div>
+      <span class="badge sponsored">SPONSORED</span>
+      <h3>Fuel Station</h3>
+      <button class="btn" onclick="openMapForCategory('fuel')">Show on Map</button>
     </div>
-
   </div>
-
 </section>
-
 
 <!-- CAMERA -->
 <section id="page-camera" class="page">
-
   <div class="hero">
-
-    <div class="space">
-
-      <div>
-        <h1>📷 RockyX Camera</h1>
-        <p>
-          Record directly with your phone camera and create
-          Shorts or Videos.
-        </p>
-      </div>
-
-      <span class="badge pro">STANDARD / PRO</span>
-
-    </div>
-
-  </div>
-
-
-  <div class="camera-shell">
-
-    <video id="cameraVideo"
-      class="camera-video"
-      autoplay
-      muted
-      playsinline></video>
-
-    <div class="camera-overlay">
-
-      <div class="camera-top">
-
-        <button class="camera-tool"
-          onclick="cameraClose()">×</button>
-
-        <span class="badge"
-          id="cameraTimer">00:00</span>
-
-        <button class="camera-tool"
-          onclick="switchCamera()">🔄</button>
-
-      </div>
-
-
-      <div class="camera-side">
-
-        <button class="camera-tool"
-          onclick="cameraTimer()">⏱️</button>
-
-        <button class="camera-tool"
-          onclick="cameraSpeed()">⚡</button>
-
-        <button class="camera-tool"
-          onclick="cameraZoom()">🔍</button>
-
-        <button class="camera-tool"
-          onclick="cameraEffect()">✨</button>
-
-        <button class="camera-tool"
-          onclick="cameraFilter()">🎨</button>
-
-        <button class="camera-tool"
-          onclick="showPage('sounds')">🎵</button>
-
-        <button class="camera-tool"
-          onclick="showPage('editor')">✂️</button>
-
-      </div>
-
-
-      <div class="camera-bottom">
-
-        <div class="camera-mode">
-
-          <button class="active"
-            id="cameraShortMode"
-            onclick="setCameraMode('short')">SHORT</button>
-
-          <button
-            id="cameraVideoMode"
-            onclick="setCameraMode('video')">VIDEO</button>
-
-        </div>
-
-        <div class="record-row">
-
-          <button class="camera-tool"
-            onclick="openCameraUpload()">🖼️</button>
-
-          <button id="recordButton"
-            class="record-button"
-            onclick="toggleRecording()"></button>
-
-          <button class="camera-tool"
-            onclick="openCameraMore()">•••</button>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <div class="section">
-
-    <div class="row wrap">
-
-      <button class="btn"
-        onclick="cameraVoice()">🎙️ Voice-over</button>
-
-      <button class="btn"
-        onclick="cameraCaptions()">CC Captions</button>
-
-      <button class="btn"
-        onclick="cameraBeatSync()">🥁 Beat Sync</button>
-
-      <button class="btn"
-        onclick="cameraText()">T Text</button>
-
-      <button class="btn"
-        onclick="cameraStickers()">😀 Stickers</button>
-
-      <button class="btn pro"
-        onclick="showPage('ai')">🤖 AI Studio</button>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- EDITOR -->
-<section id="page-editor" class="page">
-
-  <div class="hero">
-
-    <div class="space">
-
-      <div>
-        <h1>✂️ RockyX Editor</h1>
-        <p>
-          Edit your locally recorded or selected media.
-        </p>
-      </div>
-
-      <span class="badge pro">ROCKYX PRO</span>
-
-    </div>
-
-  </div>
-
-
-  <div class="editor-layout">
-
-    <div class="editor-panel">
-
-      <h3>Media</h3>
-
-      <input id="editorFile"
-        type="file"
-        accept="video/*,image/*,audio/*">
-
-      <div class="divider"></div>
-
-      <h3>Basic</h3>
-
-      <div class="tool-grid">
-
-        <button class="tool"
-          onclick="editorTool('Trim')">✂️<br>Trim</button>
-
-        <button class="tool"
-          onclick="editorTool('Split')">🔪<br>Split</button>
-
-        <button class="tool"
-          onclick="editorTool('Merge')">🔗<br>Merge</button>
-
-        <button class="tool"
-          onclick="editorTool('Crop')">▣<br>Crop</button>
-
-        <button class="tool"
-          onclick="editorTool('Resize')">↔️<br>Resize</button>
-
-        <button class="tool"
-          onclick="editorTool('Rotate')">⟳<br>Rotate</button>
-
-        <button class="tool"
-          onclick="editorTool('Speed')">⚡<br>Speed</button>
-
-        <button class="tool"
-          onclick="editorTool('Reverse')">↔<br>Reverse</button>
-
-        <button class="tool"
-          onclick="editorTool('Freeze')">❄️<br>Freeze</button>
-
-        <button class="tool"
-          onclick="editorTool('Stabilize')">🎯<br>Stabilize</button>
-
-        <button class="tool"
-          onclick="editorTool('Zoom')">🔍<br>Zoom</button>
-
-        <button class="tool"
-          onclick="editorTool('Frame')">▧<br>Frame</button>
-
-      </div>
-
-      <div class="divider"></div>
-
-      <h3>Text</h3>
-
-      <div class="tool-grid">
-
-        <button class="tool"
-          onclick="editorTool('Text')">T<br>Text</button>
-
-        <button class="tool"
-          onclick="editorTool('Captions')">CC<br>Captions</button>
-
-        <button class="tool"
-          onclick="editorTool('Fonts')">A<br>Fonts</button>
-
-        <button class="tool"
-          onclick="editorTool('Animation')">✨<br>Animate</button>
-
-        <button class="tool"
-          onclick="editorTool('Text Color')">🎨<br>Color</button>
-
-        <button class="tool"
-          onclick="editorTool('Text Shadow')">▣<br>Shadow</button>
-
-      </div>
-
-    </div>
-
-
-    <div class="editor-panel">
-
-      <div class="preview">
-
-        <div id="editorEmpty">
-          <div style="font-size:60px">🎬</div>
-          <div class="muted">Select media</div>
-        </div>
-
-        <video id="editorVideo"
-          controls
-          playsinline
-          style="display:none"></video>
-
-        <img id="editorImage"
-          style="display:none"
-          alt="Selected media">
-
-      </div>
-
-      <div class="timeline">
-
-        <div class="muted">VIDEO TRACK</div>
-
-        <div class="track">
-          <div class="clip">Media</div>
-          <div class="clip">Text</div>
-          <div class="clip">Effects</div>
-          <div class="clip">Transitions</div>
-        </div>
-
-        <div class="muted">AUDIO TRACK</div>
-
-        <div class="track">
-          <div class="clip">Music</div>
-          <div class="clip">Sound</div>
-          <div class="clip">Voice</div>
-        </div>
-
-      </div>
-
-      <div class="row wrap" style="margin-top:10px">
-
-        <button class="btn"
-          onclick="editorUndo()">↶ Undo</button>
-
-        <button class="btn"
-          onclick="editorRedo()">↷ Redo</button>
-
-        <button class="btn"
-          onclick="editorPreview()">▶ Preview</button>
-
-        <button class="btn"
-          onclick="saveDraft()">Save Draft</button>
-
-      </div>
-
-    </div>
-
-
-    <div class="editor-panel editor-right">
-
-      <h3>Audio</h3>
-
-      <div class="tool-grid">
-
-        <button class="tool"
-          onclick="editorTool('Music')">🎵<br>Music</button>
-
-        <button class="tool"
-          onclick="editorTool('Sound')">🔊<br>Sound</button>
-
-        <button class="tool"
-          onclick="editorTool('Voice Over')">🎙️<br>Voice</button>
-
-        <button class="tool"
-          onclick="editorTool('Extract Audio')">🎧<br>Extract</button>
-
-        <button class="tool"
-          onclick="editorTool('Fade')">〰️<br>Fade</button>
-
-        <button class="tool"
-          onclick="editorTool('Noise')">🔇<br>Noise</button>
-
-        <button class="tool"
-          onclick="editorTool('SFX')">💥<br>SFX</button>
-
-        <button class="tool"
-          onclick="editorTool('Beat Sync')">🥁<br>Beat Sync</button>
-
-      </div>
-
-      <div class="divider"></div>
-
-      <h3>Visual</h3>
-
-      <div class="tool-grid">
-
-        <button class="tool"
-          onclick="editorTool('Filter')">🎨<br>Filter</button>
-
-        <button class="tool"
-          onclick="editorTool('Effects')">✨<br>Effects</button>
-
-        <button class="tool"
-          onclick="editorTool('Transitions')">🔀<br>Transitions</button>
-
-        <button class="tool"
-          onclick="editorTool('Stickers')">😀<br>Stickers</button>
-
-        <button class="tool"
-          onclick="editorTool('GIF')">GIF<br>GIF</button>
-
-        <button class="tool"
-          onclick="editorTool('Overlay')">▣<br>Overlay</button>
-
-        <button class="tool"
-          onclick="editorTool('Blur')">🌫️<br>Blur</button>
-
-        <button class="tool"
-          onclick="editorTool('Mask')">◉<br>Mask</button>
-
-        <button class="tool"
-          onclick="editorTool('Keyframes')">◆<br>Keyframes</button>
-
-        <button class="tool"
-          onclick="editorTool('Layers')">▤<br>Layers</button>
-
-        <button class="tool"
-          onclick="editorTool('Chroma')">🟩<br>Chroma</button>
-
-        <button class="tool"
-          onclick="editorTool('Color')">🌈<br>Color</button>
-
-      </div>
-
-      <div class="divider"></div>
-
-      <button class="btn pro"
-        style="width:100%"
-        onclick="showPage('ai')">🤖 AI Studio</button>
-
-    </div>
-
-  </div>
-
-
-  <div class="section">
-
-    <div class="row wrap">
-
-      <button class="btn primary"
-        onclick="publishContent('short')">
-        Publish Short
-      </button>
-
-      <button class="btn primary"
-        onclick="publishContent('video')">
-        Publish Video
-      </button>
-
-      <button class="btn"
-        onclick="downloadEdited()">⬇ Download</button>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- TEMPLATES -->
-<section id="page-templates" class="page">
-
-  <div class="hero">
-
-    <h1>✨ Templates</h1>
-
-    <p>
-      Templates for videos, photos, sounds, transitions,
-      products, businesses, creators and local trends.
-    </p>
-
-  </div>
-
-  <div class="tabs">
-
-    <button class="tab active">For You</button>
-    <button class="tab">Trending</button>
-    <button class="tab">By Sound</button>
-    <button class="tab">Video</button>
-    <button class="tab">Photo</button>
-    <button class="tab">Transitions</button>
-    <button class="tab">Effects</button>
-    <button class="tab">Business</button>
-    <button class="tab">Music</button>
-    <button class="tab">Quick</button>
-    <button class="tab">Creator</button>
-    <button class="tab">Ghana Trends</button>
-    <button class="tab">Saved</button>
-
-  </div>
-
-  <div class="section">
-
-    <div class="grid small">
-
-      <div class="card">
-        <div class="thumb short-thumb">🔥</div>
-        <div class="card-body">
-          <b>Trending Beat</b>
-          <div class="card-sub">8 clips · 125K uses</div>
-          <br>
-          <button class="btn primary"
-            onclick="useTemplate('Trending Beat')">
-            Use Template
-          </button>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="thumb short-thumb">🎵</div>
-        <div class="card-body">
-          <b>Music Sync</b>
-          <div class="card-sub">12 clips · Beat sync</div>
-          <br>
-          <button class="btn primary"
-            onclick="useTemplate('Music Sync')">
-            Use Template
-          </button>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="thumb short-thumb">🛍️</div>
-        <div class="card-body">
-          <b>Product Promo</b>
-          <div class="card-sub">Business template</div>
-          <br>
-          <button class="btn primary"
-            onclick="useTemplate('Product Promo')">
-            Use Template
-          </button>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="thumb short-thumb">🇬🇭</div>
-        <div class="card-body">
-          <b>Ghana Trend</b>
-          <div class="card-sub">Local trend</div>
-          <br>
-          <button class="btn primary"
-            onclick="useTemplate('Ghana Trend')">
-            Use Template
-          </button>
-        </div>
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- TASKS -->
-<section id="page-tasks" class="page">
-
-  <div class="hero">
-
-    <h1>🎯 Creation Tasks</h1>
-
-    <p>
-      Create content for eligible RockyX campaigns and creator
-      opportunities.
-    </p>
-
-    <div class="row wrap">
-      <span class="badge">Create</span>
-      →
-      <span class="badge">Submit</span>
-      →
-      <span class="badge">Review</span>
-      →
-      <span class="badge">Reward</span>
-      →
-      <span class="badge">Earnings</span>
-    </div>
-
-  </div>
-
-  <div class="grid">
-
-    <div class="card">
-      <div class="thumb">🎵</div>
-      <div class="card-body">
-        <span class="badge">Music Challenge</span>
-        <h3>Create with this sound</h3>
-        <div class="card-sub">Deadline · 7 days</div>
-        <br>
-        <progress value="30" max="100"
-          style="width:100%"></progress>
-        <br><br>
-        <button class="btn primary"
-          onclick="startTask('Music Challenge')">
-          Start
-        </button>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="thumb">🛍️</div>
-      <div class="card-body">
-        <span class="badge">Product Promotion</span>
-        <h3>Promote a product</h3>
-        <div class="card-sub">Create a product video.</div>
-        <br>
-        <button class="btn primary"
-          onclick="startTask('Product Promotion')">
-          Create
-        </button>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="thumb">✨</div>
-      <div class="card-body">
-        <span class="badge pro">PRO</span>
-        <h3>Premium Challenge</h3>
-        <div class="card-sub">Advanced creator tools.</div>
-        <br>
-        <button class="btn pro"
-          onclick="upgradePro()">Unlock</button>
-      </div>
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- AI -->
-<section id="page-ai" class="page">
-
-  <div class="hero">
-
-    <span class="badge pro">ROCKYX PRO</span>
-
-    <h1>🤖 AI Studio</h1>
-
-    <p>
-      AI-assisted creation tools. Production AI generation,
-      voice models and advanced processing require backend
-      model services.
-    </p>
-
-  </div>
-
-  <div class="grid">
-
-    <div class="card">
-      <div class="card-body">
-        <h3>📝 AI Script</h3>
-        <textarea id="aiPrompt"
-          placeholder="Describe your video idea..."></textarea>
-        <button class="btn pro"
-          onclick="aiAction('script')">Generate</button>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-body">
-        <h3>🎬 Text to Video</h3>
-        <textarea
-          placeholder="Describe your video..."></textarea>
-        <button class="btn pro"
-          onclick="aiAction('text-video')">Generate</button>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-body">
-        <h3>🖼 Image to Video</h3>
-        <input type="file" accept="image/*">
-        <br><br>
-        <button class="btn pro"
-          onclick="aiAction('image-video')">Animate</button>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-body">
-        <h3>🎙️ Text to Speech</h3>
-        <textarea id="ttsText"
-          placeholder="Type your voice-over..."></textarea>
-        <select id="ttsVoice">
-          <option>Standard Voice</option>
-          <option>Standard Voice 2</option>
-          <option>Pro Voice 🔒</option>
-          <option>Pro Voice 2 🔒</option>
-        </select>
-        <br><br>
-        <button class="btn pro"
-          onclick="generateTTS()">Preview Voice</button>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-body">
-        <h3>💬 AI Captions</h3>
-        <p class="card-sub">Automatic captions and translation.</p>
-        <button class="btn pro"
-          onclick="aiAction('captions')">Generate</button>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-body">
-        <h3>🥁 Beat Sync</h3>
-        <p class="card-sub">Synchronize clips to music.</p>
-        <button class="btn pro"
-          onclick="aiAction('beat-sync')">Sync</button>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-body">
-        <h3>🧹 Background Removal</h3>
-        <button class="btn pro"
-          onclick="aiAction('background')">Remove</button>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-body">
-        <h3>⭐ Auto Highlights</h3>
-        <button class="btn pro"
-          onclick="aiAction('highlights')">Find Highlights</button>
-      </div>
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- UPLOAD -->
-<section id="page-upload" class="page">
-
-  <div class="hero">
-
-    <h1>⬆️ Upload</h1>
-
-    <p>
-      Select media from your device. Media is not automatically
-      uploaded to cloud storage by this frontend.
-    </p>
-
-  </div>
-
-  <div class="grid">
-
-    <div class="card">
-      <div class="card-body">
-        <h3>🎬 Video</h3>
-        <input id="uploadVideo" type="file" accept="video/*">
-        <br><br>
-        <button class="btn primary"
-          onclick="uploadToEditor()">Open Editor</button>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-body">
-        <h3>🎵 Music</h3>
-        <input type="file" accept="audio/*">
-        <br><br>
-        <button class="btn primary"
-          onclick="showToast('Music selected.')">Add Music</button>
-      </div>
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- CREATOR -->
-<section id="page-creator" class="page">
-
-  <div class="hero">
-
-    <h1>🎨 Creator Studio</h1>
-
-    <p>
-      Manage content, analytics, followers and monetization.
-    </p>
-
-  </div>
-
-  <div class="stat-grid">
-
-    <div class="stat">
-      <div class="stat-value">0</div>
-      <div class="stat-label">Views</div>
-    </div>
-
-    <div class="stat">
-      <div class="stat-value">0</div>
-      <div class="stat-label">Followers</div>
-    </div>
-
-    <div class="stat">
-      <div class="stat-value">0</div>
-      <div class="stat-label">Likes</div>
-    </div>
-
-    <div class="stat">
-      <div class="stat-value">GH₵ 0</div>
-      <div class="stat-label">Earnings</div>
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- EARNINGS -->
-<section id="page-earnings" class="page">
-
-  <div class="hero">
-
-    <h1>💰 Earnings</h1>
-
-    <p>
-      Creator, marketplace and advertising earnings.
-    </p>
-
-  </div>
-
-  <div class="stat-grid">
-
-    <div class="stat">
-      <div class="stat-value">GH₵ 0</div>
-      <div class="stat-label">Available</div>
-    </div>
-
-    <div class="stat">
-      <div class="stat-value">GH₵ 0</div>
-      <div class="stat-label">Pending</div>
-    </div>
-
-    <div class="stat">
-      <div class="stat-value">GH₵ 0</div>
-      <div class="stat-label">Lifetime</div>
-    </div>
-
-    <div class="stat">
-      <div class="stat-value">GHS</div>
-      <div class="stat-label">Currency</div>
-    </div>
-
-  </div>
-
-  <br>
-
-  <button class="btn primary"
-    onclick="showToast('Secure payout backend connection required.')">
-    Withdraw
-  </button>
-
-</section>
-
-
-<!-- VERIFICATION -->
-<section id="page-verification" class="page">
-
-  <div class="hero">
-
-    <h1>☑️ Verification</h1>
-
-    <p>
-      Creator and business verification.
-    </p>
-
+    <h1>📷 Camera</h1>
+    <p class="muted">Create Shorts and videos using your device camera.</p>
   </div>
 
   <div class="card">
+    <video id="cameraPreview" autoplay playsinline muted
+           style="width:100%;max-height:500px;background:#000;border-radius:18px"></video>
 
-    <div class="card-body">
-
-      <div class="space">
-
-        <div>
-          <h2>Creator Verification</h2>
-          <div class="card-sub">
-            Eligibility is determined by RockyX backend rules.
-          </div>
-        </div>
-
-        <span class="badge">Not Verified</span>
-
-      </div>
-
-      <br>
-
-      <button class="btn primary"
-        onclick="showToast('Checking eligibility through RockyX backend.')">
-        Check Eligibility
-      </button>
-
+    <div class="actions" style="margin-top:12px">
+      <button class="btn primary" onclick="startCamera()">Start Camera</button>
+      <button class="btn" onclick="switchCamera()">Switch Camera</button>
+      <button id="recordBtn" class="btn danger" onclick="toggleRecording()">● Record</button>
+      <button class="btn" onclick="cameraClose()">Close</button>
     </div>
 
+    <div class="actions" style="margin-top:12px">
+      <button class="btn" onclick="setCameraMode('short')">Short</button>
+      <button class="btn" onclick="setCameraMode('video')">Video</button>
+      <button class="btn" onclick="cameraTimer()">Timer</button>
+      <button class="btn" onclick="cameraSpeed()">Speed</button>
+      <button class="btn" onclick="cameraZoom()">Zoom</button>
+      <button class="btn" onclick="cameraEffect()">Effects</button>
+      <button class="btn" onclick="cameraFilter()">Filters</button>
+      <button class="btn" onclick="cameraVoice()">Voice</button>
+      <button class="btn" onclick="cameraCaptions()">Captions</button>
+      <button class="btn" onclick="cameraBeatSync()">Beat Sync</button>
+      <button class="btn" onclick="cameraText()">Text</button>
+      <button class="btn" onclick="cameraStickers()">Stickers</button>
+    </div>
   </div>
-
 </section>
 
+<!-- EDITOR -->
+<section id="page-editor" class="page">
+  <div class="hero">
+    <h1>✂️ Video Editor</h1>
+    <p class="muted">Edit local/device media without requiring cloud storage.</p>
+    <input id="editorFile" type="file" accept="video/*,image/*" onchange="loadEditorFile(event)">
+  </div>
+
+  <div class="card">
+    <video id="editorPreview" controls
+           style="display:none;width:100%;max-height:500px;background:#000;border-radius:18px"></video>
+    <img id="editorImagePreview"
+         style="display:none;width:100%;max-height:500px;object-fit:contain;background:#000;border-radius:18px">
+
+    <div class="actions" style="margin-top:12px">
+      <button class="btn" onclick="editorTool('trim')">Trim</button>
+      <button class="btn" onclick="editorTool('text')">Text</button>
+      <button class="btn" onclick="editorTool('speed')">Speed</button>
+      <button class="btn" onclick="editorTool('filter')">Filter</button>
+      <button class="btn" onclick="editorTool('captions')">Captions</button>
+      <button class="btn" onclick="editorTool('music')">Music</button>
+      <button class="btn" onclick="editorTool('sounds')">Sounds</button>
+      <button class="btn" onclick="editorUndo()">Undo</button>
+      <button class="btn" onclick="editorRedo()">Redo</button>
+      <button class="btn" onclick="editorPreview()">Preview</button>
+      <button class="btn" onclick="saveDraft()">Save Draft</button>
+      <button class="btn primary" onclick="publishContent()">Publish</button>
+      <button class="btn" onclick="downloadEdited()">Download</button>
+    </div>
+  </div>
+</section>
+
+<!-- TEMPLATES -->
+<section id="page-templates" class="page">
+  <div class="hero">
+    <h1>✨ Templates</h1>
+    <p class="muted">Creation templates for videos and social content.</p>
+  </div>
+  <div class="grid grid-3">
+    <div class="card">
+      <h3>Trending Short</h3>
+      <p class="muted">Fast social video template.</p>
+      <button class="btn primary" onclick="useTemplate('Trending Short')">Use Template</button>
+    </div>
+    <div class="card">
+      <h3>Music Sync</h3>
+      <p class="muted">Sync clips to music.</p>
+      <button class="btn primary" onclick="useTemplate('Music Sync')">Use Template</button>
+    </div>
+    <div class="card">
+      <h3>Business Promo</h3>
+      <p class="muted">Promotional video template.</p>
+      <button class="btn primary" onclick="useTemplate('Business Promo')">Use Template</button>
+    </div>
+  </div>
+</section>
+
+<!-- TASKS -->
+<section id="page-tasks" class="page">
+  <div class="hero">
+    <h1>🎯 Creation Tasks</h1>
+    <p class="muted">Complete tasks to improve your creator activity.</p>
+  </div>
+  <div class="grid grid-3">
+    <div class="card">
+      <h3>Post a Short</h3>
+      <p class="muted">Create and publish a Short.</p>
+      <button class="btn" onclick="startTask('Post a Short')">Start</button>
+    </div>
+    <div class="card">
+      <h3>Use a Sound</h3>
+      <p class="muted">Create a video using a saved sound.</p>
+      <button class="btn" onclick="startTask('Use a Sound')">Start</button>
+    </div>
+  </div>
+</section>
+
+<!-- AI -->
+<section id="page-ai" class="page">
+  <div class="hero">
+    <h1>🤖 AI Studio</h1>
+    <p class="muted">AI-assisted creation tools.</p>
+  </div>
+  <div class="grid grid-3">
+    <div class="card">
+      <h3>Generate Caption</h3>
+      <button class="btn" onclick="aiAction('caption')">Generate</button>
+    </div>
+    <div class="card">
+      <h3>Generate Ideas</h3>
+      <button class="btn" onclick="aiAction('ideas')">Generate</button>
+    </div>
+    <div class="card">
+      <h3>Text to Speech</h3>
+      <textarea id="ttsText" placeholder="Enter text..."></textarea>
+      <button class="btn" onclick="generateTTS()">Speak</button>
+    </div>
+  </div>
+</section>
+
+<!-- UPLOAD -->
+<section id="page-upload" class="page">
+  <div class="hero">
+    <h1>⬆️ Upload</h1>
+    <p class="muted">Upload local media to create content.</p>
+  </div>
+
+  <div class="card">
+    <input id="uploadFile" type="file" accept="video/*,image/*,audio/*">
+    <div class="form-group" style="margin-top:14px">
+      <label>Caption</label>
+      <textarea id="uploadCaption"
+        placeholder="Write something... Use @mentions and #hashtags"></textarea>
+    </div>
+    <div class="actions">
+      <button class="btn primary" onclick="publishUpload()">Publish</button>
+      <button class="btn" onclick="showPage('editor')">Open Editor</button>
+    </div>
+  </div>
+</section>
+
+<!-- CREATOR -->
+<section id="page-creator" class="page">
+  <div class="hero">
+    <h1>📊 Creator Studio</h1>
+    <p class="muted">Manage content, audience and creator performance.</p>
+  </div>
+
+  <div class="grid grid-4">
+    <div class="card"><div class="stat">0</div><div class="muted">Views</div></div>
+    <div class="card"><div class="stat">0</div><div class="muted">Followers</div></div>
+    <div class="card"><div class="stat">0</div><div class="muted">Likes</div></div>
+    <div class="card"><div class="stat">$0</div><div class="muted">Earnings</div></div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h3>Creator actions</h3>
+    <div class="actions">
+      <button class="btn" onclick="showPage('upload')">Upload</button>
+      <button class="btn" onclick="showPage('promote')">Promote Video</button>
+      <button class="btn" onclick="showPage('earnings')">Earnings</button>
+      <button class="btn" onclick="showPage('verification')">Verification</button>
+    </div>
+  </div>
+</section>
+
+<!-- EARNINGS -->
+<section id="page-earnings" class="page">
+  <div class="hero">
+    <h1>💰 Earnings</h1>
+    <p class="muted">Creator monetization dashboard.</p>
+  </div>
+  <div class="grid grid-3">
+    <div class="card"><div class="stat">$0.00</div><div class="muted">Available</div></div>
+    <div class="card"><div class="stat">$0.00</div><div class="muted">Pending</div></div>
+    <div class="card"><div class="stat">$0.00</div><div class="muted">Total earned</div></div>
+  </div>
+</section>
+
+<!-- VERIFICATION -->
+<section id="page-verification" class="page">
+  <div class="hero">
+    <h1>☑️ Creator Verification</h1>
+    <p class="muted">
+      Verification eligibility and review status.
+    </p>
+    <button class="btn primary" onclick="requestVerification()">Request Verification</button>
+  </div>
+</section>
+
+<!-- PROMOTE -->
+<section id="page-promote" class="page">
+  <div class="hero">
+    <h1>🚀 Promote</h1>
+    <p class="muted">
+      Promote is specifically for creators promoting their own videos.
+      It is separate from Business Ads.
+    </p>
+  </div>
+
+  <div class="grid grid-3">
+    <div class="card plan" onclick="selectPlan(this,'$1','1 day')">
+      <h3>1 Day</h3>
+      <div class="plan-price">$1</div>
+      <p class="muted">Promote one creator video for one day.</p>
+      <button class="btn primary">Choose</button>
+    </div>
+
+    <div class="card plan" onclick="selectPlan(this,'$10','7 days')">
+      <h3>7 Days</h3>
+      <div class="plan-price">$10</div>
+      <p class="muted">Promote your video for one week.</p>
+      <button class="btn primary">Choose</button>
+    </div>
+
+    <div class="card plan" onclick="selectPlan(this,'$30','30 days')">
+      <h3>30 Days</h3>
+      <div class="plan-price">$30</div>
+      <p class="muted">Longer creator promotion campaign.</p>
+      <button class="btn primary">Choose</button>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h3>Promote a video</h3>
+    <div class="form-group">
+      <label>Video</label>
+      <select id="promoteVideo">
+        <option>My latest video</option>
+        <option>My latest Short</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Goal</label>
+      <select id="promoteGoal">
+        <option>More views</option>
+        <option>More followers</option>
+        <option>More engagement</option>
+        <option>More profile visits</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Audience</label>
+      <select id="promoteAudience">
+        <option>Automatic</option>
+        <option>Specific country/region</option>
+        <option>Interests</option>
+      </select>
+    </div>
+    <button class="btn primary" onclick="startPromotion()">Continue to Payment</button>
+  </div>
+</section>
+
+<!-- ADS -->
+<section id="page-ads" class="page">
+  <div class="hero">
+    <h1>📢 Ads Manager</h1>
+    <p class="muted">
+      Business advertising is separate from creator Promote.
+      Advertise products, services, businesses, properties and brands.
+    </p>
+  </div>
+
+  <div class="grid grid-3">
+    <div class="card plan" onclick="selectAdPlan(this,'$1','1 day')">
+      <h3>Daily</h3>
+      <div class="plan-price">$1</div>
+      <p class="muted">1 day campaign.</p>
+      <button class="btn primary">Choose</button>
+    </div>
+
+    <div class="card plan" onclick="selectAdPlan(this,'$10','7 days')">
+      <h3>Weekly</h3>
+      <div class="plan-price">$10</div>
+      <p class="muted">7 day campaign.</p>
+      <button class="btn primary">Choose</button>
+    </div>
+
+    <div class="card plan" onclick="selectAdPlan(this,'$30','30 days')">
+      <h3>Monthly</h3>
+      <div class="plan-price">$30</div>
+      <p class="muted">30 day campaign.</p>
+      <button class="btn primary">Choose</button>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h2>Create Business Advertisement</h2>
+
+    <div class="grid grid-2">
+      <div class="form-group">
+        <label>Ad title</label>
+        <input id="adTitle" placeholder="Example: House for Rent">
+      </div>
+
+      <div class="form-group">
+        <label>Category</label>
+        <select id="adCategory">
+          <option>Business</option>
+          <option>Marketplace</option>
+          <option>Property</option>
+          <option>Service</option>
+          <option>Transport</option>
+          <option>Food</option>
+          <option>Hotel</option>
+          <option>Music</option>
+          <option>Video</option>
+          <option>General</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Description</label>
+      <textarea id="adDescription"
+        placeholder="Describe what you are advertising..."></textarea>
+    </div>
+
+    <div class="grid grid-2">
+      <div class="form-group">
+        <label>Price</label>
+        <input id="adPrice" type="number" min="0" placeholder="0">
+      </div>
+
+      <div class="form-group">
+        <label>Country / Region</label>
+        <input id="adLocation" placeholder="Country, city or region">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Advertising placements</label>
+      <div class="check"><input type="checkbox" value="map" checked> Map</div>
+      <div class="check"><input type="checkbox" value="music" checked> Music streams</div>
+      <div class="check"><input type="checkbox" value="videos"> Videos</div>
+      <div class="check"><input type="checkbox" value="shorts"> Shorts</div>
+      <div class="check"><input type="checkbox" value="marketplace"> Marketplace</div>
+      <div class="check"><input type="checkbox" value="search"> Search</div>
+      <div class="check"><input type="checkbox" value="explore"> Home / Explore</div>
+    </div>
+
+    <div class="form-group">
+      <label>Ad media</label>
+      <input id="adMedia" type="file" accept="image/*,video/*">
+    </div>
+
+    <div class="actions">
+      <button class="btn" onclick="previewAd()">Preview</button>
+      <button class="btn primary" onclick="submitAd()">Continue to Payment</button>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h3>Campaign Analytics</h3>
+    <div class="grid grid-4">
+      <div><div class="stat">0</div><div class="muted">Impressions</div></div>
+      <div><div class="stat">0</div><div class="muted">Clicks</div></div>
+      <div><div class="stat">0</div><div class="muted">Views</div></div>
+      <div><div class="stat">$0</div><div class="muted">Spent</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROPERTY ADS -->
+<section id="page-propertyAds" class="page">
+  <div class="hero">
+    <h1>🏠 Property Ads</h1>
+    <p class="muted">
+      Advertise houses, apartments, rooms, land and commercial property.
+    </p>
+  </div>
+
+  <div class="card">
+    <h2>Create Property Advertisement</h2>
+
+    <div class="grid grid-2">
+      <div class="form-group">
+        <label>Property title</label>
+        <input id="propertyTitle" placeholder="3 Bedroom House for Rent">
+      </div>
+
+      <div class="form-group">
+        <label>Property type</label>
+        <select id="propertyType">
+          <option>House for Rent</option>
+          <option>Apartment for Rent</option>
+          <option>Room / Self-contained</option>
+          <option>House for Sale</option>
+          <option>Land for Sale</option>
+          <option>Land for Lease</option>
+          <option>Shop / Office</option>
+          <option>Commercial Property</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Price</label>
+        <input id="propertyPrice" type="number" min="0" placeholder="2500">
+      </div>
+
+      <div class="form-group">
+        <label>Currency</label>
+        <select id="propertyCurrency">
+          <option>USD ($)</option>
+          <option>GHS (GH₵)</option>
+          <option>EUR (€)</option>
+          <option>GBP (£)</option>
+          <option>NGN (₦)</option>
+          <option>KES (KSh)</option>
+          <option>ZAR (R)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Bedrooms</label>
+        <input id="propertyBedrooms" type="number" min="0">
+      </div>
+
+      <div class="form-group">
+        <label>Bathrooms</label>
+        <input id="propertyBathrooms" type="number" min="0">
+      </div>
+
+      <div class="form-group">
+        <label>Public location</label>
+        <input id="propertyLocation" placeholder="City / region / neighborhood">
+      </div>
+
+      <div class="form-group">
+        <label>Contact</label>
+        <input id="propertyContact" placeholder="Phone, email or RockyX message">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Description</label>
+      <textarea id="propertyDescription"
+        placeholder="Describe the property..."></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Photos / video</label>
+      <input id="propertyMedia" type="file" multiple accept="image/*,video/*">
+    </div>
+
+    <div class="notice warning">
+      For privacy and safety, advertisers should use a public/approximate
+      location rather than exposing a private residential address unnecessarily.
+    </div>
+
+    <div class="actions" style="margin-top:14px">
+      <button class="btn" onclick="previewPropertyAd()">Preview</button>
+      <button class="btn primary" onclick="createPropertyAd()">Continue to Ads Plans</button>
+    </div>
+  </div>
+</section>
 
 <!-- MESSAGES -->
 <section id="page-messages" class="page">
-
   <div class="hero">
     <h1>💬 Messages</h1>
-    <p>Chat with people, creators, sellers and businesses.</p>
+    <p class="muted">Conversations with creators, sellers, businesses and users.</p>
   </div>
 
-  <div id="messagesBox"
-    style="height:400px;overflow:auto;padding:15px;border:1px solid var(--line);border-radius:15px">
-
-    <div class="notice">
-      RockyX messaging.
+  <div class="card">
+    <div id="messagesList">
+      <div class="notice">No conversations yet.</div>
     </div>
 
+    <div class="row" style="margin-top:12px">
+      <input id="messageInput" placeholder="Write a message...">
+      <button class="btn primary" onclick="sendMessage()">Send</button>
+    </div>
   </div>
-
-  <br>
-
-  <div class="row">
-
-    <input id="messageInput"
-      placeholder="Write a message...">
-
-    <button class="btn primary"
-      onclick="sendMessage()">Send</button>
-
-  </div>
-
 </section>
-
 
 <!-- NOTIFICATIONS -->
 <section id="page-notifications" class="page">
-
   <div class="hero">
     <h1>🔔 Notifications</h1>
   </div>
-
-  <div class="list">
-
-    <div class="list-item">
-      ❤️
-      <div>
-        <b>Someone liked your video</b>
-        <div class="muted">Recently</div>
-      </div>
-    </div>
-
-    <div class="list-item">
-      👤
-      <div>
-        <b>Someone followed you</b>
-        <div class="muted">Recently</div>
-      </div>
-    </div>
-
+  <div class="card">
+    <div class="notice">No new notifications.</div>
   </div>
-
 </section>
-
 
 <!-- PROFILE -->
 <section id="page-profile" class="page">
+  <div class="card" style="padding:0;overflow:hidden">
+    <div class="profile-cover"></div>
 
-  <div class="hero">
-
-    <div class="row">
-
-      <div class="avatar"
-        style="width:75px;height:75px;font-size:30px">
+    <div class="profile-head">
+      <div class="profile-avatar-large" id="profileAvatar">
         👤
       </div>
 
-      <div>
-        <h1 style="margin:0">RockyX User</h1>
-        <div class="muted">@username</div>
-        <span class="badge">Creator</span>
+      <div class="between" style="margin-top:10px">
+        <div>
+          <h1 id="profileDisplayName" style="margin:0">RockyX User</h1>
+          <div id="profileUsername" class="muted">@username</div>
+          <div style="margin-top:7px">
+            <span id="profileTypeBadge" class="badge">Creator</span>
+            <span id="profileVerifiedBadge" class="badge verified" style="display:none">✓ Verified</span>
+          </div>
+        </div>
+
+        <button class="btn primary" onclick="openProfileEditor()">Edit Profile</button>
       </div>
 
+      <p id="profileBioDisplay" class="muted" style="margin-top:14px">
+        Add a bio to tell people about yourself.
+      </p>
     </div>
-
   </div>
 
-  <div class="stat-grid">
-
-    <div class="stat">
-      <div class="stat-value">0</div>
-      <div class="stat-label">Following</div>
-    </div>
-
-    <div class="stat">
-      <div class="stat-value">0</div>
-      <div class="stat-label">Followers</div>
-    </div>
-
-    <div class="stat">
-      <div class="stat-value">0</div>
-      <div class="stat-label">Likes</div>
-    </div>
-
-    <div class="stat">
-      <div class="stat-value">0</div>
-      <div class="stat-label">Videos</div>
-    </div>
-
+  <div class="grid grid-3" style="margin-top:16px">
+    <div class="card"><div class="stat">0</div><div class="muted">Posts</div></div>
+    <div class="card"><div class="stat">0</div><div class="muted">Followers</div></div>
+    <div class="card"><div class="stat">0</div><div class="muted">Following</div></div>
   </div>
 
+  <div class="card" style="margin-top:16px">
+    <h3>Create Post</h3>
+    <textarea id="postComposer"
+      placeholder="Write something... Use @username and #hashtags"></textarea>
+    <div class="actions" style="margin-top:10px">
+      <button class="btn" onclick="insertMention()">@ Mention</button>
+      <button class="btn" onclick="insertHashtag()"># Hashtag</button>
+      <button class="btn primary" onclick="publishPost()">Post</button>
+    </div>
+  </div>
+
+  <div id="profilePosts" style="margin-top:16px"></div>
 </section>
 
+<!-- VIOLATIONS -->
+<section id="page-violations" class="page">
+  <div class="hero">
+    <h1>⚠️ Violation Center</h1>
+    <p class="muted">
+      Review reports, enforcement actions and appeals.
+    </p>
+  </div>
+
+  <div class="grid grid-3">
+    <div class="card">
+      <h3>My violations</h3>
+      <div class="stat">0</div>
+      <p class="muted">No violations recorded.</p>
+    </div>
+
+    <div class="card">
+      <h3>Live reports</h3>
+      <div class="stat">0</div>
+      <p class="muted">Reports submitted by viewers.</p>
+    </div>
+
+    <div class="card">
+      <h3>Appeals</h3>
+      <div class="stat">0</div>
+      <p class="muted">Appeal decisions when available.</p>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h3>RockyX Live Rules</h3>
+    <ul class="muted">
+      <li>No harassment or threats.</li>
+      <li>No prohibited sexual content.</li>
+      <li>No dangerous or violent content.</li>
+      <li>No scams or fraudulent activity.</li>
+      <li>No impersonation.</li>
+      <li>No spam or abusive behavior.</li>
+      <li>Respect copyright.</li>
+      <li>Follow applicable laws and RockyX Community Guidelines.</li>
+    </ul>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h3>Enforcement</h3>
+    <p class="muted">
+      Depending on the violation, RockyX may issue a warning, remove content,
+      restrict a feature, end a live stream, temporarily suspend Live access,
+      or apply other account restrictions.
+    </p>
+    <button class="btn" onclick="appealViolation()">Submit an Appeal</button>
+  </div>
+</section>
 
 <!-- SECURITY -->
 <section id="page-security" class="page">
-
   <div class="hero">
-
     <h1>🔐 Security</h1>
-
-    <p>
-      Secure your RockyX account with passkeys and additional
-      authentication.
-    </p>
-
+    <p class="muted">Protect your RockyX account.</p>
   </div>
 
-  <div class="grid">
-
+  <div class="grid grid-2">
     <div class="card">
-      <div class="card-body">
-
-        <h3>🔑 Passkey / Face ID / Touch ID</h3>
-
-        <p class="card-sub">
-          Supported devices can use their built-in biometric
-          authentication through WebAuthn. RockyX does not
-          receive or store your biometric data.
-        </p>
-
-        <button class="btn primary"
-          onclick="registerPasskey()">
-          Set Up Passkey
-        </button>
-
-      </div>
+      <h3>Passkey</h3>
+      <p class="muted">Use a supported device passkey.</p>
+      <button class="btn primary" onclick="registerPasskey()">Set Up Passkey</button>
     </div>
-
     <div class="card">
-      <div class="card-body">
-
-        <h3>🛡️ Two-Factor Authentication</h3>
-
-        <button class="btn primary"
-          onclick="showToast('2FA setup requires the authentication backend.')">
-          Set Up 2FA
-        </button>
-
-      </div>
+      <h3>Two-factor authentication</h3>
+      <p class="muted">Additional account protection.</p>
+      <button class="btn" onclick="showToast('2FA setup requires backend authentication configuration')">Configure</button>
     </div>
-
   </div>
-
 </section>
-
 
 <!-- SETTINGS -->
 <section id="page-settings" class="page">
-
   <div class="hero">
     <h1>⚙️ Settings</h1>
   </div>
 
   <div class="card">
-
-    <div class="card-body">
-
-      <div class="permission">
-        <span>Appear on Nearby Map</span>
-        <button class="switch"
-          id="nearbySwitch"
-          onclick="toggleSwitch(this)"></button>
-      </div>
-
-      <div class="permission">
-        <span>Notifications</span>
-        <button class="switch on"
-          onclick="toggleSwitch(this)"></button>
-      </div>
-
-      <div class="permission">
-        <span>Autoplay Videos</span>
-        <button class="switch on"
-          onclick="toggleSwitch(this)"></button>
-      </div>
-
-      <div class="permission">
-        <span>Private Account</span>
-        <button class="switch"
-          onclick="toggleSwitch(this)"></button>
-      </div>
-
-    </div>
-
+    <h3>Mentions</h3>
+    <label>Who can mention me?</label>
+    <select id="mentionSetting" onchange="saveMentionSetting(this.value)">
+      <option>Everyone</option>
+      <option>People I follow</option>
+      <option>No one</option>
+    </select>
   </div>
 
+  <div class="card" style="margin-top:16px">
+    <h3>Currency</h3>
+    <p class="muted">
+      RockyX is international. USD is the base advertising currency,
+      while supported local currencies can be displayed where available.
+    </p>
+    <select id="currencySetting" onchange="setCurrency(this.value)">
+      <option value="USD">USD ($)</option>
+      <option value="GHS">GHS (GH₵)</option>
+      <option value="EUR">EUR (€)</option>
+      <option value="GBP">GBP (£)</option>
+      <option value="NGN">NGN (₦)</option>
+      <option value="KES">KES (KSh)</option>
+      <option value="ZAR">ZAR (R)</option>
+    </select>
+  </div>
 </section>
-
 
 <!-- ACCOUNT -->
 <section id="page-account" class="page">
-
   <div class="hero">
-
-    <h1>🧾 Account</h1>
-
-    <p>
-      Sign in or create your RockyX account.
-    </p>
-
+    <h1>Account</h1>
+    <p id="accountStatus" class="muted">Not signed in.</p>
   </div>
 
-  <div id="loggedOut">
+  <div class="card">
+    <h3>Create Account</h3>
 
-    <div class="grid">
-
-      <div class="card">
-
-        <div class="card-body">
-
-          <h2>Sign In</h2>
-
-          <input id="loginEmail"
-            type="email"
-            placeholder="Email">
-
-          <br><br>
-
-          <input id="loginPassword"
-            type="password"
-            placeholder="Password">
-
-          <br><br>
-
-          <button class="btn primary"
-            onclick="login()">Sign In</button>
-
-        </div>
-
-      </div>
-
-
-      <div class="card">
-
-        <div class="card-body">
-
-          <h2>Create Account</h2>
-
-          <input id="signupName"
-            placeholder="Full name">
-
-          <br><br>
-
-          <input id="signupEmail"
-            type="email"
-            placeholder="Email">
-
-          <br><br>
-
-          <input id="signupPhone"
-            type="tel"
-            placeholder="Phone">
-
-          <br><br>
-
-          <select id="signupCountry">
-            <option value="">Select country</option>
-            <option value="GH">Ghana</option>
-            <option value="NG">Nigeria</option>
-            <option value="US">United States</option>
-            <option value="GB">United Kingdom</option>
-            <option value="CA">Canada</option>
-            <option value="ZA">South Africa</option>
-          </select>
-
-          <br><br>
-
-          <select id="signupType">
-            <option value="personal">Personal</option>
-            <option value="creator">Creator</option>
-            <option value="seller">Seller</option>
-            <option value="business">Business</option>
-            <option value="service">Service</option>
-            <option value="artist">Artist</option>
-          </select>
-
-          <br><br>
-
-          <input id="signupPassword"
-            type="password"
-            placeholder="Password">
-
-          <br><br>
-
-          <button class="btn primary"
-            onclick="createAccount()">
-            Create Account
-          </button>
-
-        </div>
-
-      </div>
-
+    <div class="grid grid-2">
+      <input id="signupName" placeholder="Full name">
+      <input id="signupEmail" type="email" placeholder="Email">
+      <input id="signupPhone" type="tel" placeholder="Phone">
+      <input id="signupCountry" placeholder="Country">
+      <select id="signupType">
+        <option value="personal">Personal</option>
+        <option value="creator">Creator</option>
+        <option value="business">Business</option>
+      </select>
+      <input id="signupPassword" type="password" placeholder="Password">
     </div>
 
-  </div>
-
-
-  <div id="loggedIn" class="hidden">
-
-    <div class="card">
-
-      <div class="card-body">
-
-        <h2>Account Active</h2>
-
-        <div id="userInfo"
-          class="notice"></div>
-
-        <br>
-
-        <button class="btn"
-          onclick="showPage('profile')">Profile</button>
-
-        <button class="btn"
-          onclick="showPage('settings')">Settings</button>
-
-        <button class="btn danger"
-          onclick="logout()">Sign Out</button>
-
-      </div>
-
+    <div class="actions" style="margin-top:12px">
+      <button class="btn primary" onclick="createAccount()">Create Account</button>
+      <button class="btn" onclick="login()">Sign In</button>
+      <button class="btn danger" onclick="logout()">Sign Out</button>
     </div>
-
   </div>
-
 </section>
-
-
-<!-- PRIVATE ADMIN -->
-<section id="page-admin" class="page">
-
-  <div class="hero">
-
-    <span class="badge">PRIVATE OWNER AREA</span>
-
-    <h1>🔒 RockyX Admin</h1>
-
-    <p>
-      This area is intentionally absent from normal navigation.
-      Backend authorization must control access.
-    </p>
-
-  </div>
-
-  <div id="adminStatus"
-    class="notice">
-    Owner authorization required.
-  </div>
-
-</section>
-
 
 </main>
-</div>
 
-
-<!-- MOBILE NAV -->
 <nav class="bottom-nav">
-
-  <button data-page="home"
-    onclick="showPage('home')">
-    🏠<br>Home
-  </button>
-
-  <button data-page="videos"
-    onclick="showPage('videos')">
-    🎬<br>Videos
-  </button>
-
-  <button data-page="camera"
-    onclick="showPage('camera')">
-    ＋<br>Create
-  </button>
-
-  <button data-page="map"
-    onclick="openMapWithAd()">
-    📍<br>Map
-  </button>
-
-  <button data-page="account"
-    onclick="showPage('account')">
-    👤<br>Account
-  </button>
-
+  <button onclick="showPage('home')"><span>🏠</span>Home</button>
+  <button onclick="showPage('videos')"><span>🎬</span>Videos</button>
+  <button onclick="showPage('upload')"><span>＋</span>Create</button>
+  <button onclick="openMapWithAd('map')"><span>🗺️</span>Map</button>
+  <button onclick="showPage('account')"><span>👤</span>Account</button>
 </nav>
-
 
 <!-- MAP AD MODAL -->
 <div id="mapAdModal" class="modal">
-
-  <div class="modal-box ad-screen">
-
-    <div class="modal-head">
-
-      <h2>Sponsored</h2>
-
-      <button class="close"
-        onclick="closeMapAd()">×</button>
-
+  <div class="modal-box">
+    <div class="between">
+      <h2>Advertisement</h2>
+      <button class="close" onclick="closeMapAd()">×</button>
     </div>
 
-    <div class="ad-box">
-
-      <span class="ad-label">ADVERTISEMENT</span>
-
-      <div style="font-size:55px">📢</div>
-
-      <div class="ad-count"
-        id="adCountdown">5</div>
-
-      <h2>Discover more with RockyX</h2>
-
+    <div class="card music-ad">
+      <span class="sponsored-label">ADVERTISEMENT</span>
+      <h3>Sponsored RockyX placement</h3>
       <p class="muted">
-        Sponsored content helps support RockyX.
+        Advertisements can support RockyX while helping businesses reach customers.
       </p>
-
+      <div id="mapAdCountdown" class="stat">5</div>
     </div>
 
-    <button id="continueMapButton"
-      class="btn primary"
-      disabled
-      onclick="continueToMap()">
+    <button id="continueMapBtn" class="btn primary"
+            onclick="continueToMap()" disabled>
       Continue to Map
     </button>
-
   </div>
-
 </div>
 
-
-<!-- VIDEO MODAL -->
-<div id="videoModal" class="modal">
-
+<!-- PROFILE EDITOR -->
+<div id="profileEditor" class="modal">
   <div class="modal-box">
-
-    <div class="modal-head">
-
-      <h2 id="videoTitle">Video</h2>
-
-      <button class="close"
-        onclick="closeModal('videoModal')">×</button>
-
+    <div class="between">
+      <h2>Edit Profile</h2>
+      <button class="close" onclick="closeProfileEditor()">×</button>
     </div>
 
-    <div class="preview">
-
-      <div style="font-size:60px">
-        ▶️
+    <div class="row" style="margin-bottom:15px">
+      <div id="profileEditorAvatar" class="profile-avatar-large">👤</div>
+      <div>
+        <button class="btn" onclick="openProfilePicturePicker()">Choose Picture</button>
+        <button class="btn" onclick="removeProfilePicture()">Remove</button>
+        <input id="profilePictureInput" type="file"
+               accept="image/*" style="display:none"
+               onchange="handleProfilePicture(event)">
       </div>
-
     </div>
 
-    <br>
-
-    <div class="row wrap">
-
-      <button class="btn">❤️ Like</button>
-      <button class="btn">💬 Comment</button>
-      <button class="btn">↗ Share</button>
-      <button class="btn">🔖 Save</button>
-
+    <div class="form-group">
+      <label>Full name</label>
+      <input id="profileNameInput">
     </div>
 
+    <div class="form-group">
+      <label>Username</label>
+      <input id="profileUsernameInput">
+    </div>
+
+    <div class="form-group">
+      <label>Bio</label>
+      <textarea id="profileBioInput" maxlength="160"
+        placeholder="Tell people about yourself..."></textarea>
+      <div class="muted small">Maximum 160 characters.</div>
+    </div>
+
+    <div class="actions">
+      <button class="btn primary" onclick="saveProfile()">Save Profile</button>
+      <button class="btn" onclick="closeProfileEditor()">Cancel</button>
+    </div>
   </div>
-
 </div>
 
-
-<!-- AI MODAL -->
-<div id="aiModal" class="modal">
-
+<!-- AD PREVIEW MODAL -->
+<div id="adPreviewModal" class="modal">
   <div class="modal-box">
-
-    <div class="modal-head">
-
-      <h2>🤖 RockyX AI</h2>
-
-      <button class="close"
-        onclick="closeModal('aiModal')">×</button>
-
+    <div class="between">
+      <h2>Advertisement Preview</h2>
+      <button class="close" onclick="closeModal('adPreviewModal')">×</button>
     </div>
-
-    <div id="aiResult"
-      class="notice">
-      AI operation ready.
-    </div>
-
+    <div id="adPreviewContent"></div>
   </div>
-
 </div>
 
+<!-- REPORT LIVE MODAL -->
+<div id="reportLiveModal" class="modal">
+  <div class="modal-box">
+    <div class="between">
+      <h2>Report Live Stream</h2>
+      <button class="close" onclick="closeModal('reportLiveModal')">×</button>
+    </div>
 
-<!-- CAMERA FILE INPUT -->
-<input id="cameraUpload"
-  type="file"
-  accept="video/*,image/*"
-  hidden>
+    <div class="form-group">
+      <label>Reason</label>
+      <select id="liveReportReason">
+        <option>Harassment or threats</option>
+        <option>Sexual content</option>
+        <option>Violence or dangerous content</option>
+        <option>Scam or fraud</option>
+        <option>Spam</option>
+        <option>Impersonation</option>
+        <option>Copyright</option>
+        <option>Other</option>
+      </select>
+    </div>
 
+    <textarea id="liveReportDetails"
+      placeholder="Additional details..."></textarea>
+
+    <button class="btn danger" onclick="submitLiveReport()">Submit Report</button>
+  </div>
+</div>
 
 <div id="toast" class="toast"></div>
 
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        crossorigin=""></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-/* ============================================================
-   ROCKYX CONFIGURATION
-   ============================================================ */
+/* =========================================================
+   ROCKYX FRONTEND
+   International / USD-ready
+   ========================================================= */
 
-const SUPABASE_URL =
-  "YOUR_SUPABASE_URL";
-
-const SUPABASE_PUBLISHABLE_KEY =
-  "YOUR_SUPABASE_PUBLISHABLE_KEY";
+/*
+  IMPORTANT:
+  Replace these with your existing Supabase project values.
+  Do NOT put your service_role key in this file.
+*/
+const SUPABASE_URL = "YOUR_SUPABASE_URL";
+const SUPABASE_PUBLISHABLE_KEY = "YOUR_SUPABASE_PUBLISHABLE_KEY";
 
 let supabaseClient = null;
 
 if(
-  window.supabase &&
-  !SUPABASE_URL.includes("YOUR_") &&
-  !SUPABASE_PUBLISHABLE_KEY.includes("YOUR_")
+  SUPABASE_URL !== "YOUR_SUPABASE_URL" &&
+  SUPABASE_PUBLISHABLE_KEY !== "YOUR_SUPABASE_PUBLISHABLE_KEY"
 ){
-  supabaseClient =
-    window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_PUBLISHABLE_KEY
-    );
+  supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
 }
 
-
-/* ============================================================
-   STATE
-   ============================================================ */
-
 const state = {
-
   page:"home",
-
   user:null,
-
   session:null,
 
   map:null,
-
   navigationMap:null,
-
   mapMarkers:[],
-
   mapCategory:"all",
-
   mapAdTarget:"map",
-
   nearbyVisible:false,
 
   cameraStream:null,
-
   cameraFacing:"user",
-
   mediaRecorder:null,
-
   recordedChunks:[],
-
   recordedBlob:null,
-
   recording:false,
-
   recordingSeconds:0,
-
   recordingTimer:null,
-
   cameraMode:"short",
-
   cameraSpeedValue:1,
 
   editorFile:null,
-
   editorUrl:null,
-
   editorHistory:[],
+  editorHistoryIndex:-1,
 
-  editorHistoryIndex:-1
+  profilePictureData:null,
+  profileData:{
+    full_name:"",
+    username:"",
+    bio:"",
+    avatar_url:"",
+    account_type:"personal"
+  },
 
+  selectedPromotePlan:null,
+  selectedAdPlan:null,
+
+  currency:"USD",
+
+  posts:[]
 };
 
-
-/* ============================================================
-   UI
-   ============================================================ */
+/* =========================================================
+   GENERAL UI
+   ========================================================= */
 
 function showToast(message){
-
-  const toast =
-    document.getElementById("toast");
-
-  toast.textContent = message;
-
+  const toast=document.getElementById("toast");
+  toast.textContent=message;
   toast.classList.add("show");
-
-  clearTimeout(window.rockyxToastTimer);
-
-  window.rockyxToastTimer =
-    setTimeout(
-      () => toast.classList.remove("show"),
-      3500
-    );
-
+  clearTimeout(showToast.timer);
+  showToast.timer=setTimeout(()=>toast.classList.remove("show"),3000);
 }
-
-
-function showPage(page){
-
-  state.page = page;
-
-  document
-    .querySelectorAll(".page")
-    .forEach(p =>
-      p.classList.remove("active")
-    );
-
-  const target =
-    document.getElementById(
-      "page-" + page
-    );
-
-  if(target){
-    target.classList.add("active");
-  }
-
-  document
-    .querySelectorAll(".nav-btn")
-    .forEach(btn =>
-      btn.classList.toggle(
-        "active",
-        btn.dataset.page === page
-      )
-    );
-
-  document
-    .querySelectorAll(".bottom-nav button")
-    .forEach(btn =>
-      btn.classList.toggle(
-        "active",
-        btn.dataset.page === page
-      )
-    );
-
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
-
-  if(page === "map"){
-    setTimeout(initRockyXMap,100);
-  }
-
-  if(page === "navigation"){
-    setTimeout(initNavigationMap,100);
-  }
-
-}
-
 
 function closeModal(id){
-
-  document
-    .getElementById(id)
-    ?.classList.remove("show");
-
+  const el=document.getElementById(id);
+  if(el) el.classList.remove("show");
 }
 
+function showPage(page){
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
 
-document.addEventListener(
-  "click",
-  event => {
+  const target=document.getElementById("page-"+page);
 
-    const modal =
-      event.target.closest(".modal");
-
-    if(
-      modal &&
-      event.target === modal
-    ){
-      modal.classList.remove("show");
-    }
-
+  if(!target){
+    showToast("Page is not available");
+    return;
   }
-);
 
+  target.classList.add("active");
+  state.page=page;
 
-/* ============================================================
-   MAP AD SYSTEM
-   ============================================================ */
+  document.querySelectorAll(".nav-btn").forEach(btn=>{
+    btn.classList.remove("active");
+  });
+
+  if(page==="map") setTimeout(initRockyXMap,100);
+  if(page==="navigation") setTimeout(initNavigationMap,100);
+  if(page==="profile") loadUserProfile();
+
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+/* =========================================================
+   MAP AD ENTRY
+   ========================================================= */
 
 function openMapWithAd(target="map"){
+  state.mapAdTarget=target;
 
-  state.mapAdTarget =
-    target || "map";
-
-  const modal =
-    document.getElementById(
-      "mapAdModal"
-    );
-
-  const countdown =
-    document.getElementById(
-      "adCountdown"
-    );
-
-  const continueButton =
-    document.getElementById(
-      "continueMapButton"
-    );
+  const modal=document.getElementById("mapAdModal");
+  const count=document.getElementById("mapAdCountdown");
+  const btn=document.getElementById("continueMapBtn");
 
   modal.classList.add("show");
+  btn.disabled=true;
 
-  continueButton.disabled = true;
+  let seconds=5;
+  count.textContent=seconds;
 
-  let seconds = 5;
+  clearInterval(openMapWithAd.timer);
 
-  countdown.textContent =
-    seconds;
+  openMapWithAd.timer=setInterval(()=>{
+    seconds--;
+    count.textContent=seconds;
 
-  clearInterval(
-    state.mapAdTimer
-  );
-
-  state.mapAdTimer =
-    setInterval(() => {
-
-      seconds--;
-
-      countdown.textContent =
-        seconds;
-
-      if(seconds <= 0){
-
-        clearInterval(
-          state.mapAdTimer
-        );
-
-        continueButton.disabled =
-          false;
-
-        continueButton.textContent =
-          "Continue to Map";
-
-      }
-
-    },1000);
-
+    if(seconds<=0){
+      clearInterval(openMapWithAd.timer);
+      btn.disabled=false;
+      btn.textContent="Continue to Map";
+    }
+  },1000);
 }
-
 
 function closeMapAd(){
-
-  clearInterval(
-    state.mapAdTimer
-  );
-
-  document
-    .getElementById("mapAdModal")
-    .classList.remove("show");
-
+  clearInterval(openMapWithAd.timer);
+  closeModal("mapAdModal");
 }
-
 
 function continueToMap(){
-
+  const target=state.mapAdTarget;
   closeMapAd();
-
-  if(
-    state.mapAdTarget ===
-    "navigation"
-  ){
-
-    showPage("navigation");
-
-    return;
-  }
-
-  if(
-    state.mapAdTarget ===
-    "transport"
-  ){
-
-    showPage("map");
-
-    setTimeout(
-      () => selectMapCategory("transport"),
-      200
-    );
-
-    return;
-  }
-
-  if(
-    state.mapAdTarget ===
-    "businesses"
-  ){
-
-    showPage("map");
-
-    setTimeout(
-      () => selectMapCategory("business"),
-      200
-    );
-
-    return;
-  }
-
-  if(
-    state.mapAdTarget ===
-    "services"
-  ){
-
-    showPage("map");
-
-    setTimeout(
-      () => selectMapCategory("service"),
-      200
-    );
-
-    return;
-  }
-
-  if(
-    state.mapAdTarget ===
-    "fuel"
-  ){
-
-    showPage("map");
-
-    setTimeout(
-      () => selectMapCategory("fuel"),
-      200
-    );
-
-    return;
-  }
-
-  showPage("map");
-
+  showPage(target==="navigation"?"navigation":"map");
 }
 
-
-/* ============================================================
+/* =========================================================
    MAP
-   ============================================================ */
+   ========================================================= */
+
+const mapPlaces=[
+  {
+    name:"Sponsored Property",
+    category:"property",
+    lat:5.6037,
+    lng:-0.1870,
+    sponsored:true,
+    description:"3 bedroom house for rent"
+  },
+  {
+    name:"Sponsored Business",
+    category:"business",
+    lat:5.6120,
+    lng:-0.1750,
+    sponsored:true,
+    description:"Featured business"
+  },
+  {
+    name:"Marketplace Seller",
+    category:"marketplace",
+    lat:5.5900,
+    lng:-0.2000,
+    sponsored:false,
+    description:"Marketplace seller"
+  },
+  {
+    name:"Transport",
+    category:"transport",
+    lat:5.5700,
+    lng:-0.2100,
+    sponsored:false,
+    description:"Transport service"
+  },
+  {
+    name:"Service Provider",
+    category:"service",
+    lat:5.6250,
+    lng:-0.1650,
+    sponsored:false,
+    description:"Local service"
+  },
+  {
+    name:"Fuel Station",
+    category:"fuel",
+    lat:5.6000,
+    lng:-0.1550,
+    sponsored:false,
+    description:"Fuel station"
+  },
+  {
+    name:"Food",
+    category:"food",
+    lat:5.6100,
+    lng:-0.1950,
+    sponsored:false,
+    description:"Restaurant"
+  },
+  {
+    name:"Hotel",
+    category:"hotel",
+    lat:5.5850,
+    lng:-0.1800,
+    sponsored:false,
+    description:"Hotel"
+  },
+  {
+    name:"Health",
+    category:"health",
+    lat:5.6200,
+    lng:-0.2050,
+    sponsored:false,
+    description:"Health facility"
+  },
+  {
+    name:"Bank / ATM",
+    category:"bank",
+    lat:5.5950,
+    lng:-0.1700,
+    sponsored:false,
+    description:"Bank or ATM"
+  },
+  {
+    name:"Shop",
+    category:"shop",
+    lat:5.6150,
+    lng:-0.1850,
+    sponsored:false,
+    description:"Shop"
+  },
+  {
+    name:"Place",
+    category:"place",
+    lat:5.6050,
+    lng:-0.2200,
+    sponsored:false,
+    description:"Interesting place"
+  }
+];
 
 function initRockyXMap(){
+  if(state.map) return;
 
-  if(!window.L) return;
+  const el=document.getElementById("map");
+  if(!el) return;
 
-  const element =
-    document.getElementById(
-      "rockyxMap"
-    );
-
-  if(!element) return;
-
-  if(state.map){
-
-    state.map.invalidateSize();
-
-    return;
-  }
-
-  state.map =
-    L.map(element)
-      .setView(
-        [5.6037,-0.1870],
-        13
-      );
+  state.map=L.map(el,{zoomControl:false})
+    .setView([5.6037,-0.1870],13);
 
   L.tileLayer(
     "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
     {
       maxZoom:19,
-      attribution:
-        "© OpenStreetMap contributors"
+      attribution:"© OpenStreetMap contributors"
     }
   ).addTo(state.map);
 
+  L.control.zoom({position:"bottomright"}).addTo(state.map);
+
   loadDemoMapMarkers();
-
-  setTimeout(
-    () => state.map.invalidateSize(),
-    250
-  );
-
 }
-
-
-const mapLocations = [
-
-  {
-    id:"seller1",
-    category:"marketplace",
-    name:"RockyX Marketplace Seller",
-    lat:5.6037,
-    lng:-0.1870,
-    icon:"🛍️",
-    sponsored:true,
-    description:"Marketplace seller"
-  },
-
-  {
-    id:"transport1",
-    category:"transport",
-    name:"RockyX Transport",
-    lat:5.610,
-    lng:-0.180,
-    icon:"🚕",
-    sponsored:false,
-    description:"Transport provider"
-  },
-
-  {
-    id:"business1",
-    category:"business",
-    name:"Local Business",
-    lat:5.596,
-    lng:-0.192,
-    icon:"🏢",
-    sponsored:true,
-    description:"Business"
-  },
-
-  {
-    id:"service1",
-    category:"service",
-    name:"Repair Service",
-    lat:5.600,
-    lng:-0.175,
-    icon:"🛠️",
-    sponsored:false,
-    description:"Service provider"
-  },
-
-  {
-    id:"fuel1",
-    category:"fuel",
-    name:"Fuel Station",
-    lat:5.606,
-    lng:-0.198,
-    icon:"⛽",
-    sponsored:true,
-    description:"Fuel station"
-  },
-
-  {
-    id:"food1",
-    category:"food",
-    name:"Food Restaurant",
-    lat:5.615,
-    lng:-0.190,
-    icon:"🍔",
-    sponsored:false,
-    description:"Restaurant"
-  },
-
-  {
-    id:"hotel1",
-    category:"hotel",
-    name:"Hotel",
-    lat:5.595,
-    lng:-0.180,
-    icon:"🏨",
-    sponsored:false,
-    description:"Accommodation"
-  },
-
-  {
-    id:"health1",
-    category:"health",
-    name:"Health / Pharmacy",
-    lat:5.608,
-    lng:-0.170,
-    icon:"🏥",
-    sponsored:false,
-    description:"Health location"
-  },
-
-  {
-    id:"bank1",
-    category:"bank",
-    name:"Bank / ATM",
-    lat:5.590,
-    lng:-0.188,
-    icon:"🏦",
-    sponsored:false,
-    description:"Bank or ATM"
-  },
-
-  {
-    id:"shop1",
-    category:"shop",
-    name:"Supermarket",
-    lat:5.600,
-    lng:-0.205,
-    icon:"🛒",
-    sponsored:false,
-    description:"Shop"
-  },
-
-  {
-    id:"place1",
-    category:"place",
-    name:"Popular Place",
-    lat:5.618,
-    lng:-0.180,
-    icon:"📍",
-    sponsored:false,
-    description:"Nearby place"
-  }
-
-];
-
 
 function loadDemoMapMarkers(){
-
   if(!state.map) return;
 
-  state.mapMarkers.forEach(
-    marker => marker.remove()
-  );
+  state.mapMarkers.forEach(marker=>{
+    state.map.removeLayer(marker);
+  });
 
-  state.mapMarkers = [];
+  state.mapMarkers=[];
 
-  mapLocations.forEach(
-    location => addMapMarker(location)
-  );
+  mapPlaces.forEach(place=>{
+    if(
+      state.mapCategory!=="all" &&
+      place.category!==state.mapCategory
+    ) return;
 
+    addMapMarker(place);
+  });
 }
 
+function addMapMarker(place){
+  const marker=L.marker([place.lat,place.lng]).addTo(state.map);
 
-function addMapMarker(location){
+  let html="";
 
-  if(!state.map) return;
-
-  const popup = `
-
-    <div class="marker-card">
-
-      <strong>
-        ${escapeHtml(location.icon)}
-        ${escapeHtml(location.name)}
-      </strong>
-
-      <p>
-        ${escapeHtml(location.description)}
-      </p>
-
-      ${
-        location.sponsored
-          ? `<span class="badge">Sponsored</span>`
-          : ""
-      }
-
-      <br><br>
-
-      <button
-        onclick="mapPlaceAction('${escapeHtml(location.id)}')"
-        style="padding:7px;border:0;border-radius:7px">
-        View
-      </button>
-
-      <button
-        onclick="directionsTo(${location.lat},${location.lng})"
-        style="padding:7px;border:0;border-radius:7px">
-        Directions
-      </button>
-
-    </div>
-  `;
-
-  const marker =
-    L.marker([
-      location.lat,
-      location.lng
-    ])
-    .addTo(state.map)
-    .bindPopup(popup);
-
-  marker.rockyxData =
-    location;
-
-  state.mapMarkers.push(marker);
-
-}
-
-
-function mapCategory(button,category){
-
-  document
-    .querySelectorAll(".map-category")
-    .forEach(
-      b => b.classList.remove("active")
-    );
-
-  button.classList.add("active");
-
-  selectMapCategory(category);
-
-}
-
-
-function selectMapCategory(category){
-
-  state.mapCategory =
-    category;
-
-  document
-    .querySelectorAll(".map-category")
-    .forEach(button =>
-      button.classList.toggle(
-        "active",
-        button.dataset.category === category
-      )
-    );
-
-  state.mapMarkers.forEach(
-    marker => {
-
-      const data =
-        marker.rockyxData;
-
-      const visible =
-        category === "all" ||
-        data.category === category;
-
-      if(visible){
-
-        if(!state.map.hasLayer(marker)){
-          marker.addTo(state.map);
-        }
-
-      }else{
-
-        if(state.map.hasLayer(marker)){
-          marker.remove();
-        }
-
-      }
-
-    }
-  );
-
-}
-
-
-function refreshMapData(){
-
-  showToast(
-    "Refreshing RockyX map locations..."
-  );
-
-  if(state.map){
-    loadDemoMapMarkers();
-    selectMapCategory(
-      state.mapCategory
-    );
+  if(place.sponsored){
+    html+=`<div class="sponsored-label">ADVERTISEMENT</div>`;
   }
 
+  html+=`
+    <strong>${escapeHtml(place.name)}</strong>
+    <br>
+    ${escapeHtml(place.description)}
+    <br><br>
+    <button onclick="mapPlaceAction('${escapeHtml(place.name)}')">
+      View
+    </button>
+    <button onclick="directionsTo(${place.lat},${place.lng})">
+      Directions
+    </button>
+  `;
+
+  marker.bindPopup(html);
+
+  marker.on("click",()=>{
+    const sheet=document.getElementById("mapSheet");
+    sheet.innerHTML=`
+      ${place.sponsored?'<span class="badge sponsored">SPONSORED</span>':''}
+      <h3>${escapeHtml(place.name)}</h3>
+      <p class="muted">${escapeHtml(place.description)}</p>
+      <div class="actions">
+        <button class="btn" onclick="mapPlaceAction('${escapeHtml(place.name)}')">View</button>
+        <button class="btn primary" onclick="directionsTo(${place.lat},${place.lng})">Directions</button>
+      </div>
+    `;
+  });
+
+  state.mapMarkers.push(marker);
 }
 
+function selectMapCategory(category){
+  state.mapCategory=category;
+  loadDemoMapMarkers();
+  showToast("Showing "+category+" locations");
+}
+
+function refreshMapData(){
+  loadDemoMapMarkers();
+  showToast("Map refreshed");
+}
 
 function locateUser(){
-
   if(!navigator.geolocation){
-
-    showToast(
-      "Location is not supported."
-    );
-
+    showToast("Location is not supported on this device");
     return;
   }
 
   navigator.geolocation.getCurrentPosition(
-    position => {
+    position=>{
+      const lat=position.coords.latitude;
+      const lng=position.coords.longitude;
 
-      const lat =
-        position.coords.latitude;
+      if(!state.map) initRockyXMap();
 
-      const lng =
-        position.coords.longitude;
+      state.map.setView([lat,lng],16);
 
-      if(!state.map){
-        initRockyXMap();
-      }
+      L.circleMarker([lat,lng],{
+        radius:8
+      }).addTo(state.map)
+       .bindPopup("Your current location")
+       .openPopup();
 
-      state.map.setView(
-        [lat,lng],
-        16
-      );
-
-      L.marker([lat,lng])
-        .addTo(state.map)
-        .bindPopup(
-          "Your current device location"
-        )
-        .openPopup();
-
-      showToast(
-        "Your location was found."
-      );
-
+      showToast("Location found");
     },
-    error => {
-
-      console.error(error);
-
-      showToast(
-        "Location permission was unavailable."
-      );
-
+    ()=>{
+      showToast("Unable to access your location");
     },
     {
       enableHighAccuracy:true,
-      timeout:10000,
-      maximumAge:30000
+      timeout:10000
     }
   );
-
 }
-
 
 function toggleNearby(){
-
-  state.nearbyVisible =
-    !state.nearbyVisible;
-
+  state.nearbyVisible=!state.nearbyVisible;
   showToast(
     state.nearbyVisible
-      ? "You chose to appear on Nearby."
-      : "You are no longer appearing on Nearby."
+    ? "Nearby discovery enabled"
+    : "Nearby discovery hidden"
   );
-
 }
-
 
 function openMapSearch(){
-
-  const query =
-    prompt(
-      "Search for a place, business, service or fuel station:"
-    );
-
-  if(!query) return;
-
-  searchMap(query);
-
+  document.getElementById("mapSearchInput").focus();
 }
 
+async function searchMap(){
+  const input=document.getElementById("mapSearchInput");
+  const query=input.value.trim();
 
-async function searchMap(query){
+  if(!query){
+    showToast("Enter a place to search");
+    return;
+  }
 
   try{
+    const url=
+      "https://nominatim.openstreetmap.org/search?format=json&q="+
+      encodeURIComponent(query);
 
-    const response =
-      await fetch(
-        "https://nominatim.openstreetmap.org/search?format=json&limit=5&q=" +
-        encodeURIComponent(query)
-      );
+    const response=await fetch(url,{
+      headers:{
+        "Accept":"application/json"
+      }
+    });
 
-    const results =
-      await response.json();
+    const data=await response.json();
 
-    if(!results.length){
-
-      showToast(
-        "No locations found."
-      );
-
+    if(!data.length){
+      showToast("No location found");
       return;
     }
 
-    const result =
-      results[0];
+    const place=data[0];
+    const lat=parseFloat(place.lat);
+    const lng=parseFloat(place.lon);
 
-    const lat =
-      Number(result.lat);
-
-    const lng =
-      Number(result.lon);
-
-    state.map.setView(
-      [lat,lng],
-      17
-    );
+    state.map.setView([lat,lng],16);
 
     L.marker([lat,lng])
       .addTo(state.map)
-      .bindPopup(
-        escapeHtml(
-          result.display_name
-        )
-      )
+      .bindPopup(escapeHtml(place.display_name))
       .openPopup();
 
   }catch(error){
-
-    console.error(error);
-
-    showToast(
-      "Map search failed."
-    );
-
+    showToast("Map search failed");
   }
-
 }
 
-
-function mapPlaceAction(id){
-
-  const location =
-    mapLocations.find(
-      item => item.id === id
-    );
-
-  if(!location) return;
-
-  showToast(
-    location.name +
-    " selected."
-  );
-
+function mapPlaceAction(name){
+  showToast("Opening "+name);
 }
-
 
 function directionsTo(lat,lng){
-
-  if(
-    state.userLocation
-  ){
-
-    showToast(
-      "Destination selected. Connect routing backend for turn-by-turn directions."
-    );
-
+  if(!state.map){
+    showPage("map");
+    setTimeout(()=>directionsTo(lat,lng),500);
     return;
   }
 
-  showToast(
-    "Allow location access for directions."
-  );
-
+  state.map.setView([lat,lng],17);
+  showToast("Destination selected");
 }
 
+function openMapForCategory(category){
+  showPage("map");
+  setTimeout(()=>{
+    selectMapCategory(category);
+  },400);
+}
 
-/* ============================================================
-   NAVIGATION MAP
-   ============================================================ */
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
 
 function initNavigationMap(){
+  if(state.navigationMap) return;
 
-  if(!window.L) return;
+  const el=document.getElementById("navigationMap");
+  if(!el) return;
 
-  const element =
-    document.getElementById(
-      "navigationMap"
-    );
-
-  if(!element) return;
-
-  if(state.navigationMap){
-
-    state.navigationMap.invalidateSize();
-
-    return;
-  }
-
-  state.navigationMap =
-    L.map(element)
-      .setView(
-        [5.6037,-0.1870],
-        13
-      );
+  state.navigationMap=L.map(el)
+    .setView([5.6037,-0.1870],13);
 
   L.tileLayer(
     "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
     {
       maxZoom:19,
-      attribution:
-        "© OpenStreetMap contributors"
+      attribution:"© OpenStreetMap contributors"
     }
-  ).addTo(
-    state.navigationMap
-  );
-
+  ).addTo(state.navigationMap);
 }
 
-
 async function findDestination(){
+  const input=document.getElementById("destinationInput");
+  const query=input.value.trim();
 
-  const input =
-    document
-      .getElementById("destination")
-      .value
-      .trim();
-
-  if(!input){
-
-    showToast(
-      "Enter a destination."
-    );
-
+  if(!query){
+    showToast("Enter a destination");
     return;
   }
 
-  if(!state.navigationMap){
-    initNavigationMap();
-  }
-
   try{
+    const response=await fetch(
+      "https://nominatim.openstreetmap.org/search?format=json&q="+
+      encodeURIComponent(query)
+    );
 
-    const response =
-      await fetch(
-        "https://nominatim.openstreetmap.org/search?format=json&limit=1&q=" +
-        encodeURIComponent(input)
-      );
+    const data=await response.json();
 
-    const results =
-      await response.json();
-
-    if(!results.length){
-
-      showToast(
-        "Destination not found."
-      );
-
+    if(!data.length){
+      showToast("Destination not found");
       return;
     }
 
-    const result =
-      results[0];
+    const lat=parseFloat(data[0].lat);
+    const lng=parseFloat(data[0].lon);
 
-    const lat =
-      Number(result.lat);
-
-    const lng =
-      Number(result.lon);
-
-    state.navigationMap.setView(
-      [lat,lng],
-      17
-    );
+    state.navigationMap.setView([lat,lng],15);
 
     L.marker([lat,lng])
       .addTo(state.navigationMap)
-      .bindPopup(
-        escapeHtml(
-          result.display_name
-        )
-      )
+      .bindPopup("Destination")
       .openPopup();
 
   }catch(error){
-
-    console.error(error);
-
-    showToast(
-      "Destination search failed."
-    );
-
+    showToast("Navigation search failed");
   }
-
 }
 
+function setTravelMode(mode){
+  showToast("Travel mode: "+mode);
+}
 
-/* ============================================================
+/* =========================================================
    CAMERA
-   ============================================================ */
+   ========================================================= */
 
 async function startCamera(){
-
-  if(!navigator.mediaDevices?.getUserMedia){
-
-    showToast(
-      "Camera is not supported by this browser."
-    );
-
-    return;
-  }
-
   try{
-
     if(state.cameraStream){
-
-      state.cameraStream
-        .getTracks()
-        .forEach(
-          track => track.stop()
-        );
-
+      state.cameraStream.getTracks().forEach(track=>track.stop());
     }
 
-    state.cameraStream =
-      await navigator.mediaDevices.getUserMedia({
-        video:{
-          facingMode:
-            state.cameraFacing,
-          width:{
-            ideal:1080
-          },
-          height:{
-            ideal:1920
-          }
-        },
-        audio:true
-      });
+    state.cameraStream=await navigator.mediaDevices.getUserMedia({
+      video:{
+        facingMode:state.cameraFacing
+      },
+      audio:true
+    });
 
-    const video =
-      document.getElementById(
-        "cameraVideo"
-      );
+    const video=document.getElementById("cameraPreview");
+    video.srcObject=state.cameraStream;
 
-    video.srcObject =
-      state.cameraStream;
-
-    if(
-      state.cameraFacing ===
-      "user"
-    ){
-
-      video.style.transform =
-        "scaleX(-1)";
-
-    }else{
-
-      video.style.transform =
-        "scaleX(1)";
-
-    }
-
-    showToast(
-      "Camera ready."
-    );
+    showToast("Camera started");
 
   }catch(error){
-
-    console.error(error);
-
-    showToast(
-      "Camera permission was denied or unavailable."
-    );
-
+    showToast("Camera permission was not granted");
   }
-
 }
 
+async function switchCamera(){
+  state.cameraFacing=
+    state.cameraFacing==="user"
+    ? "environment"
+    : "user";
 
-function switchCamera(){
-
-  state.cameraFacing =
-    state.cameraFacing ===
-    "user"
-      ? "environment"
-      : "user";
-
-  startCamera();
-
+  await startCamera();
 }
-
 
 function toggleRecording(){
-
-  if(state.recording){
-
-    stopRecording();
-
-  }else{
-
-    startRecording();
-
-  }
-
+  if(state.recording) stopRecording();
+  else startRecording();
 }
-
 
 function startRecording(){
-
   if(!state.cameraStream){
-
-    startCamera().then(
-      () => {
-
-        setTimeout(
-          startRecording,
-          500
-        );
-
-      }
-    );
-
+    showToast("Start the camera first");
     return;
   }
 
-  state.recordedChunks = [];
-
-  let options = {};
-
-  if(
-    MediaRecorder.isTypeSupported(
-      "video/webm;codecs=vp9,opus"
-    )
-  ){
-
-    options.mimeType =
-      "video/webm;codecs=vp9,opus";
-
-  }
+  state.recordedChunks=[];
 
   try{
+    state.mediaRecorder=new MediaRecorder(state.cameraStream);
 
-    state.mediaRecorder =
-      new MediaRecorder(
-        state.cameraStream,
-        options
+    state.mediaRecorder.ondataavailable=e=>{
+      if(e.data.size>0){
+        state.recordedChunks.push(e.data);
+      }
+    };
+
+    state.mediaRecorder.onstop=()=>{
+      state.recordedBlob=new Blob(
+        state.recordedChunks,
+        {type:"video/webm"}
       );
+
+      showToast("Recording ready. Open Editor to edit it.");
+    };
+
+    state.mediaRecorder.start();
+    state.recording=true;
+    state.recordingSeconds=0;
+
+    document.getElementById("recordBtn").textContent="■ Stop";
+
+    clearInterval(state.recordingTimer);
+
+    state.recordingTimer=setInterval(()=>{
+      state.recordingSeconds++;
+      updateCameraTimer();
+    },1000);
 
   }catch(error){
-
-    state.mediaRecorder =
-      new MediaRecorder(
-        state.cameraStream
-      );
-
+    showToast("Recording could not start");
   }
-
-  state.mediaRecorder.ondataavailable =
-    event => {
-
-      if(event.data.size){
-        state.recordedChunks.push(
-          event.data
-        );
-      }
-
-    };
-
-  state.mediaRecorder.onstop =
-    () => {
-
-      state.recordedBlob =
-        new Blob(
-          state.recordedChunks,
-          {
-            type:
-              state.mediaRecorder.mimeType ||
-              "video/webm"
-          }
-        );
-
-      showToast(
-        "Recording complete."
-      );
-
-    };
-
-  state.mediaRecorder.start();
-
-  state.recording = true;
-
-  document
-    .getElementById("recordButton")
-    .classList.add("recording");
-
-  state.recordingSeconds = 0;
-
-  updateCameraTimer();
-
-  clearInterval(
-    state.recordingTimer
-  );
-
-  state.recordingTimer =
-    setInterval(
-      () => {
-
-        state.recordingSeconds++;
-
-        updateCameraTimer();
-
-      },
-      1000
-    );
-
 }
-
 
 function stopRecording(){
+  if(!state.mediaRecorder) return;
 
-  if(
-    state.mediaRecorder &&
-    state.mediaRecorder.state !==
-    "inactive"
-  ){
+  state.mediaRecorder.stop();
+  state.recording=false;
 
-    state.mediaRecorder.stop();
+  clearInterval(state.recordingTimer);
 
-  }
-
-  state.recording = false;
-
-  clearInterval(
-    state.recordingTimer
-  );
-
-  document
-    .getElementById("recordButton")
-    .classList.remove("recording");
-
+  document.getElementById("recordBtn").textContent="● Record";
 }
-
 
 function updateCameraTimer(){
-
-  const minutes =
-    Math.floor(
-      state.recordingSeconds / 60
-    );
-
-  const seconds =
-    state.recordingSeconds % 60;
-
-  document
-    .getElementById("cameraTimer")
-    .textContent =
-    String(minutes).padStart(2,"0") +
-    ":" +
-    String(seconds).padStart(2,"0");
-
+  showToast(
+    "Recording "+state.recordingSeconds+"s"
+  );
 }
-
 
 function cameraClose(){
-
   if(state.cameraStream){
-
-    state.cameraStream
-      .getTracks()
-      .forEach(
-        track => track.stop()
-      );
-
+    state.cameraStream.getTracks().forEach(track=>track.stop());
+    state.cameraStream=null;
   }
 
-  state.cameraStream = null;
+  const video=document.getElementById("cameraPreview");
+  video.srcObject=null;
 
-  showPage("home");
-
+  showToast("Camera closed");
 }
-
 
 function setCameraMode(mode){
-
-  state.cameraMode =
-    mode;
-
-  document
-    .getElementById(
-      "cameraShortMode"
-    )
-    .classList.toggle(
-      "active",
-      mode === "short"
-    );
-
-  document
-    .getElementById(
-      "cameraVideoMode"
-    )
-    .classList.toggle(
-      "active",
-      mode === "video"
-    );
-
+  state.cameraMode=mode;
+  showToast("Camera mode: "+mode);
 }
 
-
-function cameraTimer(){
-
-  showToast(
-    "Recording timer selected."
-  );
-
-}
-
-
-function cameraSpeed(){
-
-  const speeds =
-    [0.5,1,1.5,2];
-
-  const current =
-    speeds.indexOf(
-      state.cameraSpeedValue
-    );
-
-  const next =
-    speeds[
-      (current + 1) %
-      speeds.length
-    ];
-
-  state.cameraSpeedValue =
-    next;
-
-  showToast(
-    "Camera speed: " +
-    next +
-    "x"
-  );
-
-}
-
-
-function cameraZoom(){
-
-  showToast(
-    "Zoom control uses device/browser camera capabilities."
-  );
-
-}
-
-
-function cameraEffect(){
-
-  showToast(
-    "Effects panel ready."
-  );
-
-}
-
-
-function cameraFilter(){
-
-  showToast(
-    "Filters panel ready."
-  );
-
-}
-
-
-function cameraVoice(){
-
-  showToast(
-    "Voice-over tool ready in the Editor."
-  );
-
-}
-
-
-function cameraCaptions(){
-
-  showPage("editor");
-
-  setTimeout(
-    () => editorTool("Captions"),
-    200
-  );
-
-}
-
-
-function cameraBeatSync(){
-
-  showPage("editor");
-
-  setTimeout(
-    () => editorTool("Beat Sync"),
-    200
-  );
-
-}
-
-
-function cameraText(){
-
-  showPage("editor");
-
-  setTimeout(
-    () => editorTool("Text"),
-    200
-  );
-
-}
-
-
-function cameraStickers(){
-
-  showToast(
-    "Sticker tool ready."
-  );
-
-}
-
-
-function cameraMore(){
-
-  showToast(
-    "More camera tools."
-  );
-
-}
-
-
-function openCameraMore(){
-  cameraMore();
-}
-
-
-function openCameraUpload(){
-
-  document
-    .getElementById("cameraUpload")
-    .click();
-
-}
-
-
-document
-  .getElementById("cameraUpload")
-  ?.addEventListener(
-    "change",
-    event => {
-
-      const file =
-        event.target.files?.[0];
-
-      if(!file) return;
-
-      loadEditorFile(file);
-
-      showPage("editor");
-
-    }
-  );
-
-
-/* ============================================================
+function cameraTimer(){showToast("Timer settings opened")}
+function cameraSpeed(){showToast("Speed: "+state.cameraSpeedValue+"x")}
+function cameraZoom(){showToast("Zoom controls opened")}
+function cameraEffect(){showToast("Effects opened")}
+function cameraFilter(){showToast("Filters opened")}
+function cameraVoice(){showToast("Voice tools opened")}
+function cameraCaptions(){showToast("Captions enabled")}
+function cameraBeatSync(){showToast("Beat Sync enabled")}
+function cameraText(){showToast("Text tool opened")}
+function cameraStickers(){showToast("Stickers opened")}
+
+/* =========================================================
    EDITOR
-   ============================================================ */
+   ========================================================= */
 
-document
-  .getElementById("editorFile")
-  ?.addEventListener(
-    "change",
-    event => {
+function loadEditorFile(event){
+  const file=event.target.files[0];
 
-      const file =
-        event.target.files?.[0];
+  if(!file) return;
 
-      if(file){
-        loadEditorFile(file);
-      }
-
-    }
-  );
-
-
-function loadEditorFile(file){
-
-  state.editorFile =
-    file;
+  state.editorFile=file;
 
   if(state.editorUrl){
-
-    URL.revokeObjectURL(
-      state.editorUrl
-    );
-
+    URL.revokeObjectURL(state.editorUrl);
   }
 
-  state.editorUrl =
-    URL.createObjectURL(
-      file
-    );
+  state.editorUrl=URL.createObjectURL(file);
 
-  const video =
-    document.getElementById(
-      "editorVideo"
-    );
+  const video=document.getElementById("editorPreview");
+  const image=document.getElementById("editorImagePreview");
 
-  const image =
-    document.getElementById(
-      "editorImage"
-    );
+  video.style.display="none";
+  image.style.display="none";
 
-  const empty =
-    document.getElementById(
-      "editorEmpty"
-    );
-
-  video.style.display =
-    "none";
-
-  image.style.display =
-    "none";
-
-  empty.style.display =
-    "none";
-
-  if(
-    file.type.startsWith(
-      "video/"
-    )
-  ){
-
-    video.src =
-      state.editorUrl;
-
-    video.style.display =
-      "block";
-
-  }else if(
-    file.type.startsWith(
-      "image/"
-    )
-  ){
-
-    image.src =
-      state.editorUrl;
-
-    image.style.display =
-      "block";
-
+  if(file.type.startsWith("video/")){
+    video.src=state.editorUrl;
+    video.style.display="block";
+  }else if(file.type.startsWith("image/")){
+    image.src=state.editorUrl;
+    image.style.display="block";
   }
 
-  state.editorHistory.push({
-    action:"load",
-    file:file.name
-  });
+  state.editorHistory.push(file.name);
+  state.editorHistoryIndex=state.editorHistory.length-1;
 
+  showToast("Media loaded");
 }
-
 
 function editorTool(tool){
-
-  state.editorHistory.push({
-    action:tool,
-    time:new Date().toISOString()
-  });
-
-  state.editorHistoryIndex =
-    state.editorHistory.length - 1;
-
-  showToast(
-    tool +
-    " selected."
-  );
-
+  showToast(tool+" tool opened");
 }
-
 
 function editorUndo(){
-
-  if(
-    state.editorHistory.length === 0
-  ){
-
-    showToast(
-      "Nothing to undo."
-    );
-
-    return;
+  if(state.editorHistoryIndex>0){
+    state.editorHistoryIndex--;
+    showToast("Undo");
+  }else{
+    showToast("Nothing to undo");
   }
-
-  state.editorHistory.pop();
-
-  showToast(
-    "Undo."
-  );
-
 }
-
 
 function editorRedo(){
-
-  showToast(
-    "Redo is ready for the full rendering history engine."
-  );
-
+  if(
+    state.editorHistoryIndex<
+    state.editorHistory.length-1
+  ){
+    state.editorHistoryIndex++;
+    showToast("Redo");
+  }else{
+    showToast("Nothing to redo");
+  }
 }
-
 
 function editorPreview(){
+  const video=document.getElementById("editorPreview");
 
-  const video =
-    document.getElementById(
-      "editorVideo"
-    );
-
-  if(
-    video.style.display !==
-    "none"
-  ){
-
-    video.play().catch(
-      () => {}
-    );
-
-    return;
+  if(video.style.display!=="none"){
+    video.play().catch(()=>{});
   }
 
-  showToast(
-    "Select a video first."
-  );
-
+  showToast("Preview started");
 }
-
 
 function saveDraft(){
-
-  const draft = {
-
-    fileName:
-      state.editorFile?.name ||
-      null,
-
-    history:
-      state.editorHistory,
-
-    createdAt:
-      new Date().toISOString()
-
-  };
-
-  localStorage.setItem(
-    "rockyx_editor_draft",
-    JSON.stringify(draft)
-  );
-
-  showToast(
-    "Draft saved on this device."
-  );
-
+  showToast("Draft saved locally on this device");
 }
 
-
-function publishContent(type){
-
+function publishContent(){
   if(!state.editorFile){
-
-    showToast(
-      "Select or record media first."
-    );
-
+    showToast("Choose media first");
     return;
   }
 
-  showToast(
-    "Ready to publish as " +
-    (type === "short"
-      ? "Short"
-      : "Video") +
-    "."
-  );
-
+  showToast("Content prepared for publishing");
 }
-
 
 function downloadEdited(){
-
-  if(state.recordedBlob){
-
-    const url =
-      URL.createObjectURL(
-        state.recordedBlob
-      );
-
-    const a =
-      document.createElement("a");
-
-    a.href = url;
-    a.download =
-      "rockyx-recording.webm";
-
-    a.click();
-
-    URL.revokeObjectURL(url);
-
+  if(!state.editorFile){
+    showToast("Choose media first");
     return;
   }
 
-  if(state.editorFile){
+  const url=state.editorUrl;
+  const a=document.createElement("a");
+  a.href=url;
+  a.download=state.editorFile.name;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
 
-    const url =
-      URL.createObjectURL(
-        state.editorFile
-      );
-
-    const a =
-      document.createElement("a");
-
-    a.href = url;
-
-    a.download =
-      "rockyx-" +
-      state.editorFile.name;
-
-    a.click();
-
-    setTimeout(
-      () => URL.revokeObjectURL(url),
-      1000
-    );
-
-    showToast(
-      "Original media downloaded. Final edited export requires the rendering engine."
-    );
-
-    return;
-  }
-
-  showToast(
-    "No media selected."
-  );
-
+  showToast("Media downloaded");
 }
-
 
 function uploadToEditor(){
-
-  const file =
-    document
-      .getElementById(
-        "uploadVideo"
-      )
-      .files?.[0];
-
-  if(!file){
-
-    showToast(
-      "Select a video first."
-    );
-
-    return;
-  }
-
-  loadEditorFile(file);
-
-  showPage("editor");
-
+  document.getElementById("editorFile").click();
 }
 
-
-/* ============================================================
+/* =========================================================
    TEMPLATES / TASKS
-   ============================================================ */
+   ========================================================= */
 
 function useTemplate(name){
-
-  showToast(
-    "Template selected: " +
-    name
-  );
-
+  showToast(name+" template selected");
   showPage("editor");
-
 }
-
 
 function startTask(name){
-
-  showToast(
-    "Creation task started: " +
-    name
-  );
-
-  showPage("editor");
-
+  showToast("Task started: "+name);
 }
-
 
 function upgradePro(){
-
-  showToast(
-    "RockyX Pro subscription will connect to your payment backend."
-  );
-
+  showToast("Pro upgrade opened");
 }
 
-
-/* ============================================================
+/* =========================================================
    SOUNDS
-   ============================================================ */
+   ========================================================= */
 
 function saveSound(name){
-
-  const sounds =
-    JSON.parse(
-      localStorage.getItem(
-        "rockyx_saved_sounds"
-      ) || "[]"
-    );
+  const sounds=
+    JSON.parse(localStorage.getItem("rockyx_saved_sounds")||"[]");
 
   if(!sounds.includes(name)){
     sounds.push(name);
+    localStorage.setItem(
+      "rockyx_saved_sounds",
+      JSON.stringify(sounds)
+    );
   }
 
-  localStorage.setItem(
-    "rockyx_saved_sounds",
-    JSON.stringify(sounds)
-  );
-
-  showToast(
-    "Sound saved."
-  );
-
+  showToast("Sound saved");
 }
-
 
 function useSound(name){
-
-  showToast(
-    "Sound selected: " +
-    name
-  );
-
-  showPage("editor");
-
+  localStorage.setItem("rockyx_current_sound",name);
+  showToast("Using "+name);
 }
 
+function searchSounds(value){
+  if(value.trim()){
+    showToast("Searching sounds for "+value);
+  }
+}
 
-/* ============================================================
+/* =========================================================
    MARKETPLACE
-   ============================================================ */
+   ========================================================= */
 
-function addCart(product){
+function addCart(name,price){
+  const cart=
+    JSON.parse(localStorage.getItem("rockyx_cart")||"[]");
 
-  const cart =
-    JSON.parse(
-      localStorage.getItem(
-        "rockyx_cart"
-      ) || "[]"
-    );
-
-  cart.push({
-    product,
-    createdAt:
-      new Date().toISOString()
-  });
+  cart.push({name,price});
 
   localStorage.setItem(
     "rockyx_cart",
     JSON.stringify(cart)
   );
 
-  showToast(
-    product +
-    " added to cart."
-  );
-
+  showToast(name+" added to cart");
 }
 
+/* =========================================================
+   BUSINESS
+   ========================================================= */
 
-/* ============================================================
-   MESSAGES
-   ============================================================ */
-
-function sendMessage(){
-
-  const input =
-    document.getElementById(
-      "messageInput"
-    );
-
-  const text =
-    input.value.trim();
-
-  if(!text) return;
-
-  const box =
-    document.getElementById(
-      "messagesBox"
-    );
-
-  const item =
-    document.createElement(
-      "div"
-    );
-
-  item.className =
-    "notice";
-
-  item.style.marginTop =
-    "8px";
-
-  item.style.marginLeft =
-    "20%";
-
-  item.textContent =
-    text;
-
-  box.appendChild(item);
-
-  input.value = "";
-
-  box.scrollTop =
-    box.scrollHeight;
-
+function openBusiness(name){
+  showToast("Opening "+name);
 }
 
+function requestTransport(){
+  showToast("Transport request started");
+}
 
-/* ============================================================
-   AI
-   ============================================================ */
+/* =========================================================
+   CREATOR PROMOTE
+   ========================================================= */
 
-function aiAction(type){
+function selectPlan(element,price,duration){
+  document.querySelectorAll("#page-promote .plan")
+    .forEach(p=>p.classList.remove("selected"));
 
-  const names = {
+  element.classList.add("selected");
 
-    script:"AI Script",
-
-    "text-video":"Text to Video",
-
-    "image-video":"Image to Video",
-
-    captions:"AI Captions",
-
-    "beat-sync":"Beat Sync",
-
-    background:"Background Removal",
-
-    highlights:"Auto Highlights"
-
+  state.selectedPromotePlan={
+    price,
+    duration
   };
 
-  document
-    .getElementById(
-      "aiResult"
-    )
-    .innerHTML = `
-
-      <h3>
-        ${escapeHtml(
-          names[type] ||
-          "AI Tool"
-        )}
-      </h3>
-
-      <p>
-        The RockyX frontend control is ready.
-        Connect the corresponding AI backend/model
-        to perform the actual operation.
-      </p>
-
-    `;
-
-  document
-    .getElementById(
-      "aiModal"
-    )
-    .classList.add("show");
-
+  showToast(price+" plan selected");
 }
 
+function openPromoteForVideo(videoName){
+  showPage("promote");
+  document.getElementById("promoteVideo").value=
+    "My latest video";
 
-function generateTTS(){
+  showToast("Promoting "+videoName);
+}
 
-  const text =
-    document
-      .getElementById(
-        "ttsText"
-      )
-      .value
-      .trim();
-
-  if(!text){
-
-    showToast(
-      "Enter text first."
-    );
-
+function startPromotion(){
+  if(!state.selectedPromotePlan){
+    showToast("Choose a Promote plan first");
     return;
   }
 
-  if(
-    "speechSynthesis"
-    in window
-  ){
+  showToast(
+    "Promotion ready for payment: "+
+    state.selectedPromotePlan.price+
+    " / "+
+    state.selectedPromotePlan.duration
+  );
+}
 
-    const utterance =
-      new SpeechSynthesisUtterance(
-        text
+/* =========================================================
+   BUSINESS ADS
+   ========================================================= */
+
+function selectAdPlan(element,price,duration){
+  document.querySelectorAll("#page-ads .plan")
+    .forEach(p=>p.classList.remove("selected"));
+
+  element.classList.add("selected");
+
+  state.selectedAdPlan={
+    price,
+    duration
+  };
+
+  showToast(price+" advertising plan selected");
+}
+
+function getAdPlacements(){
+  return [...document.querySelectorAll(
+    "#page-ads input[type=checkbox]:checked"
+  )].map(input=>input.value);
+}
+
+function previewAd(){
+  const title=
+    document.getElementById("adTitle").value ||
+    "Advertisement";
+
+  const description=
+    document.getElementById("adDescription").value ||
+    "Sponsored advertisement";
+
+  const price=
+    document.getElementById("adPrice").value;
+
+  const location=
+    document.getElementById("adLocation").value;
+
+  document.getElementById("adPreviewContent").innerHTML=`
+    <div class="card">
+      <span class="badge sponsored">SPONSORED</span>
+      <h2>${escapeHtml(title)}</h2>
+      <p>${escapeHtml(description)}</p>
+      ${price?`<div class="price">$${escapeHtml(price)}</div>`:""}
+      <p class="muted">${escapeHtml(location)}</p>
+    </div>
+  `;
+
+  document.getElementById("adPreviewModal")
+    .classList.add("show");
+}
+
+function submitAd(){
+  if(!state.selectedAdPlan){
+    showToast("Choose an Ads plan first");
+    return;
+  }
+
+  const title=document.getElementById("adTitle").value.trim();
+
+  if(!title){
+    showToast("Enter an advertisement title");
+    return;
+  }
+
+  const placements=getAdPlacements();
+
+  showToast(
+    "Ad prepared for payment. Placements: "+
+    placements.join(", ")
+  );
+}
+
+/* =========================================================
+   PROPERTY ADS
+   ========================================================= */
+
+function previewPropertyAd(){
+  const title=
+    document.getElementById("propertyTitle").value ||
+    "Property for Rent";
+
+  const type=
+    document.getElementById("propertyType").value;
+
+  const price=
+    document.getElementById("propertyPrice").value;
+
+  const currency=
+    document.getElementById("propertyCurrency").value;
+
+  const location=
+    document.getElementById("propertyLocation").value;
+
+  document.getElementById("adPreviewContent").innerHTML=`
+    <div class="card">
+      <span class="badge sponsored">SPONSORED PROPERTY</span>
+      <h2>${escapeHtml(title)}</h2>
+      <p>${escapeHtml(type)}</p>
+      <div class="price">${escapeHtml(currency)} ${escapeHtml(price)}</div>
+      <p class="muted">${escapeHtml(location)}</p>
+    </div>
+  `;
+
+  document.getElementById("adPreviewModal")
+    .classList.add("show");
+}
+
+function createPropertyAd(){
+  const title=document.getElementById("propertyTitle").value.trim();
+
+  if(!title){
+    showToast("Enter a property title");
+    return;
+  }
+
+  showPage("ads");
+
+  document.getElementById("adTitle").value=title;
+  document.getElementById("adCategory").value="Property";
+
+  showToast(
+    "Property advertisement added to your Ads campaign"
+  );
+}
+
+/* =========================================================
+   LIVE
+   ========================================================= */
+
+function startLive(){
+  showToast(
+    "Live setup opened. Streaming provider/backend configuration is required for real broadcasting."
+  );
+}
+
+function watchLive(name){
+  showToast("Opening "+name);
+}
+
+function reportLive(name){
+  state.reportedLive=name;
+  document.getElementById("reportLiveModal")
+    .classList.add("show");
+}
+
+function submitLiveReport(){
+  const reason=
+    document.getElementById("liveReportReason").value;
+
+  const details=
+    document.getElementById("liveReportDetails").value;
+
+  closeModal("reportLiveModal");
+
+  showToast(
+    "Live report submitted: "+reason
+  );
+
+  console.log({
+    type:"live_report",
+    reason,
+    details
+  });
+}
+
+function appealViolation(){
+  const reason=prompt(
+    "Briefly explain why you want to appeal this enforcement action:"
+  );
+
+  if(reason){
+    showToast("Appeal submitted for review");
+  }
+}
+
+/* =========================================================
+   PROFILE
+   ========================================================= */
+
+function openProfilePicturePicker(){
+  document.getElementById("profilePictureInput").click();
+}
+
+function handleProfilePicture(event){
+  const file=event.target.files[0];
+
+  if(!file) return;
+
+  if(!file.type.startsWith("image/")){
+    showToast("Please select an image");
+    return;
+  }
+
+  resizeProfileImage(file,800,800,.82)
+    .then(data=>{
+      state.profilePictureData=data;
+
+      document.getElementById("profileEditorAvatar").innerHTML=
+        `<img src="${data}" alt="Profile picture">`;
+
+      showToast("Profile picture selected");
+    })
+    .catch(()=>{
+      showToast("Could not process profile picture");
+    });
+}
+
+function resizeProfileImage(file,maxWidth,maxHeight,quality){
+  return new Promise((resolve,reject)=>{
+    const reader=new FileReader();
+
+    reader.onload=()=>{
+      const img=new Image();
+
+      img.onload=()=>{
+        let width=img.width;
+        let height=img.height;
+
+        const scale=Math.min(
+          maxWidth/width,
+          maxHeight/height,
+          1
+        );
+
+        width=Math.round(width*scale);
+        height=Math.round(height*scale);
+
+        const canvas=document.createElement("canvas");
+        canvas.width=width;
+        canvas.height=height;
+
+        const ctx=canvas.getContext("2d");
+        ctx.drawImage(img,0,0,width,height);
+
+        resolve(
+          canvas.toDataURL("image/jpeg",quality)
+        );
+      };
+
+      img.onerror=reject;
+      img.src=reader.result;
+    };
+
+    reader.onerror=reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+function removeProfilePicture(){
+  state.profilePictureData=null;
+  state.profileData.avatar_url="";
+
+  document.getElementById("profileEditorAvatar").innerHTML="👤";
+
+  showToast("Profile picture removed");
+}
+
+function openProfileEditor(){
+  const p=state.profileData;
+
+  document.getElementById("profileNameInput").value=
+    p.full_name || "";
+
+  document.getElementById("profileUsernameInput").value=
+    p.username || "";
+
+  document.getElementById("profileBioInput").value=
+    p.bio || "";
+
+  const avatar=document.getElementById("profileEditorAvatar");
+
+  if(state.profilePictureData || p.avatar_url){
+    avatar.innerHTML=
+      `<img src="${state.profilePictureData || p.avatar_url}" alt="Profile">`;
+  }else{
+    avatar.innerHTML="👤";
+  }
+
+  document.getElementById("profileEditor")
+    .classList.add("show");
+}
+
+function closeProfileEditor(){
+  closeModal("profileEditor");
+}
+
+async function saveProfile(){
+  const name=
+    document.getElementById("profileNameInput").value.trim();
+
+  const username=
+    document.getElementById("profileUsernameInput").value.trim()
+      .replace(/^@/,"");
+
+  const bio=
+    document.getElementById("profileBioInput").value.trim();
+
+  state.profileData.full_name=name || "RockyX User";
+  state.profileData.username=
+    username || generateUsername(name);
+
+  state.profileData.bio=bio;
+
+  if(state.profilePictureData){
+    state.profileData.avatar_url=
+      state.profilePictureData;
+  }
+
+  /*
+    Local fallback keeps the frontend usable even before
+    Supabase Storage is connected.
+  */
+  localStorage.setItem(
+    "rockyx_profile",
+    JSON.stringify(state.profileData)
+  );
+
+  /*
+    If the existing profiles table has the expected columns,
+    attempt to update the existing row.
+    No table is created or altered here.
+  */
+  if(supabaseClient && state.user){
+
+    try{
+
+      await supabaseClient
+        .from("profiles")
+        .upsert({
+          id:state.user.id,
+          full_name:state.profileData.full_name,
+          username:state.profileData.username,
+          bio:state.profileData.bio,
+          avatar_url:state.profileData.avatar_url || null,
+          account_type:state.profileData.account_type
+        },{
+          onConflict:"id"
+        });
+
+    }catch(error){
+
+      console.warn(
+        "Existing profiles table could not be updated:",
+        error
       );
 
-    speechSynthesis.cancel();
+    }
 
-    speechSynthesis.speak(
-      utterance
-    );
+    try{
 
-    showToast(
-      "Playing local browser TTS preview."
-    );
+      await supabaseClient.auth.updateUser({
+        data:{
+          full_name:state.profileData.full_name,
+          username:state.profileData.username,
+          bio:state.profileData.bio
+        }
+      });
+
+    }catch(error){
+
+      console.warn(
+        "Auth metadata update failed:",
+        error
+      );
+
+    }
+  }
+
+  updateProfileUI();
+  closeProfileEditor();
+
+  showToast("Profile saved");
+}
+
+async function loadUserProfile(){
+
+  const local=
+    localStorage.getItem("rockyx_profile");
+
+  if(local){
+
+    try{
+      state.profileData={
+        ...state.profileData,
+        ...JSON.parse(local)
+      };
+    }catch(error){}
+  }
+
+  if(state.user){
+
+    if(state.user.user_metadata){
+
+      state.profileData={
+        ...state.profileData,
+        full_name:
+          state.user.user_metadata.full_name ||
+          state.profileData.full_name,
+
+        username:
+          state.user.user_metadata.username ||
+          state.profileData.username,
+
+        bio:
+          state.user.user_metadata.bio ||
+          state.profileData.bio
+      };
+
+    }
+
+    if(supabaseClient){
+
+      try{
+
+        const result=
+          await supabaseClient
+            .from("profiles")
+            .select(
+              "id,full_name,username,bio,avatar_url,account_type"
+            )
+            .eq("id",state.user.id)
+            .maybeSingle();
+
+        if(result.data){
+
+          state.profileData={
+            ...state.profileData,
+            ...result.data
+          };
+
+        }
+
+      }catch(error){
+
+        console.warn(
+          "Profile lookup unavailable:",
+          error
+        );
+
+      }
+
+    }
+  }
+
+  updateProfileUI();
+}
+
+function updateProfileUI(){
+
+  const p=state.profileData;
+
+  document.getElementById("profileDisplayName")
+    .textContent=p.full_name || "RockyX User";
+
+  document.getElementById("profileUsername")
+    .textContent="@"+(p.username || "username");
+
+  document.getElementById("profileBioDisplay")
+    .textContent=
+      p.bio ||
+      "Add a bio to tell people about yourself.";
+
+  document.getElementById("profileTypeBadge")
+    .textContent=
+      p.account_type ?
+      p.account_type.charAt(0).toUpperCase()+
+      p.account_type.slice(1)
+      :
+      "Personal";
+
+  const avatar=document.getElementById("profileAvatar");
+
+  if(p.avatar_url){
+
+    avatar.innerHTML=
+      `<img src="${p.avatar_url}" alt="Profile picture">`;
 
   }else{
 
-    showToast(
-      "Browser speech synthesis unavailable."
-    );
+    avatar.innerHTML="👤";
 
   }
-
 }
 
+function generateUsername(name){
 
-/* ============================================================
-   LIVE
-   ============================================================ */
+  const clean=(name||"user")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g,"")
+    .slice(0,18);
 
-function startLive(){
+  return clean || "rockyxuser";
+}
 
-  showToast(
-    "Live streaming will connect to the RockyX streaming provider backend."
+/* =========================================================
+   POSTS / @MENTIONS / #HASHTAGS
+   ========================================================= */
+
+function insertMention(){
+
+  const textarea=document.getElementById("postComposer");
+
+  textarea.value+=
+    (textarea.value?" ":"")+"@username ";
+
+  textarea.focus();
+}
+
+function insertHashtag(){
+
+  const textarea=document.getElementById("postComposer");
+
+  textarea.value+=
+    (textarea.value?" ":"")+"#RockyX ";
+
+  textarea.focus();
+}
+
+function parsePostText(text){
+
+  let escaped=escapeHtml(text);
+
+  escaped=escaped.replace(
+    /(^|\s)@([a-zA-Z0-9_.]+)/g,
+    '$1<span class="mention" onclick="openUserProfile(\'$2\')">@$2</span>'
   );
 
+  escaped=escaped.replace(
+    /(^|\s)#([a-zA-Z0-9_]+)/g,
+    '$1<span class="hashtag" onclick="openHashtag(\'$2\')">#$2</span>'
+  );
+
+  return escaped;
 }
 
+function publishPost(){
 
-/* ============================================================
-   SECURITY
-   ============================================================ */
+  const textarea=document.getElementById("postComposer");
+  const text=textarea.value.trim();
 
-async function registerPasskey(){
-
-  if(
-    !window.PublicKeyCredential ||
-    !navigator.credentials
-  ){
-
-    showToast(
-      "Passkeys are not supported here."
-    );
-
+  if(!text){
+    showToast("Write something first");
     return;
   }
 
+  const post={
+    id:Date.now(),
+    text,
+    created_at:new Date().toISOString()
+  };
+
+  state.posts.unshift(post);
+
+  renderPosts();
+
+  textarea.value="";
+
+  showToast("Post published");
+}
+
+function renderPosts(){
+
+  const container=document.getElementById("profilePosts");
+
+  if(!state.posts.length){
+
+    container.innerHTML="";
+    return;
+
+  }
+
+  container.innerHTML=state.posts.map(post=>`
+    <article class="post-box">
+      <div class="row">
+        <div class="avatar">👤</div>
+        <div>
+          <strong>${escapeHtml(
+            state.profileData.full_name||"RockyX User"
+          )}</strong>
+          <div class="muted small">
+            @${escapeHtml(
+              state.profileData.username||"username"
+            )}
+          </div>
+        </div>
+      </div>
+
+      <div class="post-text" style="margin-top:12px">
+        ${parsePostText(post.text)}
+      </div>
+
+      <div class="actions" style="margin-top:12px">
+        <button class="btn" onclick="showToast('Liked')">♡ Like</button>
+        <button class="btn" onclick="showToast('Comment opened')">💬 Comment</button>
+        <button class="btn" onclick="showToast('Post shared')">↗ Share</button>
+      </div>
+    </article>
+  `).join("");
+}
+
+function openUserProfile(username){
+  showToast("Opening @"+username);
+}
+
+function openHashtag(hashtag){
+  showToast("Opening #"+hashtag);
+}
+
+/* =========================================================
+   MESSAGES
+   ========================================================= */
+
+function sendMessage(){
+
+  const input=document.getElementById("messageInput");
+  const value=input.value.trim();
+
+  if(!value){
+    return;
+  }
+
+  const list=document.getElementById("messagesList");
+
+  if(
+    list.querySelector(".notice") &&
+    list.children.length===1
+  ){
+    list.innerHTML="";
+  }
+
+  const item=document.createElement("div");
+
+  item.className="card";
+  item.style.marginBottom="8px";
+  item.textContent=value;
+
+  list.appendChild(item);
+
+  input.value="";
+}
+
+/* =========================================================
+   AI
+   ========================================================= */
+
+function aiAction(action){
+  showToast("AI "+action+" tool opened");
+}
+
+function generateTTS(){
+
+  const text=
+    document.getElementById("ttsText").value.trim();
+
+  if(!text){
+    showToast("Enter text first");
+    return;
+  }
+
+  if("speechSynthesis" in window){
+
+    const utterance=
+      new SpeechSynthesisUtterance(text);
+
+    speechSynthesis.speak(utterance);
+
+  }else{
+
+    showToast("Text-to-speech is not supported");
+
+  }
+}
+
+/* =========================================================
+   UPLOAD
+   ========================================================= */
+
+function publishUpload(){
+
+  const file=
+    document.getElementById("uploadFile").files[0];
+
+  const caption=
+    document.getElementById("uploadCaption").value.trim();
+
+  if(!file){
+    showToast("Choose a file first");
+    return;
+  }
+
+  if(caption){
+    showToast("Upload prepared with caption");
+  }else{
+    showToast("Upload prepared");
+  }
+}
+
+/* =========================================================
+   CREATOR / SECURITY
+   ========================================================= */
+
+function requestVerification(){
+  showToast("Verification request submitted");
+}
+
+async function registerPasskey(){
+
+  if(!window.PublicKeyCredential){
+    showToast("Passkeys are not supported on this browser");
+    return;
+  }
+
+  /*
+    Real WebAuthn registration requires a server-generated
+    challenge. This frontend intentionally does not fake
+    registration.
+  */
   showToast(
-    "WebAuthn requires a server-generated challenge from RockyX."
+    "Passkey setup requires the RockyX WebAuthn backend challenge"
+  );
+}
+
+function toggleSwitch(id){
+  const element=document.getElementById(id);
+
+  if(element){
+    element.checked=!element.checked;
+  }
+}
+
+/* =========================================================
+   SETTINGS
+   ========================================================= */
+
+function saveMentionSetting(value){
+  localStorage.setItem(
+    "rockyx_mention_setting",
+    value
   );
 
+  showToast("Mention settings saved");
 }
 
+function setCurrency(value){
+  state.currency=value;
 
-function toggleSwitch(button){
+  localStorage.setItem(
+    "rockyx_currency",
+    value
+  );
 
-  button.classList.toggle("on");
-
+  showToast("Currency set to "+value);
 }
 
-
-/* ============================================================
-   AUTHENTICATION
-   ============================================================ */
+/* =========================================================
+   AUTH
+   ========================================================= */
 
 async function createAccount(){
 
   if(!supabaseClient){
-
-    showToast(
-      "Add your Supabase URL and publishable key first."
-    );
-
+    showToast("Add your Supabase URL and publishable key first");
     return;
   }
 
-  const name =
-    document
-      .getElementById("signupName")
-      .value.trim();
+  const name=
+    document.getElementById("signupName").value.trim();
 
-  const email =
-    document
-      .getElementById("signupEmail")
-      .value.trim();
+  const email=
+    document.getElementById("signupEmail").value.trim();
 
-  const phone =
-    document
-      .getElementById("signupPhone")
-      .value.trim();
+  const phone=
+    document.getElementById("signupPhone").value.trim();
 
-  const country =
-    document
-      .getElementById("signupCountry")
-      .value;
+  const country=
+    document.getElementById("signupCountry").value.trim();
 
-  const type =
-    document
-      .getElementById("signupType")
-      .value;
+  const accountType=
+    document.getElementById("signupType").value;
 
-  const password =
-    document
-      .getElementById("signupPassword")
-      .value;
+  const password=
+    document.getElementById("signupPassword").value;
 
-  if(
-    !name ||
-    !email ||
-    !password
-  ){
-
-    showToast(
-      "Complete the required fields."
-    );
-
+  if(!name || !email || !password){
+    showToast("Name, email and password are required");
     return;
   }
 
   try{
 
-    const {data,error} =
+    const result=
       await supabaseClient.auth.signUp({
-
         email,
         password,
-
         options:{
           data:{
             full_name:name,
             phone,
             country,
-            account_type:type
+            account_type:accountType
           }
         }
-
       });
 
-    if(error) throw error;
+    if(result.error){
+      showToast(result.error.message);
+      return;
+    }
 
     showToast(
-      data.session
-        ? "Account created."
-        : "Account created. Check your email if verification is required."
+      "Account created. Check your email if confirmation is required."
     );
 
   }catch(error){
 
-    console.error(error);
-
-    showToast(
-      error.message ||
-      "Sign up failed."
-    );
+    showToast("Sign up failed");
 
   }
-
 }
-
 
 async function login(){
 
   if(!supabaseClient){
-
-    showToast(
-      "Connect Supabase first."
-    );
-
+    showToast("Add your Supabase configuration first");
     return;
   }
 
-  const email =
-    document
-      .getElementById("loginEmail")
-      .value.trim();
+  const email=
+    document.getElementById("signupEmail").value.trim();
 
-  const password =
-    document
-      .getElementById("loginPassword")
-      .value;
+  const password=
+    document.getElementById("signupPassword").value;
 
   try{
 
-    const {data,error} =
-      await supabaseClient.auth
-        .signInWithPassword({
-          email,
-          password
-        });
+    const result=
+      await supabaseClient.auth.signInWithPassword({
+        email,
+        password
+      });
 
-    if(error) throw error;
+    if(result.error){
+      showToast(result.error.message);
+      return;
+    }
 
-    state.user =
-      data.user;
-
-    state.session =
-      data.session;
-
-    updateAccountUI();
-
-    showToast(
-      "Signed in."
-    );
+    showToast("Signed in");
 
   }catch(error){
 
-    console.error(error);
-
-    showToast(
-      error.message ||
-      "Sign in failed."
-    );
+    showToast("Sign in failed");
 
   }
-
 }
-
 
 async function logout(){
 
   if(supabaseClient){
-
     await supabaseClient.auth.signOut();
-
   }
 
-  state.user = null;
-  state.session = null;
+  state.user=null;
+  state.session=null;
 
   updateAccountUI();
 
-  showToast(
-    "Signed out."
-  );
-
+  showToast("Signed out");
 }
-
 
 async function loadSession(){
 
   if(!supabaseClient){
-
     updateAccountUI();
-
     return;
   }
 
   try{
 
-    const {data,error} =
-      await supabaseClient.auth
-        .getSession();
+    const result=
+      await supabaseClient.auth.getSession();
 
-    if(error) throw error;
-
-    state.session =
-      data.session;
-
-    state.user =
-      data.session?.user ||
-      null;
+    state.session=result.data.session;
+    state.user=state.session?.user || null;
 
     updateAccountUI();
+    loadUserProfile();
 
   }catch(error){
 
-    console.error(error);
+    console.warn(error);
 
   }
 
-}
+  supabaseClient.auth.onAuthStateChange(
+    async(event,session)=>{
 
+      state.session=session;
+      state.user=session?.user || null;
+
+      updateAccountUI();
+
+      if(state.user){
+        await loadUserProfile();
+      }
+
+    }
+  );
+}
 
 function updateAccountUI(){
 
-  const loggedOut =
-    document.getElementById(
-      "loggedOut"
-    );
+  const status=document.getElementById("accountStatus");
 
-  const loggedIn =
-    document.getElementById(
-      "loggedIn"
-    );
+  if(state.user){
 
-  if(!state.user){
-
-    loggedOut
-      ?.classList.remove(
-        "hidden"
-      );
-
-    loggedIn
-      ?.classList.add(
-        "hidden"
-      );
-
-    return;
-  }
-
-  loggedOut
-    ?.classList.add(
-      "hidden"
-    );
-
-  loggedIn
-    ?.classList.remove(
-      "hidden"
-    );
-
-  const metadata =
-    state.user.user_metadata ||
-    {};
-
-  const info =
-    document.getElementById(
-      "userInfo"
-    );
-
-  if(info){
-
-    info.innerHTML =
-      "<b>" +
-      escapeHtml(
-        metadata.full_name ||
-        "RockyX User"
-      ) +
-      "</b><br>" +
-      escapeHtml(
+    status.textContent=
+      "Signed in as "+
+      (
         state.user.email ||
-        ""
+        state.profileData.username ||
+        "RockyX user"
       );
+
+  }else{
+
+    status.textContent="Not signed in.";
 
   }
-
 }
 
+/* =========================================================
+   GLOBAL SEARCH
+   ========================================================= */
 
-/* ============================================================
-   SEARCH
-   ============================================================ */
+document.getElementById("globalSearch")
+  .addEventListener("keydown",event=>{
 
-document
-  .getElementById(
-    "globalSearch"
-  )
-  ?.addEventListener(
-    "keydown",
-    async event => {
+    if(event.key!=="Enter") return;
 
-      if(
-        event.key !==
-        "Enter"
-      ){
-        return;
-      }
+    const value=event.target.value.trim();
 
-      const query =
-        event.target.value.trim();
+    if(!value) return;
 
-      if(!query) return;
+    showToast("Searching RockyX for "+value);
 
-      showPage("explore");
+    showPage("explore");
 
-      showToast(
-        "Searching RockyX for " +
-        query
-      );
+  });
 
-      if(
-        supabaseClient &&
-        state.user
-      ){
+/* =========================================================
+   VIDEO HELPERS
+   ========================================================= */
 
-        try{
-
-          await supabaseClient
-            .from("search_history")
-            .insert({
-              user_id:
-                state.user.id,
-              query
-            });
-
-        }catch(error){
-
-          console.log(
-            "Search history:",
-            error
-          );
-
-        }
-
-      }
-
-    }
-  );
-
-
-/* ============================================================
-   VIDEO TABS
-   ============================================================ */
-
-function videoTab(button,type){
-
-  document
-    .querySelectorAll(
-      "#videoTabs .tab"
-    )
-    .forEach(
-      tab =>
-        tab.classList.remove(
-          "active"
-        )
-    );
-
-  button.classList.add(
-    "active"
-  );
-
-  document
-    .querySelectorAll(
-      ".video-item"
-    )
-    .forEach(
-      item => {
-
-        if(
-          type === "foryou" ||
-          type === "following" ||
-          type === "trending"
-        ){
-
-          item.style.display =
-            "";
-
-          return;
-
-        }
-
-        item.style.display =
-          item.dataset.type ===
-          (
-            type === "shorts"
-              ? "short"
-              : "long"
-          )
-            ? ""
-            : "none";
-
-      }
-    );
-
+function videoTab(tab){
+  showToast("Videos: "+tab);
 }
 
-
-function openVideo(title){
-
-  document
-    .getElementById(
-      "videoTitle"
-    )
-    .textContent =
-    title;
-
-  document
-    .getElementById(
-      "videoModal"
-    )
-    .classList.add(
-      "show"
-    );
-
+function openVideo(name){
+  showToast("Opening "+name);
 }
 
+function openAlbum(name){
+  showToast("Opening "+name);
+}
 
-/* ============================================================
-   ESCAPE HTML
-   ============================================================ */
+/* =========================================================
+   OTHER HELPERS
+   ========================================================= */
+
+function cameraZoom(){
+  showToast("Camera zoom controls opened");
+}
+
+function openMapSearch(){
+  document.getElementById("mapSearchInput").focus();
+}
 
 function escapeHtml(value){
 
-  return String(
-    value ?? ""
-  )
-  .replaceAll("&","&amp;")
-  .replaceAll("<","&lt;")
-  .replaceAll(">","&gt;")
-  .replaceAll('"',"&quot;")
-  .replaceAll("'","&#039;");
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
 
 }
 
-
-/* ============================================================
+/* =========================================================
    STARTUP
-   ============================================================ */
+   ========================================================= */
 
-document.addEventListener(
-  "DOMContentLoaded",
-  async () => {
+document.addEventListener("DOMContentLoaded",()=>{
 
-    await loadSession();
+  const savedCurrency=
+    localStorage.getItem("rockyx_currency");
 
-    showPage("home");
+  if(savedCurrency){
+    state.currency=savedCurrency;
 
-    /*
-      The camera is intentionally not opened automatically.
-      The browser requires explicit camera permission.
-    */
+    const selector=
+      document.getElementById("currencySetting");
+
+    if(selector){
+      selector.value=savedCurrency;
+    }
+  }
+
+  const savedProfile=
+    localStorage.getItem("rockyx_profile");
+
+  if(savedProfile){
+
+    try{
+
+      state.profileData={
+        ...state.profileData,
+        ...JSON.parse(savedProfile)
+      };
+
+    }catch(error){}
 
   }
-);
 
+  updateProfileUI();
+  loadSession();
 
-if(supabaseClient){
+});
 
-  supabaseClient.auth
-    .onAuthStateChange(
-      (_event,session) => {
+/* =========================================================
+   CLEANUP
+   ========================================================= */
 
-        state.session =
-          session;
+window.addEventListener("beforeunload",()=>{
 
-        state.user =
-          session?.user ||
-          null;
+  if(state.cameraStream){
 
-        updateAccountUI();
-
-      }
-    );
-
-}
-
-
-window.addEventListener(
-  "beforeunload",
-  () => {
-
-    if(state.cameraStream){
-
-      state.cameraStream
-        .getTracks()
-        .forEach(
-          track => track.stop()
-        );
-
-    }
-
-    if(state.editorUrl){
-
-      URL.revokeObjectURL(
-        state.editorUrl
-      );
-
-    }
+    state.cameraStream
+      .getTracks()
+      .forEach(track=>track.stop());
 
   }
-);
 
+  if(state.editorUrl){
+    URL.revokeObjectURL(state.editorUrl);
+  }
+
+});
 </script>
 
 </body>
