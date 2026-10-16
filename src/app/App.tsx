@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, type CSSProperties } from 'react';
 
 type ModuleName =
   | 'Home'
@@ -83,7 +83,7 @@ export default function App() {
 
   const buttonStyle = (
     active: boolean
-  ): React.CSSProperties => ({
+  ): CSSProperties => ({
     width: '100%',
     display: 'block',
     padding: '11px 12px',
