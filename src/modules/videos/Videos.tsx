@@ -330,8 +330,6 @@ export default function Videos() {
     }
   }
 
-  const activePost = posts.find((post) => post.id === activeVideoId);
-
   return (
     <div style={pageStyle}>
       <div
