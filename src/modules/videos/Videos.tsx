@@ -1,118 +1,306 @@
-import { useEffect, useRef, useState } from 'react';
+import {
+  useEffect,
+  useRef,
+  useState,
+  type ChangeEvent,
+  type CSSProperties,
+} from 'react';
 
 type VideoPost = {
-  id: number;
+  id: string;
   creator: string;
+  username: string;
   caption: string;
+  sound: string;
   likes: number;
   comments: string[];
+  following: boolean;
   videoUrl?: string;
+  color: string;
 };
 
-export default function Videos() {
-  const [posts, setPosts] = useState<VideoPost[]>([
-    {
-      id: 1,
-      creator: 'RockyX Creator',
-      caption: 'Welcome to RockyX! One World. One Platform. 🌍',
-      likes: 128,
-      comments: ['Welcome to RockyX!'],
-    },
-    {
-      id: 2,
-      creator: 'Music Explorer',
-      caption: 'Discover something new today. 🎵',
-      likes: 86,
-      comments: [],
-    },
-  ]);
+type FeedType = 'For You' | 'Following' | 'Friends' | 'LIVE';
 
+const initialPosts: VideoPost[] = [
+  {
+    id: '1',
+    creator: 'RockyX Creator',
+    username: '@rockyxcreator',
+    caption: 'Welcome to RockyX! 🌍 One World. One Platform.',
+    sound: 'Original sound - RockyX Creator',
+    likes: 12800,
+    comments: ['Welcome to RockyX! 🔥', 'Amazing!'],
+    following: false,
+    color: '#482477',
+  },
+  {
+    id: '2',
+    creator: 'Music Explorer',
+    username: '@musicexplorer',
+    caption: 'Discover your next favorite sound. 🎵',
+    sound: 'Original sound - Music Explorer',
+    likes: 8450,
+    comments: ['Love this vibe ❤️', 'More music please!'],
+    following: true,
+    color: '#164e63',
+  },
+  {
+    id: '3',
+    creator: 'Creative World',
+    username: '@creativeworld',
+    caption: 'Create something beautiful today. ✨',
+    sound: 'Creative vibes - Original sound',
+    likes: 3260,
+    comments: ['So creative!', '🔥🔥🔥'],
+    following: false,
+    color: '#713f12',
+  },
+];
+
+const pageStyle: CSSProperties = {
+  position: 'relative',
+  width: '100%',
+  height: 'calc(100dvh - 66px)',
+  minHeight: 480,
+  background: '#08080d',
+  color: '#fff',
+  overflow: 'hidden',
+  fontFamily: 'system-ui, -apple-system, sans-serif',
+};
+
+const iconButtonStyle: CSSProperties = {
+  border: 0,
+  background: 'transparent',
+  color: '#fff',
+  cursor: 'pointer',
+  padding: 0,
+  textAlign: 'center',
+};
+
+function formatCount(value: number) {
+  if (value >= 1_000_000) {
+    return `${(value / 1_000_000).toFixed(1).replace(/\.0$/, '')}M`;
+  }
+
+  if (value >= 1_000) {
+    return `${(value / 1_000).toFixed(1).replace(/\.0$/, '')}K`;
+  }
+
+  return String(value);
+}
+
+export default function Videos() {
+  const [posts, setPosts] = useState<VideoPost[]>(initialPosts);
+  const [activeFeed, setActiveFeed] = useState<FeedType>('For You');
+  const [likedIds, setLikedIds] = useState<string[]>([]);
+  const [activeVideoId, setActiveVideoId] = useState('1');
+  const [muted, setMuted] = useState(true);
+  const [playing, setPlaying] = useState(true);
+  const [commentsFor, setCommentsFor] = useState<string | null>(null);
   const [commentText, setCommentText] = useState('');
-  const [commentingOn, setCommentingOn] = useState<number | null>(null);
+  const [uploadMessage, setUploadMessage] = useState('');
+  const [showUpload, setShowUpload] = useState(false);
+  const [uploadCaption, setUploadCaption] = useState('');
   const [uploadUrl, setUploadUrl] = useState<string | null>(null);
-  const [uploadName, setUploadName] = useState('');
-  const [message, setMessage] = useState('');
+  const [uploadFile, setUploadFile] = useState<File | null>(null);
+  const [showHeart, setShowHeart] = useState(false);
 
   const fileInput = useRef<HTMLInputElement>(null);
+  const feedRef = useRef<HTMLDivElement>(null);
+  const videoRefs = useRef<Record<string, HTMLVideoElement | null>>({});
+  const lastTapRef = useRef<{ time: number; id: string } | null>(null);
+  const heartTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const objectUrlsRef = useRef<string[]>([]);
 
   useEffect(() => {
     return () => {
-      if (uploadUrl) URL.revokeObjectURL(uploadUrl);
+      objectUrlsRef.current.forEach((url) => URL.revokeObjectURL(url));
+
+      if (uploadUrl && !objectUrlsRef.current.includes(uploadUrl)) {
+        URL.revokeObjectURL(uploadUrl);
+      }
+
+      if (heartTimerRef.current) {
+        clearTimeout(heartTimerRef.current);
+      }
     };
   }, [uploadUrl]);
 
-  function handleVideoSelection(
-    event: React.ChangeEvent<HTMLInputElement>
-  ) {
-    const file = event.target.files?.[0];
+  const visiblePosts =
+    activeFeed === 'Following'
+      ? posts.filter((post) => post.following)
+      : activeFeed === 'Friends'
+        ? posts.filter((post) => post.following)
+        : posts;
 
-    if (!file) return;
+  function likePost(postId: string) {
+    if (likedIds.includes(postId)) return;
 
-    if (!file.type.startsWith('video/')) {
-      setMessage('Please select a video file.');
-      return;
-    }
+    setLikedIds((current) => [...current, postId]);
 
-    if (file.size > 100 * 1024 * 1024) {
-      setMessage('Please select a video smaller than 100 MB.');
-      return;
-    }
-
-    setMessage('');
-    setUploadName(file.name);
-    setUploadUrl(URL.createObjectURL(file));
-  }
-
-  function publishPreview() {
-    if (!uploadUrl) {
-      setMessage('Select a video before publishing.');
-      return;
-    }
-
-    const newPost: VideoPost = {
-      id: Date.now(),
-      creator: 'You',
-      caption: uploadName,
-      likes: 0,
-      comments: [],
-      videoUrl: uploadUrl,
-    };
-
-    setPosts((current) => [newPost, ...current]);
-    setMessage('Video added to your current feed preview.');
-    setUploadUrl(null);
-    setUploadName('');
-
-    if (fileInput.current) {
-      fileInput.current.value = '';
-    }
-  }
-
-  function toggleLike(postId: number) {
     setPosts((current) =>
       current.map((post) =>
         post.id === postId
-          ? {
-              ...post,
-              likes: post.likes + 1,
-            }
+          ? { ...post, likes: post.likes + 1 }
           : post
       )
     );
   }
 
-  function addComment(postId: number) {
-    const text = commentText.trim();
+  function handleVideoTap(postId: string) {
+    const now = Date.now();
+    const lastTap = lastTapRef.current;
 
-    if (!text) return;
+    if (
+      lastTap &&
+      lastTap.id === postId &&
+      now - lastTap.time < 300
+    ) {
+      likePost(postId);
+      setShowHeart(true);
+
+      if (heartTimerRef.current) {
+        clearTimeout(heartTimerRef.current);
+      }
+
+      heartTimerRef.current = setTimeout(() => {
+        setShowHeart(false);
+      }, 750);
+
+      lastTapRef.current = null;
+      return;
+    }
+
+    lastTapRef.current = { time: now, id: postId };
+
+    const video = videoRefs.current[postId];
+
+    if (video) {
+      if (video.paused) {
+        void video.play().then(() => setPlaying(true)).catch(() => {});
+      } else {
+        video.pause();
+        setPlaying(false);
+      }
+    } else {
+      setPlaying((current) => !current);
+    }
+  }
+
+  function toggleFollow(postId: string) {
+    setPosts((current) =>
+      current.map((post) =>
+        post.id === postId
+          ? { ...post, following: !post.following }
+          : post
+      )
+    );
+  }
+
+  function selectFeed(feed: FeedType) {
+    setActiveFeed(feed);
+    setCommentsFor(null);
+    setPlaying(true);
+
+    if (feedRef.current) {
+      feedRef.current.scrollTop = 0;
+    }
+
+    setActiveVideoId('');
+  }
+
+  function handleScroll() {
+    const container = feedRef.current;
+    if (!container) return;
+
+    const height = container.clientHeight;
+
+    if (!height) return;
+
+    const index = Math.round(container.scrollTop / height);
+    const post = visiblePosts[index];
+
+    if (post && post.id !== activeVideoId) {
+      setActiveVideoId(post.id);
+      setPlaying(true);
+    }
+  }
+
+  function handleVideoFile(event: ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+
+    if (!file) return;
+
+    if (!file.type.startsWith('video/')) {
+      setUploadMessage('Please select a video file.');
+      return;
+    }
+
+    if (file.size > 100 * 1024 * 1024) {
+      setUploadMessage('Choose a video smaller than 100 MB.');
+      return;
+    }
+
+    if (uploadUrl) {
+      URL.revokeObjectURL(uploadUrl);
+    }
+
+    const url = URL.createObjectURL(file);
+
+    objectUrlsRef.current.push(url);
+    setUploadUrl(url);
+    setUploadFile(file);
+    setUploadMessage('');
+  }
+
+  function publishVideoPreview() {
+    if (!uploadUrl || !uploadFile) {
+      setUploadMessage('Select a video before continuing.');
+      return;
+    }
+
+    const newPost: VideoPost = {
+      id: `local-${Date.now()}`,
+      creator: 'You',
+      username: '@you',
+      caption: uploadCaption.trim() || uploadFile.name,
+      sound: 'Original sound - You',
+      likes: 0,
+      comments: [],
+      following: false,
+      videoUrl: uploadUrl,
+      color: '#312e81',
+    };
+
+    setPosts((current) => [newPost, ...current]);
+    setActiveFeed('For You');
+    setActiveVideoId(newPost.id);
+    setShowUpload(false);
+    setUploadCaption('');
+    setUploadUrl(null);
+    setUploadFile(null);
+    setUploadMessage(
+      'Added to this session preview. It has not been uploaded to a server.'
+    );
+
+    if (fileInput.current) {
+      fileInput.current.value = '';
+    }
+
+    if (feedRef.current) {
+      feedRef.current.scrollTop = 0;
+    }
+  }
+
+  function addComment(postId: string) {
+    const comment = commentText.trim();
+
+    if (!comment) return;
 
     setPosts((current) =>
       current.map((post) =>
         post.id === postId
-          ? {
-              ...post,
-              comments: [...post.comments, text],
-            }
+          ? { ...post, comments: [...post.comments, comment] }
           : post
       )
     );
@@ -120,320 +308,770 @@ export default function Videos() {
     setCommentText('');
   }
 
-  const styles = {
-    page: {
-      width: '100%',
-      maxWidth: 760,
-      margin: '0 auto',
-      padding: '20px 14px 80px',
-      boxSizing: 'border-box' as const,
-      color: '#f5f5ff',
-      fontFamily: 'system-ui, sans-serif',
-    },
-    panel: {
-      background: '#171724',
-      border: '1px solid #303044',
-      borderRadius: 16,
-      padding: 16,
-      marginBottom: 18,
-    },
-    button: {
-      background: 'linear-gradient(110deg, #7c3aed, #db2777)',
-      border: 0,
-      borderRadius: 9,
-      padding: '10px 14px',
-      color: '#fff',
-      fontWeight: 700,
-      cursor: 'pointer',
-    },
-    secondaryButton: {
-      background: '#29293b',
-      border: '1px solid #404057',
-      borderRadius: 9,
-      padding: '9px 12px',
-      color: '#fff',
-      cursor: 'pointer',
-    },
-  };
+  async function sharePost(post: VideoPost) {
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          title: 'RockyX Video',
+          text: `${post.caption} ${post.username}`,
+          url: window.location.href,
+        });
+      } else if (navigator.clipboard) {
+        await navigator.clipboard.writeText(
+          `${post.caption} — ${post.username} ${window.location.href}`
+        );
+
+        setUploadMessage('Share text copied.');
+      } else {
+        setUploadMessage('Sharing is not supported in this browser.');
+      }
+    } catch {
+      // The user may cancel the share sheet.
+    }
+  }
+
+  const activePost = posts.find((post) => post.id === activeVideoId);
 
   return (
-    <div style={styles.page}>
-      <header style={{ marginBottom: 24 }}>
-        <p
+    <div style={pageStyle}>
+      <div
+        style={{
+          position: 'absolute',
+          zIndex: 5,
+          top: 0,
+          left: 0,
+          right: 0,
+          height: 58,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: 22,
+          padding: '0 8px',
+          background:
+            'linear-gradient(to bottom, rgba(0,0,0,.55), transparent)',
+        }}
+      >
+        {(['Following', 'For You', 'Friends', 'LIVE'] as FeedType[]).map(
+          (feed) => (
+            <button
+              key={feed}
+              onClick={() => {
+                if (feed === 'LIVE') {
+                  setUploadMessage(
+                    'LIVE streaming will be connected in a future module.'
+                  );
+                  return;
+                }
+
+                selectFeed(feed);
+              }}
+              style={{
+                ...iconButtonStyle,
+                fontSize: 13,
+                fontWeight: activeFeed === feed ? 800 : 500,
+                opacity: activeFeed === feed ? 1 : 0.72,
+                borderBottom:
+                  activeFeed === feed
+                    ? '2px solid #fff'
+                    : '2px solid transparent',
+                padding: '8px 0',
+              }}
+            >
+              {feed}
+            </button>
+          )
+        )}
+      </div>
+
+      <div
+        ref={feedRef}
+        onScroll={handleScroll}
+        style={{
+          width: '100%',
+          height: '100%',
+          overflowY: 'auto',
+          overflowX: 'hidden',
+          scrollSnapType: 'y mandatory',
+          overscrollBehaviorY: 'contain',
+          scrollbarWidth: 'none',
+        }}
+      >
+        {visiblePosts.length === 0 && (
+          <div
+            style={{
+              minHeight: '100%',
+              display: 'grid',
+              placeItems: 'center',
+              padding: 30,
+              boxSizing: 'border-box',
+              textAlign: 'center',
+              color: '#fff',
+            }}
+          >
+            <div>
+              <h2>No videos yet</h2>
+              <p style={{ color: '#bbb' }}>
+                Follow creators to see their videos here.
+              </p>
+              <button
+                onClick={() => selectFeed('For You')}
+                style={{
+                  border: 0,
+                  borderRadius: 20,
+                  background: '#fe2c55',
+                  color: '#fff',
+                  padding: '12px 20px',
+                  fontWeight: 700,
+                }}
+              >
+                Explore For You
+              </button>
+            </div>
+          </div>
+        )}
+
+        {visiblePosts.map((post) => {
+          const liked = likedIds.includes(post.id);
+          const active = activeVideoId === post.id;
+
+          return (
+            <section
+              key={post.id}
+              data-video-id={post.id}
+              style={{
+                position: 'relative',
+                width: '100%',
+                height: '100%',
+                minHeight: 480,
+                scrollSnapAlign: 'start',
+                scrollSnapStop: 'always',
+                overflow: 'hidden',
+                background: post.color,
+                isolation: 'isolate',
+              }}
+            >
+              {post.videoUrl ? (
+                <video
+                  ref={(element) => {
+                    videoRefs.current[post.id] = element;
+                  }}
+                  src={post.videoUrl}
+                  muted={muted}
+                  loop
+                  playsInline
+                  controls={false}
+                  autoPlay={active}
+                  onClick={() => handleVideoTap(post.id)}
+                  onEnded={() => setPlaying(false)}
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    background: '#08080d',
+                    zIndex: -1,
+                  }}
+                />
+              ) : (
+                <div
+                  onClick={() => handleVideoTap(post.id)}
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    zIndex: -1,
+                    display: 'grid',
+                    placeItems: 'center',
+                    background: `radial-gradient(ellipse at 30% 25%, ${post.color}, #09090f 85%)`,
+                    cursor: 'pointer',
+                  }}
+                >
+                  <div style={{ textAlign: 'center', padding: 28 }}>
+                    <div
+                      style={{
+                        fontSize: 58,
+                        marginBottom: 16,
+                        opacity: 0.85,
+                      }}
+                    >
+                      ▶
+                    </div>
+                    <strong style={{ fontSize: 21 }}>
+                      RockyX
+                    </strong>
+                    <p
+                      style={{
+                        color: '#ddd',
+                        fontSize: 13,
+                        lineHeight: 1.6,
+                        maxWidth: 260,
+                      }}
+                    >
+                      Sample feed preview
+                      <br />
+                      Connect video storage to display real creator videos.
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              <div
+                onClick={() => handleVideoTap(post.id)}
+                onTouchEnd={(event) => {
+                  if (event.changedTouches.length === 1) {
+                    // Double-tap is also handled by the click event.
+                    // Keep touch interaction native for scrolling.
+                  }
+                }}
+                style={{
+                  position: 'absolute',
+                  inset: '58px 64px 150px 0',
+                  zIndex: 1,
+                  cursor: 'pointer',
+                }}
+              />
+
+              {showHeart && active && (
+                <div
+                  aria-hidden="true"
+                  style={{
+                    position: 'absolute',
+                    left: '40%',
+                    top: '42%',
+                    zIndex: 3,
+                    fontSize: 76,
+                    pointerEvents: 'none',
+                    textShadow: '0 3px 25px #000',
+                  }}
+                >
+                  ❤️
+                </div>
+              )}
+
+              {!playing && post.videoUrl && active && (
+                <button
+                  onClick={() => handleVideoTap(post.id)}
+                  aria-label="Play video"
+                  style={{
+                    ...iconButtonStyle,
+                    position: 'absolute',
+                    top: '45%',
+                    left: '45%',
+                    fontSize: 46,
+                    zIndex: 4,
+                  }}
+                >
+                  ▶
+                </button>
+              )}
+
+              <div
+                style={{
+                  position: 'absolute',
+                  left: 14,
+                  right: 78,
+                  bottom: 22,
+                  zIndex: 2,
+                  textShadow: '0 2px 8px rgba(0,0,0,.8)',
+                  pointerEvents: 'none',
+                }}
+              >
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 8,
+                    marginBottom: 12,
+                  }}
+                >
+                  <div
+                    style={{
+                      width: 40,
+                      height: 40,
+                      borderRadius: '50%',
+                      display: 'grid',
+                      placeItems: 'center',
+                      background: 'linear-gradient(135deg,#8b5cf6,#ec4899)',
+                      border: '2px solid white',
+                      fontWeight: 800,
+                      flexShrink: 0,
+                    }}
+                  >
+                    {post.creator.charAt(0).toUpperCase()}
+                  </div>
+
+                  <div style={{ minWidth: 0 }}>
+                    <strong style={{ fontSize: 14 }}>
+                      {post.username}
+                    </strong>
+                    <div style={{ fontSize: 11, color: '#eee' }}>
+                      {post.creator}
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      toggleFollow(post.id);
+                    }}
+                    style={{
+                      border: post.following
+                        ? '1px solid white'
+                        : '1px solid #fe2c55',
+                      background: post.following
+                        ? 'rgba(0,0,0,.3)'
+                        : '#fe2c55',
+                      color: '#fff',
+                      padding: '6px 10px',
+                      borderRadius: 5,
+                      fontWeight: 700,
+                      fontSize: 12,
+                      cursor: 'pointer',
+                      pointerEvents: 'auto',
+                    }}
+                  >
+                    {post.following ? 'Following' : '+ Follow'}
+                  </button>
+                </div>
+
+                <p
+                  style={{
+                    fontSize: 14,
+                    lineHeight: 1.5,
+                    margin: '0 0 12px',
+                    overflowWrap: 'anywhere',
+                  }}
+                >
+                  {post.caption}
+                </p>
+
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 8,
+                    fontSize: 12,
+                    overflow: 'hidden',
+                  }}
+                >
+                  <span>♫</span>
+                  <span
+                    style={{
+                      whiteSpace: 'nowrap',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                    }}
+                  >
+                    {post.sound}
+                  </span>
+                </div>
+              </div>
+
+              <div
+                style={{
+                  position: 'absolute',
+                  right: 12,
+                  bottom: 100,
+                  zIndex: 4,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  gap: 21,
+                  width: 54,
+                }}
+              >
+                <button
+                  onClick={() => likePost(post.id)}
+                  style={iconButtonStyle}
+                  aria-label={liked ? 'Liked' : 'Like video'}
+                >
+                  <div
+                    style={{
+                      fontSize: 31,
+                      filter: liked ? 'none' : 'grayscale(1)',
+                    }}
+                  >
+                    ❤️
+                  </div>
+                  <div style={{ fontSize: 12, fontWeight: 700 }}>
+                    {formatCount(post.likes)}
+                  </div>
+                </button>
+
+                <button
+                  onClick={() => setCommentsFor(post.id)}
+                  style={iconButtonStyle}
+                  aria-label="Open comments"
+                >
+                  <div style={{ fontSize: 30 }}>💬</div>
+                  <div style={{ fontSize: 12, fontWeight: 700 }}>
+                    {formatCount(post.comments.length)}
+                  </div>
+                </button>
+
+                <button
+                  onClick={() => void sharePost(post)}
+                  style={iconButtonStyle}
+                  aria-label="Share video"
+                >
+                  <div style={{ fontSize: 30 }}>↗</div>
+                  <div style={{ fontSize: 12, fontWeight: 700 }}>
+                    Share
+                  </div>
+                </button>
+
+                <button
+                  onClick={() => setMuted((current) => !current)}
+                  style={iconButtonStyle}
+                  aria-label={muted ? 'Unmute videos' : 'Mute videos'}
+                >
+                  <div style={{ fontSize: 25 }}>
+                    {muted ? '🔇' : '🔊'}
+                  </div>
+                  <div style={{ fontSize: 11 }}>
+                    {muted ? 'Muted' : 'Sound'}
+                  </div>
+                </button>
+              </div>
+            </section>
+          );
+        })}
+      </div>
+
+      <div
+        style={{
+          position: 'absolute',
+          zIndex: 6,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          height: 64,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-around',
+          background: 'rgba(8,8,13,.96)',
+          borderTop: '1px solid #292936',
+        }}
+      >
+        <button
+          onClick={() => selectFeed('For You')}
+          style={iconButtonStyle}
+        >
+          <div style={{ fontSize: 21 }}>⌂</div>
+          <div style={{ fontSize: 10 }}>Home</div>
+        </button>
+
+        <button
+          onClick={() => selectFeed('Following')}
+          style={iconButtonStyle}
+        >
+          <div style={{ fontSize: 21 }}>♧</div>
+          <div style={{ fontSize: 10 }}>Following</div>
+        </button>
+
+        <button
+          onClick={() => {
+            setShowUpload(true);
+            setUploadMessage('');
+          }}
+          aria-label="Create video"
           style={{
-            color: '#c4b5fd',
-            fontSize: 12,
+            ...iconButtonStyle,
+            width: 46,
+            height: 32,
+            borderRadius: 8,
+            background: '#fff',
+            color: '#08080d',
+            fontSize: 28,
             fontWeight: 800,
-            letterSpacing: 2,
+            lineHeight: '28px',
           }}
         >
-          ROCKYX SOCIAL
-        </p>
+          +
+        </button>
 
-        <h1 style={{ fontSize: 32, margin: '8px 0' }}>
-          Videos
-        </h1>
+        <button
+          onClick={() => selectFeed('Friends')}
+          style={iconButtonStyle}
+        >
+          <div style={{ fontSize: 21 }}>♙</div>
+          <div style={{ fontSize: 10 }}>Friends</div>
+        </button>
 
-        <p style={{ color: '#a4a4bb', lineHeight: 1.7 }}>
-          Watch, create, and share videos with the RockyX community.
-        </p>
-      </header>
-
-      <section style={styles.panel}>
-        <h2 style={{ fontSize: 18, marginTop: 0 }}>
-          Create a video post
-        </h2>
-
-        <p style={{ color: '#a4a4bb', fontSize: 13 }}>
-          Select a video from your device to preview it.
-        </p>
-
-        <input
-          ref={fileInput}
-          type="file"
-          accept="video/*"
-          onChange={handleVideoSelection}
-          aria-label="Choose a video"
-          style={{
-            display: 'block',
-            width: '100%',
-            margin: '14px 0',
-            color: '#ddd',
+        <button
+          onClick={() => {
+            setUploadMessage(
+              'Your profile will be connected when account authentication is implemented.'
+            );
           }}
-        />
+          style={iconButtonStyle}
+        >
+          <div style={{ fontSize: 21 }}>◎</div>
+          <div style={{ fontSize: 10 }}>Profile</div>
+        </button>
+      </div>
 
-        {uploadUrl && (
-          <div style={{ marginBottom: 14 }}>
+      {uploadMessage && !showUpload && (
+        <div
+          role="status"
+          style={{
+            position: 'absolute',
+            left: 12,
+            right: 12,
+            bottom: 76,
+            zIndex: 10,
+            padding: 12,
+            borderRadius: 10,
+            background: '#29213d',
+            color: '#fff',
+            fontSize: 12,
+          }}
+        >
+          {uploadMessage}
+          <button
+            onClick={() => setUploadMessage('')}
+            style={{
+              ...iconButtonStyle,
+              float: 'right',
+              paddingLeft: 10,
+            }}
+          >
+            ✕
+          </button>
+        </div>
+      )}
+
+      {showUpload && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Create video"
+          style={{
+            position: 'absolute',
+            inset: 0,
+            zIndex: 20,
+            background: '#101019',
+            padding: 20,
+            overflowY: 'auto',
+            boxSizing: 'border-box',
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}
+          >
+            <h2>Create video</h2>
+            <button
+              onClick={() => {
+                setShowUpload(false);
+                setUploadMessage('');
+              }}
+              style={iconButtonStyle}
+            >
+              ✕ Close
+            </button>
+          </div>
+
+          <input
+            ref={fileInput}
+            type="file"
+            accept="video/*"
+            onChange={handleVideoFile}
+            style={{ display: 'block', margin: '20px 0', maxWidth: '100%' }}
+          />
+
+          {uploadUrl && (
             <video
               src={uploadUrl}
               controls
               playsInline
               style={{
-                width: '100%',
-                maxHeight: 360,
-                background: '#08080d',
-                borderRadius: 12,
-              }}
-            />
-
-            <p style={{ color: '#a4a4bb', fontSize: 13 }}>
-              Selected: {uploadName}
-            </p>
-
-            <button
-              onClick={publishPreview}
-              style={styles.button}
-            >
-              Add to feed preview
-            </button>
-          </div>
-        )}
-
-        {message && (
-          <p
-            role="status"
-            style={{ color: '#d8b4fe', fontSize: 13 }}
-          >
-            {message}
-          </p>
-        )}
-
-        <p
-          style={{
-            color: '#85859c',
-            fontSize: 12,
-            lineHeight: 1.6,
-            marginBottom: 0,
-          }}
-        >
-          This preview does not upload videos to a server.
-          Persistent publishing will be added when we connect
-          secure media storage.
-        </p>
-      </section>
-
-      <h2 style={{ fontSize: 21, marginBottom: 16 }}>
-        Your feed
-      </h2>
-
-      {posts.map((post) => (
-        <article
-          key={post.id}
-          style={{
-            ...styles.panel,
-            padding: 0,
-            overflow: 'hidden',
-          }}
-        >
-          <div style={{ padding: 16 }}>
-            <strong>@{post.creator.replace(/\s+/g, '')}</strong>
-
-            <p
-              style={{
-                color: '#dedeea',
-                fontSize: 14,
-                lineHeight: 1.6,
-                marginBottom: 0,
-              }}
-            >
-              {post.caption}
-            </p>
-          </div>
-
-          {post.videoUrl ? (
-            <video
-              src={post.videoUrl}
-              controls
-              playsInline
-              style={{
-                width: '100%',
-                maxHeight: 540,
                 display: 'block',
-                background: '#08080d',
+                width: '100%',
+                maxHeight: 350,
+                background: '#000',
+                borderRadius: 12,
+                marginBottom: 16,
               }}
             />
-          ) : (
-            <div
-              style={{
-                minHeight: 250,
-                display: 'grid',
-                placeItems: 'center',
-                textAlign: 'center',
-                padding: 24,
-                boxSizing: 'border-box',
-                background:
-                  'radial-gradient(ellipse at top left, #433078, #171724 70%)',
-              }}
-            >
-              <div>
-                <div style={{ fontSize: 42, marginBottom: 12 }}>
-                  ▶
-                </div>
-
-                <strong>
-                  RockyX Video Preview
-                </strong>
-
-                <p
-                  style={{
-                    color: '#c4c4d8',
-                    fontSize: 13,
-                    lineHeight: 1.6,
-                  }}
-                >
-                  Real creator videos will appear here when
-                  media storage and the feed backend are connected.
-                </p>
-              </div>
-            </div>
           )}
 
-          <div
+          <textarea
+            value={uploadCaption}
+            onChange={(event) => setUploadCaption(event.target.value)}
+            placeholder="Write a caption..."
+            rows={3}
             style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              gap: 10,
+              width: '100%',
+              boxSizing: 'border-box',
+              background: '#20202e',
+              color: '#fff',
+              border: '1px solid #414155',
+              borderRadius: 10,
+              padding: 12,
+              font: 'inherit',
+            }}
+          />
+
+          {uploadMessage && (
+            <p role="status" style={{ color: '#f9a8d4' }}>
+              {uploadMessage}
+            </p>
+          )}
+
+          <button
+            onClick={publishVideoPreview}
+            style={{
+              display: 'block',
+              width: '100%',
+              marginTop: 16,
               padding: 14,
+              border: 0,
+              borderRadius: 10,
+              background: '#fe2c55',
+              color: '#fff',
+              fontWeight: 800,
+              cursor: 'pointer',
             }}
           >
-            <button
-              onClick={() => toggleLike(post.id)}
-              style={styles.secondaryButton}
-              aria-label={`Like post by ${post.creator}`}
-            >
-              ❤️ Like {post.likes}
-            </button>
+            Add to feed preview
+          </button>
 
-            <button
-              onClick={() =>
-                setCommentingOn(
-                  commentingOn === post.id ? null : post.id
-                )
-              }
-              style={styles.secondaryButton}
-            >
-              💬 Comments {post.comments.length}
-            </button>
+          <p
+            style={{
+              color: '#aaa',
+              fontSize: 12,
+              lineHeight: 1.6,
+              marginTop: 16,
+            }}
+          >
+            This is a local preview. The video is not saved online
+            and will not be visible to other users. Server uploads
+            will be added when RockyX media storage is connected.
+          </p>
+        </div>
+      )}
 
-            <button
-              onClick={() => {
-                if (navigator.share) {
-                  void navigator.share({
-                    title: 'RockyX Video',
-                    text: post.caption,
-                  }).catch(() => {});
-                } else {
-                  setMessage(
-                    'Sharing is not available in this browser.'
-                  );
-                }
-              }}
-              style={styles.secondaryButton}
-            >
-              ↗ Share
-            </button>
-          </div>
-
-          {commentingOn === post.id && (
+      {commentsFor && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Video comments"
+          style={{
+            position: 'absolute',
+            inset: 0,
+            zIndex: 30,
+            display: 'flex',
+            alignItems: 'flex-end',
+            background: 'rgba(0,0,0,.55)',
+          }}
+          onClick={() => setCommentsFor(null)}
+        >
+          <div
+            onClick={(event) => event.stopPropagation()}
+            style={{
+              width: '100%',
+              maxHeight: '75%',
+              display: 'flex',
+              flexDirection: 'column',
+              background: '#171722',
+              borderRadius: '18px 18px 0 0',
+              padding: 18,
+              boxSizing: 'border-box',
+              borderTop: '1px solid #38384a',
+            }}
+          >
             <div
               style={{
-                padding: '0 14px 16px',
-                borderTop: '1px solid #303044',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
               }}
             >
-              {post.comments.map((comment, index) => (
-                <p
-                  key={`${post.id}-${index}`}
-                  style={{
-                    color: '#dedeea',
-                    fontSize: 13,
-                    overflowWrap: 'anywhere',
-                  }}
-                >
-                  {comment}
-                </p>
-              ))}
+              <h3>
+                Comments (
+                {posts.find((post) => post.id === commentsFor)
+                  ?.comments.length ?? 0}
+                )
+              </h3>
 
-              <form
-                onSubmit={(event) => {
-                  event.preventDefault();
-                  addComment(post.id);
-                }}
+              <button
+                onClick={() => setCommentsFor(null)}
+                style={iconButtonStyle}
+              >
+                ✕
+              </button>
+            </div>
+
+            <div style={{ overflowY: 'auto', flex: 1 }}>
+              {posts
+                .find((post) => post.id === commentsFor)
+                ?.comments.map((comment, index) => (
+                  <p
+                    key={`${commentsFor}-${index}`}
+                    style={{
+                      padding: '10px 0',
+                      borderBottom: '1px solid #30303e',
+                      overflowWrap: 'anywhere',
+                      fontSize: 14,
+                    }}
+                  >
+                    <strong style={{ marginRight: 8 }}>
+                      @rockyxuser
+                    </strong>
+                    {comment}
+                  </p>
+                ))}
+            </div>
+
+            <form
+              onSubmit={(event) => {
+                event.preventDefault();
+                addComment(commentsFor);
+              }}
+              style={{
+                display: 'flex',
+                gap: 8,
+                paddingTop: 12,
+              }}
+            >
+              <input
+                value={commentText}
+                onChange={(event) => setCommentText(event.target.value)}
+                placeholder="Add a comment..."
+                aria-label="Add a comment"
                 style={{
-                  display: 'flex',
-                  gap: 8,
-                  marginTop: 12,
+                  minWidth: 0,
+                  flex: 1,
+                  padding: 12,
+                  borderRadius: 24,
+                  border: '1px solid #444456',
+                  background: '#292936',
+                  color: '#fff',
+                  font: 'inherit',
+                }}
+              />
+
+              <button
+                type="submit"
+                style={{
+                  border: 0,
+                  borderRadius: 22,
+                  padding: '0 16px',
+                  background: '#fe2c55',
+                  color: '#fff',
+                  fontWeight: 800,
                 }}
               >
-                <input
-                  value={commentText}
-                  onChange={(event) =>
-                    setCommentText(event.target.value)
-                  }
-                  placeholder="Write a comment..."
-                  aria-label="Write a comment"
-                  style={{
-                    minWidth: 0,
-                    flex: 1,
-                    padding: 10,
-                    borderRadius: 8,
-                    border: '1px solid #404057',
-                    background: '#0f0f19',
-                    color: '#fff',
-                  }}
-                />
-
-                <button
-                  type="submit"
-                  style={styles.button}
-                >
-                  Send
-                </button>
-              </form>
-            </div>
-          )}
-        </article>
-      ))}
+                Send
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
