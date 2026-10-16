@@ -1,4 +1,5 @@
 import { useState, type CSSProperties } from 'react';
+import Videos from '../modules/videos/Videos';
 
 type ModuleName =
   | 'Home'
@@ -68,7 +69,6 @@ export default function App() {
     useState<ModuleName>('Home');
 
   const [search, setSearch] = useState('');
-
   const [menuOpen, setMenuOpen] = useState(false);
 
   const filteredModules = modules.filter((module) =>
@@ -140,16 +140,6 @@ export default function App() {
           Rocky<span style={{ color: colors.purple }}>X</span>
         </button>
 
-        <span
-          style={{
-            color: colors.muted,
-            fontSize: 12,
-            display: 'none',
-          }}
-        >
-          One World. One Platform.
-        </span>
-
         <button
           onClick={() => setMenuOpen(!menuOpen)}
           aria-expanded={menuOpen}
@@ -170,8 +160,9 @@ export default function App() {
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns:
-            menuOpen ? '230px minmax(0, 1fr)' : 'minmax(0, 1fr)',
+          gridTemplateColumns: menuOpen
+            ? '230px minmax(0, 1fr)'
+            : 'minmax(0, 1fr)',
           minHeight: 'calc(100vh - 66px)',
         }}
       >
@@ -207,6 +198,12 @@ export default function App() {
               </button>
             ))}
 
+            {filteredModules.length === 0 && (
+              <p style={{ color: colors.muted, padding: 10 }}>
+                No matching modules found.
+              </p>
+            )}
+
             <div
               style={{
                 marginTop: 24,
@@ -235,215 +232,220 @@ export default function App() {
             padding: '28px 20px 100px',
           }}
         >
-          <div
-            style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              gap: 16,
-              marginBottom: 28,
-            }}
-          >
-            <div>
-              <p
+          {activeModule === 'Videos' ? (
+            <Videos />
+          ) : (
+            <>
+              <div
                 style={{
-                  color: colors.purple,
-                  fontSize: 12,
-                  fontWeight: 800,
-                  letterSpacing: 2,
-                  textTransform: 'uppercase',
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  gap: 16,
+                  marginBottom: 28,
                 }}
               >
-                RockyX Platform
-              </p>
+                <div>
+                  <p
+                    style={{
+                      color: colors.purple,
+                      fontSize: 12,
+                      fontWeight: 800,
+                      letterSpacing: 2,
+                      textTransform: 'uppercase',
+                    }}
+                  >
+                    RockyX Platform
+                  </p>
 
-              <h1
-                style={{
-                  fontSize: 'clamp(28px, 5vw, 42px)',
-                  margin: '8px 0',
-                  letterSpacing: -1,
-                }}
-              >
-                {activeModule}
-              </h1>
+                  <h1
+                    style={{
+                      fontSize: 'clamp(28px, 5vw, 42px)',
+                      margin: '8px 0',
+                      letterSpacing: -1,
+                    }}
+                  >
+                    {activeModule}
+                  </h1>
 
-              <p
-                style={{
-                  color: colors.muted,
-                  lineHeight: 1.7,
-                  margin: 0,
-                }}
-              >
-                {descriptions[activeModule]}
-              </p>
-            </div>
-
-            <input
-              value={search}
-              onChange={(event) => {
-                setSearch(event.target.value);
-                setMenuOpen(true);
-              }}
-              placeholder="Find a module..."
-              aria-label="Search RockyX modules"
-              style={{
-                width: '100%',
-                maxWidth: 260,
-                boxSizing: 'border-box',
-                padding: '12px 14px',
-                borderRadius: 10,
-                border: `1px solid ${colors.border}`,
-                background: colors.panel,
-                color: colors.text,
-                outlineColor: colors.purple,
-              }}
-            />
-          </div>
-
-          <section
-            style={{
-              padding: 'clamp(20px, 5vw, 36px)',
-              borderRadius: 20,
-              border: `1px solid ${colors.border}`,
-              background:
-                'radial-gradient(ellipse at top left, #282044 0%, #14141f 55%)',
-              marginBottom: 26,
-            }}
-          >
-            <p
-              style={{
-                color: '#d8b4fe',
-                fontWeight: 700,
-                fontSize: 12,
-                letterSpacing: 1.5,
-              }}
-            >
-              ONE WORLD. ONE PLATFORM.
-            </p>
-
-            <h2
-              style={{
-                fontSize: 'clamp(25px, 4vw, 38px)',
-                lineHeight: 1.2,
-                margin: '14px 0',
-              }}
-            >
-              Everything you love,
-              <br />
-              connected in one place.
-            </h2>
-
-            <p
-              style={{
-                color: colors.muted,
-                maxWidth: 520,
-                lineHeight: 1.8,
-              }}
-            >
-              RockyX brings creativity, entertainment, music,
-              shopping, and community together in one platform.
-            </p>
-
-            <button
-              onClick={() => navigate('Videos')}
-              style={{
-                padding: '12px 18px',
-                border: 0,
-                borderRadius: 10,
-                color: '#ffffff',
-                background:
-                  `linear-gradient(110deg, ${colors.purple}, ${colors.pink})`,
-                fontWeight: 700,
-                cursor: 'pointer',
-              }}
-            >
-              Explore RockyX →
-            </button>
-          </section>
-
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              gap: 12,
-              marginBottom: 16,
-            }}
-          >
-            <h2 style={{ fontSize: 21, margin: 0 }}>
-              Explore modules
-            </h2>
-
-            <span style={{ color: colors.muted, fontSize: 12 }}>
-              {modules.length} modules
-            </span>
-          </div>
-
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns:
-                'repeat(auto-fit, minmax(min(100%, 210px), 1fr))',
-              gap: 14,
-            }}
-          >
-            {modules.map((module, index) => (
-              <button
-                key={module}
-                onClick={() => navigate(module)}
-                style={{
-                  minHeight: 145,
-                  padding: 20,
-                  border: `1px solid ${
-                    activeModule === module
-                      ? colors.purple
-                      : colors.border
-                  }`,
-                  borderRadius: 15,
-                  background:
-                    activeModule === module
-                      ? '#211a36'
-                      : colors.panel,
-                  color: colors.text,
-                  textAlign: 'left',
-                  cursor: 'pointer',
-                  transition: 'border-color 0.2s',
-                }}
-              >
-                <div
-                  style={{
-                    width: 38,
-                    height: 38,
-                    display: 'grid',
-                    placeItems: 'center',
-                    borderRadius: 11,
-                    marginBottom: 15,
-                    background: '#28213d',
-                    color: '#d8b4fe',
-                    fontWeight: 800,
-                  }}
-                >
-                  {String(index + 1).padStart(2, '0')}
+                  <p
+                    style={{
+                      color: colors.muted,
+                      lineHeight: 1.7,
+                      margin: 0,
+                    }}
+                  >
+                    {descriptions[activeModule]}
+                  </p>
                 </div>
 
-                <strong style={{ fontSize: 16 }}>
-                  {module}
-                </strong>
+                <input
+                  value={search}
+                  onChange={(event) => {
+                    setSearch(event.target.value);
+                    setMenuOpen(true);
+                  }}
+                  placeholder="Find a module..."
+                  aria-label="Search RockyX modules"
+                  style={{
+                    width: '100%',
+                    maxWidth: 260,
+                    boxSizing: 'border-box',
+                    padding: '12px 14px',
+                    borderRadius: 10,
+                    border: `1px solid ${colors.border}`,
+                    background: colors.panel,
+                    color: colors.text,
+                    outlineColor: colors.purple,
+                  }}
+                />
+              </div>
+
+              <section
+                style={{
+                  padding: 'clamp(20px, 5vw, 36px)',
+                  borderRadius: 20,
+                  border: `1px solid ${colors.border}`,
+                  background:
+                    'radial-gradient(ellipse at top left, #282044 0%, #14141f 55%)',
+                  marginBottom: 26,
+                }}
+              >
+                <p
+                  style={{
+                    color: '#d8b4fe',
+                    fontWeight: 700,
+                    fontSize: 12,
+                    letterSpacing: 1.5,
+                  }}
+                >
+                  ONE WORLD. ONE PLATFORM.
+                </p>
+
+                <h2
+                  style={{
+                    fontSize: 'clamp(25px, 4vw, 38px)',
+                    lineHeight: 1.2,
+                    margin: '14px 0',
+                  }}
+                >
+                  Everything you love,
+                  <br />
+                  connected in one place.
+                </h2>
 
                 <p
                   style={{
                     color: colors.muted,
-                    fontSize: 12,
-                    lineHeight: 1.6,
-                    marginBottom: 0,
+                    maxWidth: 520,
+                    lineHeight: 1.8,
                   }}
                 >
-                  {descriptions[module]}
+                  RockyX brings creativity, entertainment, music,
+                  shopping, and community together in one platform.
                 </p>
-              </button>
-            ))}
-          </div>
+
+                <button
+                  onClick={() => navigate('Videos')}
+                  style={{
+                    padding: '12px 18px',
+                    border: 0,
+                    borderRadius: 10,
+                    color: '#ffffff',
+                    background:
+                      `linear-gradient(110deg, ${colors.purple}, ${colors.pink})`,
+                    fontWeight: 700,
+                    cursor: 'pointer',
+                  }}
+                >
+                  Explore Videos →
+                </button>
+              </section>
+
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  gap: 12,
+                  marginBottom: 16,
+                }}
+              >
+                <h2 style={{ fontSize: 21, margin: 0 }}>
+                  Explore modules
+                </h2>
+
+                <span style={{ color: colors.muted, fontSize: 12 }}>
+                  {modules.length} modules
+                </span>
+              </div>
+
+              <div
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns:
+                    'repeat(auto-fit, minmax(min(100%, 210px), 1fr))',
+                  gap: 14,
+                }}
+              >
+                {modules.map((module, index) => (
+                  <button
+                    key={module}
+                    onClick={() => navigate(module)}
+                    style={{
+                      minHeight: 145,
+                      padding: 20,
+                      border: `1px solid ${
+                        activeModule === module
+                          ? colors.purple
+                          : colors.border
+                      }`,
+                      borderRadius: 15,
+                      background:
+                        activeModule === module
+                          ? '#211a36'
+                          : colors.panel,
+                      color: colors.text,
+                      textAlign: 'left',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: 38,
+                        height: 38,
+                        display: 'grid',
+                        placeItems: 'center',
+                        borderRadius: 11,
+                        marginBottom: 15,
+                        background: '#28213d',
+                        color: '#d8b4fe',
+                        fontWeight: 800,
+                      }}
+                    >
+                      {String(index + 1).padStart(2, '0')}
+                    </div>
+
+                    <strong style={{ fontSize: 16 }}>
+                      {module}
+                    </strong>
+
+                    <p
+                      style={{
+                        color: colors.muted,
+                        fontSize: 12,
+                        lineHeight: 1.6,
+                        marginBottom: 0,
+                      }}
+                    >
+                      {descriptions[module]}
+                    </p>
+                  </button>
+                ))}
+              </div>
+            </>
+          )}
 
           <footer
             style={{
@@ -458,9 +460,8 @@ export default function App() {
             <strong style={{ color: colors.text }}>RockyX</strong>
             {' '}— One World. One Platform.
             <br />
-            Initial development interface. Accounts, media,
-            payments, and other backend features are not yet
-            implemented.
+            Initial development version. Some modules still require
+            backend services and further implementation.
           </footer>
         </main>
       </div>
